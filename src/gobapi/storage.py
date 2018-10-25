@@ -106,7 +106,7 @@ def _get_convert_for_table(table, filter={}):
     return convert
 
 
-def get_entities(collection_name, offset, limit, view=None):
+def get_entities(collection_name, offset, limit, order_by=None, view=None):
     """Entities
 
     Returns the list of entities within a collection.
@@ -115,6 +115,8 @@ def get_entities(collection_name, offset, limit, view=None):
     :param collection_name:
     :param offset:
     :param limit:
+    :param order_by:
+    :param view:
     :return:
     """
     assert(session and Base)
@@ -124,7 +126,12 @@ def get_entities(collection_name, offset, limit, view=None):
     all_entities = session.query(table)
     all_count = all_entities.count()
 
-    page_entities = all_entities.offset(offset).limit(limit).all()
+    # Order desc if - is added in front of attribute name
+    if order_by and order_by.startswith('-'):
+        order_by = order_by.replace('-', '')
+        order_by = f"{order_by} DESC"
+
+    page_entities = all_entities.order_by(order_by).offset(offset).limit(limit).all()
 
     if view:
         entity_convert = _get_convert_for_table(table,

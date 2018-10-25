@@ -46,7 +46,7 @@ entity = None
 views = {}
 
 
-def mock_entities(collection, offset, limit, view=None):
+def mock_entities(collection, offset, limit, order_by=None, view=None):
     global entities
 
     return entities, len(entities)

@@ -21,9 +21,9 @@ class MockBase:
 
 
 class MockEntity:
-    def __init__(self, *args):
-        for key in args:
-            setattr(self, key, key)
+    def __init__(self, kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
 
 class MockEntities:
@@ -43,6 +43,9 @@ class MockEntities:
         return self.all_entities
 
     def filter_by(self, **kwargs):
+        return self
+
+    def order_by(self, order_by):
         return self
 
     def one_or_none(self):
@@ -154,17 +157,34 @@ def test_entities(monkeypatch):
     MockEntities.all_entities = []
     assert(get_entities('collection1', 0, 1) == ([], 0))
 
-    mockEntity = MockEntity('id', 'attribute')
+    mockEntity = MockEntity({'id': 'id', 'attribute': 'attribute'})
     MockEntities.all_entities = [
         mockEntity
     ]
     assert(get_entities('collection1', 0, 1) == ([{'attribute': 'attribute', 'id': 'id'}], 1))
 
-    mockEntity = MockEntity('id', 'attribute', 'non_existing_attribute')
+    mockEntity = MockEntity({'id': 'id', 'attribute': 'attribute', 'non_existing_attribute': 'non_existing_attribute'})
     MockEntities.all_entities = [
         mockEntity
     ]
     assert(get_entities('collection1', 0, 1) == ([{'attribute': 'attribute', 'id': 'id'}], 1))
+
+
+def test_entities_with_ordering(monkeypatch):
+    before_each_storage_test(monkeypatch)
+
+    from gobapi.storage import get_entities
+    mockEntity1 = MockEntity({'id': 'id1', 'attribute': 'attribute'})
+    mockEntity2 = MockEntity({'id': 'id2', 'attribute': 'attribute'})
+    MockEntities.all_entities = [
+        mockEntity1,
+        mockEntity2,
+    ]
+    assert(get_entities('collection1', 0, 1) == ([{'attribute': 'attribute', 'id': 'id1'}, {'attribute': 'attribute', 'id': 'id2'}], 2))
+
+    # Test that both asc as desc are accepted as input
+    assert(get_entities('collection1', 0, 1, order_by='id') == ([{'attribute': 'attribute', 'id': 'id1'}, {'attribute': 'attribute', 'id': 'id2'}], 2))
+    assert(get_entities('collection1', 0, 1, order_by='-id') == ([{'attribute': 'attribute', 'id': 'id1'}, {'attribute': 'attribute', 'id': 'id2'}], 2))
 
 
 def test_entities_with_view(monkeypatch):
@@ -172,19 +192,19 @@ def test_entities_with_view(monkeypatch):
 
     from gobapi.storage import get_entities
     MockEntities.all_entities = []
-    assert(get_entities('collection1', 0, 1, 'enhanced') == ([], 0))
+    assert(get_entities('collection1', 0, 1, view='enhanced') == ([], 0))
 
-    mockEntity = MockEntity('id', 'attribute')
+    mockEntity = MockEntity({'id': 'id', 'attribute': 'attribute'})
     MockEntities.all_entities = [
         mockEntity
     ]
-    assert(get_entities('collection1', 0, 1, 'enhanced') == ([{'attribute': 'attribute', 'id': 'id'}], 1))
+    assert(get_entities('collection1', 0, 1, view='enhanced') == ([{'attribute': 'attribute', 'id': 'id'}], 1))
 
-    mockEntity = MockEntity('id', 'attribute', 'non_existing_attribute')
+    mockEntity = MockEntity({'id': 'id', 'attribute': 'attribute', 'non_existing_attribute': 'non_existing_attribute'})
     MockEntities.all_entities = [
         mockEntity
     ]
-    assert(get_entities('collection1', 0, 1, 'enhanced') == ([{'attribute': 'attribute', 'id': 'id'}], 1))
+    assert(get_entities('collection1', 0, 1, view='enhanced') == ([{'attribute': 'attribute', 'id': 'id'}], 1))
 
 
 def test_entity(monkeypatch):
@@ -193,7 +213,7 @@ def test_entity(monkeypatch):
     from gobapi.storage import get_entity
     assert(get_entity('collection1', 'id') == None)
 
-    mockEntity = MockEntity('id', 'attribute', 'meta')
+    mockEntity = MockEntity({'id': 'id', 'attribute': 'attribute', 'meta': 'meta'})
     MockEntities.one_entity = mockEntity
     assert(get_entity('collection1', 'id') == {'attribute': 'attribute', 'id': 'id', 'meta': 'meta'})
 
@@ -205,6 +225,6 @@ def test_entity_with_view(monkeypatch):
     from gobapi.storage import get_entity
     assert(get_entity('collection1', 'id', 'enhanced') == None)
 
-    mockEntity = MockEntity('id', 'attribute', 'meta')
+    mockEntity = MockEntity({'id': 'id', 'attribute': 'attribute', 'meta': 'meta'})
     MockEntities.one_entity = mockEntity
     assert(get_entity('collection1', 'id', 'enhanced') == {'attribute': 'attribute', 'id': 'id', 'meta': 'meta'})
