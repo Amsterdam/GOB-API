@@ -5,16 +5,16 @@ Filters provide for a way to dynamically filter collections on field values
 """
 from graphene import Boolean
 from graphene_sqlalchemy import SQLAlchemyConnectionField
-from sqlalchemy import and_
+from sqlalchemy import tuple_, func
 
 from gobcore.model.metadata import FIELD
-from gobcore.model.relations import get_reference_name_from_relation_table_name
 from gobcore.sources import GOBSources
 from gobcore.model import GOBModel
 
 from gobapi.storage import filter_active, filter_deleted
-from gobapi.session import get_session
 from gobapi import serialize
+
+from typing import List
 
 gobsources = GOBSources()
 gobmodel = GOBModel()
@@ -36,7 +36,7 @@ def _add_query_filter_kwargs(query, model, **kwargs):
     return query
 
 
-def _build_query(query, model, relation, **kwargs):
+def _build_query(query, model, **kwargs):
     """Build a query to filter a model on the contents of kwargs
 
     :param query: the query to start with
@@ -44,20 +44,10 @@ def _build_query(query, model, relation, **kwargs):
     :param kwargs: the filter arguments
     :return: the query to filter model on the filter arguments
     """
-    query = _add_query_filter_kwargs(query, model, **kwargs)
-
-    if relation is not None:
-        join_condition = relation.c.dst_id == getattr(model, FIELD.ID)
-        if model.__has_states__:
-            join_condition = and_(
-                join_condition,
-                relation.c.dst_volgnummer == getattr(model, FIELD.SEQNR, None)
-            )
-        query = query.join(relation, join_condition)
-    return query
+    return _add_query_filter_kwargs(query, model, **kwargs)
 
 
-def _build_query_inverse(query, model, relation, **kwargs):
+def _build_query_inverse(query, model, **kwargs):
     """Build a query to filter a model on the contents of kwargs
 
     :param query: the query to start with
@@ -65,18 +55,7 @@ def _build_query_inverse(query, model, relation, **kwargs):
     :param kwargs: the filter arguments
     :return: the query to filter model on the filter arguments
     """
-    query = _add_query_filter_kwargs(query, model, **kwargs)
-
-    if relation is not None:
-        join_condition = relation.c.src_id == getattr(model, FIELD.ID)
-
-        if model.__has_states__:
-            join_condition = and_(
-                join_condition,
-                relation.c.src_volgnummer == getattr(model, FIELD.SEQNR, None)
-            )
-        query = query.join(relation, join_condition)
-    return query
+    return _add_query_filter_kwargs(query, model, **kwargs)
 
 
 class BaseFilterConnectionField(SQLAlchemyConnectionField):
@@ -87,7 +66,7 @@ class BaseFilterConnectionField(SQLAlchemyConnectionField):
         super(BaseFilterConnectionField, self).__init__(type, *args, **kwargs)
 
     @classmethod
-    def get_query(cls, model, info, relation=None, **kwargs):
+    def get_query(cls, model, info, **kwargs):
         """Gets a query that returns the model filtered on the contents of kwargs
 
         :param model: the model class of the referenced collection
@@ -101,7 +80,7 @@ class BaseFilterConnectionField(SQLAlchemyConnectionField):
         query = filter_deleted(query, model)
         if kwargs.get('active'):
             query = filter_active(query, model)
-        return cls.build_query_fn(query, model, relation, **kwargs)
+        return cls.build_query_fn(query, model, **kwargs)
 
 
 class FilterConnectionField(BaseFilterConnectionField):
@@ -143,7 +122,7 @@ def get_resolve_attribute_missing_relation(field_name):
     return resolve_attribute
 
 
-def add_bronwaardes_to_results(relation_table, model, obj, results: list):
+def add_bronwaardes_to_results(src_attribute, obj, results: list):
     """Adds bronwaardes to results from get_resolve_attribute.
 
     Fetches all bronwaardes from the original object and gets the destination_attribute from gobsources.
@@ -158,21 +137,35 @@ def add_bronwaardes_to_results(relation_table, model, obj, results: list):
     :param results:
     :return:
     """
-    reference_name = get_reference_name_from_relation_table_name(relation_table.__tablename__)
 
     # Add bronwaarde to results
     for result in results:
         # For now set an empty bronwaarde on many references
-        if isinstance(getattr(obj, reference_name), list):
+        if isinstance(getattr(obj, src_attribute), list):
             setattr(result, 'bronwaarde', '')
         else:
             # Set the bronwaarde for single references
-            setattr(result, 'bronwaarde', getattr(obj, reference_name)['bronwaarde'])
+            setattr(result, 'bronwaarde', getattr(obj, src_attribute)['bronwaarde'])
 
     return results
 
 
-def get_resolve_attribute(relation_table, model):
+def _extract_tuples(lst: List[dict], attrs: tuple):
+    """Extracts tuples from list of dicts in the format defined by attrs.
+
+    For example:
+    _extract_tuples([{'a': 1, 'b': 2, 'c': 3}, {'a': 4, 'b': 5, 'c': 6}], ('a', 'c')) -> [(1, 3), (4, 6)]
+
+    Ignores entries where one of the attributes is missing.
+
+    :param lst:
+    :param attrs:
+    :return:
+    """
+    return [tuple([item[t] for t in attrs]) for item in lst]
+
+
+def get_resolve_attribute(src_attribute_name, model):
     """Gets an attribute resolver
 
     An attribute resolver takes a get_session function, a model class and the name of a reference
@@ -185,8 +178,8 @@ def get_resolve_attribute(relation_table, model):
 
     Next, any other query filters are applied
 
+    :param src_attribute_name: the attribute in the src model containing the references
     :param model: the model class of the collection that is referenced by the foreign key
-    :param ref_name: the name of the field that contains the foreign key
     :return: a function that resolves the object to a list of referenced objects
     """
 
@@ -198,27 +191,33 @@ def get_resolve_attribute(relation_table, model):
         :param kwargs: any filter arguments, <name of field>: <value of field>
         :return: the list of referenced objects
         """
-        # First get the relations for the specific object
-        session = get_session()
-        relation = session.query(relation_table).filter(relation_table.src_id == getattr(obj, FIELD.ID))
-        if obj.__has_states__:
-            relation = relation.filter(relation_table.src_volgnummer == getattr(obj, FIELD.SEQNR))
+        bronwaardes = getattr(obj, src_attribute_name)
 
-        query = FilterConnectionField.get_query(model, info, relation.subquery(), **kwargs)
-        return add_bronwaardes_to_results(relation_table, model, obj, query.all())
+        if isinstance(bronwaardes, dict):
+            bronwaardes = [bronwaardes]
+
+        query = FilterConnectionField.get_query(model, info, **kwargs)
+
+        if obj.__has_states__:
+            ids = _extract_tuples(bronwaardes, ('id', 'volgnummer'))
+            query = query.filter(tuple_(getattr(model, FIELD.ID), getattr(model, FIELD.SEQNR)).in_(ids))
+        else:
+            ids = _extract_tuples(bronwaardes, ('id',))
+            query = query.filter(getattr(model, FIELD.ID).in_(ids))
+
+        return add_bronwaardes_to_results(src_attribute_name, obj, query.all())
 
     return resolve_attribute
 
 
-def get_resolve_inverse_attribute(relation_table, model):
+def get_resolve_inverse_attribute(src_attribute_name, model):
 
     def resolve_attribute(obj, info, **kwargs):
-        session = get_session()
-        relation = session.query(relation_table).filter(relation_table.dst_id == getattr(obj, FIELD.ID))
+        query = FilterInverseConnectionField.get_query(model, info, **kwargs)
+        # query contains all instances of model (dst_relation)
 
-        if obj.__has_states__:
-            relation = relation.filter(relation_table.dst_volgnummer == getattr(obj, FIELD.SEQNR))
 
-        query = FilterInverseConnectionField.get_query(model, info, relation.subquery(), **kwargs)
+
+
         return query.all()
     return resolve_attribute

@@ -179,7 +179,7 @@ def get_graphene_query():
             **{connection["field_name"]: connection["connection_field"] for connection in connections},
             **{connection["field_name"]: connection["connection_field"] for connection in inverse_connections},
             **get_secure_resolvers(catalog_name, collection_name, sec_attributes),
-            **get_relation_resolvers(catalog_name, collection_name, connections),
+            **get_relation_resolvers(connections),
             **get_inverse_relation_resolvers(inverse_connections),
             **get_missing_relation_resolvers(missing_rels),
             **{rel: graphene.JSONString for rel in missing_rels},
@@ -264,15 +264,16 @@ def get_inverse_relation_resolvers(inverse_connections):
     resolvers = {}
 
     for connection in inverse_connections:
-        relation_table = get_relation_name(
-            model,
-            connection['src_catalog'],
-            connection['src_collection'],
-            connection['src_relation_name'],
-        )
+        # relation_table = get_relation_name(
+        #     model,
+        #     connection['src_catalog'],
+        #     connection['src_collection'],
+        #     connection['src_relation_name'],
+        # )
 
         resolvers[f"resolve_{connection['field_name']}"] = get_resolve_inverse_attribute(
-            models[f'rel_{relation_table}'],
+            # models[f'rel_{relation_table}'],
+            connection['src_relation_name'],
             models[model.get_table_name(connection['src_catalog'], connection['src_collection'])],
         )
     return resolvers
@@ -287,18 +288,12 @@ def get_missing_relation_resolvers(missing_relations):
     return resolvers
 
 
-def get_relation_resolvers(src_catalog_name, src_collection_name, connections):
+def get_relation_resolvers(connections):
     resolvers = {}
     for connection in connections:
-        # Get the relations table name for the relation
-        relation_table = get_relation_name(
-            model,
-            src_catalog_name,
-            src_collection_name,
-            connection['field_name'])
         try:
             resolvers[f"resolve_{connection['field_name']}"] = get_resolve_attribute(
-                models[f'rel_{relation_table}'],
+                connection['field_name'],
                 models[connection['dst_name']])
         except KeyError:
             pass
