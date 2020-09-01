@@ -39,8 +39,8 @@ class GraphQLCustomStreamingResponseBuilder(GraphQLStreamingResponseBuilder):
             items = [s.strip() for s in items]
             return [s for s in items if s]
 
-        self.flatten = strtobool(request_args.get('flatten') or 'false')
-        self.lowercase = strtobool(request_args.get('lowercase') or 'false')
+        self.flatten = bool(strtobool(request_args.get('flatten', 'false')))
+        self.lowercase = bool(strtobool(request_args.get('lowercase', 'false')))
 
         self.condens = parse_list(request_args.get('condens'))
         self.id = parse_list(request_args.get('id'))
