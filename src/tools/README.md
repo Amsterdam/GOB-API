@@ -105,8 +105,8 @@ The generated GraphQL for large collections may result in a 504 Gateway Timeout,
 much data to fetch and return in too little time.
 
 Use cursor-based GraphQL pagination to fetch the data in smaller chunks. See
-[GraphQL Pagination](https://graphql.org/learn/pagination/). The `cursor` field is already returned when using
-the generated GraphQL query. All that is left is to add the `first` and `after` parameters.
+[GraphQL Pagination](https://graphql.org/learn/pagination/). The `#cursor` comment field is already returned when using
+the generated GraphQL query. All that is left is to uncomment cursor and add the `first` and `after` parameters.
 
 ## CURL for Secure endpoints
 Secured collections cannot be fetched through the public GOB endpoint, but will need to be accessed
