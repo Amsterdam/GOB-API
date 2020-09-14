@@ -54,6 +54,20 @@ class TestGraphQLCustomStreamingResponseBuilder(TestCase):
         result = rb._customized_entity(entity)
         expect = {
             'identificatie': '10281154',
+            'statusCode': 1,
+            'statusOmschrijving': 'Actueel'
+        }
+        self.assertEqual(result, expect)
+
+        # lowercase overrides capitalisation that is used in flatten
+        request = {
+            'flatten': 'true',
+            'lowercase': 'true'
+        }
+        rb = GraphQLCustomStreamingResponseBuilder(None, None, None, request_args=request)
+        result = rb._customized_entity(entity)
+        expect = {
+            'identificatie': '10281154',
             'statuscode': 1,
             'statusomschrijving': 'Actueel'
         }
