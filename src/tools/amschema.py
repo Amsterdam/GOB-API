@@ -8,12 +8,16 @@ import json
 import os
 import sys
 
+# DO NOT INCLUDE GOB MODULES BEFORE THIS LINE
+
+# Suppress any output from GOBModel class (otherwise GOB Model messages can appear in the schema output)
+# to allow redirecting of the output
+sys.stdout = open(os.devnull, 'w')
+
 # To have access to the gobapi module, while still being able to run python amschema.py
 sys.path.append(os.path.join('..'))
 from gobapi.auth.auth_query import Authority  # noqa: E402, module level import not at top of file
 
-# Suppress any output from GOBModel class (otherwise GOB Model messages can appear in the schema output)
-sys.stdout = open(os.devnull, 'w')
 from gobcore.model import GOBModel  # noqa: E402, module level import not at top of file
 from gobcore.model.metadata import FIELD  # noqa: E402, module level import not at top of file
 from gobcore.sources import GOBSources  # noqa: E402, module level import not at top of file
@@ -201,7 +205,7 @@ def get_graphql_query(catalog_name, collection_name):  # noqa: C901, too complex
     collection = model.get_collection(catalog_name, collection_name)
     node = {
         collection['entity_id']: '',
-        'cursor': ''
+        '#cursor': ''   # Add cursor as comment field
     }
     if model.has_states(catalog_name, collection_name):
         node[FIELD.SEQNR] = ''
@@ -354,6 +358,5 @@ if __name__ == "__main__":  # noqa: C901, too complex
 
     print(result)
 
-    if args.format in ('query', 'curl'):
-        print("")
-        print_yellow("NOTE: For large collections, use pagination in the query (using first, after and cursor)")
+    # Only print result to make the allow redirecting the output to a shell command processor or a file
+    # If you want to add info about the program add more help info

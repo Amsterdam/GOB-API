@@ -1,3 +1,5 @@
+import re
+
 from antlr4 import InputStream, CommonTokenStream
 from gobapi.constants import API_FIELD
 from gobapi.graphql_streaming.graphql2sql.grammar.GraphQLLexer import GraphQLLexer
@@ -559,6 +561,8 @@ class GraphQL2SQL:
 
     def __init__(self, graphql_query: str):
         self.query = graphql_query
+        # Remove any GraphQL comments
+        self.query = re.sub(r'#[^\s]*', '', self.query)
         self.relations_hierarchy = None
         self.selections = None
 

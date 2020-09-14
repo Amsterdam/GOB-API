@@ -67,6 +67,12 @@ Or activate the previously created virtual environment
 The API depends on a running database.
 To start a database instance follow the instructions in the GOB-Upload project.
 
+Optional: Set environment if GOB-API should connect to remote data sources:
+
+```bash
+export $(cat .env | xargs)  # Copy from .env.example if missing
+```
+
 Start the API
 
 ```

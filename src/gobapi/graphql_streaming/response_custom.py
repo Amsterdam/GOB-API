@@ -139,7 +139,8 @@ class GraphQLCustomStreamingResponseBuilder(GraphQLStreamingResponseBuilder):
                 flat_value = self._customized_entity(value)
                 if isinstance(flat_value, dict):
                     for subkey, subvalue in flat_value.items():
-                        subkeyvalue = self.key(key, subkey)
+                        # Capitalize flattened JSON, example: status { code: ...} => statusCode
+                        subkeyvalue = self.key(key, subkey.capitalize())
                         result[subkeyvalue] = subvalue
                 else:
                     result[keyvalue] = flat_value
