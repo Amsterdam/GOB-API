@@ -313,7 +313,7 @@ def _add_resolve_attrs_to_columns(columns):
 
     Adds attribute, authority and public_name (heeft_bsn_voor in this case) to columns matching the pattern above.
     """
-    resolve_attr_pattern = re.compile("^(\w+):(\w+):(\w+)$")
+    resolve_attr_pattern = re.compile(r"^(\w+):(\w+):(\w+)$")
 
     for column in columns:
         match = re.match(resolve_attr_pattern, column.name)
@@ -671,7 +671,7 @@ def query_entities(catalog, collection, view):
     # Apply filters if defined in model
     try:
         filters = model['api']['filters']
-    except (KeyError, TypeError) as e:
+    except (KeyError, TypeError):
         pass
     else:
         all_entities = _apply_filters(all_entities, filters, table)
@@ -855,7 +855,7 @@ def get_entity(catalog, collection, id, view=None):
     # Apply filters if defined in model
     try:
         filters = model['api']['filters']
-    except (KeyError, TypeError) as e:
+    except (KeyError, TypeError):
         pass
     else:
         entity = _apply_filters(entity, filters, table)

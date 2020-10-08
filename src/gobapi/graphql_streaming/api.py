@@ -1,9 +1,9 @@
-from flask import request
+from flask import request, jsonify
 
 from gobapi.session import get_session
 from sqlalchemy.sql import text
 
-from gobapi.graphql_streaming.graphql2sql.graphql2sql import GraphQL2SQL, NoAccessException
+from gobapi.graphql_streaming.graphql2sql.graphql2sql import GraphQL2SQL, NoAccessException, InvalidQueryException
 from gobapi.graphql_streaming.response_custom import GraphQLCustomStreamingResponseBuilder
 from gobapi.worker.response import WorkerResponse
 
@@ -22,8 +22,10 @@ class GraphQLStreamingApi():
         graphql2sql = GraphQL2SQL(query)
         try:
             sql = graphql2sql.sql()
-        except NoAccessException as e:
-            return "Forbidden", 403
+        except NoAccessException:
+            return jsonify({'error': 'Forbidden'}), 403
+        except InvalidQueryException as e:
+            return jsonify({'error': str(e)}), 400
         session = get_session()
         # use an ad-hoc Connection and stream results (instead of pre-buffered)
         result_rows = session.connection().execution_options(stream_results=True).execute(text(sql))

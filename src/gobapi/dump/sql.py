@@ -247,7 +247,7 @@ def _import_csv(schema, collection_name, csv_file):
     :return:
     """
     table_name = _quoted_tablename(schema, collection_name)
-    return f"\COPY {table_name} FROM '{csv_file}' DELIMITER '{DELIMITER_CHAR}' CSV HEADER;"
+    return f"\\COPY {table_name} FROM '{csv_file}' DELIMITER '{DELIMITER_CHAR}' CSV HEADER;"
 
 
 def sql_entities(catalog_name, collection_name, model):
