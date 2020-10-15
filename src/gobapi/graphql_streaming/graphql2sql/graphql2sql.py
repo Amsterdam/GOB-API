@@ -1,6 +1,13 @@
 import re
+from typing import List
 
-from antlr4 import InputStream, CommonTokenStream
+from antlr4 import CommonTokenStream, InputStream
+from gobcore.model import GOBModel
+from gobcore.model.metadata import FIELD
+from gobcore.model.relations import get_relation_name
+from gobcore.typesystem import gob_types, is_gob_geo_type
+
+from gobapi.auth.auth_query import Authority
 from gobapi.constants import API_FIELD
 from gobapi.graphql_streaming.graphql2sql.grammar.GraphQLLexer import GraphQLLexer
 from gobapi.graphql_streaming.graphql2sql.grammar.GraphQLParser import GraphQLParser
@@ -8,12 +15,6 @@ from gobapi.graphql_streaming.graphql2sql.grammar.GraphQLVisitor import GraphQLV
 from gobapi.graphql_streaming.resolve import CATALOG_NAME, COLLECTION_NAME
 from gobapi.graphql_streaming.utils import resolve_schema_collection_name
 from gobapi.utils import to_snake
-
-from gobcore.model import GOBModel
-from gobcore.model.metadata import FIELD
-from gobcore.model.relations import get_relation_name
-from gobcore.typesystem import gob_types, is_gob_geo_type
-from gobapi.auth.auth_query import Authority
 
 
 class GraphQLVisitor(BaseVisitor):
@@ -133,7 +134,11 @@ class GraphQLVisitor(BaseVisitor):
         return ctx.NAME(1).getText(), ctx.NAME(0).getText()
 
 
-class NoAccessException (Exception):
+class NoAccessException(Exception):
+    pass
+
+
+class InvalidQueryException(Exception):
     pass
 
 
@@ -196,7 +201,9 @@ class SqlGenerator:
 
     def _collect_relation_info(self, relation_name: str, schema_collection_name: str):
         catalog_name, collection_name = resolve_schema_collection_name(schema_collection_name)
-        assert catalog_name and collection_name, f"{schema_collection_name} error"
+
+        if not (catalog_name and collection_name):
+            raise InvalidQueryException(f"{schema_collection_name} is not a valid entity")
 
         collection = self.model.get_collection(catalog_name, collection_name)
 
@@ -212,6 +219,7 @@ class SqlGenerator:
             'has_states': collection.get('has_states', False),
             'collection': collection,
             'attributes': collection['attributes'],
+            'all_fields': collection['all_fields'],
         }
 
         return self.relation_info[relation_name]
@@ -219,12 +227,22 @@ class SqlGenerator:
     def _get_relation_info(self, relation_alias: str):
         return self.relation_info[relation_alias]
 
+    def _validate_attributes(self, relation_info: dict, attributes: List[str], relation_name: str):
+        for attribute in attributes:
+            self._validate_attribute(relation_info, attribute, relation_name)
+
+    def _validate_attribute(self, relation_info: dict, attribute: str, relation_name: str):
+        if to_snake(attribute) not in relation_info['all_fields'] + [FIELD.SOURCE_VALUE, FIELD.SOURCE_INFO]:
+            raise InvalidQueryException(f"Attribute {attribute} does not exist for {relation_name}")
+
     def _select_expression(self, relation: dict, field: str):
         if field == self.CURSOR_ID:
             return f"{relation['alias']}.{FIELD.GOBID} AS {self.CURSOR_ID}"
 
         field_snake = to_snake(field)
         expression = f"{relation['alias']}.{field_snake}"
+
+        self._validate_attribute(relation, field, relation['collection_name'])
 
         # If geometry field, transform to WKT
         if field_snake in relation['attributes'] and is_gob_geo_type(relation['attributes'][field_snake]['type']):
@@ -283,8 +301,8 @@ class SqlGenerator:
         self.select_expressions.extend(select_fields)
         # Add catalog and collection to allow for value resolution
         self.select_expressions.extend([
-          f"'{base_info['catalog_name']}' AS {CATALOG_NAME}",
-          f"'{base_info['collection_name']}' AS {COLLECTION_NAME}",
+            f"'{base_info['catalog_name']}' AS {CATALOG_NAME}",
+            f"'{base_info['collection_name']}' AS {COLLECTION_NAME}",
         ])
         authority = Authority(base_info['catalog_name'], base_info['collection_name'])
         if not authority.allows_access():
@@ -343,7 +361,7 @@ class SqlGenerator:
 
         if is_many:
             src_values_join = f"LEFT JOIN jsonb_array_elements({src_relation['alias']}.{src_attr_name}) " \
-                f"{jsonb_alias}(item) ON {jsonb_alias}.item->>'{FIELD.SOURCE_VALUE}' IS NOT NULL"
+                              f"{jsonb_alias}(item) ON {jsonb_alias}.item->>'{FIELD.SOURCE_VALUE}' IS NOT NULL"
 
             match_src_value = f"{jsonb_alias}.item->>'{FIELD.SOURCE_VALUE}'"
 
@@ -425,14 +443,13 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
             join_dst_table += f" AND ({') AND ('.join(filter_args)})"
 
         if arguments['active']:
-
             join_dst_table += f" AND {self._current_filter_expression(dst_relation['alias'])}"
 
         return join_dst_table
 
     def _add_relation_joins(self, src_relation: dict, dst_relation: dict, relation_name: str, arguments: dict,
-                            src_value_requested: bool=False, src_attr_name: str=None,
-                            is_many: bool=False, is_inverse=False):
+                            src_value_requested: bool = False, src_attr_name: str = None,
+                            is_many: bool = False, is_inverse=False):
         """Joins dst_relation to src_relation using relation_table
 
         Resulting SQL will create a join of the form A -> B -> C, where
@@ -481,11 +498,11 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         snake_attrs = [to_snake(attr) for attr in attributes]
 
         json_attrs = ",".join([f"'{attr}', {relation_name}.{attr}" for attr in snake_attrs
-                              if attr not in self.srcvalues_attributes + self.relvalues_attributes])
+                               if attr not in self.srcvalues_attributes + self.relvalues_attributes])
 
         if self._is_relvalue_requested(attributes):
             rel_attrs = ",".join([f"'{attr}', rel_{self.relcnt}.{attr.replace('_relatie', '')}"
-                                 for attr in snake_attrs if attr in self.relvalues_attributes])
+                                  for attr in snake_attrs if attr in self.relvalues_attributes])
             json_attrs = f"{json_attrs}, {rel_attrs}"
 
         return json_attrs
@@ -501,11 +518,14 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         parent_info = self._get_relation_info(parent)
         relation_attr_name = to_snake(self.relation_aliases[relation_name])
 
+        self._validate_attribute(parent_info, relation_attr_name, parent)
+
         dst_catalog_name, dst_collection_name = self.model.get_catalog_collection_names_from_ref(
             parent_info['collection']['attributes'][relation_attr_name]['ref']
         )
 
         dst_info = self._collect_relation_info(relation_name, f'{dst_catalog_name}_{dst_collection_name}')
+        self._validate_attributes(dst_info, attributes, relation_name)
 
         alias = f"_{to_snake(relation_name)}"
         json_attrs = self._json_build_attrs(attributes, dst_info['alias'])
@@ -536,11 +556,13 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         dst_collection_name = relation_name_snake[-1]
         dst_model_name = self.model.get_table_name(dst_catalog_name, dst_collection_name)
         dst_info = self._collect_relation_info(relation_name, f'{dst_model_name}')
+        self._validate_attributes(dst_info, attributes, relation_name)
 
         json_attrs = self._json_build_attrs(attributes, dst_info['alias'])
         json_attrs = f"{json_attrs}, '_catalog', '{dst_catalog_name}', '_collection', '{dst_collection_name}'"
         alias = f"_inv_{relation_attr_name}_{dst_info['catalog_name']}_{dst_info['collection_name']}"
 
+        self._validate_attribute(dst_info, relation_attr_name, dst_collection_name)
         relation_name = get_relation_name(
             self.model,
             dst_info['catalog_name'],

@@ -150,7 +150,7 @@ def get_graphene_query():
 
     for ref in sorted_refs:
         # A reference is a "catalogue:collection" string
-        pattern = re.compile('(\w+):(\w+)')
+        pattern = re.compile(r'(\w+):(\w+)')
         catalog_name, collection_name = re.findall(pattern, ref)[0]
         collection = model.get_collection(catalog_name, collection_name)
 

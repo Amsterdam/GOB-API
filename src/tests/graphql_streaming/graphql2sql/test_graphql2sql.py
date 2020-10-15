@@ -3,7 +3,7 @@ import re
 from unittest import TestCase
 from unittest.mock import MagicMock, patch, call
 
-from gobapi.graphql_streaming.graphql2sql.graphql2sql import GraphQL2SQL, SqlGenerator, GraphQLVisitor, GraphQLParser, NoAccessException
+from gobapi.graphql_streaming.graphql2sql.graphql2sql import GraphQL2SQL, SqlGenerator, GraphQLVisitor, GraphQLParser, NoAccessException, InvalidQueryException
 from gobapi.graphql_streaming.utils import to_snake
 
 
@@ -25,7 +25,8 @@ class MockModel:
                         'type': 'GOB.ManyReference',
                         'ref': 'catalog:collectionb',
                     }
-                }
+                },
+                'all_fields': [],
             },
             'collectionb': {
                 'abbreviation': 'colb',
@@ -34,7 +35,8 @@ class MockModel:
                     'identificatie': {
                         'type': 'GOB.String',
                     }
-                }
+                },
+                'all_fields': [],
             },
             'collectionc': {
                 'abbreviation': 'colc',
@@ -44,7 +46,8 @@ class MockModel:
                         'type': 'GOB.Reference',
                         'ref': 'catalog:collectionb',
                     },
-                }
+                },
+                'all_fields': [],
             },
             'collectionwithgeometry': {
                 'abbreviation': 'geocoll',
@@ -53,7 +56,8 @@ class MockModel:
                     'geofield': {
                         'type': 'GOB.Geo.Polygon'
                     }
-                }
+                },
+                'all_fields': [],
             }
         }
     }
@@ -634,6 +638,7 @@ ORDER BY colb_0._gobid
             print("OUTPUT", result)
         self.assertEqual(expect, actual)
 
+    @patch("gobapi.graphql_streaming.graphql2sql.graphql2sql.SqlGenerator._validate_attribute", MagicMock())
     @patch("gobapi.graphql_streaming.graphql2sql.graphql2sql.resolve_schema_collection_name")
     def test_graphql2sql(self, mock_resolve, mock_model):
         mock_model.return_value = MockModel()
@@ -641,8 +646,10 @@ ORDER BY colb_0._gobid
 
         for inp, outp in self.test_cases:
             graphql2sql = GraphQL2SQL(inp)
+            # _validate_attribute of SqlGenerator is mocked to avoid having to define all fields
             self.assertResult(inp, outp, graphql2sql.sql())
 
+    @patch("gobapi.graphql_streaming.graphql2sql.graphql2sql.SqlGenerator._validate_attribute", MagicMock())
     @patch("gobapi.graphql_streaming.graphql2sql.graphql2sql.resolve_schema_collection_name")
     @patch("gobapi.graphql_streaming.graphql2sql.graphql2sql.Authority")
     def test_graphql2sql_no_access(self, mock_authority, mock_resolve, mock_model):
@@ -656,6 +663,123 @@ ORDER BY colb_0._gobid
             inp, outp = self.test_cases[0]
             graphql2sql = GraphQL2SQL(inp)
             self.assertResult(inp, outp, graphql2sql.sql())
+
+    @patch("gobapi.graphql_streaming.graphql2sql.graphql2sql.resolve_schema_collection_name",  lambda n : to_snake(n).split('_'))
+    def test_invalid_attributes(self, mock_model):
+        query = """
+{
+  catalogCollectionc(active: false) {
+    edges {
+      node {
+        identificatie
+
+        relationToB(someProperty: "someval") {
+            edges {
+                node {
+                    nestedIdentificatie
+                    bronwaarde
+                    broninfo
+                }
+            }
+        }
+      }
+    }
+  }
+}"""
+        query2 = """
+{
+  catalogCollectionb(active: false) {
+    edges {
+      node {
+        identificatie
+
+        invRelationToBCatalogCollectionc(someProperty: "someval") {
+            edges {
+                node {
+                    nestedIdentificatie
+                    bronwaarde
+                    broninfo
+                }
+            }
+        }
+      }
+    }
+  }
+}"""
+
+        def setup_model():
+            model = MockModel()
+            model.model['catalog']['collectionc']['all_fields'] = ['_gobid', 'identificatie', 'nested_identificatie', 'relation_to_b']
+            model.model['catalog']['collectionb']['all_fields'] = ['_gobid', 'identificatie', 'nested_identificatie']
+            mock_model.return_value = model
+
+        def run_query(q):
+            graphql2sql = GraphQL2SQL(q)
+            graphql2sql.sql()
+
+        def delete_field(collection: str, field: str):
+            idx = mock_model.return_value.model['catalog'][collection]['all_fields'].index(field)
+            del mock_model.return_value.model['catalog'][collection]['all_fields'][idx]
+
+        # Should both succeed
+        setup_model()
+        run_query(query)
+        run_query(query2)
+
+        # Now remove 'identificatie' from both collections
+        setup_model()
+        delete_field('collectionb', 'identificatie')
+        delete_field('collectionc', 'identificatie')
+
+        with self.assertRaisesRegex(InvalidQueryException, "Attribute identificatie does not exist for collectionc"):
+            run_query(query)
+        with self.assertRaisesRegex(InvalidQueryException, "Attribute identificatie does not exist for collectionb"):
+            run_query(query2)
+
+        # Remove relation_to_b
+        setup_model()
+        delete_field('collectionc', 'relation_to_b')
+
+        with self.assertRaisesRegex(InvalidQueryException, "Attribute relation_to_b does not exist for catalogCollectionc"):
+            run_query(query)
+        with self.assertRaisesRegex(InvalidQueryException, "Attribute relation_to_b does not exist for collectionc"):
+            run_query(query2)
+
+        # Remove nested identificatie
+        setup_model()
+        delete_field('collectionb', 'nested_identificatie')
+        delete_field('collectionc', 'nested_identificatie')
+
+        with self.assertRaisesRegex(InvalidQueryException, "Attribute nestedIdentificatie does not exist for relationToB"):
+            run_query(query)
+        with self.assertRaisesRegex(InvalidQueryException, "Attribute nestedIdentificatie does not exist for invRelationToBCatalogCollectionc"):
+            run_query(query2)
+
+    def test_invalid_relation(self, mock_model):
+        query = """
+        {
+          catalogCollectionc(active: false) {
+            edges {
+              node {
+                identificatie
+
+                relationToB(someProperty: "someval") {
+                    edges {
+                        node {
+                            nestedIdentificatie
+                            bronwaarde
+                            broninfo
+                        }
+                    }
+                }
+              }
+            }
+          }
+        }"""
+
+        with self.assertRaisesRegex(InvalidQueryException, "catalogCollectionc is not a valid entity"):
+            graphql2sql = GraphQL2SQL(query)
+            graphql2sql.sql()
 
 
 class TestGraphQLVisitor(TestCase):
