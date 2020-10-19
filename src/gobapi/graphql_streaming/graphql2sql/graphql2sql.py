@@ -232,7 +232,7 @@ class SqlGenerator:
             self._validate_attribute(relation_info, attribute, relation_name)
 
     def _validate_attribute(self, relation_info: dict, attribute: str, relation_name: str):
-        if to_snake(attribute) not in relation_info['all_fields'] + [FIELD.SOURCE_VALUE, FIELD.SOURCE_INFO]:
+        if to_snake(attribute) not in list(relation_info['all_fields']) + [FIELD.SOURCE_VALUE, FIELD.SOURCE_INFO]:
             raise InvalidQueryException(f"Attribute {attribute} does not exist for {relation_name}")
 
     def _select_expression(self, relation: dict, field: str):
