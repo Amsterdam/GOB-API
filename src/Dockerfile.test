@@ -28,5 +28,8 @@ COPY test.sh test.sh
 COPY build.sh /app
 RUN ./build.sh
 
+# Create directory for gob-volume
+RUN mkdir -p /root/gob-volume
+
 # Copy jenkins files
 COPY .jenkins /.jenkins
