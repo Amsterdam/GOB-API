@@ -20,6 +20,10 @@ RUN rm -rf /app/src/flask-audit-log/tests
 # Copy gob api module
 COPY gobapi gobapi
 
+# Remove gobcore tests
+RUN rm -rf /app/src/gobcore/tests
+RUN rm -rf /app/src/datapunt-flask-audit-log/tests
+
 # Copy tests
 COPY tests tests
 COPY .flake8 .flake8
