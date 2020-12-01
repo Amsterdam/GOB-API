@@ -5,6 +5,8 @@ MAINTAINER datapunt@amsterdam.nl
 RUN apt-get update -y
 RUN apt-get install -y antlr4
 
+RUN apt-get -y --no-install-recommends install unixodbc-dev
+
 # Install api service in /app folder
 WORKDIR /app
 
