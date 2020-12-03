@@ -3,8 +3,7 @@ antlr4-python3-runtime==4.7.2
 atomicwrites==1.2.1
 attrs==18.2.0
 click==6.7
-coverage==4.5.1
-flake8==3.5.0
+flake8==3.8.4
 Flask==1.1.1
 Flask-Cors==3.0.6
 Flask-GraphQL==2.0.0
@@ -13,7 +12,7 @@ GeoAlchemy2==0.5.0
 geomet==0.2.0.post2
 geojson==2.5.0
 -e git+https://github.com/Amsterdam/flask-audit-log.git@v0.1.0a-rc1#egg=datapunt-flask-audit-log
--e git+https://github.com/Amsterdam/GOB-Core.git@v0.17.0h#egg=gobcore
+-e git+https://github.com/Amsterdam/GOB-Core.git@v0.17.1i#egg=gobcore
 graphene==2.1.3
 graphene-sqlalchemy==2.1.0
 graphql-core==2.1
@@ -27,15 +26,12 @@ more-itertools==4.3.0
 pika==0.12.0
 pluggy==0.7.1
 promise==2.2.1
-psycopg2-binary==2.7.7
 py==1.6.0
-pycodestyle==2.3.1
-pyflakes==1.6.0
+pyflakes==2.2.0
 pytest==3.7.4
 pytest-cov==2.5.1
 python-dateutil==2.7.5
 Rx==1.6.1
-Shapely==1.6.4.post2
 simplejson==3.16.0
 singledispatch==3.4.0.3
 six==1.11.0

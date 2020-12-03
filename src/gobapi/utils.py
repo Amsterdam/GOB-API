@@ -76,7 +76,7 @@ def streaming_gob_response(func):
             # Add new line to signal successful response
             yield "\n"
         except Exception as e:
-            yield f"GOB_API_ERROR. Caught Exception. Response aborted. See logs.\n"
+            yield "GOB_API_ERROR. Caught Exception. Response aborted. See logs.\n"
 
             # Re-raise so that this Exception is logged
             raise e

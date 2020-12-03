@@ -191,16 +191,17 @@ class TestAuthority(TestCase):
         authority.filter_row(row)
         self.assertEqual(row, {'a': None, 'b': None, 'c': None})
 
-
-    @patch("gobapi.auth.auth_query.request")
     @patch("gobapi.auth.auth_query.User")
-    def test_secured_value(self, mock_user, mock_request):
-        authority = Authority('cat', 'col')
-        mock_user.return_value = "any user"
-        mock_secure_type = mock.MagicMock()
-        result = authority.get_secured_value(mock_secure_type)
-        mock_user.assert_called_with(mock_request)
-        mock_secure_type.get_value.assert_called_with("any user")
+    def test_secured_value(self, mock_user):
+        mock_request = MagicMock()
+        with patch("gobapi.auth.auth_query.request", mock_request):
+
+            authority = Authority('cat', 'col')
+            mock_user.return_value = "any user"
+            mock_secure_type = mock.MagicMock()
+            result = authority.get_secured_value(mock_secure_type)
+            mock_user.assert_called_with(mock_request)
+            mock_secure_type.get_value.assert_called_with("any user")
 
     @patch("gobapi.auth.auth_query.GOB_AUTH_SCHEME", mock_scheme)
     def test_is_secured(self):

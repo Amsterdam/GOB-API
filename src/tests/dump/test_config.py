@@ -170,86 +170,95 @@ class TestConfig(TestCase):
 class TestDumpApi(TestCase):
 
     @patch('gobapi.api.dump_entities', lambda cat, col, **kwargs: ([], {}))
-    @patch('gobapi.api.request')
-    def test_dump_csv(self, mock_request):
-        mock_request.method = 'GET'
+    def test_dump_csv(self):
+        mock_request = MagicMock()
+        with patch('gobapi.api.request', mock_request):
+            mock_request.method = 'GET'
 
-        mock_request.args = {'format': 'csv'}
-        result = api._dump("any catalog", "any collection")
-        self.assertIsInstance(result, Response)
+            mock_request.args = {'format': 'csv'}
+            result = api._dump("any catalog", "any collection")
+            self.assertIsInstance(result, Response)
 
     @patch('gobapi.api.dump_entities')
-    @patch('gobapi.api.request')
-    def test_dump_exclude_deleted(self, mock_request, mock_dump_entities):
-        mock_dump_entities.return_value = ([], {})
-        mock_request.method = 'GET'
-        mock_request.args = {
-            'format': 'csv'
-        }
+    def test_dump_exclude_deleted(self, mock_dump_entities):
+        mock_request = MagicMock()
 
-        result = api._dump("any catalog", "any collection")
-        self.assertIsInstance(result, Response)
-        mock_dump_entities.assert_called_with('any catalog', 'any collection', filter=None)
+        with patch('gobapi.api.request', mock_request):
 
-        mock_request.args = {
-            'format': 'csv',
-            'exclude_deleted': 'true'
-        }
+            mock_dump_entities.return_value = ([], {})
+            mock_request.method = 'GET'
+            mock_request.args = {
+                'format': 'csv'
+            }
 
-        result = api._dump("any catalog", "any collection")
-        self.assertIsInstance(result, Response)
+            result = api._dump("any catalog", "any collection")
+            self.assertIsInstance(result, Response)
+            mock_dump_entities.assert_called_with('any catalog', 'any collection', filter=None)
 
-        args, kwargs = mock_dump_entities.call_args
-        assert args[0] == 'any catalog'
-        assert args[1] == 'any collection'
-        assert callable(kwargs.get('filter'))
+            mock_request.args = {
+                'format': 'csv',
+                'exclude_deleted': 'true'
+            }
 
-        is_mock = MagicMock()
-        table_mock = type('', (), {
-            '_date_deleted': is_mock
-        })
+            result = api._dump("any catalog", "any collection")
+            self.assertIsInstance(result, Response)
 
-        self.assertEqual(is_mock.is_.return_value, kwargs.get('filter')(table_mock))
+            args, kwargs = mock_dump_entities.call_args
+            assert args[0] == 'any catalog'
+            assert args[1] == 'any collection'
+            assert callable(kwargs.get('filter'))
+
+            is_mock = MagicMock()
+            table_mock = type('', (), {
+                '_date_deleted': is_mock
+            })
+
+            self.assertEqual(is_mock.is_.return_value, kwargs.get('filter')(table_mock))
 
     @patch('gobapi.api.dump_entities', lambda cat, col, **kwargs: ([], {}))
     @patch('gobapi.api.sql_entities', lambda cat, col, model: [])
-    @patch('gobapi.api.request')
-    def test_dump_sql(self, mock_request):
+    def test_dump_sql(self):
+        mock_request = MagicMock()
         mock_request.method = 'GET'
 
-        mock_request.args = {'format': 'sql'}
-        result = api._dump("any catalog", "any collection")
-        self.assertIsInstance(result, Response)
+        with patch('gobapi.api.request', mock_request):
+            mock_request.args = {'format': 'sql'}
+            result = api._dump("any catalog", "any collection")
+            self.assertIsInstance(result, Response)
 
     @patch('gobapi.api.dump_entities', lambda cat, col, **kwargs: ([], {}))
-    @patch('gobapi.api.request')
-    def test_dump_other(self, mock_request):
-        mock_request.method = 'GET'
+    def test_dump_other(self):
+        mock_request = MagicMock()
+        with patch('gobapi.api.request', mock_request):
+            mock_request.method = 'GET'
 
-        mock_request.args = {'format': 'any other format'}
-        msg, status = api._dump("any catalog", "any collection")
-        self.assertEqual(status, 400)
+            mock_request.args = {'format': 'any other format'}
+            msg, status = api._dump("any catalog", "any collection")
+            self.assertEqual(status, 400)
 
-        mock_request.args = {}
-        msg, status = api._dump("any catalog", "any collection")
-        self.assertEqual(status, 400)
+            mock_request.args = {}
+            msg, status = api._dump("any catalog", "any collection")
+            self.assertEqual(status, 400)
 
     @patch('gobapi.api.dump_to_db')
     @patch('gobapi.api.json')
-    @patch('gobapi.api.request')
     @patch('gobapi.api.WorkerResponse.stream_with_context', lambda f, mimetype: f)
-    def test_dump_db(self, mock_request, mock_json, mock_dump):
+    def test_dump_db(self, mock_json, mock_dump):
+        mock_request = MagicMock()
         mock_request.method = 'POST'
         mock_request.content_type = 'application/json'
-        mock_json.loads.return_value = {}
 
-        result = api._dump("any catalog", "any collection")
-        mock_dump.assert_called_with("any catalog", "any collection", {})
+        with patch('gobapi.api.request', mock_request):
 
-        mock_request.content_type = 'any content type'
-        mock_dump.reset_mock()
-        result = api._dump("any catalog", "any collection")
-        mock_dump.assert_not_called()
+            mock_json.loads.return_value = {}
+
+            result = api._dump("any catalog", "any collection")
+            mock_dump.assert_called_with("any catalog", "any collection", {})
+
+            mock_request.content_type = 'any content type'
+            mock_dump.reset_mock()
+            result = api._dump("any catalog", "any collection")
+            mock_dump.assert_not_called()
 
 
 class TestDumpStorage(TestCase):

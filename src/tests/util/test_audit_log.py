@@ -13,33 +13,35 @@ class TestFunctions(TestCase):
         self.assertEqual(mock_database_handler.return_value, get_log_handler())
 
     @patch("gobapi.util.audit_log.get_client_ip", lambda r: r.ip)
-    @patch("gobapi.util.audit_log.request")
-    def test_get_user_from_request(self, mock_request):
-        mock_request.headers = {
-            'X-Auth-Email': 'the email',
-            'X-Auth-Roles': ['a', 'b', 'c'],
-            'X-Auth-Userid': 'the user'
-        }
+    def test_get_user_from_request(self):
+        mock_request = MagicMock()
+        with patch("gobapi.util.audit_log.request", mock_request):
 
-        self.assertEqual({
-            'authenticated': True,
-            'provider': 'Keycloak',
-            'realm': '',
-            'email': 'the email',
-            'roles': ['a', 'b', 'c'],
-            'ip': mock_request.ip
-        }, get_user_from_request())
+            mock_request.headers = {
+                'X-Auth-Email': 'the email',
+                'X-Auth-Roles': ['a', 'b', 'c'],
+                'X-Auth-Userid': 'the user'
+            }
 
-        mock_request.headers['X-Auth-Userid'] = None
+            self.assertEqual({
+                'authenticated': True,
+                'provider': 'Keycloak',
+                'realm': '',
+                'email': 'the email',
+                'roles': ['a', 'b', 'c'],
+                'ip': mock_request.ip
+            }, get_user_from_request())
 
-        self.assertEqual({
-            'authenticated': False,
-            'provider': 'Keycloak',
-            'realm': '',
-            'email': 'the email',
-            'roles': ['a', 'b', 'c'],
-            'ip': mock_request.ip
-        }, get_user_from_request())
+            mock_request.headers['X-Auth-Userid'] = None
+
+            self.assertEqual({
+                'authenticated': False,
+                'provider': 'Keycloak',
+                'realm': '',
+                'email': 'the email',
+                'roles': ['a', 'b', 'c'],
+                'ip': mock_request.ip
+            }, get_user_from_request())
 
     def test_get_nested_item(self):
         data = {

@@ -8,7 +8,7 @@ import importlib
 import json
 
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 from gobcore.typesystem.gob_types import JSON
 
@@ -172,8 +172,8 @@ def test_object_to_camelcase(monkeypatch):
 
 class TestStream(TestCase):
 
-    @patch('gobapi.auth.auth_query.request')
-    def test_stream(self, mock_request):
+    @patch('gobapi.auth.auth_query.request', MagicMock())
+    def test_stream(self):
         result = stream_response({'some_key': 'some_data'})
         self.assertEqual(result, '{"someKey": "some_data"}')
 
