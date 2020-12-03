@@ -895,5 +895,5 @@ def filter_active(query, model):
     """
     return query.filter(or_(
         getattr(model, FIELD.EXPIRATION_DATE) > datetime.datetime.now(),
-        getattr(model, FIELD.EXPIRATION_DATE) == None
+        getattr(model, FIELD.EXPIRATION_DATE) == None  # noqa: E711 (== None)
     ))  # noqa: E711 (== None)

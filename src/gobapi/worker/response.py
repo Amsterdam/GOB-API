@@ -62,7 +62,7 @@ class WorkerResponse():
                 yield from self.yield_progress(tmp_filename)
                 if os.path.isfile(sentinel):
                     print(f"WARNING: Worker {self.id} aborted")
-                    yield f"ABORT\n"
+                    yield "ABORT\n"
                     break
             else:
                 # no break or exception, all rows have successfully been written to file

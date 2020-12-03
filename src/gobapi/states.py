@@ -77,7 +77,7 @@ def _get_valid_states_in_timeslot(timeslot_start, timeslot_end, collection_name,
 
 
 def _calculate_timeslots_for_entity(states, relations, collection_name,  # noqa: C901
-                                   collections_with_state, timeslot_end=None):
+                                    collections_with_state, timeslot_end=None):
     """Calculate all timeslots for an entity
     The function is recursive to loop through all relations.
 

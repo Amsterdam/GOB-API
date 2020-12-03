@@ -192,7 +192,7 @@ class DbDumper:
                                                dst_name=self.collection_name)
         self._execute(insert_into_table)
 
-        yield f"Delete temporary table\n"
+        yield "Delete temporary table\n"
         self._delete_tmp_table()
 
     def _delete_table(self, table_name: str):
@@ -265,7 +265,7 @@ class DbDumper:
                     count_dst = self._count_dst()
                     yield f"Compare counts: src {count_src:,}, dst {count_dst:,}\n"
                     if count_src == count_dst:
-                        yield f"Collection is up-to-date, no actions necessary\n"
+                        yield "Collection is up-to-date, no actions necessary\n"
                         self._delete_tmp_table()
                         return
                     else:
@@ -305,7 +305,7 @@ class DbDumper:
 
         :return:
         """
-        yield f"Creating view\n"
+        yield "Creating view\n"
 
         main_alias = self.model['abbreviation'].lower()
         src_has_states = self.model.get('has_states', False)

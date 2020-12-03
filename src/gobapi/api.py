@@ -369,7 +369,7 @@ def _states():
             }
         return hal_response(result, links)
     else:
-        return not_found(f'No collections requested')
+        return not_found('No collections requested')
 
 
 def _health():
