@@ -28,14 +28,14 @@ class GraphQLCustomStreamingResponseBuilder(GraphQLStreamingResponseBuilder):
         :param request_args:
         :return:
         """
-        def parse_list(l):
+        def parse_list(lst):
             """
             Convert a comma separated list of values into an array of strings
 
             :param l:
             :return:
             """
-            items = (l or "").split(",")
+            items = (lst or "").split(",")
             items = [s.strip() for s in items]
             return [s for s in items if s]
 

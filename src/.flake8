@@ -12,6 +12,7 @@ exclude=.git,
         tests,
         scripts,
         */settings_commons.py,
-        gobapi/graphql_streaming/graphql2sql/grammar/*
+        gobapi/graphql_streaming/graphql2sql/grammar/*,
+        src/gobcore/*
 max-complexity=6
 max-line-length = 119
