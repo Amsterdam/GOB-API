@@ -44,9 +44,6 @@ COPY ./gatekeeper.conf gatekeeper.conf
 RUN chmod 755 keycloak-gatekeeper
 RUN mkdir -p /var/log/gatekeeper && chown datapunt /var/log/gatekeeper
 
-# Fix for mounted shared volume
-RUN mkdir -p /app/shared/workerfiles && chown -R datapunt /app/shared
-
 USER datapunt
 
 CMD ["/deploy/docker-run.sh"]
