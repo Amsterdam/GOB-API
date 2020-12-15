@@ -38,11 +38,11 @@ COPY deploy /deploy/
 COPY build.sh /app
 RUN ./build.sh
 
-# Gatekeeper
-COPY ./keycloak-gatekeeper.latest keycloak-gatekeeper
-COPY ./gatekeeper.conf gatekeeper.conf
-RUN chmod 755 keycloak-gatekeeper
-RUN mkdir -p /var/log/gatekeeper && chown datapunt /var/log/gatekeeper
+# OAuth2 Proxy
+COPY ./oauth2-proxy oauth2-proxy
+COPY ./oauth2-proxy.cfg oauth2-proxy.cfg
+RUN chmod 755 oauth2-proxy
+RUN mkdir -p /var/log/oauth2-proxy && chown datapunt /var/log/oauth2-proxy
 
 USER datapunt
 

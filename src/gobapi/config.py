@@ -9,8 +9,8 @@ import os
 from flask import request
 from gobcore.exceptions import GOBException
 
-API_BASE_PATH = '/gob'
-API_SECURE_BASE_PATH = '/gob/secure'
+API_BASE_PATH = '/gob/public'
+API_SECURE_BASE_PATH = '/gob'
 
 GOB_DB = {
     'drivername': 'postgres',

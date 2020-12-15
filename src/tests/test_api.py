@@ -187,7 +187,7 @@ def test_catalogs(monkeypatch):
                 '_embedded': {
                     'catalogs': [
                         {
-                            '_links': {'self': {'href': '/gob/catalog/'}},
+                            '_links': {'self': {'href': '/gob/public/catalog/'}},
                             'name': 'catalog',
                             'abbreviation': 'cat',
                             'description': 'catalog'

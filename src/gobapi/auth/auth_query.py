@@ -1,3 +1,5 @@
+import jwt
+
 from sqlalchemy.orm import Query
 from flask import request
 
@@ -5,10 +7,11 @@ from gobcore.secure.user import User
 from gobcore.model import GOBModel
 from gobcore.typesystem import get_gob_type_from_info, gob_types, gob_secure_types
 
-from gobcore.secure.config import REQUEST_ROLES
 from gobapi.auth.schemes import GOB_AUTH_SCHEME
 
 SUPPRESSED_COLUMNS = "_suppressed_columns"
+
+REQUEST_ACCESS_TOKEN = 'X-Forwarded-Access-Token'
 
 
 class Authority():
@@ -29,12 +32,16 @@ class Authority():
 
     def get_roles(self):
         """
-        Gets the user roles from the request headers
+        Gets the user roles from the access token.
+
+        Access Token is forwarded by OAuth2Proxy. Keycloak roles are present in access token
         """
-        try:
-            return [h for h in request.headers.get(REQUEST_ROLES, "").split(",") if h]
-        except AttributeError:
-            return []
+        token = request.headers.get(REQUEST_ACCESS_TOKEN)
+
+        if token:
+            decoded = jwt.decode(token, verify=False)
+            return decoded.get('realm_access', {}).get('roles', [])
+        return []
 
     def get_checked_columns(self):
         """

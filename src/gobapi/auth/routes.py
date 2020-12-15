@@ -1,13 +1,13 @@
-import re
 
 from flask import request
 
-from gobcore.secure.config import AUTH_PATTERN, REQUEST_ROLES, REQUEST_USER
 from gobapi.auth.auth_query import Authority
 
 # Request args that require authorisation
 # SECURE_ARGS = ['view']  # view results are not checked for secure data!
 SECURE_ARGS = []
+
+REQUEST_ACCESS_TOKEN = 'X-Forwarded-Access-Token'
 
 
 def secure_route(rule, func):
@@ -20,9 +20,7 @@ def secure_route(rule, func):
     :return:
     """
     def wrapper(*args, **kwargs):
-        # Check that the endpoint is protected by gatekeeper and check access
-        if request.headers.get(REQUEST_USER) and request.headers.get(REQUEST_ROLES) and \
-                _allows_access(rule, *args, **kwargs):
+        if request.headers.get(REQUEST_ACCESS_TOKEN) and _allows_access(rule, *args, **kwargs):
             return func(*args, **kwargs)
         else:
             return "Forbidden", 403
@@ -40,10 +38,7 @@ def _secure_headers_detected(rule, *args, **kwargs):
     :param kwargs:
     :return:
     """
-    for header, value in request.headers.items():
-        if re.match(AUTH_PATTERN, header):
-            return True
-    return False
+    return True if request.headers.get(REQUEST_ACCESS_TOKEN) else False
 
 
 def _allows_access(rule, *args, **kwargs):

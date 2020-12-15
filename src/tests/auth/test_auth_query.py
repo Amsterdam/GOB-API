@@ -1,7 +1,7 @@
 from unittest import TestCase, mock
 from unittest.mock import patch, MagicMock
 
-from gobapi.auth.auth_query import Authority, AuthorizedQuery, GOB_AUTH_SCHEME, REQUEST_ROLES, gob_types, gob_secure_types
+from gobapi.auth.auth_query import Authority, AuthorizedQuery, GOB_AUTH_SCHEME, gob_types, gob_secure_types, REQUEST_ACCESS_TOKEN
 
 role_a = "a"
 role_b = "b"
@@ -58,22 +58,25 @@ class TestAuthorizedQuery(TestCase):
         self.assertEqual(q._authority._collection, "any collection")
         self.assertEqual(q._authority._auth_scheme, GOB_AUTH_SCHEME)
 
+    @patch("gobapi.auth.auth_query.jwt")
     @patch("gobapi.auth.auth_query.request", mock_request)
-    def test_get_roles(self):
+    def test_get_roles(self, mock_jwt):
+        mock_jwt.decode.return_value = {
+            'realm_access': {
+                'roles': ['any roles']
+            }
+        }
         q = AuthorizedQuery()
         q.set_catalog_collection('cat', 'col')
 
         mock_request.headers = {
-            REQUEST_ROLES: "any roles"
+            REQUEST_ACCESS_TOKEN: "the token"
         }
         roles = q._authority.get_roles()
         self.assertEqual(roles, ["any roles"])
+        mock_jwt.decode.assert_called_with('the token', verify=False)
 
         mock_request.headers = {}
-        roles = q._authority.get_roles()
-        self.assertEqual(roles, [])
-
-        delattr(mock_request, 'headers')
         roles = q._authority.get_roles()
         self.assertEqual(roles, [])
 

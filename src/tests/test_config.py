@@ -18,12 +18,12 @@ class TestConfig(TestCase):
              self.assertRaisesRegex(GOBException, 'Could not determine base path'):
             current_api_base_path()
 
-        mock_request = type('MockRequest', (object,), {'path': '/gob/secure/endpoint'})
-
-        with patch("gobapi.config.request", mock_request):
-            self.assertEqual('/gob/secure', current_api_base_path())
-
         mock_request = type('MockRequest', (object,), {'path': '/gob/endpoint'})
 
         with patch("gobapi.config.request", mock_request):
             self.assertEqual('/gob', current_api_base_path())
+
+        mock_request = type('MockRequest', (object,), {'path': '/gob/public/endpoint'})
+
+        with patch("gobapi.config.request", mock_request):
+            self.assertEqual('/gob/public', current_api_base_path())
