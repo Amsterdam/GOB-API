@@ -12,15 +12,15 @@ class TestFunctions(TestCase):
     def test_get_log_handler(self, mock_database_handler):
         self.assertEqual(mock_database_handler.return_value, get_log_handler())
 
+    @patch("gobapi.util.audit_log.extract_roles")
     @patch("gobapi.util.audit_log.get_client_ip", lambda r: r.ip)
-    def test_get_user_from_request(self):
+    def test_get_user_from_request(self, mock_extract):
         mock_request = MagicMock()
         with patch("gobapi.util.audit_log.request", mock_request):
 
             mock_request.headers = {
-                'X-Auth-Email': 'the email',
-                'X-Auth-Roles': ['a', 'b', 'c'],
-                'X-Auth-Userid': 'the user'
+                'X-Forwarded-Access-Token': 'token',
+                'X-Forwarded-Email': 'the email',
             }
 
             self.assertEqual({
@@ -28,18 +28,19 @@ class TestFunctions(TestCase):
                 'provider': 'Keycloak',
                 'realm': '',
                 'email': 'the email',
-                'roles': ['a', 'b', 'c'],
+                'roles': mock_extract.return_value,
                 'ip': mock_request.ip
             }, get_user_from_request())
+            mock_extract.assert_called_with(mock_request.headers)
 
-            mock_request.headers['X-Auth-Userid'] = None
+            mock_request.headers['X-Forwarded-Access-Token'] = None
 
             self.assertEqual({
                 'authenticated': False,
                 'provider': 'Keycloak',
                 'realm': '',
                 'email': 'the email',
-                'roles': ['a', 'b', 'c'],
+                'roles': mock_extract.return_value,
                 'ip': mock_request.ip
             }, get_user_from_request())
 

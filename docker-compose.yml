@@ -18,7 +18,7 @@ services:
       API_INFRA_SERVICES: MESSAGE_SERVICE
       SECURE_SALT: insecure
       SECURE_PASSWORD: insecure
-      # Gatekeeper listens on port 8000 and serves as a proxy for UWSGI
+      # OAuth2 Proxy listens on port 8000 and serves as a proxy for UWSGI
       UWSGI_HTTP: ":8001"
       UWSGI_MODULE: "gobapi.wsgi"
       UWSGI_CALLABLE: "application"
