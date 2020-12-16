@@ -1,7 +1,8 @@
 from unittest import TestCase, mock
 from unittest.mock import patch, MagicMock
 
-from gobapi.auth.routes import secure_route, public_route, REQUEST_ACCESS_TOKEN
+from gobapi.auth.routes import secure_route, public_route
+from gobcore.secure.request import ACCESS_TOKEN_HEADER
 
 class TestAuth(TestCase):
 
@@ -19,7 +20,7 @@ class TestAuth(TestCase):
             self.assertEqual(result, (mock.ANY, 403))
 
             mock_request.headers = {
-                REQUEST_ACCESS_TOKEN: "any token"
+                ACCESS_TOKEN_HEADER: "any token"
             }
 
             result = wrapped_func()
@@ -58,7 +59,7 @@ class TestAuth(TestCase):
             mock_authority.allows_access.return_value = True
 
             mock_request.headers = {
-                REQUEST_ACCESS_TOKEN: "any token",
+                ACCESS_TOKEN_HEADER: "any token",
             }
             result = wrapped_func()
             self.assertEqual(result, (mock.ANY, 400))
@@ -84,7 +85,7 @@ class TestAuth(TestCase):
             # Assure that compromised public requests are signalled
             func = lambda *args, **kwargs: "Any result"
             mock_request.headers = {
-                REQUEST_ACCESS_TOKEN: "any token"
+                ACCESS_TOKEN_HEADER: "any token"
             }
             wrapped_func = public_route("any rule", func)
             wrapped_func()

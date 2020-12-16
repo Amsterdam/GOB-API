@@ -8,7 +8,7 @@ from flask import request
 from flask_audit_log.util import get_client_ip
 
 from gobcore.logging.audit_logger import AuditLogger
-from gobcore.secure.config import AUTH_PATTERN, REQUEST_ROLES, REQUEST_USER
+from gobcore.secure.request import extract_roles, is_secured_request, USER_EMAIL_HEADER
 
 logger = logging.getLogger()
 
@@ -75,11 +75,11 @@ def get_user_from_request() -> dict:
     and returns a dict with the user information for the Datapunt Audit Logger
     """
     user = {
-        'authenticated': True if request.headers.get(REQUEST_USER) else False,
+        'authenticated': True if is_secured_request(request.headers) else False,
         'provider': 'Keycloak',
         'realm': '',
-        'email': request.headers.get(f'{AUTH_PATTERN[1:]}Email', ''),
-        'roles': request.headers.get(REQUEST_ROLES, []),
+        'email': request.headers.get(USER_EMAIL_HEADER, ''),
+        'roles': extract_roles(request.headers),
         'ip': get_client_ip(request)
     }
     return user

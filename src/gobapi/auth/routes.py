@@ -2,12 +2,11 @@
 from flask import request
 
 from gobapi.auth.auth_query import Authority
+from gobcore.secure.request import is_secured_request
 
 # Request args that require authorisation
 # SECURE_ARGS = ['view']  # view results are not checked for secure data!
 SECURE_ARGS = []
-
-REQUEST_ACCESS_TOKEN = 'X-Forwarded-Access-Token'
 
 
 def secure_route(rule, func):
@@ -20,7 +19,7 @@ def secure_route(rule, func):
     :return:
     """
     def wrapper(*args, **kwargs):
-        if request.headers.get(REQUEST_ACCESS_TOKEN) and _allows_access(rule, *args, **kwargs):
+        if is_secured_request(request.headers) and _allows_access(rule, *args, **kwargs):
             return func(*args, **kwargs)
         else:
             return "Forbidden", 403
@@ -38,7 +37,7 @@ def _secure_headers_detected(rule, *args, **kwargs):
     :param kwargs:
     :return:
     """
-    return True if request.headers.get(REQUEST_ACCESS_TOKEN) else False
+    return is_secured_request(request.headers)
 
 
 def _allows_access(rule, *args, **kwargs):
