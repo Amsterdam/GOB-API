@@ -4,8 +4,8 @@ from flask import request
 from gobcore.secure.user import User
 from gobcore.model import GOBModel
 from gobcore.typesystem import get_gob_type_from_info, gob_types, gob_secure_types
+from gobcore.secure.request import extract_roles
 
-from gobcore.secure.config import REQUEST_ROLES
 from gobapi.auth.schemes import GOB_AUTH_SCHEME
 
 SUPPRESSED_COLUMNS = "_suppressed_columns"
@@ -29,12 +29,11 @@ class Authority():
 
     def get_roles(self):
         """
-        Gets the user roles from the request headers
+        Gets the user roles from the access token.
+
+        Access Token is forwarded by OAuth2Proxy. Keycloak roles are present in access token
         """
-        try:
-            return [h for h in request.headers.get(REQUEST_ROLES, "").split(",") if h]
-        except AttributeError:
-            return []
+        return extract_roles(request.headers)
 
     def get_checked_columns(self):
         """

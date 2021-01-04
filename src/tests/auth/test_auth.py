@@ -2,8 +2,7 @@ from unittest import TestCase, mock
 from unittest.mock import patch, MagicMock
 
 from gobapi.auth.routes import secure_route, public_route
-from gobcore.secure.config import REQUEST_USER, REQUEST_ROLES
-
+from gobcore.secure.request import ACCESS_TOKEN_HEADER
 
 class TestAuth(TestCase):
 
@@ -21,21 +20,9 @@ class TestAuth(TestCase):
             self.assertEqual(result, (mock.ANY, 403))
 
             mock_request.headers = {
-                REQUEST_USER: "any user"
+                ACCESS_TOKEN_HEADER: "any token"
             }
-            result = wrapped_func()
-            self.assertEqual(result, (mock.ANY, 403))
 
-            mock_request.headers = {
-                REQUEST_ROLES: "any role"
-            }
-            result = wrapped_func()
-            self.assertEqual(result, (mock.ANY, 403))
-
-            mock_request.headers = {
-                REQUEST_USER: "any user",
-                REQUEST_ROLES: "any role"
-            }
             result = wrapped_func()
             self.assertEqual(result, "Any result")
 
@@ -70,21 +57,9 @@ class TestAuth(TestCase):
             self.assertEqual(result, (mock.ANY, 403))
 
             mock_authority.allows_access.return_value = True
-            mock_request.headers = {
-                REQUEST_USER: "any user"
-            }
-            result = wrapped_func()
-            self.assertEqual(result, (mock.ANY, 400))
 
             mock_request.headers = {
-                REQUEST_ROLES: "any role"
-            }
-            result = wrapped_func()
-            self.assertEqual(result, (mock.ANY, 400))
-
-            mock_request.headers = {
-                REQUEST_USER: "any user",
-                REQUEST_ROLES: "any role"
+                ACCESS_TOKEN_HEADER: "any token",
             }
             result = wrapped_func()
             self.assertEqual(result, (mock.ANY, 400))
@@ -110,7 +85,7 @@ class TestAuth(TestCase):
             # Assure that compromised public requests are signalled
             func = lambda *args, **kwargs: "Any result"
             mock_request.headers = {
-                REQUEST_USER: "any user"
+                ACCESS_TOKEN_HEADER: "any token"
             }
             wrapped_func = public_route("any rule", func)
             wrapped_func()

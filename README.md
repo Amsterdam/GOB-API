@@ -5,6 +5,8 @@ GOB API provides for a HAL JSON and GraphQL view on the GOB catalogs, collection
 The root endpoint provides for all GOB catalogs.
 Every endpoint contains the links to explore the data in more detail.
 
+The endpoints prefixed with `/gob/public` are public, the `/gob` endpoints are protected.
+
 # Requirements
 
     * docker-compose >= 1.17
@@ -16,7 +18,7 @@ Every endpoint contains the links to explore the data in more detail.
 ## Secure data
 
 Secure data in GOB is protected by:
-- gatekeeper (protected access points)
+- oauth2-proxy (protected access points)
 - keycloak (authentication)
 - authorisation schemes (match keycloak roles on GOB access)
 - encryption (for confidential attributes)
@@ -25,16 +27,14 @@ In order to access secure data you need to define environment variables:
 - SECURE_SALT and SECURE_PASSWORD
   - shared with GOB Import (symmetrical encryption).
     GOB Import is responsable for the encryption and GOB API uses the secrets for decryption
-- GATEKEEPER configuration
-  - GATEKEEPER_CLIENT_ID
-  - GATEKEEPER_CLIENT_SECRET
-  - GATEKEEPER_ENCRYPTION_KEY
-  - GATEKEEPER_LISTEN
-  - GATEKEEPER_UPSTREAM_URL
-  - GATEKEEPER_DISCOVERY_URL
-  - GATEKEEPER_REDIRECTION_URL
-
-In order to activate gatekeeper and keycloak locally see the comments in docker-compose.yml   
+- OAUTH2_PROXY configuration
+  - OAUTH2_PROXY_CLIENT_ID
+  - OAUTH2_PROXY_CLIENT_SECRET
+  - OAUTH2_PROXY_COOKIE_SECRET
+  - OAUTH2_PROXY_OIDC_ISSUER_URL
+  - OAUTH2_PROXY_REDIRECT_URL
+  
+In order to activate OAuth2 Proxy and keycloak locally see the comments in docker-compose.yml
 
 ## Local
 
