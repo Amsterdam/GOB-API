@@ -12,6 +12,7 @@ services:
       - "8141:8001"
     container_name: gobapi
     environment:
+      GOB_SHARED_DIR: /app/shared
       DATABASE_PORT_OVERRIDE: 5432
       DATABASE_HOST_OVERRIDE: database
       MESSAGE_BROKER_ADDRESS: rabbitmq
@@ -41,6 +42,12 @@ services:
       OAUTH2_PROXY_COOKIE_SECRET: ${OAUTH2_PROXY_COOKIE_SECRET}
       OAUTH2_PROXY_OIDC_ISSUER_URL: ${OAUTH2_PROXY_OIDC_ISSUER_URL}
       OAUTH2_PROXY_REDIRECT_URL: ${OAUTH2_PROXY_REDIRECT_URL}
+    volumes:
+      - gob-volume:/app/shared
+
+volumes:
+  gob-volume:
+    external: true
 
 networks:
   default:
