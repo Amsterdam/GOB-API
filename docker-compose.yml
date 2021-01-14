@@ -8,6 +8,7 @@ services:
       # To use oauth2-proxy:
       #   Set port to 8000
       #   Set the variables in .env
+      #   Set cookie_secure in oauth2-proxy.cfg to false
       # Use port 8001 to bypass the OAuth2 Proxy locally
       - "8141:8001"
     container_name: gobapi
