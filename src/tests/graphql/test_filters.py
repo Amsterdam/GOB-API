@@ -128,6 +128,9 @@ class TestFilters(TestCase):
         f = get_resolve_json_attribute('someattr')
         assert(f(a, None) == {'a': 'a', 'aB': 'a_b'})
 
+        a.someattr = [a.someattr]
+        assert(f(a, None) == [{'a': 'a', 'aB': 'a_b'}])
+
         a.someattr = None
         assert(f(a, None) == None)
 
