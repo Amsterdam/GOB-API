@@ -253,6 +253,8 @@ def get_resolve_json_attribute(name):
 
     def resolve_attribute(obj, info, **kwargs):
         value = getattr(obj, name)
+        if isinstance(value, list):
+            return [dict_to_camelcase(d) for d in value]
         return dict_to_camelcase(value)
 
     return resolve_attribute
