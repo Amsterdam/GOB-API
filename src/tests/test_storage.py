@@ -169,7 +169,7 @@ class MockSession:
     def remove(self):
         self._remove = True
 
-def mock_create_engine(url):
+def mock_create_engine(url, **kwargs):
     return 'engine'
 
 
