@@ -1,0 +1,97 @@
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  VERSION_TAG: '0.12.0'
+  # containerRegistry: 'Container Registry - piosupportacr'
+  # containerRegistryFullName: 'piosupportacr.azurecr.io'
+  # repository: 't-rex'
+
+resources:
+  repositories:
+  - repository: Gob-API
+    type: github
+    endpoint: Amsterdam
+    name: Amsterdam/Gob-API
+
+
+steps:
+- checkout: self
+
+  #Create Timestamp pipeline variable
+- script: |
+    displayName: setDynamicVars
+    echo "##vso[task.setvariable variable=timeStamp]$(date +%y%m%d%H%M%S)"
+    printenv
+
+# - task: Docker@2
+#   displayName: Gob-APIBuildPush
+#   inputs:
+#     containerRegistry: 'Container Registry - piosupportacr'
+#     repository: 'Gob-API'
+#     command: 'buildAndPush'
+#     # arguments: --build-arg VERSION_TAG='$(VERSION_TAG)'
+#     Dockerfile: 'Gob-API/src/Dockerfile'
+#     tags: |
+#       $(Build.BuildId)-$(timeStamp)
+#       latest
+
+# - task: Docker@2
+#   displayName: GOB-CoreBuildPush
+#   inputs:
+#     containerRegistry: 'Container Registry - piosupportacr'
+#     repository: 'GOB-Core'
+#     command: 'buildAndPush'
+#     # arguments: --build-arg VERSION_TAG='$(VERSION_TAG)'
+#     Dockerfile: 'GOB-Core/src/Dockerfile'
+#     tags: |
+#       $(Build.BuildId)-$(timeStamp)
+#       latest
+
+# - task: Docker@2
+#   displayName: GOB-DistributeBuildPush
+#   inputs:
+#     containerRegistry: 'Container Registry - piosupportacr'
+#     repository: 'GOB-Distribute'
+#     command: 'buildAndPush'
+#     # arguments: --build-arg VERSION_TAG='$(VERSION_TAG)'
+#     Dockerfile: 'GOB-Distribute/src/Dockerfile'
+#     tags: |
+#       $(Build.BuildId)-$(timeStamp)
+#       latest
+
+# - task: Docker@2
+#   displayName: GOB-ExportBuildPush
+#   inputs:
+#     containerRegistry: 'Container Registry - piosupportacr'
+#     repository: 'GOB-Export'
+#     command: 'buildAndPush'
+#     # arguments: --build-arg VERSION_TAG='$(VERSION_TAG)'
+#     Dockerfile: 'GOB-Export/src/Dockerfile'
+#     tags: |
+#       $(Build.BuildId)-$(timeStamp)
+#       latest
+
+# - task: Docker@2
+#   displayName: GOB-ImportBuildPush
+#   inputs:
+#     containerRegistry: 'Container Registry - piosupportacr'
+#     repository: 'GOB-Import'
+#     command: 'buildAndPush'
+#     # arguments: --build-arg VERSION_TAG='$(VERSION_TAG)'
+#     Dockerfile: 'GOB-Import/src/Dockerfile'
+#     tags: |
+#       $(Build.BuildId)-$(timeStamp)
+#       latest
+
+# - task: Docker@2
+#   displayName: GOB-InfraBuildPush
+#   inputs:
+#     containerRegistry: 'Container Registry - piosupportacr'
+#     repository: 'GOB-Infra'
+#     command: 'buildAndPush'
+#     # arguments: --build-arg VERSION_TAG='$(VERSION_TAG)'
+#     Dockerfile: 'GOB-Infra/src/Dockerfile'
+#     tags: |
+#       $(Build.BuildId)-$(timeStamp)
+#       latest
