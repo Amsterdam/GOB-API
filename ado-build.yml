@@ -38,7 +38,7 @@ steps:
 
 
 - task: Docker@2
-  displayName: $(productName)BuildPush
+  displayName: BuildPush
   inputs:
     containerRegistry: 'Container Registry - piosupportacr'
     repository: $(productName)
