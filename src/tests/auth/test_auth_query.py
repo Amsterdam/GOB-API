@@ -58,15 +58,17 @@ class TestAuthorizedQuery(TestCase):
         self.assertEqual(q._authority._collection, "any collection")
         self.assertEqual(q._authority._auth_scheme, GOB_AUTH_SCHEME)
 
-    @patch("gobapi.auth.auth_query.extract_roles")
-    def test_get_roles(self, mock_extract):
+    def test_get_roles(self):
         mock_req = MagicMock()
+        delattr(mock_req, 'roles')
 
         with patch("gobapi.auth.auth_query.request", mock_req):
             q = AuthorizedQuery()
             q.set_catalog_collection('any catalog', 'any collection')
-            self.assertEqual(mock_extract.return_value, q._authority.get_roles())
-            mock_extract.assert_called_with(mock_req.headers)
+            self.assertEqual([], q._authority.get_roles())
+
+            mock_req.roles = ['role1', 'role2']
+            self.assertEqual(['role1', 'role2'], q._authority.get_roles())
 
     @patch("gobapi.auth.auth_query.request", mock_request)
     @patch("gobapi.auth.auth_query.GOB_AUTH_SCHEME", mock_scheme)
