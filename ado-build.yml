@@ -34,7 +34,7 @@ steps:
   inputs:
     script: |
       printenv
-
+      echo woooo wooooo: $(productRepo)-$(productName)
 
 
 # - task: Docker@2
