@@ -6,7 +6,8 @@ from gobcore.secure.request import ACCESS_TOKEN_HEADER
 
 class TestAuth(TestCase):
 
-    def test_secure_route(self):
+    @patch("gobapi.auth.routes.extract_roles")
+    def test_secure_route(self, mock_extract_roles):
         mock_request = MagicMock()
 
         with patch("gobapi.auth.routes.request", mock_request):
@@ -25,6 +26,7 @@ class TestAuth(TestCase):
 
             result = wrapped_func()
             self.assertEqual(result, "Any result")
+            self.assertEqual(mock_extract_roles.return_value, mock_request.roles)
 
     @patch('gobapi.auth.routes.SECURE_ARGS', ['secure_arg'])
     @patch('gobapi.auth.routes.Authority')
