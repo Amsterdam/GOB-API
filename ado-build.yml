@@ -9,7 +9,7 @@ variables:
 
 resources:
   repositories:
-  - repository: Gob-API
+  - repository: gob-api
     type: github
     endpoint: Amsterdam
     name: Amsterdam/Gob-API
@@ -34,20 +34,19 @@ steps:
   inputs:
     script: |
       printenv
-      echo woooo wooooo: $(productRepo)-$(productName)
+      echo woooo wooooo: $(productName)
 
 
-# - task: Docker@2
-#   displayName: $(productName)BuildPush
-#   inputs:
-#     containerRegistry: 'Container Registry - piosupportacr'
-#     repository: 'Gob-API'
-#     command: 'buildAndPush'
-#     # arguments: --build-arg VERSION_TAG='$(VERSION_TAG)'
-#     Dockerfile: 'Gob-API/src/Dockerfile'
-#     tags: |
-#       $(Build.BuildId)-$(timeStamp)
-#       latest
+- task: Docker@2
+  displayName: $(productName)BuildPush
+  inputs:
+    containerRegistry: 'Container Registry - piosupportacr'
+    repository: $(productName)
+    command: 'buildAndPush'
+    Dockerfile: 'src/Dockerfile'
+    tags: |
+      $(Build.BuildId)-$(timeStamp)
+      latest
 
 # - task: Docker@2
 #   displayName: GOB-CoreBuildPush
