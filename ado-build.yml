@@ -64,9 +64,3 @@ steps:
         latest
 
 
-
-
-
-
-
-docker run --rm --tty --volume=$(pwd):/project tidypy/tidypy
