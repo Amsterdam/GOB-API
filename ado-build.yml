@@ -8,7 +8,10 @@ parameters:
 - name: runUnitTests
   type: boolean
   default: true
-- name: runBuild
+- name: runBuildPush
+  type: boolean
+  default: true
+- name: runContainerScan
   type: boolean
   default: true
 - name: runE2Etests
@@ -51,9 +54,9 @@ steps:
         cd src/gobapi
         docker run --rm --tty --volume=$(pwd):/project tidypy/tidypy
 
-- ${{ if eq(parameters.runBuild, true) }}:
+- ${{ if eq(parameters.runBuildPush, true) }}:
   - task: Docker@2
-    displayName: runBuild
+    displayName: runBuildPush
     inputs:
       containerRegistry: 'Container Registry - piosupportacr'
       repository: $(productName)
