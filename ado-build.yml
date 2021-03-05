@@ -1,11 +1,13 @@
 pool:
   vmImage: ubuntu-latest
 
+parameters:
+- name: runBuildTask # name of the parameter; required
+  type: boolean # data type of the parameter; required
+  default: true
+
 variables:
   versionTag: 'x.y.z'
-  runBuildTask: false
-  # RUN_CODEQUALITY_TASK: 'IGNORE_ERROR'
-  # RUN_DOCKER_ANALYZE_TASK:
 
 resources:
   repositories:
