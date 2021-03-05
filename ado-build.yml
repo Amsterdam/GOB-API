@@ -14,16 +14,6 @@ resources:
     endpoint: Amsterdam
     name: Amsterdam/Gob-API
 
-
-
-steps:
-  - ${{ if eq(parameters.experimentalTemplate, true) }}:
-    - template: experimental.yml
-
-
-
-
-
 steps:
 - checkout: self
 
