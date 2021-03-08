@@ -2,7 +2,7 @@
 from flask import request
 
 from gobapi.auth.auth_query import Authority
-from gobcore.secure.request import is_secured_request
+from gobcore.secure.request import is_secured_request, extract_roles
 
 # Request args that require authorisation
 # SECURE_ARGS = ['view']  # view results are not checked for secure data!
@@ -19,10 +19,13 @@ def secure_route(rule, func):
     :return:
     """
     def wrapper(*args, **kwargs):
-        if is_secured_request(request.headers) and _allows_access(rule, *args, **kwargs):
-            return func(*args, **kwargs)
-        else:
-            return "Forbidden", 403
+        if is_secured_request(request.headers):
+            """Access Token is forwarded by OAuth2Proxy. Keycloak roles are present in access token"""
+            setattr(request, 'roles', extract_roles(request.headers))
+
+            if _allows_access(rule, *args, **kwargs):
+                return func(*args, **kwargs)
+        return "Forbidden", 403
 
     wrapper.__name__ = f"secure_{func.__name__}"
     return wrapper
