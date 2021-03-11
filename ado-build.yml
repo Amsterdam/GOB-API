@@ -18,10 +18,6 @@ parameters:
   type: boolean
   default: true
 
-
-
-
-
 variables:
   versionTag: 'x.y.z'
 
@@ -66,4 +62,13 @@ steps:
         $(Build.BuildId)-$(timeStamp)
         latest
 
+- ${{ if eq(parameters.runContainerScan, true) }}:
+  - task: CmdLine@2
+    displayName: runContainerScan
+    inputs:
+      script: |
+        echo '#########CONTAINER SCAN PLACEHOLDER############'
+        echo '#########CONTAINER SCAN PLACEHOLDER############'
+        echo '#########CONTAINER SCAN PLACEHOLDER############'
+        echo '#########CONTAINER SCAN PLACEHOLDER############'
 
