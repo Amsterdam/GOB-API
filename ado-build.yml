@@ -50,6 +50,7 @@ steps:
   - ${{ if eq(parameters.runCodeQuality, true) }}:
       - task: CmdLine@2
         displayName: runCodeQuality
+        continueOnError: true
         inputs:
           script: |
             cd src/gobapi
