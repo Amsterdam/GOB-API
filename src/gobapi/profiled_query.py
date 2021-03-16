@@ -20,11 +20,12 @@ class ProfiledQuery():
         self.end_time = time.time()
 
     @property
-    def is_complex(self):
+    def is_slow(self):
         return self.duration > self.LONG_DURATION
 
     @property
     def duration(self):
+        """Returns duration in seconds."""
         return self.end_time - self.start_time
 
     def __str__(self):
@@ -35,7 +36,7 @@ class ProfiledQuery():
 
         return f"""ProfiledQuery
 Statement: {statement}
-Duration:  {round(self.duration * 60)} minutes
+Duration:  {round(self.duration / 60)} minutes
 Started:   {str_time(self.start_time)}
 Ended:     {str_time(self.end_time)}
 """
@@ -58,6 +59,6 @@ def activate():
                              parameters, context, executemany):
         profiled_query = conn.info['query_info'].pop(-1)
         profiled_query.set_end()
-        if profiled_query.is_complex:
-            print("WARNING: Complex query detected")
+        if profiled_query.is_slow:
+            print("WARNING: Slow query detected")
             print(profiled_query)
