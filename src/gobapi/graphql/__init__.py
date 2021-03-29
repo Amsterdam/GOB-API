@@ -24,10 +24,12 @@ def graphene_type(gob_typename, description=""):
         "GOB.DateTime": DateTime,
         "GOB.Geo.Geometry": GeoJSON,
         "GOB.JSON": graphene.JSONString,
+        "GOB.IncompleteDate": graphene.JSONString,
         # Secure types match their 'base type', datetimes are converted to strings
         "GOB.SecureString": graphene.String,
         "GOB.SecureDecimal": graphene.Float,
-        "GOB.SecureDateTime": graphene.String
+        "GOB.SecureDateTime": graphene.String,
+        "GOB.SecureIncompleteDate": graphene.JSONString,
     }
     if conversion.get(gob_typename):
         return conversion.get(gob_typename)(description=description)
