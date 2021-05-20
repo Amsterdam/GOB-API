@@ -7,6 +7,7 @@ import re
 
 from gobapi.dump.config import DELIMITER_CHAR, QUOTATION_CHAR
 from gobapi.dump.config import REFERENCE_TYPES, get_reference_fields
+from gobapi.dump.config import JSON_TYPES
 
 from gobapi.dump.config import get_unique_reference, add_unique_reference, is_unique_id
 from gobapi.dump.config import get_field_specifications, get_field_order, get_field_value, joined_names
@@ -82,7 +83,7 @@ def _csv_values(value, spec):
     """
     if spec['type'] in REFERENCE_TYPES:
         return _csv_reference_values(value, spec)
-    elif spec['type'] == 'GOB.JSON':
+    elif spec['type'] in JSON_TYPES:
         if type(value) == list:
             values = []
             for field in spec['attributes'].keys():
@@ -112,7 +113,7 @@ def _csv_header(field_specs, field_order):
         if field_spec['type'] in REFERENCE_TYPES:
             for reference_field in get_reference_fields(field_spec):
                 fields.append(_csv_value(joined_names(field_name, reference_field)))
-        elif field_spec['type'] == 'GOB.JSON':
+        elif field_spec['type'] in JSON_TYPES:
             for field in field_spec['attributes'].keys():
                 fields.append(_csv_value(joined_names(field_name, field)))
         else:

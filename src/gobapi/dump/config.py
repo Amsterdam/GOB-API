@@ -29,6 +29,8 @@ SKIP_FIELDS = ["_hash", "_gobid"]
 
 SKIP_RELATIONS = ["brk_tng_brk_sdl_is_gebaseerd_op_stukdeel"]
 
+JSON_TYPES = ["GOB.JSON", "GOB.IncompleteDate"]
+
 # SQL constants
 SQL_TYPE_CONVERSIONS = {
     "GOB.String": "character varying",
