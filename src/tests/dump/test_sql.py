@@ -62,6 +62,19 @@ class TestSQL(TestCase):
             # Nested JSON attributes should always have type character varying, to account for possible merged values.
             self.assertTrue(f"character varying" in result)
 
+        mock_specs.return_value = {
+            'a': {
+                'type': 'GOB.IncompleteDate',
+                'attributes': {'a': {'type': 'GOB.String'}, 'b': {'type': 'GOB.Integer'}},
+                'description': 'Any description'
+            }
+        }
+        result = _create_table(catalogue, 'any_schema', 'any_table', {})
+        for s in ['a', 'b']:
+            self.assertTrue(f"\"a_{s}\"" in result)
+            # Nested JSON attributes should always have type character varying, to account for possible merged values.
+            self.assertTrue(f"character varying" in result)
+
         # With alternative tablename (used for tmp table)
         result = _create_table('any_schema', catalogue, 'any_table', {}, tablename='the table name')
         self.assertTrue("CREATE TABLE IF NOT EXISTS \"any_schema\".\"the table name\"" in result)

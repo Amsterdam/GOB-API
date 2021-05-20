@@ -10,7 +10,7 @@ from gobcore.typesystem.gob_types import String
 from gobcore.typesystem import fully_qualified_type_name
 
 from gobapi.auth.auth_query import Authority
-from gobapi.dump.config import DELIMITER_CHAR
+from gobapi.dump.config import DELIMITER_CHAR, JSON_TYPES
 from gobapi.dump.config import UNIQUE_ID, REFERENCE_TYPES, get_reference_fields
 from gobapi.dump.config import SQL_TYPE_CONVERSIONS, SQL_QUOTATION_MARK
 
@@ -201,7 +201,7 @@ def _create_table(schema, catalog_name, collection_name, model, tablename=None):
                 name = joined_names(field_name, reference_field)
                 fields.append(_create_field(name, fully_qualified_type_name(String),
                                             f"{field_description} ({reference_field})"))
-        elif field_spec['type'] == 'GOB.JSON':
+        elif field_spec['type'] in JSON_TYPES:
             for field, spec in field_spec['attributes'].items():
                 name = joined_names(field_name, field)
                 # Make all JSON attribute columns of type String (in case the resulting values are merged into a list)
