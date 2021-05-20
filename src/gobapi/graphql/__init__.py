@@ -4,7 +4,35 @@
 import graphene
 
 from gobcore.model.metadata import PRIVATE_META_FIELDS, PUBLIC_META_FIELDS, FIXED_FIELDS
-from gobapi.graphql.scalars import Date, DateTime, GeoJSON
+from gobapi.graphql.scalars import Date, DateTime, GeoJSON, Scalar
+from graphql.language.ast import IntValue
+
+
+class BigInt(Scalar):
+    """
+    The `BigInt` scalar type represents non-fractional whole numeric values.
+    `BigInt` is not constrained to 32-bit like the `Int` type and thus is a less
+    compatible type.
+    """
+
+    @staticmethod
+    def coerce_int(value):
+        try:
+            num = int(value)
+        except ValueError:
+            try:
+                num = int(float(value))
+            except ValueError:
+                return None
+        return num
+
+    serialize = coerce_int
+    parse_value = coerce_int
+
+    @staticmethod
+    def parse_literal(ast):
+        if isinstance(ast, IntValue):
+            return int(ast.value)
 
 
 def graphene_type(gob_typename, description=""):
@@ -18,6 +46,7 @@ def graphene_type(gob_typename, description=""):
         "GOB.Character": graphene.String,
         "GOB.String": graphene.String,
         "GOB.Integer": graphene.Int,
+        "GOB.BigInteger": BigInt,
         "GOB.Decimal": graphene.Float,
         "GOB.Boolean": graphene.Boolean,
         "GOB.Date": Date,

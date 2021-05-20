@@ -3,7 +3,7 @@ import datetime
 import sqlalchemy
 
 from graphql.language import ast
-from gobapi.graphql import scalars
+from gobapi.graphql import scalars, BigInt
 from gobapi.graphql.scalars import Date, DateTime, GeoJSON
 
 
@@ -105,3 +105,32 @@ def test_geojson(monkeypatch):
 
     parsed_literal = GeoJSON.parse_literal("non literal")
     assert(parsed_literal == None)  # value is not parsed
+
+
+def test_bigint():
+    big_num_int = 17_000_000_000
+    tests = [
+        (big_num_int, big_num_int),
+        ('17000000000', big_num_int),
+        (17_000_000_000.02, big_num_int),
+        (-17_000_000_000, big_num_int*-1),
+        (10, 10)
+    ]
+
+    class Literal(ast.IntValue):
+        def __init__(self, value):
+            self.value = value
+
+    for num, expected in tests:
+        assert BigInt.parse_literal(Literal(num)) == expected
+        assert BigInt.serialize(num) == expected
+        assert BigInt.parse_value(num) == expected
+
+    try:
+        BigInt.parse_literal(Literal('abcd'))
+    except ValueError:
+        assert True
+    else:
+        assert False
+
+    assert BigInt.serialize('abcd') is None
