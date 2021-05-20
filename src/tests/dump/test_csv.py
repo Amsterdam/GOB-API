@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 
-from gobapi.dump.config import REFERENCE_FIELDS
+from gobapi.dump.config import REFERENCE_FIELDS, JSON_TYPES
 from gobapi.dump.csv import _csv_line, _csv_value, _csv_header, _csv_reference_values, _csv_values, _csv_record, csv_entities
 
 
@@ -72,6 +72,9 @@ class TestCSV(TestCase):
         result = _csv_header({'name': {'type': 'GOB.JSON', 'attributes': {'a': 'some a', 'b': 'some b'}}}, ['name'])
         self.assertEqual(result, ['"name_a"', '"name_b"'])
 
+        result = _csv_header({'name': {'type': 'GOB.IncompleteDate', 'attributes': {'a': 'some a', 'b': 'some b'}}}, ['name'])
+        self.assertEqual(result, ['"name_a"', '"name_b"'])
+
     @patch('gobapi.dump.csv.get_reference_fields', lambda x: REFERENCE_FIELDS)
     def test_csv_reference_values(self):
         spec = {'type': 'GOB.Reference'}
@@ -115,36 +118,42 @@ class TestCSV(TestCase):
         result = _csv_values(value, spec)
         self.assertEqual(result, _csv_reference_values(value, spec))
 
-        value = {'a': 1, 'b': 'any value', 'c': 'some other value'}
-        spec = {'type': 'GOB.JSON', 'attributes': {'a': 'some a', 'b': 'some b'}}
-        result = _csv_values(value, spec)
-        self.assertEqual(result, ['1', '"any value"'])
+        for json_type in JSON_TYPES:
+            value = {'a': 1, 'b': 'any value', 'c': 'some other value'}
+            spec = {'type': json_type, 'attributes': {'a': 'some a', 'b': 'some b'}}
+            result = _csv_values(value, spec)
+            self.assertEqual(result, ['1', '"any value"'])
 
-        value = {'a': 1}
-        spec = {'type': 'GOB.JSON', 'attributes': {'a': 'some a', 'b': 'some b'}}
-        result = _csv_values(value, spec)
-        self.assertEqual(result, ['1', ''])
+            value = {'a': 1}
+            spec = {'type': json_type, 'attributes': {'a': 'some a', 'b': 'some b'}}
+            result = _csv_values(value, spec)
+            self.assertEqual(result, ['1', ''])
 
-        # Test JSON many values
-        value = [{'a': 1}, {'a': 2}]
-        spec = {'type': 'GOB.JSON', 'attributes': {'a': 'some a'}}
-        result = _csv_values(value, spec)
-        self.assertEqual(result, ['[1,2]'])
+            # Test JSON many values
+            value = [{'a': 1}, {'a': 2}]
+            spec = {'type': json_type, 'attributes': {'a': 'some a'}}
+            result = _csv_values(value, spec)
+            self.assertEqual(result, ['[1,2]'])
 
-        value = [{'a': '1'}, {'a': '2'}]
-        spec = {'type': 'GOB.JSON', 'attributes': {'a': 'some a'}}
-        result = _csv_values(value, spec)
-        self.assertEqual(result, ['["1","2"]'])
+            value = [{'a': '1'}, {'a': '2'}]
+            spec = {'type': json_type, 'attributes': {'a': 'some a'}}
+            result = _csv_values(value, spec)
+            self.assertEqual(result, ['["1","2"]'])
 
-        value = [{'a': '1'}, {'a': '2'}]
-        spec = {'type': 'GOB.JSON', 'attributes': {'a': 'some a', 'b': 'some b'}}
-        result = _csv_values(value, spec)
-        self.assertEqual(result, ['["1","2"]', '["",""]'])
+            value = [{'a': '1'}, {'a': '2'}]
+            spec = {'type': json_type, 'attributes': {'a': 'some a', 'b': 'some b'}}
+            result = _csv_values(value, spec)
+            self.assertEqual(result, ['["1","2"]', '["",""]'])
 
-        value = None
-        spec = {'type': 'GOB.JSON', 'attributes': {'a': 'some a', 'b': 'some b'}}
-        result = _csv_values(value, spec)
-        self.assertEqual(result, ['', ''])
+            value = [{'a': '1'}, {'a': '2'}]
+            spec = {'type': json_type, 'attributes': {'a': 'some a', 'b': 'some b'}}
+            result = _csv_values(value, spec)
+            self.assertEqual(result, ['["1","2"]', '["",""]'])
+
+            value = None
+            spec = {'type': json_type, 'attributes': {'a': 'some a', 'b': 'some b'}}
+            result = _csv_values(value, spec)
+            self.assertEqual(result, ['', ''])
 
     def test_csv_record(self):
         entity = None
