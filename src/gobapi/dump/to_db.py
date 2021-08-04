@@ -202,23 +202,23 @@ class DbDumper:
     def _delete_tmp_table(self):
         self._delete_table(self.tmp_collection_name)
 
-    def _create_indexes(self, model):
+    def _create_indexes(self):
         """
         Create default indexes for the given collection
 
         :param model:
         :return:
         """
-        for index in _create_indexes(model):
+        for index in _create_indexes(self.model):
             yield f"Create index on {index['field']}\n"
             self._execute(_create_index(self.schema, self.collection_name, **index))
 
-    def _dump_entities_to_table(self, entities, model):
+    def _dump_entities_to_table(self, entities):
         authority = Authority(self.catalog_name, self.collection_name)
         suppress_columns = authority.get_suppressed_columns()
 
         connection = self.datastore.connection
-        stream = CSVStream(csv_entities(entities, model, suppress_columns), STREAM_PER)
+        stream = CSVStream(csv_entities(entities, self.model, suppress_columns), STREAM_PER)
 
         with connection.cursor() as cursor:
             yield "Export data"
@@ -277,14 +277,14 @@ class DbDumper:
 
         if full_dump:
             # Full write of all entities
-            entities, model = yield from self._full_dump()
+            entities = yield from self._full_dump()
         else:
             # Sync updated and new entities
-            entities, model = yield from self._sync_dump(dst_max_eventid, source_ids_to_update)
+            entities = yield from self._sync_dump(dst_max_eventid, source_ids_to_update)
 
-        yield from self._dump_entities_to_table(entities, model)
+        yield from self._dump_entities_to_table(entities)
         yield from self._copy_tmp_table()
-        yield from self._create_indexes(model)
+        yield from self._create_indexes()
 
     def _ref(self, rel_alias: str, with_seqnr: bool):
         """Returns ref expression for a relation with alias :rel_alias: with or without seqnr
@@ -415,7 +415,8 @@ from {self.catalog_name}.{self.collection_name} {main_alias}
         :param kwargs:
         :return:
         """
-        return dump_entities(self.catalog_name, self.collection_name, **kwargs, order_by=FIELD.LAST_EVENT)
+        # Only return entities generator, not the model
+        return dump_entities(self.catalog_name, self.collection_name, **kwargs, order_by=FIELD.LAST_EVENT)[0]
 
     def _full_dump(self):
         """
