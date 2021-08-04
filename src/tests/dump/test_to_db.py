@@ -263,13 +263,10 @@ class TestDbDumper(TestCase):
     def test_create_indexes(self, mock_indexes, mock_datastore_factory):
         db_dumper = self._get_dumper()
         db_dumper._execute = MagicMock()
-
-        model = {
-            'entity_id': "any id"
-        }
+        db_dumper.model = {'entity_id': 'any id'}
 
         specs = {
-            model['entity_id']: "any id value",
+            db_dumper.model['entity_id']: "any id value",
             'ref': "any ref",
             'dst_ref': "any dst ref",
             'dst_reference': {
@@ -287,7 +284,7 @@ class TestDbDumper(TestCase):
         }
 
         mock_indexes.return_value = [{'field': 'any field'}, {'field': 'any other field'}]
-        list(db_dumper._create_indexes(model))
+        list(db_dumper._create_indexes())
         self.assertEqual(db_dumper._execute.call_count, 2)
 
     @patch('gobapi.dump.to_db.CSVStream')
@@ -299,10 +296,11 @@ class TestDbDumper(TestCase):
         mock_stream.return_value = MockStream()
         mock_connection = MagicMock()
         db_dumper = self._get_dumper()
+        db_dumper.model = MagicMock()
         db_dumper.datastore.connection = mock_connection
 
         entities = iter([])
-        results = list(db_dumper._dump_entities_to_table(entities, MagicMock()))
+        results = list(db_dumper._dump_entities_to_table(entities))
 
         self.assertEqual(mock_connection.commit.call_count, 2)
         self.assertTrue("Export data\ncollection_name: 10\nExported" in "".join(results))
@@ -322,9 +320,10 @@ class TestDbDumper(TestCase):
         mock_connection = MagicMock()
         db_dumper = self._get_dumper()
         db_dumper.datastore.connection = mock_connection
+        db_dumper.model = MagicMock()
 
         entities = iter([])
-        results = list(db_dumper._dump_entities_to_table(entities, MagicMock()))
+        results = list(db_dumper._dump_entities_to_table(entities))
         self.assertEqual(mock_connection.commit.call_count, 1)
         self.assertTrue("Export data.\nExported" in "".join(results))
 
@@ -335,11 +334,11 @@ class TestDbDumper(TestCase):
         db_dumper = self._get_dumper()
         db_dumper.datastore.connection = MagicMock()
         entities = iter([])
-        model = MagicMock()
-        results = list(db_dumper._dump_entities_to_table(entities, model))
+        db_dumper.model = MagicMock()
+        results = list(db_dumper._dump_entities_to_table(entities))
 
         # Suppressed columns are passed to csv entities.
-        mock_csv_entities.assert_called_with(entities, model, mock_authority().get_suppressed_columns())
+        mock_csv_entities.assert_called_with(entities, db_dumper.model, mock_authority().get_suppressed_columns())
 
     def test_filter_last_events_lambda(self, mock_datastore_factory):
         db_dumper = self._get_dumper()
