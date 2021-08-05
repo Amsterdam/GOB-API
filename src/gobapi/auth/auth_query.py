@@ -233,6 +233,9 @@ class AuthorizedQuery(Query):
         An authorized query checks every entity for columns that should not be communicated.
         """
         self._authority = None
+        self.suppressed_columns = []
+        self.secure_columns = {}
+        self.expire_per = kwargs.pop('expire_per', None)
         super().__init__(*args, **kwargs)
 
     def set_catalog_collection(self, catalog, collection):
@@ -240,45 +243,53 @@ class AuthorizedQuery(Query):
         Register the catalog and collection for the entities to be checked
         """
         self._authority = Authority(catalog, collection)
+        self.suppressed_columns = self._authority.get_suppressed_columns()
+        self.secure_columns = self._authority.get_secured_columns()
 
     def __iter__(self):
         """
         Iterator that yields entities for which the non-authorized columns have been cleared.
         An extra attribute is set on the entity that specifies the cleared columns
         """
-        if self._authority:
-            suppressed_columns = self._authority.get_suppressed_columns()
-            secure_columns = self._authority.get_secured_columns()
-        else:
+        if not self._authority:
             print("ERROR: UNAUTHORIZED ACCESS DETECTED")
-            suppressed_columns = []
-            secure_columns = {}
 
+        count = 0
         for entity in super().__iter__():
-            if isinstance(entity, tuple):
-                self._suppress_columns(entity[0], suppressed_columns)
-                self._handle_secure_columns(entity[0], secure_columns)
-            else:
-                self._suppress_columns(entity, suppressed_columns)
-                self._handle_secure_columns(entity, secure_columns)
+            current_entity = entity[0] if isinstance(entity, tuple) else entity
+
+            _suppress_columns(current_entity, self.suppressed_columns)
+            _handle_secure_columns(current_entity, self.secure_columns)
+
+            count += 1
             yield entity
 
-    def _handle_secure_columns(self, entity, secure_columns):
-        for column, info in secure_columns.items():
-            try:
-                entity_value = getattr(entity, column)
-                setattr(entity, column, Authority.exposed_value(entity_value, info))
-            except AttributeError:
-                pass
+            if self.expire_per and count % self.expire_per == 0:
+                # objects will be kept in memory if not explicitely expired
+                self.session.expire_all()
 
-    def _suppress_columns(self, entity, suppressed_columns):
-        self.set_suppressed_columns(entity, suppressed_columns)
-        for column in [c for c in suppressed_columns if hasattr(entity, c)]:
-            setattr(entity, column, None)
+        if self.expire_per:
+            self.session.expire_all()
 
-    def set_suppressed_columns(self, entity, suppressed_columns):
+
+def _handle_secure_columns(entity, secure_columns):
+    for column, info in secure_columns.items():
         try:
-            # Register the suppressed columns with the entity
-            setattr(entity, SUPPRESSED_COLUMNS, suppressed_columns)
+            entity_value = getattr(entity, column)
+            setattr(entity, column, Authority.exposed_value(entity_value, info))
         except AttributeError:
             pass
+
+
+def _suppress_columns(entity, suppressed_columns):
+    # set_suppressed_columns(entity, suppressed_columns)
+    for column in [c for c in suppressed_columns if hasattr(entity, c)]:
+        setattr(entity, column, None)
+
+
+def set_suppressed_columns(entity, suppressed_columns):
+    try:
+        # Register the suppressed columns with the entity
+        setattr(entity, SUPPRESSED_COLUMNS, suppressed_columns)
+    except AttributeError:
+        pass

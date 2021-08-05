@@ -483,13 +483,15 @@ def dump_entities(catalog, collection, filter=None, order_by=None):
     assert _Base
     session = get_session()
 
+    yield_per = 10_000
+
     table, model = get_table_and_model(catalog, collection)
 
     # Register the meta data in the model
     model['catalog'] = catalog
     model['collection'] = collection
 
-    entities = session.query(table)
+    entities = session.query(table, expire_per=yield_per)
 
     if filter:
         entities = entities.filter(filter(table))
@@ -499,7 +501,7 @@ def dump_entities(catalog, collection, filter=None, order_by=None):
 
     entities.set_catalog_collection(catalog, collection)
 
-    return entities.yield_per(10000), model
+    return entities.yield_per(yield_per), model
 
 
 def get_id_columns(catalog, collection):
