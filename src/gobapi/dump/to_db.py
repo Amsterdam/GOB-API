@@ -1,4 +1,5 @@
 import traceback
+from io import StringIO
 
 from gobcore.typesystem import fully_qualified_type_name, GOB
 from typing import Tuple, List
@@ -14,18 +15,17 @@ from gobcore.datastore.factory import DatastoreFactory
 from gobapi.dump.config import SKIP_RELATIONS, UNIQUE_ID, UNIQUE_REL_ID
 from gobapi.dump.sql import _create_schema, _create_table, _insert_into_table, _delete_table
 from gobapi.dump.sql import _create_indexes, _create_index, get_max_eventid, get_count as get_dst_count
-from gobapi.dump.csv import csv_entities
-from gobapi.dump.csv_stream import CSVStream
+from gobapi.dump.csv import CsvDumper
 from gobapi.storage import get_entity_refs_after, get_table_and_model, get_max_eventid as get_src_max_eventid, \
     get_count as get_src_count
 
 from gobapi.dump.sql import to_sql_string_value
 
-STREAM_PER = 10000              # Stream per STREAM_PER lines
+STREAM_PER = 10_000              # Stream per STREAM_PER lines
 COMMIT_PER = 10 * STREAM_PER    # Commit once per COMMIT_PER lines
-BUFFER_PER = 50000              # Copy read buffer size
+BUFFER_PER = 50_000              # Copy read buffer size
 
-MAX_SYNC_ITEMS = 500000         # Maximum number of items to sync before switching to full dump
+MAX_SYNC_ITEMS = 500_000         # Maximum number of items to sync before switching to full dump
 
 
 class DbDumper:
@@ -60,6 +60,9 @@ class DbDumper:
         # Set attributes for create_table
         self.model['catalog'] = catalog_name
         self.model['collection'] = collection_name
+
+        self.suppressed_columns = Authority(self.catalog_name, self.collection_name).get_suppressed_columns()
+
 
     def _get_dst_schema(self, config: dict, catalog_name: str, collection_name: str):
         """Returns schema from config if set, otherwise catalog_name. If catalog_name is 'rel', return the catalog_name
@@ -213,35 +216,44 @@ class DbDumper:
             yield f"Create index on {index['field']}\n"
             self._execute(_create_index(self.schema, self.collection_name, **index))
 
+    @staticmethod
+    def _stream_entities(stream: CsvDumper, entities):
+        with StringIO() as buffer:
+            for item in stream.iterate(entities):
+                buffer.write(item)
+
+                if stream.count % STREAM_PER == 0:
+                    buffer.seek(0)
+                    yield buffer
+
+                    buffer.truncate(0)
+                    buffer.seek(0)
+            else:
+                buffer.seek(0)
+                yield buffer
+
     def _dump_entities_to_table(self, entities):
-        authority = Authority(self.catalog_name, self.collection_name)
-        suppress_columns = authority.get_suppressed_columns()
+        def maybe_commit(count: int):
+            if count % COMMIT_PER == 0:
+                connection.commit()
+                yield f"\n{self.collection_name}: {count:,}"
+            else:
+                yield '.'
 
         connection = self.datastore.connection
-        stream = CSVStream(csv_entities(entities, self.model, suppress_columns), STREAM_PER)
+        csv_streamer = CsvDumper(self.model, ignore_fields=self.suppressed_columns, header=False)
+        sql = f"COPY {self.schema}.{self.tmp_collection_name} FROM STDIN DELIMITER '{csv_streamer.sep}' CSV"
 
         with connection.cursor() as cursor:
             yield "Export data"
-            commit = COMMIT_PER
-            while stream.has_items():
-                stream.reset_count()
-                cursor.copy_expert(
-                    sql=f"COPY {self.schema}.{self.tmp_collection_name} FROM STDIN DELIMITER ';' CSV HEADER;",
-                    file=stream,
-                    size=BUFFER_PER
-                )
 
-                if stream.total_count >= commit:
-                    connection.commit()
-                    commit += COMMIT_PER
+            for stream in self._stream_entities(csv_streamer, entities):
+                cursor.copy_expert(sql, stream, size=BUFFER_PER)
 
-                    yield f"\n{self.collection_name}: {stream.total_count:,}"
-                else:
-                    # Let client know we're still working.
-                    yield "."
+                yield from maybe_commit(csv_streamer.count)
 
-        yield f"\nExported {stream.total_count} rows\n"
         connection.commit()
+        yield f"\nExported {csv_streamer.count:,} rows\n"
 
     def _filter_last_events_lambda(self, max_eventid):
         return lambda table: getattr(table, FIELD.LAST_EVENT) > max_eventid
