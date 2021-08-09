@@ -202,7 +202,7 @@ def _dump(catalog_name, collection_name):
         entities, model = dump_entities(catalog_name, collection_name, filter=filter)
 
         if format == "csv":
-            result = CsvDumper(model).iterate(entities)
+            result = CsvDumper(entities, model=model)
             return WorkerResponse.stream_with_context(result, mimetype='text/csv')
         elif format == "sql":
             return Response(sql_entities(catalog_name, collection_name, model), mimetype='application/sql')
