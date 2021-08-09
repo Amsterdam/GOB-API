@@ -1,30 +1,79 @@
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import Mock, patch, call
 
-from gobapi.dump.config import REFERENCE_FIELDS, JSON_TYPES
-from gobapi.dump.csv import _csv_line, _csv_value, _csv_header, _csv_reference_values, _csv_values, _csv_record, csv_entities
+from gobapi.dump.config import JSON_TYPES
+from gobapi.dump.csv import _csv_line, _csv_value, _csv_reference_values, _csv_values, CsvDumper, CsvStream
 
 
-class MockEntity:
+class TestCsvDumper(TestCase):
 
-    def __init__(self):
-        self.a = "a"
-        self.b = 5
-
-    @classmethod
-    def specs(self):
-        return {
-            'a': {
-                'type': 'GOB.String',
-                'entity_id': 'a'
-            },
-            'b': {
-                'type': 'GOB.Integer'
-            },
-            'c': {
-                'type': 'GOB.String'
+    def setUp(self) -> None:
+        self.model = {
+            'catalog': 'any catalog',
+            'entity_id': 'any_entity_id',
+            'fields': {},
+            'all_fields': {
+                'any_entity_id': {'type': 'GOB.String'},
+                'reference': {'type': 'GOB.Reference'},
+                'json': {'type': 'GOB.JSON', 'attributes': {'a': 'GOB.String', 'b': 'GOB.String'}},
+                'incdate': {'type': 'GOB.IncompleteDate', 'attributes': {'formatted': {"type": "GOB.String"}}}
             }
         }
+
+        self.mock_entity = Mock()
+        self.mock_entity.any_entity_id = 'value_a'
+        self.mock_entity.reference = {'bronwaarde': 'value_ref'}
+        self.mock_entity.json = {'a': 'some a', 'b': 'some b'}
+        self.mock_entity.incdate = {'year': 2021, 'month': 1, 'day': 2}
+
+    def test_init_model_is_none(self):
+        dumper = CsvDumper([])
+        self.assertEqual(dumper.field_specs, {})
+        self.assertEqual(dumper.field_order, [])
+        self.assertEqual(dumper.field_names, [])
+
+    def test_get_field_names(self):
+        dumper = CsvDumper([], model=self.model)
+        expected = [
+            'any_entity_id',
+            'ref',
+            'reference_bronwaarde',
+            'json_a',
+            'json_b',
+            'incdate_formatted'
+        ]
+        self.assertEqual(dumper.field_names, expected)
+
+    def test_csv_header(self):
+        dumper = CsvDumper([], model=self.model)
+        expected = '"any_entity_id";"ref";"reference_bronwaarde";"json_a";"json_b";"incdate_formatted"\n'
+        self.assertEqual(dumper._csv_header(), expected)
+
+    def test_csv_record(self):
+        dumper = CsvDumper([], model=self.model)
+        expected = ';;;;;\n'
+        self.assertEqual(dumper._csv_record(None), expected)
+
+        expected = '"value_a";"value_a";"value_ref";"some a";"some b";"2021-01-02"\n'
+        self.assertEqual(dumper._csv_record(self.mock_entity), expected)
+
+    def test_iterate(self):
+        dumper = CsvDumper([], model=self.model)
+        value = [item for item in dumper]
+        self.assertEqual(value, [])
+
+        header = '"any_entity_id";"ref";"reference_bronwaarde";"json_a";"json_b";"incdate_formatted"\n'
+        line1 = '"value_a";"value_a";"value_ref";"some a";"some b";"2021-01-02"\n'
+
+        # header is True
+        dumper = CsvDumper([self.mock_entity], model=self.model)
+        value = [item for item in dumper]
+        self.assertEqual(value, [header, line1])
+
+        # header is False
+        dumper = CsvDumper([self.mock_entity], model=self.model, header=False)
+        value = [item for item in dumper]
+        self.assertEqual(value, [line1])
 
 
 class TestCSV(TestCase):
@@ -58,24 +107,6 @@ class TestCSV(TestCase):
         result = _csv_value("a\"b\"")
         self.assertEqual(result, '"a""b"""')
 
-    @patch('gobapi.dump.csv.get_reference_fields', lambda x: REFERENCE_FIELDS)
-    def test_csv_header(self):
-        result = _csv_header({}, [])
-        self.assertEqual(result, [])
-
-        result = _csv_header({'name': {'type': 'any type'}}, ['name'])
-        self.assertEqual(result, ['"name"'])
-
-        result = _csv_header({'name': {'type': 'GOB.Reference'}}, ['name'])
-        self.assertEqual(result, ['"name_bronwaarde"'])
-
-        result = _csv_header({'name': {'type': 'GOB.JSON', 'attributes': {'a': 'some a', 'b': 'some b'}}}, ['name'])
-        self.assertEqual(result, ['"name_a"', '"name_b"'])
-
-        result = _csv_header({'name': {'type': 'GOB.IncompleteDate', 'attributes': {'a': 'some a', 'b': 'some b'}}}, ['name'])
-        self.assertEqual(result, ['"name_a"', '"name_b"'])
-
-    @patch('gobapi.dump.csv.get_reference_fields', lambda x: REFERENCE_FIELDS)
     def test_csv_reference_values(self):
         spec = {'type': 'GOB.Reference'}
         value = {}
@@ -102,7 +133,6 @@ class TestCSV(TestCase):
         result = _csv_reference_values(values, spec)
         self.assertEqual(result, ['["any bronwaarde","any bronwaarde"]'])
 
-    @patch('gobapi.dump.csv.get_reference_fields', lambda x: REFERENCE_FIELDS)
     def test_csv_values(self):
         value = None
         result = _csv_values(None, {'type': 'any type'})
@@ -155,50 +185,22 @@ class TestCSV(TestCase):
             result = _csv_values(value, spec)
             self.assertEqual(result, ['', ''])
 
-    def test_csv_record(self):
-        entity = None
-        specs = {}
-        result = _csv_record(entity, specs, [])
-        self.assertEqual(result, [])
 
-        entity = MockEntity()
-        specs = entity.specs()
+class TestCsvStream(TestCase):
 
-        result = _csv_record(entity, specs, ['a', 'b'])
-        self.assertEqual(result, ['"a"', '5'])
+    def test_iter(self):
+        lines = ['a;b;c\n', 'd;e;f\n']
+        obj = CsvStream(lines, size=1)
 
-    def test_csv_entities(self):
-        entities = []
-        model = {
-            'catalog': 'any catalog',
-            'entity_id': 'any entity id',
-            'fields': {
-                'any entity id': {
-                    'type': 'any type'
-                }
-            },
-            'all_fields': {
-                'any entity id': {
-                    'type': 'any type'
-                }
-            }
-        }
-        results = []
-        for result in csv_entities(entities, model):
-            results.append(result)
+        result = ''
+        for stream, line_nr in obj:
+            result += stream.read()
 
-        self.assertEqual(results, [])
+        self.assertEqual(line_nr, 2)
+        self.assertEqual(result, ''.join(lines))
 
-        entities = [MockEntity(), MockEntity()]
-        model = {
-            'catalog': 'any catalog',
-            'entity_id': 'a',
-            'fields': MockEntity.specs(),
-            'all_fields': MockEntity.specs()
-        }
-        results = []
-        # Field c should be ignored
-        for result in csv_entities(entities, model, ['c']):
-            results.append(result)
-
-        self.assertEqual(results, ['"a";"b";"ref"\n', '"a";5;"a"\n', '"a";5;"a"\n'])
+    @patch('gobapi.dump.csv.StringIO')
+    def test_buffer_closed(self, mock_io):
+        result = [_ for _, _ in CsvStream([], size=1)]
+        obj = mock_io()
+        obj.__exit__.assert_called_once()

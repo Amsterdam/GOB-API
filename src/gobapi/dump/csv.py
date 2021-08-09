@@ -4,6 +4,7 @@ Dump GOB
 Dumps of catalog collections in csv format
 """
 import re
+from io import StringIO
 
 from gobapi.dump.config import DELIMITER_CHAR, QUOTATION_CHAR
 from gobapi.dump.config import REFERENCE_TYPES, get_reference_fields
@@ -15,7 +16,7 @@ from gobapi.dump.config import get_field_specifications, get_field_order, get_fi
 regex_crlf = re.compile(r"\r?\n")
 
 
-def _csv_line(values):
+def _csv_line(values: list) -> str:
     """
     Returns a CSV line for the given values
 
@@ -25,7 +26,7 @@ def _csv_line(values):
     return DELIMITER_CHAR.join(values) + "\n"
 
 
-def _csv_value(value):
+def _csv_value(value) -> str:
     """
     Return the CSV value for a given value
 
@@ -44,7 +45,7 @@ def _csv_value(value):
         return f"{QUOTATION_CHAR}{value}{QUOTATION_CHAR}"
 
 
-def _csv_reference_values(value, spec):
+def _csv_reference_values(value, spec) -> list:
     """
     Returns the CSV values for the given reference and type specification
     Note that the result is an array, as a reference value results in multiple CSV values
@@ -79,7 +80,7 @@ def _csv_reference_values(value, spec):
     return values
 
 
-def _csv_values(value, spec):
+def _csv_values(value, spec) -> list:
     """
     Returns the CSV values for the given value and type specification
     Note that the result is an array, as reference value result in multiple CSV values
@@ -113,17 +114,20 @@ def _csv_values(value, spec):
 
 class CsvDumper:
 
-    def __init__(self, model, ignore_fields=None, header=True, sep=';'):
-        self.field_specs = get_field_specifications(model)
-        self.field_order = [f for f in get_field_order(model) if f not in (ignore_fields or [])]
+    def __init__(self, entities, model=None, ignore_fields=None, header=True):
+        if model:
+            self.field_specs = get_field_specifications(model)
+            self.field_order = [f for f in get_field_order(model) if f not in (ignore_fields or [])]
+        else:
+            self.field_specs, self.field_order = {}, []
+
         self.field_names = self._get_field_names()
         self.include_header = header
-        self.count = 0
-        self.sep = sep
+        self.entities = entities
 
-    def _get_field_names(self):
+    def _get_field_names(self) -> list:
         """
-        Returns the CSV header fields for the given type specifications
+        Returns the fieldnames for field specifications, based on the field order
 
         :return:
         """
@@ -145,10 +149,10 @@ class CsvDumper:
 
         return fields
 
-    def _csv_header(self):
+    def _csv_header(self) -> str:
         return _csv_line([_csv_value(field) for field in self.field_names])
 
-    def _csv_record(self, entity):
+    def _csv_record(self, entity) -> str:
         """
         Returns the CSV record fields for the given entity and corresponding type specifications
         :param entity:
@@ -167,22 +171,44 @@ class CsvDumper:
 
             fields.extend(_csv_values(value, field_spec))
 
-        return fields
+        return _csv_line(fields)
 
-    def iterate(self, entities):
+    def __iter__(self) -> str:
         """
         Yield the given entities as a list, starting with a header.
 
         :return:
         """
         _header_yielded = False
-        for entity in entities:
+
+        for entity in self.entities:
             if not _header_yielded and self.include_header:
                 yield self._csv_header()
                 _header_yielded = True
 
-            record = self._csv_record(entity)
-            line = _csv_line(record)
+            yield self._csv_record(entity)
 
-            self.count += 1
-            yield line
+
+class CsvStream:
+
+    def __init__(self, lines, size: int):
+        self.size = size
+        self.lines = lines
+
+    def __iter__(self):
+        count = 0
+
+        with StringIO() as buffer:
+            for line in self.lines:
+                buffer.write(line)
+                count += 1
+
+                if not count % self.size:
+                    buffer.seek(0)
+                    yield buffer, count
+
+                    buffer.truncate(0)
+                    buffer.seek(0)
+            else:
+                buffer.seek(0)
+                yield buffer, count
