@@ -1,7 +1,8 @@
 from unittest import TestCase, mock
 from unittest.mock import patch, MagicMock
 
-from gobapi.auth.auth_query import Authority, AuthorizedQuery, GOB_AUTH_SCHEME, gob_types, gob_secure_types
+from gobapi.auth.auth_query import Authority, AuthorizedQuery, GOB_AUTH_SCHEME, gob_types, gob_secure_types, \
+    _handle_secure_columns, set_suppressed_columns
 
 role_a = "a"
 role_b = "b"
@@ -31,7 +32,8 @@ mock_scheme = {
     },
 }
 
-class MockEntity():
+
+class MockEntity:
 
     def __init__(self):
         self.a = "value a"
@@ -39,10 +41,12 @@ class MockEntity():
         self.c = "value c"
 
 
-class MockRequest():
+class MockRequest:
     headers = {}
 
+
 mock_request = MockRequest()
+
 
 @patch("gobapi.auth.auth_query.super", MagicMock)
 class TestAuthorizedQuery(TestCase):
@@ -75,14 +79,17 @@ class TestAuthorizedQuery(TestCase):
     def test_get_suppressed_columns(self):
         q = AuthorizedQuery()
         q.set_catalog_collection("any catalog", "any collection")
-        q._authority.get_roles = lambda : [role_a]
+
+        q._authority.get_roles = lambda: [role_a]
         self.assertEqual(q._authority.get_suppressed_columns(), [])
-        q._authority.get_roles = lambda : [role_b]
+
+        q._authority.get_roles = lambda: [role_b]
         self.assertEqual(q._authority.get_suppressed_columns(), [])
-        q._authority.get_roles = lambda : [role_c]
+
+        q._authority.get_roles = lambda: [role_c]
         self.assertEqual(q._authority.get_suppressed_columns(), ['any attribute'])
 
-        q._authority.get_roles = lambda : [role_a]
+        q._authority.get_roles = lambda: [role_a]
 
         q.set_catalog_collection("some other catalog", "any collection")
         self.assertEqual(q._authority.get_suppressed_columns(), [])
@@ -91,63 +98,70 @@ class TestAuthorizedQuery(TestCase):
         self.assertEqual(q._authority.get_suppressed_columns(), [])
 
         q.set_catalog_collection("secure catalog collection", "secure collection")
-        q._authority.get_roles = lambda : [role_a]
+        q._authority.get_roles = lambda: [role_a]
         q._authority._attributes = 'all attributes'
         self.assertEqual(q._authority.get_suppressed_columns(), [])
 
         q.set_catalog_collection("secure catalog collection", "secure collection")
-        q._authority.get_roles = lambda : []
+        q._authority.get_roles = lambda: []
         q._authority._attributes = 'all attributes'
         self.assertEqual(q._authority.get_suppressed_columns(), 'all attributes')
 
     @patch("gobapi.auth.auth_query.Authority")
-    @patch("gobapi.auth.auth_query.request", mock_request)
-    @patch("gobapi.auth.auth_query.GOB_AUTH_SCHEME", mock_scheme)
     def test__handle_secure_columns(self, mock_authority):
         mock_authority.exposed_value.return_value = 'exposed value'
-        q = AuthorizedQuery()
-        q.set_catalog_collection("any catalog", "any collection")
+
         entity = None
-        q._handle_secure_columns(entity, {})
+        _handle_secure_columns(entity, {})
         self.assertEqual(entity, None)
 
         class Entity:
-
             def __init__(self):
                 self.col1 = 'value1'
                 self.col2 = 'value2'
 
         entity = Entity()
-        q._handle_secure_columns(entity, {'col1': 'info1'})
+        _handle_secure_columns(entity, {'col1': 'info1'})
         self.assertEqual(entity.col1, 'exposed value')
         self.assertEqual(entity.col2, 'value2')
 
         # Do not crash on unknown columns
-        q._handle_secure_columns(entity, {'col1': 'info1', 'unknown col': 'unknown value'})
+        _handle_secure_columns(entity, {'col1': 'info1', 'unknown col': 'unknown value'})
         self.assertEqual(entity.col1, 'exposed value')
         self.assertEqual(entity.col2, 'value2')
+
 
 class TestAuthorizedQueryIter(TestCase):
 
     @patch("gobapi.auth.auth_query.super")
     def test_iter(self, mock_super):
+        mock_super.session = MagicMock()
         mock_super.return_value = iter([MockEntity(), MockEntity()])
+
         q = AuthorizedQuery()
-        q._authority = mock.MagicMock()
+        q._authority = MagicMock()
         q._authority.get_suppressed_columns = lambda: ["a", "b", "some other col"]
-        for result in q:
-            self.assertIsNone(result.a)
-            self.assertIsNone(result.b)
-            self.assertFalse(hasattr(result, "some other col"))
-            self.assertIsNotNone(result.c)
+        q.session = MagicMock()
+
+        with patch('gobapi.auth.auth_query.EXPIRE_PER', 1):
+            for result in q:
+                self.assertIsNone(result.a)
+                self.assertIsNone(result.b)
+                self.assertFalse(hasattr(result, "some other col"))
+                self.assertIsNotNone(result.c)
+
+        # assert expire_all is called every iteration + once at the end
+        self.assertEqual(q.session.expire_all.call_count, 3)
 
         # Do not fail on set suppressed columns
-        q.set_suppressed_columns(None, ["a"])
+        set_suppressed_columns(None, ["a"])
 
         mock_super.return_value = iter([(MockEntity(),), (MockEntity(),)])
         q = AuthorizedQuery()
         q._authority = mock.MagicMock()
         q._authority.get_suppressed_columns = lambda: ["a", "b", "some other col"]
+        q.session = MagicMock()
+
         for result in q:
             self.assertIsNone(result[0].a)
             self.assertIsNone(result[0].b)
@@ -158,6 +172,8 @@ class TestAuthorizedQueryIter(TestCase):
     def test_iter_unauthorized(self, mock_super):
         mock_super.return_value = iter([MockEntity(), MockEntity()])
         q = AuthorizedQuery()
+        q.session = MagicMock()
+
         for result in q:
             for attr in ["a", "b", "c"]:
                 self.assertTrue(hasattr(result, attr))

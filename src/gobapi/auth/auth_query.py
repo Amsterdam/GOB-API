@@ -8,9 +8,10 @@ from gobcore.typesystem import get_gob_type_from_info, gob_types, gob_secure_typ
 from gobapi.auth.schemes import GOB_AUTH_SCHEME
 
 SUPPRESSED_COLUMNS = "_suppressed_columns"
+EXPIRE_PER = 10_000
 
 
-class Authority():
+class Authority:
 
     def __init__(self, catalog_name, collection_name):
         """
@@ -233,9 +234,6 @@ class AuthorizedQuery(Query):
         An authorized query checks every entity for columns that should not be communicated.
         """
         self._authority = None
-        self.suppressed_columns = []
-        self.secure_columns = {}
-        self.expire_per = kwargs.pop('expire_per', None)
         super().__init__(*args, **kwargs)
 
     def set_catalog_collection(self, catalog, collection):
@@ -243,32 +241,34 @@ class AuthorizedQuery(Query):
         Register the catalog and collection for the entities to be checked
         """
         self._authority = Authority(catalog, collection)
-        self.suppressed_columns = self._authority.get_suppressed_columns()
-        self.secure_columns = self._authority.get_secured_columns()
 
     def __iter__(self):
         """
         Iterator that yields entities for which the non-authorized columns have been cleared.
         An extra attribute is set on the entity that specifies the cleared columns
         """
-        if not self._authority:
+        if self._authority:
+            suppressed_columns = self._authority.get_suppressed_columns()
+            secure_columns = self._authority.get_secured_columns()
+        else:
+            suppressed_columns, secure_columns = [], {}
             print("ERROR: UNAUTHORIZED ACCESS DETECTED")
 
         count = 0
         for entity in super().__iter__():
             current_entity = entity[0] if isinstance(entity, tuple) else entity
 
-            _suppress_columns(current_entity, self.suppressed_columns)
-            _handle_secure_columns(current_entity, self.secure_columns)
+            _suppress_columns(current_entity, suppressed_columns)
+            _handle_secure_columns(current_entity, secure_columns)
 
             count += 1
             yield entity
 
-            if self.expire_per and count % self.expire_per == 0:
-                # objects will be kept in memory if not explicitely expired
+            if EXPIRE_PER and count % EXPIRE_PER == 0:
+                # objects will still be referenced if not explicitely expired
                 self.session.expire_all()
 
-        if self.expire_per:
+        if EXPIRE_PER:
             self.session.expire_all()
 
 
