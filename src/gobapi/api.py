@@ -24,7 +24,7 @@ from gobcore.views import GOBViews
 from gobapi.config import API_BASE_PATH, API_SECURE_BASE_PATH
 from gobapi.fat_file import fat_file
 from gobapi.response import hal_response, not_found, get_page_ref, ndjson_entities, stream_entities
-from gobapi.dump.csv import csv_entities
+from gobapi.dump.csv import CsvDumper
 from gobapi.dump.sql import sql_entities
 from gobapi.dump.to_db import dump_to_db
 from gobapi.auth.routes import secure_route, public_route
@@ -202,7 +202,7 @@ def _dump(catalog_name, collection_name):
         entities, model = dump_entities(catalog_name, collection_name, filter=filter)
 
         if format == "csv":
-            result = csv_entities(entities, model)
+            result = CsvDumper(entities, model=model)
             return WorkerResponse.stream_with_context(result, mimetype='text/csv')
         elif format == "sql":
             return Response(sql_entities(catalog_name, collection_name, model), mimetype='application/sql')

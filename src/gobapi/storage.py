@@ -481,7 +481,9 @@ def dump_entities(catalog, collection, filter=None, order_by=None):
     :return: (all collection entities, the collection model)
     """
     assert _Base
-    session = get_session()
+    _session = get_session()
+
+    yield_per = 10_000
 
     table, model = get_table_and_model(catalog, collection)
 
@@ -489,7 +491,7 @@ def dump_entities(catalog, collection, filter=None, order_by=None):
     model['catalog'] = catalog
     model['collection'] = collection
 
-    entities = session.query(table)
+    entities = _session.query(table)
 
     if filter:
         entities = entities.filter(filter(table))
@@ -499,7 +501,7 @@ def dump_entities(catalog, collection, filter=None, order_by=None):
 
     entities.set_catalog_collection(catalog, collection)
 
-    return entities.yield_per(10000), model
+    return entities.yield_per(yield_per), model
 
 
 def get_id_columns(catalog, collection):

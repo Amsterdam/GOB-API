@@ -11,21 +11,20 @@ from gobcore.model.metadata import FIELD
 from gobcore.model.relations import get_relation_name
 from gobcore.datastore.factory import DatastoreFactory
 
-from gobapi.dump.config import SKIP_RELATIONS, UNIQUE_ID, UNIQUE_REL_ID
+from gobapi.dump.config import SKIP_RELATIONS, UNIQUE_ID, UNIQUE_REL_ID, DELIMITER_CHAR
 from gobapi.dump.sql import _create_schema, _create_table, _insert_into_table, _delete_table
 from gobapi.dump.sql import _create_indexes, _create_index, get_max_eventid, get_count as get_dst_count
-from gobapi.dump.csv import csv_entities
-from gobapi.dump.csv_stream import CSVStream
+from gobapi.dump.csv import CsvDumper, CsvStream
 from gobapi.storage import get_entity_refs_after, get_table_and_model, get_max_eventid as get_src_max_eventid, \
     get_count as get_src_count
 
 from gobapi.dump.sql import to_sql_string_value
 
-STREAM_PER = 10000              # Stream per STREAM_PER lines
+STREAM_PER = 10_000              # Stream per STREAM_PER lines
 COMMIT_PER = 10 * STREAM_PER    # Commit once per COMMIT_PER lines
-BUFFER_PER = 50000              # Copy read buffer size
+BUFFER_PER = 50_000              # Copy read buffer size
 
-MAX_SYNC_ITEMS = 500000         # Maximum number of items to sync before switching to full dump
+MAX_SYNC_ITEMS = 500_000         # Maximum number of items to sync before switching to full dump
 
 
 class DbDumper:
@@ -60,6 +59,12 @@ class DbDumper:
         # Set attributes for create_table
         self.model['catalog'] = catalog_name
         self.model['collection'] = collection_name
+
+        self.suppressed_columns = Authority(self.catalog_name, self.collection_name).get_suppressed_columns()
+
+    def disconnect(self):
+        if self.datastore:
+            self.datastore.disconnect()
 
     def _get_dst_schema(self, config: dict, catalog_name: str, collection_name: str):
         """Returns schema from config if set, otherwise catalog_name. If catalog_name is 'rel', return the catalog_name
@@ -202,46 +207,37 @@ class DbDumper:
     def _delete_tmp_table(self):
         self._delete_table(self.tmp_collection_name)
 
-    def _create_indexes(self, model):
+    def _create_indexes(self):
         """
         Create default indexes for the given collection
 
         :param model:
         :return:
         """
-        for index in _create_indexes(model):
+        for index in _create_indexes(self.model):
             yield f"Create index on {index['field']}\n"
             self._execute(_create_index(self.schema, self.collection_name, **index))
 
-    def _dump_entities_to_table(self, entities, model):
-        authority = Authority(self.catalog_name, self.collection_name)
-        suppress_columns = authority.get_suppressed_columns()
-
+    def _dump_entities_to_table(self, entities):
         connection = self.datastore.connection
-        stream = CSVStream(csv_entities(entities, model, suppress_columns), STREAM_PER)
+        sql = f"COPY {self.schema}.{self.tmp_collection_name} FROM STDIN DELIMITER '{DELIMITER_CHAR}' CSV"
+        csv_lines = CsvDumper(entities, model=self.model, ignore_fields=self.suppressed_columns, header=False)
+        line_nr = 0
 
         with connection.cursor() as cursor:
             yield "Export data"
-            commit = COMMIT_PER
-            while stream.has_items():
-                stream.reset_count()
-                cursor.copy_expert(
-                    sql=f"COPY {self.schema}.{self.tmp_collection_name} FROM STDIN DELIMITER ';' CSV HEADER;",
-                    file=stream,
-                    size=BUFFER_PER
-                )
 
-                if stream.total_count >= commit:
+            for stream, line_nr in CsvStream(csv_lines, size=STREAM_PER):
+                cursor.copy_expert(sql, stream, size=BUFFER_PER)
+
+                if not line_nr % COMMIT_PER:
                     connection.commit()
-                    commit += COMMIT_PER
-
-                    yield f"\n{self.collection_name}: {stream.total_count:,}"
+                    yield f"\n{self.collection_name}: {line_nr:,}"
                 else:
-                    # Let client know we're still working.
-                    yield "."
+                    yield '.'
 
-        yield f"\nExported {stream.total_count} rows\n"
         connection.commit()
+        yield f"\nExported {line_nr:,} rows\n"
 
     def _filter_last_events_lambda(self, max_eventid):
         return lambda table: getattr(table, FIELD.LAST_EVENT) > max_eventid
@@ -277,14 +273,14 @@ class DbDumper:
 
         if full_dump:
             # Full write of all entities
-            entities, model = yield from self._full_dump()
+            entities = yield from self._full_dump()
         else:
             # Sync updated and new entities
-            entities, model = yield from self._sync_dump(dst_max_eventid, source_ids_to_update)
+            entities = yield from self._sync_dump(dst_max_eventid, source_ids_to_update)
 
-        yield from self._dump_entities_to_table(entities, model)
+        yield from self._dump_entities_to_table(entities)
         yield from self._copy_tmp_table()
-        yield from self._create_indexes(model)
+        yield from self._create_indexes()
 
     def _ref(self, rel_alias: str, with_seqnr: bool):
         """Returns ref expression for a relation with alias :rel_alias: with or without seqnr
@@ -415,7 +411,8 @@ from {self.catalog_name}.{self.collection_name} {main_alias}
         :param kwargs:
         :return:
         """
-        return dump_entities(self.catalog_name, self.collection_name, **kwargs, order_by=FIELD.LAST_EVENT)
+        # Only return entities generator, not the model
+        return dump_entities(self.catalog_name, self.collection_name, **kwargs, order_by=FIELD.LAST_EVENT)[0]
 
     def _full_dump(self):
         """
@@ -461,7 +458,6 @@ from {self.catalog_name}.{self.collection_name} {main_alias}
 def _dump_relations(catalog_name, collection_name, config):
     """Dumps relations for catalog_name, collection_name """
     config['schema'] = catalog_name
-
     _, model = get_table_and_model(catalog_name, collection_name)
 
     for relation in [k for k in model['references'].keys()]:
@@ -476,9 +472,11 @@ def _dump_relations(catalog_name, collection_name, config):
 
         rel_dumper = DbDumper('rel', relation_name, config)
         yield from rel_dumper.dump_to_db(full_dump=config.get('force_full', False))
+        rel_dumper.disconnect()
 
 
 def dump_to_db(catalog_name, collection_name, config):
+    dumper = None
     try:
         dumper = DbDumper(catalog_name, collection_name, config)
         yield from dumper.dump_to_db(full_dump=config.get('force_full', False))
@@ -493,3 +491,6 @@ def dump_to_db(catalog_name, collection_name, config):
     except Exception as e:
         print("Dump failed", traceback.format_exc(limit=-5))
         yield f"ERROR: Dump failed - {str(e)}\n"
+    finally:
+        if dumper:
+            dumper.disconnect()

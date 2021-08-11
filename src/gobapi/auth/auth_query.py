@@ -8,9 +8,10 @@ from gobcore.typesystem import get_gob_type_from_info, gob_types, gob_secure_typ
 from gobapi.auth.schemes import GOB_AUTH_SCHEME
 
 SUPPRESSED_COLUMNS = "_suppressed_columns"
+EXPIRE_PER = 10_000
 
 
-class Authority():
+class Authority:
 
     def __init__(self, catalog_name, collection_name):
         """
@@ -250,35 +251,45 @@ class AuthorizedQuery(Query):
             suppressed_columns = self._authority.get_suppressed_columns()
             secure_columns = self._authority.get_secured_columns()
         else:
+            suppressed_columns, secure_columns = [], {}
             print("ERROR: UNAUTHORIZED ACCESS DETECTED")
-            suppressed_columns = []
-            secure_columns = {}
 
+        count = 0
         for entity in super().__iter__():
-            if isinstance(entity, tuple):
-                self._suppress_columns(entity[0], suppressed_columns)
-                self._handle_secure_columns(entity[0], secure_columns)
-            else:
-                self._suppress_columns(entity, suppressed_columns)
-                self._handle_secure_columns(entity, secure_columns)
+            current_entity = entity[0] if isinstance(entity, tuple) else entity
+
+            _suppress_columns(current_entity, suppressed_columns)
+            _handle_secure_columns(current_entity, secure_columns)
+
+            count += 1
             yield entity
 
-    def _handle_secure_columns(self, entity, secure_columns):
-        for column, info in secure_columns.items():
-            try:
-                entity_value = getattr(entity, column)
-                setattr(entity, column, Authority.exposed_value(entity_value, info))
-            except AttributeError:
-                pass
+            if EXPIRE_PER and count % EXPIRE_PER == 0:
+                # objects will still be referenced if not explicitely expired
+                self.session.expire_all()
 
-    def _suppress_columns(self, entity, suppressed_columns):
-        self.set_suppressed_columns(entity, suppressed_columns)
-        for column in [c for c in suppressed_columns if hasattr(entity, c)]:
-            setattr(entity, column, None)
+        if EXPIRE_PER:
+            self.session.expire_all()
 
-    def set_suppressed_columns(self, entity, suppressed_columns):
+
+def _handle_secure_columns(entity, secure_columns):
+    for column, info in secure_columns.items():
         try:
-            # Register the suppressed columns with the entity
-            setattr(entity, SUPPRESSED_COLUMNS, suppressed_columns)
+            entity_value = getattr(entity, column)
+            setattr(entity, column, Authority.exposed_value(entity_value, info))
         except AttributeError:
             pass
+
+
+def _suppress_columns(entity, suppressed_columns):
+    # set_suppressed_columns(entity, suppressed_columns)
+    for column in [c for c in suppressed_columns if hasattr(entity, c)]:
+        setattr(entity, column, None)
+
+
+def set_suppressed_columns(entity, suppressed_columns):
+    try:
+        # Register the suppressed columns with the entity
+        setattr(entity, SUPPRESSED_COLUMNS, suppressed_columns)
+    except AttributeError:
+        pass
