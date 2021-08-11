@@ -8,7 +8,6 @@ from gobcore.typesystem import get_gob_type_from_info, gob_types, gob_secure_typ
 from gobapi.auth.schemes import GOB_AUTH_SCHEME
 
 SUPPRESSED_COLUMNS = "_suppressed_columns"
-EXPIRE_PER = 10_000
 
 
 class Authority:
@@ -229,6 +228,8 @@ class Authority:
 
 class AuthorizedQuery(Query):
 
+    EXPIRE_PER = None
+
     def __init__(self, *args, **kwargs):
         """
         An authorized query checks every entity for columns that should not be communicated.
@@ -241,6 +242,10 @@ class AuthorizedQuery(Query):
         Register the catalog and collection for the entities to be checked
         """
         self._authority = Authority(catalog, collection)
+
+    def expire_per(self, size: int):
+        if size:
+            self.EXPIRE_PER = size
 
     def __iter__(self):
         """
@@ -255,6 +260,8 @@ class AuthorizedQuery(Query):
             print("ERROR: UNAUTHORIZED ACCESS DETECTED")
 
         count = 0
+        expire_per = self.EXPIRE_PER
+
         for entity in super().__iter__():
             current_entity = entity[0] if isinstance(entity, tuple) else entity
 
@@ -264,11 +271,11 @@ class AuthorizedQuery(Query):
             count += 1
             yield entity
 
-            if EXPIRE_PER and count % EXPIRE_PER == 0:
+            if expire_per and count % expire_per == 0:
                 # objects will still be referenced if not explicitely expired
                 self.session.expire_all()
 
-        if EXPIRE_PER:
+        if expire_per:
             self.session.expire_all()
 
 

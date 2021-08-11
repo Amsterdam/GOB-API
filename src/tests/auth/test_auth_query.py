@@ -143,15 +143,11 @@ class TestAuthorizedQueryIter(TestCase):
         q._authority.get_suppressed_columns = lambda: ["a", "b", "some other col"]
         q.session = MagicMock()
 
-        with patch('gobapi.auth.auth_query.EXPIRE_PER', 1):
-            for result in q:
-                self.assertIsNone(result.a)
-                self.assertIsNone(result.b)
-                self.assertFalse(hasattr(result, "some other col"))
-                self.assertIsNotNone(result.c)
-
-        # assert expire_all is called every iteration + once at the end
-        self.assertEqual(q.session.expire_all.call_count, 3)
+        for result in q:
+            self.assertIsNone(result.a)
+            self.assertIsNone(result.b)
+            self.assertFalse(hasattr(result, "some other col"))
+            self.assertIsNotNone(result.c)
 
         # Do not fail on set suppressed columns
         set_suppressed_columns(None, ["a"])
@@ -167,6 +163,23 @@ class TestAuthorizedQueryIter(TestCase):
             self.assertIsNone(result[0].b)
             self.assertFalse(hasattr(result[0], "some other col"))
             self.assertIsNotNone(result[0].c)
+
+    @patch("gobapi.auth.auth_query.super")
+    def test_iter_expire_per(self, mock_super):
+        mock_super.session = MagicMock()
+        mock_super.return_value = iter([MockEntity(), MockEntity()])
+
+        q = AuthorizedQuery()
+        q._authority = MagicMock()
+        q._authority.get_suppressed_columns = lambda: ["a", "b", "some other col"]
+        q.session = MagicMock()
+        q.expire_per(1)
+
+        for _ in q:
+            continue
+
+        # assert expire_all is called every iteration + once at the end
+        self.assertEqual(q.session.expire_all.call_count, 3)
 
     @patch("gobapi.auth.auth_query.super")
     def test_iter_unauthorized(self, mock_super):
