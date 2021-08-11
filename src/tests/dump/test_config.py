@@ -41,6 +41,9 @@ class MockSession:
     def set_catalog_collection(self, *args):
         return self
 
+    def expire_per(self, size):
+        return self
+
     def yield_per(self, n):
         return "any table"
 
