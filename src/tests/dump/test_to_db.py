@@ -27,6 +27,11 @@ class TestDbDumper(TestCase):
         }
         return DbDumper(self.catalog_name, self.collection_name, config)
 
+    def test_disconnect(self, mock_datastore_factory):
+        db_dumper = self._get_dumper()
+        db_dumper.disconnect()
+        mock_datastore_factory.assert_has_calls([call.get_datastore().disconnect()])
+
     def test_init(self, mock_datastore_factory):
         db_dumper = self._get_dumper()
 

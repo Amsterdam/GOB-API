@@ -62,6 +62,10 @@ class DbDumper:
 
         self.suppressed_columns = Authority(self.catalog_name, self.collection_name).get_suppressed_columns()
 
+    def disconnect(self):
+        if self.datastore:
+            self.datastore.disconnect()
+
     def _get_dst_schema(self, config: dict, catalog_name: str, collection_name: str):
         """Returns schema from config if set, otherwise catalog_name. If catalog_name is 'rel', return the catalog_name
         that owns the relation.
@@ -454,7 +458,6 @@ from {self.catalog_name}.{self.collection_name} {main_alias}
 def _dump_relations(catalog_name, collection_name, config):
     """Dumps relations for catalog_name, collection_name """
     config['schema'] = catalog_name
-
     _, model = get_table_and_model(catalog_name, collection_name)
 
     for relation in [k for k in model['references'].keys()]:
@@ -469,9 +472,11 @@ def _dump_relations(catalog_name, collection_name, config):
 
         rel_dumper = DbDumper('rel', relation_name, config)
         yield from rel_dumper.dump_to_db(full_dump=config.get('force_full', False))
+        rel_dumper.disconnect()
 
 
 def dump_to_db(catalog_name, collection_name, config):
+    dumper = None
     try:
         dumper = DbDumper(catalog_name, collection_name, config)
         yield from dumper.dump_to_db(full_dump=config.get('force_full', False))
@@ -486,3 +491,6 @@ def dump_to_db(catalog_name, collection_name, config):
     except Exception as e:
         print("Dump failed", traceback.format_exc(limit=-5))
         yield f"ERROR: Dump failed - {str(e)}\n"
+    finally:
+        if dumper:
+            dumper.disconnect()
