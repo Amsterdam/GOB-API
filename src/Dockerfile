@@ -24,6 +24,7 @@ ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
 ENV C_INCLUDE_PATH=/usr/include/gdal
 
 # Install required Python packages
+RUN pip3 install pip --upgrade
 COPY requirements.txt /app/
 RUN LIBGDAL_VERSION=$(gdal-config --version) pip3 install --trusted-host pypi.python.org --trusted-host pypi.org --trusted-host files.pythonhosted.org --no-cache-dir -r requirements.txt
 RUN rm requirements.txt
