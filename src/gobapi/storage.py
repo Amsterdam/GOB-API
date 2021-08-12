@@ -158,8 +158,8 @@ def _create_reference(entity, field, spec, entity_catalog=None, entity_collectio
     :param entity: The entity
     :param field: The field a reference is being created for
     :param spec: The field specification
-    :param catalog: The catalog of the entity
-    :param collection: The collection of the entity
+    :param entity_catalog: The catalog of the entity
+    :param entity_collection: The collection of the entity
     :return:
     """
     if spec['ref'] is not None:
@@ -206,7 +206,7 @@ def _to_gob_value(entity, field, spec, resolve_secure=False):
         return gob_type.from_value(entity_value)
 
 
-def _get_convert_for_state(model, fields=[], private_attributes=False):
+def _get_convert_for_state(model, fields=None, private_attributes=False):
     """Get the entity to dict convert function for GOBModels with state
 
     The model is used to extract only the public attributes of the entity,
@@ -219,6 +219,8 @@ def _get_convert_for_state(model, fields=[], private_attributes=False):
     def convert(entity):
         hal_entity = {k: _to_gob_value(entity, k, v) for k, v in items}
         return hal_entity
+
+    fields = fields or []
 
     # Select all attributes except if it's a reference, unless a specific list was passed
     if not fields:
@@ -338,8 +340,6 @@ def _get_convert_for_table(table, filter=None):
 
     The table columns are used to extract only the public attributes of the entity.
 
-    :param entity:
-    :param model:
     :return:
     """
     def convert(entity):
@@ -443,7 +443,7 @@ def get_entities(catalog, collection, offset, limit, view=None, reference_name=N
     Returns the list of entities within a collection.
     Starting at offset (>= 0) and limiting the result to <limit> items
 
-    :param collection_name:
+    :param collection:
     :param offset:
     :param limit:
     :param view: optional view for the collection
@@ -500,6 +500,7 @@ def dump_entities(catalog, collection, filter=None, order_by=None):
         entities = entities.order_by(getattr(table, order_by))
 
     entities.set_catalog_collection(catalog, collection)
+    entities.expire_per(yield_per)
 
     return entities.yield_per(yield_per), model
 
@@ -641,22 +642,22 @@ def _add_relations(query, catalog_name, collection_name):
 
 
 def _apply_filters(query, filters, model):
-    for filter in filters:
-        if filter.get('op') == '==':
-            query = query.filter(getattr(model, filter['field']) == filter['value'])
+    for filter_ in filters:
+        if filter_.get('op') == '==':
+            query = query.filter(getattr(model, filter_['field']) == filter_['value'])
         else:
-            raise NotImplementedError(f"Filter operator '{filter.get('op', '')}' not implemented")
+            raise NotImplementedError(f"Filter operator '{filter_.get('op', '')}' not implemented")
 
     return query
 
 
 def query_entities(catalog, collection, view):
     assert _Base
-    session = get_session()
+    _session = get_session()
 
     table, model = get_table_and_model(catalog, collection, view)
 
-    query = session.query(table)
+    query = _session.query(table)
     query.set_catalog_collection(catalog, collection)
 
     # Only add relations if we're querying a catalog/collection
@@ -689,7 +690,7 @@ def query_entities(catalog, collection, view):
 
 def query_reference_entities(catalog, collection, reference_name, src_id):
     assert _Base
-    session = get_session()
+    _session = get_session()
 
     gob_model = GOBModel()
 
@@ -704,9 +705,9 @@ def query_reference_entities(catalog, collection, reference_name, src_id):
     # Destination table and model
     dst_table, dst_model = get_table_and_model(dst_catalog_name, dst_collection_name)
 
-    query = session.query(dst_table) \
-                   .join(rel_table, dst_table._id == rel_table.dst_id) \
-                   .filter(rel_table.src_id == src_id)
+    query = _session.query(dst_table) \
+                    .join(rel_table, dst_table._id == rel_table.dst_id) \
+                    .filter(rel_table.src_id == src_id)
 
     # Exclude all records with date_deleted
     all_entities = filter_deleted(query, dst_table)
@@ -729,20 +730,20 @@ def get_collection_states(catalog, collection):
     :return states: A dict containing all entities by _id for easy lookup
     """
     assert _Base
-    session = get_session()
+    _session = get_session()
 
     entity, model = get_table_and_model(catalog, collection)
 
     # Get the max sequence number for every id + start validity combination
-    sub = session.query(getattr(entity, FIELD.ID),
-                        getattr(entity, FIELD.START_VALIDITY),
-                        label("max_seqnr", func.max(getattr(entity, FIELD.SEQNR)))
-                        )\
+    sub = _session.query(getattr(entity, FIELD.ID),
+                         getattr(entity, FIELD.START_VALIDITY),
+                         label("max_seqnr", func.max(getattr(entity, FIELD.SEQNR)))
+                         )\
         .group_by(FIELD.ID, FIELD.START_VALIDITY)\
         .subquery()
 
     # Filter the entities to only the highest volgnummer per id + start validity combination
-    all_entities = session.query(entity)
+    all_entities = _session.query(entity)
     all_entities.set_catalog_collection(catalog, collection)
     all_entities = all_entities \
         .join(sub, and_(getattr(sub.c, FIELD.ID) == getattr(entity, FIELD.ID),
@@ -828,21 +829,20 @@ def get_entity(catalog, collection, id, view=None):
     Returns the entity from the specified collection or the view identied by the id parameter.
     If the entity cannot be found, None is returned
 
-    :param collection_name:
     :param id:
     :param view:
     :return:
     """
     assert _Base
-    session = get_session()
+    _session = get_session()
 
-    filter = {
+    _filter = {
         "_id": id,
     }
 
     table, model = get_table_and_model(catalog, collection, view)
 
-    query = session.query(table).filter_by(**filter)
+    query = _session.query(table).filter_by(**_filter)
     query.set_catalog_collection(catalog, collection)
 
     query = _add_relations(query, catalog,  collection)
