@@ -1,5 +1,5 @@
 aniso8601==7.0.0
-antlr4-python3-runtime==4.9.2
+antlr4-python3-runtime==4.7.2
 Flask==1.1.2
 Flask-Cors==3.0.10
 Flask-GraphQL==2.0.1
