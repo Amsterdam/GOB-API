@@ -24,7 +24,7 @@ STREAM_PER = 10_000              # Stream per STREAM_PER lines
 COMMIT_PER = 10 * STREAM_PER    # Commit once per COMMIT_PER lines
 BUFFER_PER = 50_000              # Copy read buffer size
 
-MAX_SYNC_ITEMS = 500_000         # Maximum number of items to sync before switching to full dump
+MAX_SYNC_ITEMS = 250_000         # Maximum number of items to sync before switching to full dump
 
 
 class DbDumper:
