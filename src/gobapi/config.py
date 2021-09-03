@@ -14,6 +14,7 @@ API_SECURE_BASE_PATH = '/gob'
 
 GOB_DB = {
     'drivername': 'postgres',
+    'database': os.getenv('DATABASE_NAME', "gob"),
     'username': os.getenv("DATABASE_USER", "gob"),
     'password': os.getenv("DATABASE_PASSWORD", "insecure"),
     'host': os.getenv("DATABASE_HOST_OVERRIDE", "localhost"),
