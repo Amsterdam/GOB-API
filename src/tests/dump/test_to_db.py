@@ -115,18 +115,24 @@ class TestDbDumper(TestCase):
         db_dumper.schema = 'schema'
         db_dumper._copy_table_into('src_table', 'dst_table', [])
         db_dumper._execute.assert_called_with(
-            'INSERT INTO "schema"."dst_table" SELECT * FROM "schema"."src_table" '
+            'INSERT INTO "schema"."dst_table" SELECT * FROM "schema"."src_table"'
         )
 
         db_dumper._copy_table_into('src_table', 'dst_table', ['a', 'b'])
         db_dumper._execute.assert_called_with(
-            'INSERT INTO "schema"."dst_table" SELECT * FROM "schema"."src_table" WHERE ref NOT IN (\'a\',\'b\')'
+            'INSERT INTO "schema"."dst_table" '
+            'WITH excluded(unique_id) AS (VALUES (\'a\'),(\'b\')) '
+            'SELECT * FROM "schema"."src_table" '
+            'WHERE NOT EXISTS(SELECT 1 FROM excluded e WHERE ref = e.unique_id)'
         )
 
         db_dumper.catalog_name = "rel"
         db_dumper._copy_table_into('src_table', 'dst_table', ['a', 'b'])
         db_dumper._execute.assert_called_with(
-            'INSERT INTO "schema"."dst_table" SELECT * FROM "schema"."src_table" WHERE CONCAT(src_ref, \'_\', dst_ref) NOT IN (\'a\',\'b\')'
+            'INSERT INTO "schema"."dst_table" '
+            'WITH excluded(unique_id) AS (VALUES (\'a\'),(\'b\')) '
+            'SELECT * FROM "schema"."src_table" '
+            'WHERE NOT EXISTS(SELECT 1 FROM excluded e WHERE CONCAT(src_ref, \'_\', dst_ref) = e.unique_id)'
         )
 
     @patch('gobapi.dump.to_db.get_max_eventid')
