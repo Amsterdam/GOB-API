@@ -18,7 +18,7 @@ from gobapi.dump.csv import CsvDumper, CsvStream
 from gobapi.storage import get_entity_refs_after, get_table_and_model, get_max_eventid as get_src_max_eventid, \
     get_count as get_src_count
 
-from gobapi.dump.sql import to_sql_string_value
+from gobapi.dump.sql import to_sql_string_value, _quoted_tablename
 
 STREAM_PER = 10_000              # Stream per STREAM_PER lines
 COMMIT_PER = 10 * STREAM_PER    # Commit once per COMMIT_PER lines
@@ -122,16 +122,21 @@ class DbDumper:
 
         """
         where = ""
+        cte_excluded = ""
+
         if ids_to_skip:
             # Only copy the rows that have not changed
             if self.catalog_name == "rel":
                 unique_id = UNIQUE_REL_ID
             else:
                 unique_id = UNIQUE_ID
-            ids_to_skip_sql = ",".join([to_sql_string_value(id) for id in ids_to_skip])
-            where = f"WHERE {unique_id} NOT IN ({ids_to_skip_sql})"
 
-        query = f'INSERT INTO "{self.schema}"."{dst_table}" SELECT * FROM "{self.schema}"."{src_table}" {where}'
+            values_list = ",".join([f"({to_sql_string_value(item)})" for item in ids_to_skip])
+            cte_excluded = f"WITH excluded(unique_id) AS (VALUES {values_list})"
+            where = f"WHERE NOT EXISTS(SELECT 1 FROM excluded e WHERE {unique_id} = e.unique_id)"
+
+        to_insert = f"{cte_excluded} SELECT * FROM {_quoted_tablename(self.schema, src_table)} {where}"
+        query = f"INSERT INTO {_quoted_tablename(self.schema, dst_table)} {to_insert.strip()}"
         self._execute(query)
 
     def _get_max_eventid(self, table_name: str):
