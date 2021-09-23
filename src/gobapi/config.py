@@ -26,6 +26,35 @@ API_INFRA_SERVICES = os.getenv(
     "API_INFRA_SERVICES", "MESSAGE_SERVICE"
 ).upper().split(",")
 
+# Logging for the API.
+# Logging for services is configured in services.py
+API_LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {
+            "format": "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "default"
+        },
+    },
+    "loggers": {
+        "tests": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+        "gobapi": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
+    }
+}
+
 
 def current_api_base_path():
     request_base_path_key = 'gob_base_path'
