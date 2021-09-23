@@ -1,5 +1,7 @@
 import re
+from typing import Optional
 
+from flask import request
 
 def to_snake(camel: str):
     """
@@ -82,3 +84,11 @@ def streaming_gob_response(func):
             raise e
 
     return wrapper
+
+
+def get_request_id() -> Optional[str]:
+    """Get the request_id from the request object, if available.
+
+    The request_id object should be set by 'set_request_id' which is registered by app.before_request.
+    """
+    return getattr(request, "request_id", None)

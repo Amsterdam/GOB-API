@@ -1,24 +1,46 @@
-from flask import request, jsonify
+import json
+import logging
+from typing import Optional
+from uuid import uuid4
 
-from gobapi.session import get_session
+from flask import request, jsonify, g
 from sqlalchemy.sql import text
 
-from gobapi.graphql_streaming.graphql2sql.graphql2sql import GraphQL2SQL, NoAccessException, InvalidQueryException
-from gobapi.graphql_streaming.response_custom import GraphQLCustomStreamingResponseBuilder
+from gobapi.graphql_streaming.graphql2sql.graphql2sql import (
+    GraphQL2SQL,
+    NoAccessException, InvalidQueryException)
+from gobapi.graphql_streaming.response_custom import \
+    GraphQLCustomStreamingResponseBuilder
+from gobapi.logger import get_logger
+from gobapi.session import get_session
+from gobapi.utils import get_request_id
 from gobapi.worker.response import WorkerResponse
 
-import json
+logger = get_logger(__name__)
 
 
-class GraphQLStreamingApi():
+class GraphQLStreamingApi:
+    """Returns data on a long living open connection."""
 
-    def entrypoint(self):
-        # Compatible with plain GraphQL endpoint
+    def _get_query(self) -> Optional[str]:
         query = request.args.get('query')
-        if not query:
+        if query:
+            return query
+
+        if request.data:
             # Compatible with existing GOB export code
             request_data = json.loads(request.data.decode('utf-8'))
-            query = request_data['query']
+            return request_data['query']
+
+        return None
+
+    def entrypoint(self):
+        query = self._get_query()
+        if not query:
+            logger.warning("No query passed in")
+            return jsonify({'error': str("no query given")}), 400
+
+        logger.info(f"Running GraphQL for {get_request_id()}: {query}")
         graphql2sql = GraphQL2SQL(query)
         try:
             sql = graphql2sql.sql()

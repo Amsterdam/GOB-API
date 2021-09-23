@@ -3,6 +3,7 @@ from unittest import mock
 
 from gobapi.graphql_streaming.resolve import Resolver
 
+
 class TestResolve(unittest.TestCase):
 
     def testResolver(self):
