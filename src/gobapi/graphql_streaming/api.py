@@ -1,9 +1,7 @@
 import json
-import logging
 from typing import Optional
-from uuid import uuid4
 
-from flask import request, jsonify, g
+from flask import request, jsonify
 from sqlalchemy.sql import text
 
 from gobapi.graphql_streaming.graphql2sql.graphql2sql import (

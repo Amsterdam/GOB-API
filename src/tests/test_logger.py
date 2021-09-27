@@ -6,7 +6,7 @@ from gobapi.logger import get_logger
 
 
 def test_run_test():
-     assert isinstance(get_logger('a'), logging.Logger)
+    assert isinstance(get_logger('a'), logging.Logger)
 
 
 @patch("os.getenv")

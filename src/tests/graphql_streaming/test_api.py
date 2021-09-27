@@ -2,6 +2,7 @@ import json
 
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
+from uuid import uuid4
 
 from gobapi.graphql_streaming.api import GraphQLStreamingApi, NoAccessException, InvalidQueryException
 
@@ -12,6 +13,7 @@ class TestGraphQLStreamingApi(TestCase):
     def setUp(self) -> None:
         self.api = GraphQLStreamingApi()
 
+    @patch("gobapi.graphql_streaming.api.get_request_id", lambda: str(uuid4()))
     @patch("gobapi.graphql_streaming.api.get_session")
     @patch("gobapi.graphql_streaming.api.GraphQL2SQL")
     @patch("gobapi.graphql_streaming.api.GraphQLCustomStreamingResponseBuilder")
@@ -36,6 +38,8 @@ class TestGraphQLStreamingApi(TestCase):
                                                      request_args=mock_request.args)
             self.assertEqual(result, mock_response_builder.return_value)
 
+    @patch("gobapi.graphql_streaming.api.get_request_id",
+           lambda: "7d0c9d37-7f44-4e9c-85b0-51408319e177")
     @patch("gobapi.graphql_streaming.api.jsonify", lambda x: json.dumps(x))
     @patch("gobapi.graphql_streaming.api.GraphQL2SQL")
     @patch("gobapi.graphql_streaming.api.text", lambda x: 'text_' + x)

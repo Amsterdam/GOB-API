@@ -1,10 +1,8 @@
+import datetime
 import logging
 import os
-import datetime
 import uuid
-
 from pathlib import Path
-from typing import Optional
 
 from flask import request, Response, stream_with_context
 
@@ -13,8 +11,8 @@ from gobcore.message_broker.config import GOB_SHARED_DIR
 
 logger = logging.getLogger(__name__)
 
-class WorkerResponse:
 
+class WorkerResponse:
     # Write worker files in a folder in GOB_SHARED_DIR
     _WORKER_FILES_DIR = "workerfiles"
 

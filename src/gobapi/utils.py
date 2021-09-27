@@ -3,6 +3,7 @@ from typing import Optional
 
 from flask import request
 
+
 def to_snake(camel: str):
     """
     Convert a camelCase string to snake
