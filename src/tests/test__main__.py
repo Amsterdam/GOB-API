@@ -25,4 +25,6 @@ def test_main(MockReg, monkeypatch):
     mockApp = MockApp()
     MockReg()
     monkeypatch.setattr(gobapi.api, 'get_app', lambda: mockApp)
-    assert mockApp.is_running
+
+    from gobapi import __main__
+    assert(mockApp.is_running)
