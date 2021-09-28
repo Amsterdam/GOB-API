@@ -38,7 +38,8 @@ class GraphQLStreamingApi:
             logger.warning("No query passed in")
             return jsonify({'error': str("no query given")}), 400
 
-        logger.info(f"Running GraphQL for {get_request_id()}: {query}")
+        flat_query = query.replace("\n", "")
+        logger.info(f"Running GraphQL for {get_request_id()}: {flat_query}")
         graphql2sql = GraphQL2SQL(query)
         try:
             sql = graphql2sql.sql()
