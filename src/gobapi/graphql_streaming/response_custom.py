@@ -9,7 +9,7 @@ class GraphQLCustomStreamingResponseBuilder(GraphQLStreamingResponseBuilder):
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize a custom reponse builder
+        Initialize a custom response builder
 
         If no request args are present this response builder behaves identical to the base class response builder.
         Only the _build_entity method has been overridden.

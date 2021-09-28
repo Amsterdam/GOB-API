@@ -28,6 +28,9 @@ class MockFlask:
     def add_url_rule(self, rule, **kwargs):
         return noop
 
+    def before_request(self, *args, **kwargs):
+        pass
+
     def teardown_appcontext(self, func):
         return None
 

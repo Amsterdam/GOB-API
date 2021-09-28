@@ -82,4 +82,3 @@ def streaming_gob_response(func):
             raise e
 
     return wrapper
-

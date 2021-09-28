@@ -50,11 +50,11 @@ class GraphQLStreamingApi:
         session = get_session()
         # use an ad-hoc Connection and stream results (instead of pre-buffered)
         result_rows = session.connection().execution_options(stream_results=True).execute(text(sql))
-
-        response_builder = \
-            GraphQLCustomStreamingResponseBuilder(result_rows,
-                                                  graphql2sql.relations_hierarchy,
-                                                  graphql2sql.selections,
-                                                  request_args=request.args)
+        response_builder = GraphQLCustomStreamingResponseBuilder(
+            result_rows,
+            graphql2sql.relations_hierarchy,
+            graphql2sql.selections,
+            request_args=request.args
+        )
 
         return WorkerResponse.stream_with_context(response_builder, mimetype='application/x-ndjson')
