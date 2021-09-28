@@ -87,7 +87,7 @@ def streaming_gob_response(func):
     return wrapper
 
 
-def get_request_id() -> Optional[str]:
+def get_request_id() -> Optional[str]:  # pragma: no cover
     """Get the request_id from the request object, if available.
 
     The request_id object should be set by 'set_request_id' which is registered by app.before_request.

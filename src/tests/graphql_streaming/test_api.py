@@ -18,10 +18,34 @@ class TestGraphQLStreamingApi(TestCase):
     @patch("gobapi.graphql_streaming.api.GraphQL2SQL")
     @patch("gobapi.graphql_streaming.api.GraphQLCustomStreamingResponseBuilder")
     @patch("gobapi.graphql_streaming.api.text", lambda x: 'text_' + x)
-    def test_entrypoint(self, mock_response_builder, mock_graphql2sql, mock_get_session):
+    def test_entrypoint_query_data(self, mock_response_builder, mock_graphql2sql, mock_get_session):
         mock_request = MagicMock()
         mock_request.data.decode.return_value = '{"query": "some query"}'
         mock_request.args.get.return_value = ''
+        graphql2sql_instance = mock_graphql2sql.return_value
+        graphql2sql_instance.sql.return_value = 'parsed query'
+
+        with patch("gobapi.graphql_streaming.api.request", mock_request):
+            result = self.api.entrypoint()
+            mock_graphql2sql.assert_called_with("some query")
+            mock_get_session.return_value.connection.assert_called()
+            mock_get_session.return_value.connection.return_value.execution_options.assert_called_with(stream_results=True)
+            execute = mock_get_session.return_value.connection.return_value.execution_options.return_value.execute
+            execute.assert_called_with('text_parsed query')
+            mock_response_builder.assert_called_with(execute.return_value,
+                                                     graphql2sql_instance.relations_hierarchy,
+                                                     graphql2sql_instance.selections,
+                                                     request_args=mock_request.args)
+            self.assertEqual(result, mock_response_builder.return_value)
+
+    @patch("gobapi.graphql_streaming.api.get_request_id", lambda: str(uuid4()))
+    @patch("gobapi.graphql_streaming.api.get_session")
+    @patch("gobapi.graphql_streaming.api.GraphQL2SQL")
+    @patch("gobapi.graphql_streaming.api.GraphQLCustomStreamingResponseBuilder")
+    @patch("gobapi.graphql_streaming.api.text", lambda x: 'text_' + x)
+    def test_entrypoint_query_param(self, mock_response_builder, mock_graphql2sql, mock_get_session):
+        mock_request = MagicMock()
+        mock_request.args.get.return_value = "some query"
         graphql2sql_instance = mock_graphql2sql.return_value
         graphql2sql_instance.sql.return_value = 'parsed query'
 
@@ -66,3 +90,21 @@ class TestGraphQLStreamingApi(TestCase):
             result = self.api.entrypoint()
             self.assertEqual(result, ('{"error": "Some error message"}', 400))
 
+    @patch("gobapi.graphql_streaming.api.get_request_id", lambda: str(uuid4()))
+    @patch("gobapi.graphql_streaming.api.get_session")
+    @patch("gobapi.graphql_streaming.api.GraphQL2SQL")
+    @patch("gobapi.graphql_streaming.api.GraphQLCustomStreamingResponseBuilder")
+    @patch("gobapi.graphql_streaming.api.text", lambda x: 'text_' + x)
+    @patch("gobapi.graphql_streaming.api.jsonify", lambda x: x)
+    def test_entrypoint_no_query_data(self, mock_response_builder, mock_graphql2sql, mock_get_session):
+        """Test if no ?query parameter and no data as json return a 400."""
+        mock_request = MagicMock()
+        mock_request.args.get.return_value = None # = PropertyMock(return_value="")
+        mock_request.data = ""
+        # mock_request.args.get.return_value = ''
+        graphql2sql_instance = mock_graphql2sql.return_value
+        graphql2sql_instance.sql.return_value = ''
+
+        with patch("gobapi.graphql_streaming.api.request", mock_request):
+            result = self.api.entrypoint()
+            self.assertEqual(({'error': 'no query given'}, 400), result)
