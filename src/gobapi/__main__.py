@@ -19,7 +19,7 @@ def set_request_id():
 
     Responses may also include this request id in the header.
     """
-    request.request_id = uuid4()
+    request.request_id = uuid4()  # pragma: no cover
 
 
 app.run(port=os.getenv("GOB_API_PORT", 8141))
