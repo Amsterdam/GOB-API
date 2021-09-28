@@ -11,7 +11,7 @@ from gobapi.graphql_streaming.response_custom import \
     GraphQLCustomStreamingResponseBuilder
 from gobapi.logger import get_logger
 from gobapi.session import get_session
-from gobapi.utils import get_request_id
+from gobapi.context import get_request_id
 from gobapi.worker.response import WorkerResponse
 
 logger = get_logger(__name__)
@@ -38,7 +38,8 @@ class GraphQLStreamingApi:
             logger.warning("No query passed in")
             return jsonify({'error': str("no query given")}), 400
 
-        logger.info(f"Running GraphQL for {get_request_id()}: {query}")
+        flat_query = query.replace("\n", "")
+        logger.info(f"Running GraphQL for {get_request_id()}: {flat_query}")
         graphql2sql = GraphQL2SQL(query)
         try:
             sql = graphql2sql.sql()
@@ -49,11 +50,11 @@ class GraphQLStreamingApi:
         session = get_session()
         # use an ad-hoc Connection and stream results (instead of pre-buffered)
         result_rows = session.connection().execution_options(stream_results=True).execute(text(sql))
-
-        response_builder = \
-            GraphQLCustomStreamingResponseBuilder(result_rows,
-                                                  graphql2sql.relations_hierarchy,
-                                                  graphql2sql.selections,
-                                                  request_args=request.args)
+        response_builder = GraphQLCustomStreamingResponseBuilder(
+            result_rows,
+            graphql2sql.relations_hierarchy,
+            graphql2sql.selections,
+            request_args=request.args
+        )
 
         return WorkerResponse.stream_with_context(response_builder, mimetype='application/x-ndjson')

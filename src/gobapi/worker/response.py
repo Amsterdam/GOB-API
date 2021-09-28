@@ -6,7 +6,7 @@ from pathlib import Path
 
 from flask import request, Response, stream_with_context
 
-from gobapi.utils import get_request_id
+from gobapi.context import get_request_id
 from gobcore.message_broker.config import GOB_SHARED_DIR
 
 logger = logging.getLogger(__name__)
