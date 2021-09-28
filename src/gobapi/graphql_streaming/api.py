@@ -11,7 +11,7 @@ from gobapi.graphql_streaming.response_custom import \
     GraphQLCustomStreamingResponseBuilder
 from gobapi.logger import get_logger
 from gobapi.session import get_session
-from gobapi.utils import get_request_id
+from gobapi.context import get_request_id
 from gobapi.worker.response import WorkerResponse
 
 logger = get_logger(__name__)
