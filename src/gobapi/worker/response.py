@@ -84,7 +84,7 @@ class WorkerResponse:
             yield "FAILURE"
 
     @classmethod
-    def stream_with_context(cls, rows, mimetype, ):
+    def stream_with_context(cls, rows, mimetype):
         if request.headers.get(cls._WORKER_REQUEST):
             worker = WorkerResponse()
             response = Response(stream_with_context(worker.write_response(rows)), mimetype='text/plain')
