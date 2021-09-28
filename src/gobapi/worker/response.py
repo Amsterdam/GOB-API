@@ -1,15 +1,18 @@
-import os
 import datetime
+import logging
+import os
 import uuid
-
 from pathlib import Path
 
 from flask import request, Response, stream_with_context
+
+from gobapi.utils import get_request_id
 from gobcore.message_broker.config import GOB_SHARED_DIR
 
+logger = logging.getLogger(__name__)
 
-class WorkerResponse():
 
+class WorkerResponse:
     # Write worker files in a folder in GOB_SHARED_DIR
     _WORKER_FILES_DIR = "workerfiles"
 
@@ -50,7 +53,7 @@ class WorkerResponse():
         tmp_filename = self._get_tmp_filename(self.id)
         sentinel = self._get_sentinel_filename(self.id)
 
-        print(f"INFO: Worker {self.id} started")
+        logger.info(f"Worker {self.id} started")
         yield f"{self.id}\n"
 
         success = False
@@ -58,10 +61,10 @@ class WorkerResponse():
             for row in rows:
                 f.write(row)
                 if not self._last_progress:
-                    print(f"INFO: Worker {self.id} wrote first row")
+                    logger.info(f"Worker {self.id} wrote first row")
                 yield from self.yield_progress(tmp_filename)
                 if os.path.isfile(sentinel):
-                    print(f"WARNING: Worker {self.id} aborted")
+                    logger.warning(f"Worker {self.id} aborted")
                     yield "ABORT\n"
                     break
             else:
@@ -72,12 +75,12 @@ class WorkerResponse():
             os.rename(tmp_filename, filename)
 
         if self.is_finished(self.id):
-            print(f"INFO: Worker {self.id} OK")
+            logger.info(f"Worker {self.id} OK")
             yield f"{self._get_file_size(filename)}\n"
             yield "OK"
         else:
             self._cleanup(self.id)
-            print(f"ERROR: Worker {self.id} FAILURE")
+            logger.error(f"Worker {self.id} FAILURE")
             yield "FAILURE"
 
     @classmethod
@@ -86,6 +89,7 @@ class WorkerResponse():
             worker = WorkerResponse()
             response = Response(stream_with_context(worker.write_response(rows)), mimetype='text/plain')
             response.headers[cls._WORKER_ID_RESPONSE] = worker.id
+            response.headers["request-id"] = get_request_id()
             return response
         else:
             return Response(stream_with_context(rows), mimetype=mimetype)

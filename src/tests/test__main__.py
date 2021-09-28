@@ -13,6 +13,9 @@ import gobapi.config
 class MockApp:
     is_running = False
 
+    def before_request(self, *args, **kwargs):
+        pass
+
     def run(self, port):
         self.is_running = True
 
@@ -20,8 +23,8 @@ class MockApp:
 @patch("gobapi.services.registry")
 def test_main(MockReg, monkeypatch):
     mockApp = MockApp()
-    reg = MockReg()
+    MockReg()
     monkeypatch.setattr(gobapi.api, 'get_app', lambda: mockApp)
 
     from gobapi import __main__
-    assert(mockApp.is_running)
+    assert mockApp.is_running

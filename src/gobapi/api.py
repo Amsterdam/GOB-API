@@ -10,6 +10,7 @@ The API can be started by get_app().run()
 
 """
 import json
+from logging.config import dictConfig
 
 from flask_graphql import GraphQLView
 from flask import Flask, request, Response
@@ -21,7 +22,7 @@ from gobcore.model import GOBModel
 from gobcore.model.metadata import FIELD
 from gobcore.views import GOBViews
 
-from gobapi.config import API_BASE_PATH, API_SECURE_BASE_PATH
+from gobapi.config import API_BASE_PATH, API_SECURE_BASE_PATH, API_LOGGING
 from gobapi.fat_file import fat_file
 from gobapi.response import hal_response, not_found, get_page_ref, ndjson_entities, stream_entities
 from gobapi.dump.csv import CsvDumper
@@ -40,6 +41,9 @@ from gobapi.dbinfo.api import get_db_info
 from gobapi.graphql.schema import schema
 from gobapi.session import shutdown_session
 from gobapi.graphql_streaming.api import GraphQLStreamingApi
+
+
+dictConfig(API_LOGGING)
 
 
 def _catalogs():
