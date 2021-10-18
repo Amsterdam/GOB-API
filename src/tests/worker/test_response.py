@@ -26,7 +26,6 @@ class TestResponse(TestCase):
 
     @mock.patch("gobapi.worker.response.Response")
     @mock.patch("gobapi.worker.response.stream_with_context")
-    @mock.patch("gobapi.worker.response.get_request_id", lambda: str(uuid4()))
     def test_stream_with_context(self, mock_stream_with_context, mock_response):
         mock_request = mock.MagicMock()
         with mock.patch("gobapi.worker.response.request", mock_request):

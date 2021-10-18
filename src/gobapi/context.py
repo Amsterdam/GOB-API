@@ -5,7 +5,7 @@ If required, other app context related stuff should be added here as well.
 from typing import Optional
 from uuid import uuid4
 
-from flask import request
+from flask import request, Response
 
 
 def get_request_id() -> Optional[str]:  # pragma: no cover
@@ -16,9 +16,14 @@ def get_request_id() -> Optional[str]:  # pragma: no cover
     return getattr(request, "request_id", None)
 
 
-def set_request_id():  # pragma: no cover
+def set_request_id() -> None:  # pragma: no cover
     """Set a request id to be able to group logging in a request.
 
     Responses may also include this request id in the header.
     """
     request.request_id = uuid4()
+
+
+def set_request_id_header(response: Response) -> Response:
+    response.headers["X-Request-ID"] = get_request_id()
+    return response
