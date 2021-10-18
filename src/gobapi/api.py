@@ -18,7 +18,7 @@ from flask_cors import CORS
 
 from flask_audit_log.middleware import AuditLogMiddleware
 
-from gobapi.context import set_request_id
+from gobapi.context import set_request_id, set_request_id_header
 from gobcore.model import GOBModel
 from gobcore.model.metadata import FIELD
 from gobcore.views import GOBViews
@@ -465,5 +465,6 @@ def get_app():
     app.teardown_appcontext(shutdown_session)
 
     app.before_request(set_request_id)
+    app.after_request(set_request_id_header)
 
     return app
