@@ -1,6 +1,9 @@
 """Module which sets and gets request context.
 
 If required, other app context related stuff should be added here as well.
+
+There is no coverage for this, as it requires a properly setup app-mock, which
+is not available unfortunately.
 """
 from typing import Optional
 from uuid import uuid4
@@ -24,6 +27,6 @@ def set_request_id() -> None:  # pragma: no cover
     request.request_id = uuid4()
 
 
-def set_request_id_header(response: Response) -> Response:
+def set_request_id_header(response: Response) -> Response:  # pragma: no cover
     response.headers["X-Request-ID"] = get_request_id()
     return response
