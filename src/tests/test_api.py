@@ -5,7 +5,6 @@ As it is a unit test all external dependencies are mocked
 
 """
 import importlib
-import json
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -29,6 +28,9 @@ class MockFlask:
         return noop
 
     def before_request(self, *args, **kwargs):
+        pass
+
+    def after_request(self, *args, **kwargs):
         pass
 
     def teardown_appcontext(self, func):
