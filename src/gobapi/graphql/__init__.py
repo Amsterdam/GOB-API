@@ -3,7 +3,7 @@
 """
 import graphene
 
-from gobcore.model.metadata import PRIVATE_META_FIELDS, PUBLIC_META_FIELDS, FIXED_FIELDS
+from gobcore.model.metadata import PRIVATE_META_FIELDS, FIXED_FIELDS
 from gobapi.graphql.scalars import Date, DateTime, GeoJSON, Scalar
 from graphql.language.ast import IntValue
 
@@ -65,8 +65,4 @@ def graphene_type(gob_typename, description=""):
 
 
 # Not all GOB fields are exposed in the GraphQL interface
-exclude_fields = tuple(name for name in {
-    **PRIVATE_META_FIELDS,
-    **PUBLIC_META_FIELDS,
-    **FIXED_FIELDS
-}.keys())
+exclude_fields = tuple(name for name in {**PRIVATE_META_FIELDS, **FIXED_FIELDS}.keys())
