@@ -2,7 +2,7 @@ from sqlalchemy.orm import Query
 from flask import request
 
 from gobcore.secure.user import User
-from gobcore.model import GOBModel
+from gobcore.model import GOBModel, PUBLIC_META_FIELDS
 from gobcore.typesystem import get_gob_type_from_info, gob_types, gob_secure_types
 
 from gobapi.auth.schemes import GOB_AUTH_SCHEME
@@ -21,7 +21,7 @@ class Authority:
         self._catalog = catalog_name
         self._collection = collection_name
         collection = GOBModel().get_collection(self._catalog, self._collection)
-        self._attributes = [attr for attr in collection['fields']] if collection else []
+        self._attributes = [attr for attr in collection['fields'] | PUBLIC_META_FIELDS] if collection else []
         self._auth_scheme = GOB_AUTH_SCHEME
         self._secured_columns = None
         self._suppressed_columns = None
