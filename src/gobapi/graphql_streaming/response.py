@@ -1,5 +1,5 @@
 from gobcore.exceptions import GOBException
-from gobcore.model.metadata import FIELD
+from gobcore.model.metadata import FIELD, PUBLIC_META_FIELDS
 
 from gobapi.graphql_streaming.resolve import Resolver
 from gobapi.response import stream_response
@@ -208,6 +208,10 @@ class GraphQLStreamingResponseBuilder:
             result[relation] = [v for v in [FIELD.SOURCE_VALUE, FIELD.SOURCE_INFO] if v in selection['fields']]
         return result
 
+    @staticmethod
+    def _publish_meta_fields(row: dict) -> dict:
+        return {k[1:] if k in PUBLIC_META_FIELDS else k: v for k, v in row.items()}
+
     @streaming_gob_response
     def __iter__(self):
         """Main method. Use class as iterator.
@@ -226,8 +230,9 @@ class GraphQLStreamingResponseBuilder:
             # one entity, but were returned from the database as multiple rows as a result of joins.
             # When all entities with the same GOBID are collected, self.build_entity() is called to merge the rows
             # back into one entity.
+            row = self._publish_meta_fields(dict(row))
 
-            row = dict_to_camelcase(dict(row))
+            row = dict_to_camelcase(row)
             built_entity = None
 
             if row[FIELD.GOBID] != self.last_id and self.last_id is not None:
