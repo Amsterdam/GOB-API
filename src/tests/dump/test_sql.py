@@ -82,7 +82,7 @@ class TestSQL(TestCase):
 
     def test_import_csv(self):
         result = _import_csv('any_schema', 'any_collection', 'any_collection.csv')
-        self.assertTrue("\COPY \"any_schema\".\"any_collection\" FROM 'any_collection.csv'" in result)
+        self.assertTrue("COPY \"any_schema\".\"any_collection\" FROM 'any_collection.csv'" in result)
 
     @patch('gobapi.dump.sql.Authority', MagicMock())
     @patch('gobapi.dump.sql.GOBModel', MagicMock())
@@ -97,7 +97,7 @@ class TestSQL(TestCase):
         result = sql_entities('any catalog', 'any collection', {})
         self.assertTrue("CREATE SCHEMA IF NOT EXISTS" in result)
         self.assertTrue("CREATE TABLE IF NOT EXISTS" in result)
-        self.assertTrue("\COPY" in result)
+        self.assertTrue("COPY" in result)
         mock_create.assert_called()
 
     def test_quoted_tablename(self):

@@ -235,7 +235,7 @@ class GraphQLStreamingResponseBuilder:
             row = dict_to_camelcase(row)
             built_entity = None
 
-            if row[FIELD.GOBID] != self.last_id and self.last_id is not None:
+            if self.last_id is not None and row[FIELD.GOBID] != self.last_id:
                 # Build entity when all rows of same GOBID are collected
                 built_entity = self._build_entity(collected_rows)
                 collected_rows = []

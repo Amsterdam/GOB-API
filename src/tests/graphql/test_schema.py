@@ -13,7 +13,7 @@ class TestGraphqlSchema(TestCase):
             def get_catalogs(self):
                 return {}
 
-        assert(_get_sorted_references(MockModel()) == [])
+        assert (_get_sorted_references(MockModel()) == [])
 
     def test_sorted_references(self):
         class MockModel():
@@ -27,10 +27,10 @@ class TestGraphqlSchema(TestCase):
                 }
 
             def get_collections(self, catalog_name):
-                refs_1 = {"attr1" : self.ref_to("catalog:collection3")}
-                refs_2 = {"attr1" : self.ref_to("catalog:collection1")}
+                refs_1 = {"attr1": self.ref_to("catalog:collection3")}
+                refs_2 = {"attr1": self.ref_to("catalog:collection1")}
                 refs_3 = {}
-                refs_4 = {"attr1" : self.ref_to("catalog:collection2")}
+                refs_4 = {"attr1": self.ref_to("catalog:collection2")}
                 return {
                     "collection1": {
                         "references": refs_1,
@@ -52,11 +52,11 @@ class TestGraphqlSchema(TestCase):
 
         sorted_refs = _get_sorted_references(MockModel())
         # 1 => 3 implies 3 before 1
-        assert(sorted_refs.index('catalog:collection3') < sorted_refs.index('catalog:collection1'))
+        assert (sorted_refs.index('catalog:collection3') < sorted_refs.index('catalog:collection1'))
         # 2 => 1 implies 1 before 2
-        assert(sorted_refs.index('catalog:collection1') < sorted_refs.index('catalog:collection2'))
+        assert (sorted_refs.index('catalog:collection1') < sorted_refs.index('catalog:collection2'))
         # 4 => 2 implies 2 before 4
-        assert(sorted_refs.index('catalog:collection2') < sorted_refs.index('catalog:collection4'))
+        assert (sorted_refs.index('catalog:collection2') < sorted_refs.index('catalog:collection4'))
 
     @patch("gobapi.graphql.schema.inverse_connection_fields", {"fielda": "vala", "fieldb": "valb"})
     def test_get_inverse_connection_field_keyerror(self):
@@ -74,13 +74,15 @@ class TestGraphqlSchema(TestCase):
     @patch("gobapi.graphql.schema.models", MockModels())
     def test_get_inverse_relation_resolvers(self, mock_model, mock_resolve):
         connections = [
-            {'src_catalog': 'cata', 'src_collection': 'cola', 'src_relation_name': 'relation_a', 'field_name': 'field_a'},
-            {'src_catalog': 'catb', 'src_collection': 'colb', 'src_relation_name': 'relation_b', 'field_name': 'field_b'},
+            {'src_catalog': 'cata', 'src_collection': 'cola', 'src_relation_name': 'relation_a',
+             'field_name': 'field_a'},
+            {'src_catalog': 'catb', 'src_collection': 'colb', 'src_relation_name': 'relation_b',
+             'field_name': 'field_b'},
         ]
         mock_model.get_table_name.side_effect = ['table_name_a', 'table_name_b']
         mock_model._data = {
-            'cata': { 'collections': { 'cola': { 'attributes': { 'relation_a': { 'type': 'GOB.ManyReference'}}}}},
-            'catb': { 'collections': { 'colb': { 'attributes': { 'relation_b': { 'type': 'GOB.Reference'}}}}},
+            'cata': {'collections': {'cola': {'attributes': {'relation_a': {'type': 'GOB.ManyReference'}}}}},
+            'catb': {'collections': {'colb': {'attributes': {'relation_b': {'type': 'GOB.Reference'}}}}},
 
         }
         mock_resolve.side_effect = ['resolver a', 'resolver b']
