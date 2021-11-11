@@ -625,7 +625,7 @@ ORDER BY colb_0._gobid
     ]
 
     def normalise_whitespace(self, string: str):
-        whitespacechars = re.sub(r'([,(,)])', ' \g<1> ', string)
+        whitespacechars = re.sub(r'([,(,)])', ' g<1> ', string)
         return re.sub(r'\s+', ' ', whitespacechars).strip()
 
     def assertResult(self, input, expected_result, result):

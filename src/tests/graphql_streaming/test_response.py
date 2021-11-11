@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch, call
 from gobapi.graphql_streaming.response import GraphQLStreamingResponseBuilder
 
 from gobcore.exceptions import GOBException
-from gobcore.model.metadata import FIELD
+from gobcore.model.metadata import FIELD, PUBLIC_META_FIELDS
 
 
 class TestGraphQLStreamingResponseBuilder(TestCase):
@@ -580,3 +580,21 @@ class TestGraphQLStreamingResponseBuilder(TestCase):
 
         with self.assertRaises(GOBException):
             builder._determine_relation_evaluation_order()
+
+    def test_public_meta_fields_in_result(self):
+        pub_meta_fields = {pub_field: str(num) for num, pub_field in enumerate(PUBLIC_META_FIELDS)}
+        builder = self.get_instance()
+        builder._determine_relation_evaluation_order = MagicMock(return_value=([], 'root rel'))
+        builder.rows = [
+            {FIELD.GOBID: '1', 'val': 'a'} | pub_meta_fields,
+            {FIELD.GOBID: '2', 'val': 'b'} | pub_meta_fields
+        ]
+
+        expected = [
+            '{"node": {"val": "a", "version": "0", "dateCreated": "1", "dateConfirmed": "2", "dateModified": "3", '
+            '"dateDeleted": "4", "expirationDate": "5"}}\n',
+            '{"node": {"val": "b", "version": "0", "dateCreated": "1", "dateConfirmed": "2", "dateModified": "3", '
+            '"dateDeleted": "4", "expirationDate": "5"}}\n',
+            '\n'
+        ]
+        self.assertEqual(expected, list(builder))
