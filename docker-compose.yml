@@ -20,17 +20,19 @@ services:
       API_INFRA_SERVICES: MESSAGE_SERVICE
       SECURE_SALT: insecure
       SECURE_PASSWORD: insecure
+
       # OAuth2 Proxy listens on port 8000 and serves as a proxy for UWSGI
       UWSGI_HTTP: ":8001"
       UWSGI_MODULE: "gobapi.wsgi"
       UWSGI_CALLABLE: "application"
       UWSGI_MASTER: "1"
       UWSGI_ENABLE_THREADS: ""
-      UWSGI_THREADS: ""
       UWSGI_PROCESSES: "4"
-      UWSGI_LAZY: ""
       UWSGI_LAZY_APPS: "1"
       UWSGI_BUFFER_SIZE: "8192"
+      UWSGI_DIE_ON_TERM: "1"
+      UWSGI_NEED_APP: "1"
+      UWSGI_ATTACH_DAEMON2: "cmd=./oauth2-proxy --config oauth2-proxy.cfg,freq=3,control=true,stopsignal=15"
 
       # uWSGI timeouts set to 8 hours
       UWSGI_HARAKIRI: "28800"
