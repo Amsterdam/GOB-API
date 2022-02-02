@@ -13,6 +13,7 @@ from typing import List
 from collections import defaultdict
 
 from sqlalchemy import create_engine, Table, MetaData, func, and_, or_, exc as sa_exc
+from sqlalchemy.engine import Row
 from sqlalchemy.engine.url import URL
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.automap import automap_base
@@ -268,8 +269,8 @@ def _get_convert_for_model(catalog, collection, model, meta=None, private_attrib
     :param model:
     :return:
     """
-    def convert(result):
-        entity = _flatten_join_result(result) if isinstance(result, tuple) else result
+    def convert(result: Row):
+        entity = _flatten_join_result(result) if isinstance(result, (tuple, Row)) else result
 
         deleted = getattr(entity, SUPPRESSED_COLUMNS, [])
         hal_entity = {k: _to_gob_value(entity, k, v) for k, v in items if k not in deleted}
