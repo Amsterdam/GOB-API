@@ -24,6 +24,8 @@ class Date(Scalar):
         :param dt: Date
         :return: dt as a string in iso format
         """
+        if isinstance(dt, str):
+            return dt  # assume already formatted by middleware
         return serialize.date_value(dt)
 
     @staticmethod
@@ -64,6 +66,8 @@ class DateTime(Scalar):
         :param dt: DateTime
         :return: dt as a string in iso format
         """
+        if isinstance(dt, str):
+            return dt  # assume already formatted by middleware
         return serialize.datetime_value(dt)
 
     @staticmethod
