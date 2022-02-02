@@ -17,6 +17,7 @@ from flask import Flask, request, Response
 from flask_cors import CORS
 
 from flask_audit_log.middleware import AuditLogMiddleware
+from gobapi.middleware import CustomDirectivesMiddleware
 
 from gobapi.context import set_request_id, set_request_id_header
 from gobcore.model import GOBModel
@@ -419,6 +420,7 @@ def get_app():
     graphql = GraphQLView.as_view(
         'graphql',
         schema=schema,
+        middleware=[CustomDirectivesMiddleware()],
         graphiql=True  # for having the GraphiQL interface
     )
     graphql_streaming = GraphQLStreamingApi()

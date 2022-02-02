@@ -20,11 +20,13 @@ from gobcore.model.sa.gob import models
 from gobcore.model.metadata import FIELD
 from gobcore.typesystem import get_gob_type_from_info, gob_types
 
+from gobapi.middleware import CustomDirectiveMeta
 from gobapi.constants import API_FIELD, API_FIELD_DESCRIPTION
 from gobapi.graphql import graphene_type, exclude_fields
 from gobapi.graphql.filters import FilterConnectionField, get_resolve_attribute, get_resolve_json_attribute, \
     get_resolve_inverse_attribute, get_resolve_attribute_missing_relation
 from gobapi.graphql.scalars import DateTime, GeoJSON
+from gobapi.directives import string_
 
 # Use the GOB model to generate the GraphQL query
 model = GOBModel()
@@ -314,4 +316,4 @@ def _convert_json(thetype, column, registry=None):
     return GenericScalar(description=get_column_doc(column), required=not (is_column_nullable(column)))
 
 
-schema = graphene.Schema(query=get_graphene_query())
+schema = graphene.Schema(query=get_graphene_query(), directives=CustomDirectiveMeta.get_all_directives())
