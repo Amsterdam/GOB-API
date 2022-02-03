@@ -3,7 +3,6 @@ antlr4-python3-runtime==4.7.2
 Flask==1.1.2
 Flask-Cors==3.0.10
 Flask-GraphQL==2.0.1
-freezegun==1.1.0
 geojson==2.5.0
 graphene==2.1.9
 graphene-sqlalchemy==2.1.2
