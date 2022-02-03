@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-import six
-from graphql import DirectiveLocation, GraphQLDirective
+import datetime
+from abc import abstractmethod
+
+from graphql import DirectiveLocation, GraphQLDirective, GraphQLArgument, GraphQLNonNull, GraphQLString
 from promise import Promise
 
 
-__author__ = 'ekampf'
-
-
 class CustomDirectivesMiddleware:
+
     def resolve(self, next_mw, root, info, **kwargs):
         result = next_mw(root, info, **kwargs)
         return result.then(
@@ -29,7 +29,7 @@ class CustomDirectivesMiddleware:
 
 
 class CustomDirectiveMeta(type):
-    REGISTRY = {}  # Maps between ndb.Model to its GraphQL type
+    REGISTRY = {}
 
     def __new__(mcs, name, bases, attrs):
         newclass = super(CustomDirectiveMeta, mcs).__new__(mcs, name, bases, attrs)
@@ -42,21 +42,22 @@ class CustomDirectiveMeta(type):
         mcs.REGISTRY[target.get_name()] = target
 
     @classmethod
-    def get_all_directives(cls):
-        return [d() for d in cls.REGISTRY.values()]
+    def get_all_directives(mcs):
+        return [directive() for directive in mcs.REGISTRY.values()]
+
+    @abstractmethod
+    def get_name(cls):
+        pass
 
 
-class BaseCustomDirective(six.with_metaclass(CustomDirectiveMeta, GraphQLDirective)):
-    __metaclass__ = CustomDirectiveMeta
+class BaseCustomDirective(GraphQLDirective, metaclass=CustomDirectiveMeta):
 
     def __init__(self):
-        super(BaseCustomDirective, self).__init__(
+        super().__init__(
             name=self.get_name(),
             description=self.__doc__,
             args=self.get_args(),
-            locations=[
-                DirectiveLocation.FIELD
-            ]
+            locations=[DirectiveLocation.FIELD]
         )
 
     @classmethod
@@ -67,3 +68,27 @@ class BaseCustomDirective(six.with_metaclass(CustomDirectiveMeta, GraphQLDirecti
     def get_args():
         return {}
 
+    @staticmethod
+    def process(value, directive, root, info):
+        return value
+
+
+class FormatDate(BaseCustomDirective):
+    """Formats a date or datetime as string to specified format."""
+
+    @staticmethod
+    def get_args():
+        return {
+            'format': GraphQLArgument(
+                type_=GraphQLNonNull(GraphQLString),
+                description='Format Date or DateTime value in this format.',
+            )
+        }
+
+    @staticmethod
+    def process(value, directive, root, info):
+        if not isinstance(value, datetime.date):  # True for datetime and date
+            return value
+
+        fmt = [arg for arg in directive.arguments if arg.name.value == 'format'][0]
+        return value.strftime(fmt.value.value)

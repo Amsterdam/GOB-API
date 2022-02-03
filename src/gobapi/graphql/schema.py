@@ -26,7 +26,7 @@ from gobapi.graphql import graphene_type, exclude_fields
 from gobapi.graphql.filters import FilterConnectionField, get_resolve_attribute, get_resolve_json_attribute, \
     get_resolve_inverse_attribute, get_resolve_attribute_missing_relation
 from gobapi.graphql.scalars import DateTime, GeoJSON
-from gobapi.directives import string_
+
 
 # Use the GOB model to generate the GraphQL query
 model = GOBModel()
