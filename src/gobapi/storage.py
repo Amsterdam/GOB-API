@@ -48,7 +48,7 @@ def connect():
     """
     global session, _Base, metadata
 
-    engine = create_engine(URL(**GOB_DB), connect_args={'sslmode': 'require'})
+    engine = create_engine(URL.create(**GOB_DB), connect_args={'sslmode': 'require'})
     session = scoped_session(sessionmaker(autocommit=True,
                                           autoflush=False,
                                           bind=engine,
