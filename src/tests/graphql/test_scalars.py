@@ -7,7 +7,7 @@ from gobapi.graphql import scalars, BigInt
 from gobapi.graphql.scalars import Date, DateTime, GeoJSON
 
 
-class Session():
+class Session:
     def __init__(self):
         pass
 
@@ -25,7 +25,7 @@ class MockManagedSession:
         pass
 
 
-class Geometry():
+class Geometry:
     def __init__(self, geojson):
         self.geojson = geojson
 
@@ -37,9 +37,13 @@ def test_date(monkeypatch):
     serialized = Date.serialize(datetime.date(2000, 1, 20))
     assert(serialized == "2000-01-20")
 
+    serialized = Date.serialize("2000-01-20")
+    assert(serialized == "2000-01-20")
+
     class Literal(ast.StringValue):
         def __init__(self, value):
             self.value = value
+
     parsed_literal = Date.parse_literal(Literal("2000-01-20"))
     assert(parsed_literal == datetime.date(2000, 1, 20))
 
@@ -55,6 +59,9 @@ def test_date(monkeypatch):
 
 def test_datetime(monkeypatch):
     serialized = DateTime.serialize(datetime.datetime(2000, 1, 20, 12, 0, 0))
+    assert(serialized == "2000-01-20T12:00:00")
+
+    serialized = DateTime.serialize("2000-01-20T12:00:00")
     assert(serialized == "2000-01-20T12:00:00")
 
     # Test patched date for years < 1000
