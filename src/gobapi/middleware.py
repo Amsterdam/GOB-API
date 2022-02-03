@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import datetime
 from abc import abstractmethod
 
@@ -15,7 +14,8 @@ class CustomDirectivesMiddleware:
             lambda error: Promise.rejected(error)
         )
 
-    def __process_value(self, value, root, info):
+    @staticmethod
+    def __process_value(value, root, info):
         field = info.field_asts[0]
         if not field.directives:
             return value
@@ -33,7 +33,7 @@ class CustomDirectiveMeta(type):
 
     def __new__(mcs, name, bases, attrs):
         newclass = super(CustomDirectiveMeta, mcs).__new__(mcs, name, bases, attrs)
-        if name != 'BaseCustomDirective':
+        if name != "BaseCustomDirective":
             mcs.register(newclass)
         return newclass
 
@@ -47,7 +47,7 @@ class CustomDirectiveMeta(type):
 
     @abstractmethod
     def get_name(cls):
-        pass
+        raise NotImplementedError  # pragma: no cover
 
 
 class BaseCustomDirective(GraphQLDirective, metaclass=CustomDirectiveMeta):
@@ -62,7 +62,7 @@ class BaseCustomDirective(GraphQLDirective, metaclass=CustomDirectiveMeta):
 
     @classmethod
     def get_name(cls):
-        return cls.__name__.replace('Directive', '').lower()
+        return cls.__name__.replace("Directive", "").lower()
 
     @staticmethod
     def get_args():
@@ -79,9 +79,9 @@ class FormatDate(BaseCustomDirective):
     @staticmethod
     def get_args():
         return {
-            'format': GraphQLArgument(
+            "format": GraphQLArgument(
                 type_=GraphQLNonNull(GraphQLString),
-                description='Format Date or DateTime value in this format.',
+                description="Format Date or DateTime value in this format.",
             )
         }
 
@@ -90,5 +90,5 @@ class FormatDate(BaseCustomDirective):
         if not isinstance(value, datetime.date):  # True for datetime and date
             return value
 
-        fmt = [arg for arg in directive.arguments if arg.name.value == 'format'][0]
+        fmt = [arg for arg in directive.arguments if arg.name.value == "format"][0]
         return value.strftime(fmt.value.value)
