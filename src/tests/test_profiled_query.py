@@ -1,9 +1,10 @@
+import time
 from unittest import TestCase, mock
 
 from gobapi.profiled_query import ProfiledQuery, activate
 
 
-class MockEvent():
+class MockEvent:
     calls = 0
 
     def listens_for(self, *args, **kwargs):
@@ -21,6 +22,7 @@ class TestProfiledQuery(TestCase):
         q = ProfiledQuery("any statement")
         q.set_start()
         q.set_end()
+
         duration = q.duration
         self.assertTrue(duration >= 0)
 
@@ -31,11 +33,12 @@ class TestProfiledQuery(TestCase):
         self.assertTrue(q.is_slow)
 
         # assert log message for slow query is correct
+        # use localtime for different tz settings
         expected = f"""ProfiledQuery
 Statement: any statement
 Duration:  30 minutes
-Started:   00:00:00
-Ended:     00:30:01
+Started:   {time.strftime("%H:%M:%S", time.localtime(q.start_time))}
+Ended:     {time.strftime("%H:%M:%S", time.localtime(q.end_time))}
 """
         self.assertEqual(str(q), expected)
 
