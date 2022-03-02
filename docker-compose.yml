@@ -32,7 +32,7 @@ services:
       UWSGI_BUFFER_SIZE: "8192"
       UWSGI_DIE_ON_TERM: "1"
       UWSGI_NEED_APP: "1"
-      UWSGI_ATTACH_DAEMON2: "cmd=./oauth2-proxy --config oauth2-proxy.cfg,freq=3,control=true,stopsignal=15"
+#      UWSGI_ATTACH_DAEMON2: "cmd=./oauth2-proxy --config oauth2-proxy.cfg,freq=3,control=true,stopsignal=15"
 
       # uWSGI timeouts set to 8 hours
       UWSGI_HARAKIRI: "28800"
