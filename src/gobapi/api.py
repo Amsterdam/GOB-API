@@ -11,6 +11,7 @@ The API can be started by get_app().run()
 """
 import json
 from logging.config import dictConfig
+from pathlib import Path
 
 from flask_graphql import GraphQLView
 from flask import Flask, request, Response
@@ -20,6 +21,7 @@ from flask_audit_log.middleware import AuditLogMiddleware
 from gobapi.middleware import CustomDirectivesMiddleware
 
 from gobapi.context import set_request_id, set_request_id_header
+from gobcore.message_broker.config import GOB_SHARED_DIR
 from gobcore.model import GOBModel
 from gobcore.model.metadata import FIELD
 from gobcore.views import GOBViews
@@ -406,6 +408,15 @@ def _add_route(app, paths, rule, view_func, methods):
         app.add_url_rule(rule=wrapped_rule, methods=methods, view_func=wrapper(wrapped_rule, view_func))
 
 
+def check_shared_dir():  # noqa: C901
+    if not Path(GOB_SHARED_DIR).exists():
+        raise NotADirectoryError(
+            f"Directory does not exist {GOB_SHARED_DIR}."
+            # Based on a glitch which happened earlier
+            "Is this directory mounted?"
+        )
+
+
 def get_app():
     """Returns a Flask application object
 
@@ -415,6 +426,7 @@ def get_app():
 
     :return: a Flask application object
     """
+    check_shared_dir()
     connect()
 
     graphql = GraphQLView.as_view(
