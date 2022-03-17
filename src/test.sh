@@ -3,16 +3,14 @@
 set -u # crash on missing env
 set -e # stop on any error
 
-# Clear any cached results
-find . -name "*.pyc" -exec rm -f {} \;
+export GOB_RUN_MODE=TEST
+export COVERAGE_FILE=/tmp/.coverage
+
+echo "Running tests"
+coverage run --source=./gobapi -m pytest tests/
+
+echo "Running coverage report"
+coverage report --show-missing --fail-under=95
 
 echo "Running style checks"
 flake8
-
-export GOB_RUN_MODE=TEST
-
-echo "Running unit tests"
-pytest
-
-echo "Running coverage tests"
-pytest --cov=gobapi --cov-report term-missing --cov-report html --cov-fail-under=100 tests/

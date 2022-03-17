@@ -26,11 +26,14 @@ ENV C_INCLUDE_PATH=/usr/include/gdal
 # Install gdal separately from the rest of the python requirements.
 # This avoids that changes to requirements.txt incure a time consuming gdal build
 RUN LIBGDAL_VERSION=$(gdal-config --version) && pip3 install GDAL==${LIBGDAL_VERSION}
-RUN LIBGDAL_VERSION=$(gdal-config --version) && pip3 install GDAL==${LIBGDAL_VERSION}
 # Install required Python packages
 RUN pip3 install pip --upgrade
 COPY requirements.txt /app/
-RUN LIBGDAL_VERSION=$(gdal-config --version) pip3 install --trusted-host pypi.python.org --trusted-host pypi.org --trusted-host files.pythonhosted.org --no-cache-dir -r requirements.txt
+RUN LIBGDAL_VERSION=$(gdal-config --version) pip3 install \
+    --trusted-host pypi.python.org  \
+    --trusted-host pypi.org  \
+    --trusted-host files.pythonhosted.org  \
+    --no-cache-dir -r requirements.txt
 RUN rm requirements.txt
 
 # Copy gob api module
@@ -62,6 +65,7 @@ RUN pip install -e /app/GOB-Config
 USER datapunt
 
 FROM application as test
+# Run tests as root for now
 USER root
 # Remove gobcore/gobconfig tests
 RUN rm -rf /app/src/gobcore/tests
@@ -75,5 +79,5 @@ COPY test.sh test.sh
 # Copy jenkins files
 COPY .jenkins /.jenkins
 
-RUN mkdir -p /app/shared/message_broker
+RUN mkdir -p /app/shared/message_broker && chown datapunt /app/shared
 USER datapunt
