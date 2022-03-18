@@ -10,7 +10,7 @@ echo "Running tests"
 coverage run --source=./gobapi -m pytest tests/
 
 echo "Running coverage report"
-coverage report --show-missing --fail-under=95
+coverage report --show-missing --fail-under=100
 
 echo "Running style checks"
 flake8
