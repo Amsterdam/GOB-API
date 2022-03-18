@@ -75,6 +75,7 @@ RUN rm -rf /app/src/gobconfig/tests
 COPY tests tests
 COPY .flake8 .flake8
 COPY test.sh test.sh
+COPY .coveragerc .coveragerc
 
 # Copy jenkins files
 COPY .jenkins /.jenkins
