@@ -26,6 +26,7 @@ from gobcore.typesystem import get_gob_type_from_sql_type, get_gob_type_from_inf
 from gobcore.model.metadata import PUBLIC_META_FIELDS, PRIVATE_META_FIELDS, FIXED_COLUMNS, FIELD
 
 from gobapi.config import GOB_DB, current_api_base_path
+from gobapi.legacy_views.create import create_legacy_views
 from gobapi.session import set_session, get_session
 from gobapi.auth.auth_query import AuthorizedQuery, SUPPRESSED_COLUMNS, Authority
 from gobapi.constants import API_FIELD
@@ -48,11 +49,13 @@ def connect():
     """
     global session, _Base, metadata
 
-    engine = create_engine(URL.create(**GOB_DB), connect_args={'sslmode': 'require'})
+    engine = create_engine(URL.create(**GOB_DB), connect_args={'sslmode': 'require'})\
+        .execution_options(schema_translate_map={None: "legacy"})
     session = scoped_session(sessionmaker(autocommit=True,
                                           autoflush=False,
                                           bind=engine,
                                           query_cls=AuthorizedQuery))
+    create_legacy_views(GOBModel(), engine)
 
     with warnings.catch_warnings():
         # Ignore warnings for unsupported reflection for expression-based indexes

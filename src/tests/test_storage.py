@@ -169,8 +169,17 @@ class MockSession:
     def remove(self):
         self._remove = True
 
+
+class MockEngine:
+    def __init__(self, url, **kwargs):
+        pass
+
+    def execution_options(self, **kwargs):
+        return 'engine'
+
+
 def mock_create_engine(url, **kwargs):
-    return 'engine'
+    return MockEngine(url, **kwargs)
 
 
 def mock_scoped_session(func=None):
@@ -381,6 +390,8 @@ def before_each_storage_test(monkeypatch):
     import gobcore.model
     importlib.reload(gobapi.config)
 
+    import gobapi.legacy_views.create
+
     monkeypatch.setattr(sqlalchemy, 'create_engine', mock_create_engine)
     monkeypatch.setattr(sqlalchemy, 'Table', MockTable)
     monkeypatch.setattr(sqlalchemy.ext.automap, 'automap_base', mock_automap_base)
@@ -392,6 +403,8 @@ def before_each_storage_test(monkeypatch):
     monkeypatch.setattr(gobcore.model.metadata, 'PUBLIC_META_FIELDS', mock_PUBLIC_META_FIELDS)
 
     monkeypatch.setattr(gobcore.model.relations, 'get_relation_name', lambda m, a, o, r: 'relation_name')
+
+    monkeypatch.setattr(gobapi.legacy_views.create, 'create_legacy_views', lambda x, y: 'create_legacy_views')
 
     import gobapi.storage
     importlib.reload(gobapi.storage)
@@ -634,7 +647,7 @@ class TestStorage(TestCase):
 
         # Autocommit should always be set to True, to avoid problems with auto-creation of transactions that block
         # other processes.
-        mock_sessionmaker.assert_called_with(autocommit=True, autoflush=False, bind=mock_create_engine.return_value, query_cls=AuthorizedQuery)
+        mock_sessionmaker.assert_called_with(autocommit=True, autoflush=False, bind=mock_create_engine.return_value.execution_options.return_value, query_cls=AuthorizedQuery)
 
     def test_format_reference(self):
         reference = {
