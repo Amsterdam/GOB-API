@@ -147,6 +147,7 @@ class SqlGenerator:
 
     """
     CURSOR_ID = "cursor"
+    SCHEMA = "legacy"
 
     # Attributes to ignore in the query on attributes.
     srcvalues_attributes = [FIELD.SOURCE_VALUE, FIELD.SOURCE_INFO]
@@ -283,7 +284,7 @@ class SqlGenerator:
 
         return f"""FROM (
     SELECT *
-    FROM {table_name}
+    FROM {self.SCHEMA}.{table_name}
     {where}
     ORDER BY {FIELD.GOBID}
     {limit}
@@ -391,7 +392,7 @@ class SqlGenerator:
         :return:
         """
         rel_left = 'src' if not is_inverse else 'dst'
-        relation_table = f"mv_{relation_name}"
+        relation_table = f"{self.SCHEMA}.mv_{relation_name}"
 
         def join_filters(table_alias: str):
             filters = [
@@ -436,7 +437,7 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         filter_args = self._get_formatted_filter_arguments(arguments, dst_relation['alias'])
         rel_right = 'dst' if not is_inverse else 'src'
 
-        join_dst_table = f"LEFT JOIN {dst_relation['tablename']} {dst_relation['alias']} " \
+        join_dst_table = f"LEFT JOIN {self.SCHEMA}.{dst_relation['tablename']} {dst_relation['alias']} " \
                          f"ON {rel_table_alias}.{rel_right}_id = {dst_relation['alias']}.{FIELD.ID}"
 
         if dst_relation['has_states']:
