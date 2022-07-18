@@ -37,7 +37,7 @@ class Resolver:
             return
 
         if (catalog_name and collection_name):
-            collection = GOBModel().get_collection(catalog_name, collection_name)
+            collection = GOBModel(legacy=True).get_collection(catalog_name, collection_name)
             attributes = collection['attributes'].keys()
         else:
             attributes = []

@@ -60,7 +60,7 @@ class MockEntity:
         for key in args:
             setattr(self, key, key)
 
-mock_models = {
+mock_get_sqlalchemy_models = lambda m: {
     'catalog_collection1': MockEntity(),
     'catalog_collection2': MockEntity(),
     'catalog_collection3': MockEntity(),
@@ -199,7 +199,7 @@ mock_PUBLIC_META_FIELDS = {
 }
 
 
-def mock_get_gobmodel():
+def mock_get_gobmodel(legacy=False):
     class model:
         def get_catalog(self, catalog_name):
             return catalog_name
@@ -409,7 +409,7 @@ def before_each_storage_test(monkeypatch):
     import gobapi.storage
     importlib.reload(gobapi.storage)
 
-    monkeypatch.setattr(gobapi.storage, 'models', mock_models)
+    monkeypatch.setattr(gobapi.storage, 'get_sqlalchemy_models', mock_get_sqlalchemy_models)
     monkeypatch.setattr(gobapi.storage, '_apply_filters', lambda e, f, t: e)
     monkeypatch.setattr(gobapi.storage, '_format_reference', lambda ref, cat, col, spec: {'reference': ref})
     monkeypatch.setattr(gobapi.storage, '_add_relations', lambda q, cat, col: q)
@@ -719,7 +719,7 @@ class TestStorage(TestCase):
             def __init__(self, name):
                 self.name = name
 
-        model = GOBModel()
+        model = GOBModel(legacy=True)
         model._data = {
             'the_catalog': {
                 'abbreviation': 'cat',
@@ -856,8 +856,9 @@ class TestStorage(TestCase):
 
         self.assertEqual(result, expected_result)
 
-    @mock.patch("gobapi.storage.Base", MockEntity)
-    def test_flatten_join_result(self):
+    @mock.patch("gobapi.storage.get_base")
+    def test_flatten_join_result(self, mock_get_base):
+        mock_get_base.return_value = MockEntity()
         mock_entity = MockEntity()
         mock_entity.some_attr = 'some value'
 

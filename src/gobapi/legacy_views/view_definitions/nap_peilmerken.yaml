@@ -1,0 +1,13 @@
+table_name: nap_peilmerken
+override_columns:
+  ligt_in_bouwblok: ligt_in_gebieden_bouwblok
+  merk: |
+    jsonb_build_object(
+      'code', merk_code,
+      'omschrijving', merk_omschrijving
+    )
+  status: |
+    jsonb_build_object(
+      'code', status_code,
+      'omschrijving', status_omschrijving
+    )

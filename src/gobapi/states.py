@@ -137,7 +137,7 @@ def _find_relations(collections):
     for collection in collections:
         collection_name = f"{collection[0]}:{collection[1]}"
         relations[collection_name] = {}
-        model_references = GOBModel().get_collection(collection[0], collection[1])['references']
+        model_references = GOBModel(legacy=True).get_collection(collection[0], collection[1])['references']
         for field_name, reference in model_references.items():
             # Only include references for now
             if reference['type'] == 'GOB.Reference':
@@ -186,7 +186,7 @@ def _build_timeslot_rows(collections, entities_with_timeslots, primary_collectio
 
                 # First fill the primary state
                 catalog_name, collection_name = primary_collection_name.split(':')
-                model = GOBModel().get_collection(catalog_name, collection_name)
+                model = GOBModel(legacy=True).get_collection(catalog_name, collection_name)
                 entity_convert = _get_convert_for_state(model)
 
                 row = entity_convert(valid_states.pop(primary_collection_name))
@@ -201,7 +201,7 @@ def _build_timeslot_rows(collections, entities_with_timeslots, primary_collectio
                 next(itercollections)
                 for collection in itercollections:
                     collection_name = ':'.join(collection)
-                    model = GOBModel().get_collection(*collection)
+                    model = GOBModel(legacy=True).get_collection(*collection)
 
                     entity_convert = _get_convert_for_state(model,
                                                             RELATED_COLLECTION_FIELDS)

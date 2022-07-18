@@ -71,7 +71,7 @@ class TestGraphqlSchema(TestCase):
 
     @patch("gobapi.graphql.schema.get_resolve_inverse_attribute")
     @patch("gobapi.graphql.schema.model")
-    @patch("gobapi.graphql.schema.models", MockModels())
+    @patch.dict("gobapi.graphql.schema.sqlalchemy_models", {'table_name_a': 'table_name_a', 'table_name_b': 'table_name_b'}, clear=True)
     def test_get_inverse_relation_resolvers(self, mock_model, mock_resolve):
         connections = [
             {'src_catalog': 'cata', 'src_collection': 'cola', 'src_relation_name': 'relation_a',

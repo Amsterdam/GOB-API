@@ -65,7 +65,7 @@ def _catalogs():
                             'href': f'{API_BASE_PATH}/{catalog_name}/'
                         }
                     }
-                } for catalog_name, catalog in GOBModel().get_catalogs().items()
+                } for catalog_name, catalog in GOBModel(legacy=True).get_catalogs().items()
             ]
         }
     }
@@ -78,7 +78,7 @@ def _catalog(catalog_name):
     :param catalog_name: e.g. meetbouten
     :return: the details of the specified catalog {name, href}
     """
-    catalog = GOBModel().get_catalog(catalog_name)
+    catalog = GOBModel(legacy=True).get_catalog(catalog_name)
     if catalog:
         result = {
             'name': catalog_name,
@@ -96,7 +96,7 @@ def _catalog(catalog_name):
                                 'href': f'/gob/{catalog_name}/{collection_name}/'
                             }
                         }
-                    } for collection_name, collection in GOBModel().get_collections(catalog_name).items()
+                    } for collection_name, collection in GOBModel(legacy=True).get_collections(catalog_name).items()
                 ]
             }
         }
@@ -121,7 +121,7 @@ def _entities(catalog_name, collection_name, page, page_size, view=None):
     :param view: the database view that's being used to get the entities, defaults to the entity table
     :return: (result, links)
     """
-    assert (GOBModel().get_collection(catalog_name, collection_name))
+    assert (GOBModel(legacy=True).get_collection(catalog_name, collection_name))
     assert (page >= 1)
     assert (page_size >= 1)
 
@@ -168,7 +168,10 @@ def _reference_entities(src_catalog_name, src_collection_name, reference_name, s
     :param page_size: the number of entities per page
     :return: (result, links)
     """
-    assert (GOBModel().get_collection(src_catalog_name, src_collection_name)['references'].get(reference_name))
+    assert (GOBModel(legacy=True).get_collection(
+        src_catalog_name,
+        src_collection_name
+    )['references'].get(reference_name))
     assert (page >= 1)
     assert (page_size >= 1)
 
@@ -234,7 +237,7 @@ def _collection(catalog_name, collection_name):
     :return:
     """
 
-    if GOBModel().get_collection(catalog_name, collection_name):
+    if GOBModel(legacy=True).get_collection(catalog_name, collection_name):
         page = int(request.args.get('page', 1))
         page_size = int(request.args.get('page_size', 100))
 
@@ -275,7 +278,7 @@ def _entity(catalog_name, collection_name, entity_id, view=None):
     :param view: the database view that's being used to get the entity, defaults to the entity table
     :return:
     """
-    if GOBModel().get_collection(catalog_name, collection_name):
+    if GOBModel(legacy=True).get_collection(catalog_name, collection_name):
         view = request.args.get('view', None)
 
         # If a view is requested and doesn't exist return a 404
@@ -304,7 +307,7 @@ def _reference_collection(catalog_name, collection_name, entity_id, reference_pa
     :param view: the database view that's being used to get the entity, defaults to the entity table
     :return:
     """
-    model = GOBModel()
+    model = GOBModel(legacy=True)
     entity_collection = model.get_collection(catalog_name, collection_name)
 
     if entity_collection:

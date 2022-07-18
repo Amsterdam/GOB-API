@@ -10,7 +10,7 @@ from sqlalchemy import and_
 from gobcore.model.metadata import FIELD
 from gobcore.model import GOBModel
 from gobcore.model.relations import get_relation_name
-from gobcore.model.sa.gob import models, Base
+from gobcore.model.sa.gob import get_base, get_sqlalchemy_models
 
 from gobapi.utils import dict_to_camelcase
 from gobapi.storage import filter_active, filter_deleted
@@ -18,7 +18,8 @@ from gobapi.storage import filter_active, filter_deleted
 from gobapi.constants import API_FIELD
 from gobapi.graphql_streaming.utils import resolve_schema_collection_name
 
-gobmodel = GOBModel()
+gobmodel = GOBModel(legacy=True)
+sqlalchemy_models = get_sqlalchemy_models(gobmodel)
 
 FILTER_ON_NULL_VALUE = "null"
 
@@ -178,13 +179,13 @@ class RelationQuery:
 
     def get_results(self):
         query = self._build_query()
-        expected_type = models[self.dst_model.__tablename__]
+        expected_type = sqlalchemy_models[self.dst_model.__tablename__]
 
         return [self._flatten_join_query_result(result, expected_type) if self.add_relation_table_columns else result
                 for result in query.all()]
 
     def populate_source_info(self, results):
-        expected_type = models[self.dst_model.__tablename__]
+        expected_type = sqlalchemy_models[self.dst_model.__tablename__]
 
         source_values = getattr(self.src_object, self.attribute_name) or []
         source_values = [source_values] if isinstance(source_values, dict) else source_values
@@ -214,9 +215,10 @@ class RelationQuery:
         # matching related object to the row in the relation table. Create an empty destination object instead to hold
         # the extra values (bronwaarde, begin_geldigheid_relatie, etc)
         dst_object = result[0] if result[0] is not None else expected_type()
+        Base = get_base()
 
         for key, value in result._asdict().items():
-            if isinstance(value, Base):
+            if isinstance(value, Base.__class__):
                 continue
             else:
                 setattr(dst_object, key, value)
@@ -232,7 +234,7 @@ class RelationQuery:
         relation_name = get_relation_name(gobmodel, owner_catalog_name, owner_collection_name, self.attribute_name)
         relation_table_name = f"rel_{relation_name}"
 
-        return models[relation_table_name]
+        return sqlalchemy_models[relation_table_name]
 
 
 class InverseRelationQuery(RelationQuery):
@@ -281,8 +283,8 @@ def _get_catalog_collection_name_from_table_name(table_name):
     :param table_name:
     """
 
-    catalog_name = GOBModel().get_catalog_from_table_name(table_name)
-    collection_name = GOBModel().get_collection_from_table_name(table_name)
+    catalog_name = GOBModel(legacy=True).get_catalog_from_table_name(table_name)
+    collection_name = GOBModel(legacy=True).get_collection_from_table_name(table_name)
 
     return catalog_name, collection_name
 
