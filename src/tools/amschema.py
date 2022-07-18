@@ -22,7 +22,7 @@ from gobcore.model import GOBModel  # noqa: E402, module level import not at top
 from gobcore.model.metadata import FIELD  # noqa: E402, module level import not at top of file
 from gobcore.sources import GOBSources  # noqa: E402, module level import not at top of file
 
-model = GOBModel()
+model = GOBModel(legacy=True)
 sources = GOBSources()
 sys.stdout = sys.__stdout__
 
@@ -83,7 +83,7 @@ def _get_collection_schema(catalog_name, collection_name):
     :param collection_name:
     :return:
     """
-    collection = GOBModel().get_collection(catalog_name, collection_name)
+    collection = GOBModel(legacy=True).get_collection(catalog_name, collection_name)
     fields = collection['all_fields']
     required = ["schema", "id", "identificatie"]
     has_states = model.has_states(catalog_name, collection_name)
@@ -325,14 +325,14 @@ if __name__ == "__main__":  # noqa: C901, too complex
         def __call__(self, parser, namespace, values, option_string=None):
             if namespace.format in ['query', 'curl'] and values is None:
                 parser.error('query or curl require a collection')
-            elif values and not GOBModel().get_collection(namespace.catalog, values):
+            elif values and not GOBModel(legacy=True).get_collection(namespace.catalog, values):
                 parser.error(f"GOB Collection '{values}' does not exist within GOB Catalog '{namespace.catalog}'")
             else:
                 namespace.collection = values
 
     class CatalogAction(argparse.Action):
         def __call__(self, parser, namespace, values, option_string=None):
-            if not GOBModel().get_catalog(values):
+            if not GOBModel(legacy=True).get_catalog(values):
                 parser.error(f"GOB Catalog '{values}' does not exist")
             else:
                 namespace.catalog = values

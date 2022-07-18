@@ -20,7 +20,7 @@ class Authority:
         """
         self._catalog = catalog_name
         self._collection = collection_name
-        collection = GOBModel().get_collection(self._catalog, self._collection)
+        collection = GOBModel(legacy=True).get_collection(self._catalog, self._collection)
         self._attributes = [attr for attr in collection['fields'] | PUBLIC_META_FIELDS] if collection else []
         self._auth_scheme = GOB_AUTH_SCHEME
         self._secured_columns = None
@@ -95,7 +95,7 @@ class Authority:
         The secured columns are the columns that (may) require decryption
         """
         if not self._secured_columns:
-            collection = GOBModel().get_collection(self._catalog, self._collection)
+            collection = GOBModel(legacy=True).get_collection(self._catalog, self._collection)
             if collection:
                 cols = {
                     column: {

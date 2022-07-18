@@ -190,7 +190,7 @@ def _create_table(schema, catalog_name, collection_name, model, tablename=None):
     """
     specs = get_field_specifications(model)
     order = _autorized_order(get_field_order(model), catalog_name, collection_name)
-    catalog = GOBModel().get_catalog(catalog_name)
+    catalog = GOBModel(legacy=True).get_catalog(catalog_name)
     catalog_description = quote_sql_string(catalog['description'])
     fields = []
     for field_name in order:

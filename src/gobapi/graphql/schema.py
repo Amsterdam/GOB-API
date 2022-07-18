@@ -16,7 +16,7 @@ from sqlalchemy.dialects import postgresql
 
 from gobcore.model import GOBModel
 from gobcore.model.relations import get_fieldnames_for_missing_relations
-from gobcore.model.sa.gob import models
+from gobcore.model.sa.gob import get_sqlalchemy_models
 from gobcore.model.metadata import FIELD
 from gobcore.typesystem import get_gob_type_from_info, gob_types
 
@@ -29,7 +29,8 @@ from gobapi.graphql.scalars import DateTime, GeoJSON
 
 
 # Use the GOB model to generate the GraphQL query
-model = GOBModel()
+model = GOBModel(legacy=True)
+sqlalchemy_models = get_sqlalchemy_models(model)
 connection_fields = {}  # FilterConnectionField() per collection
 inverse_connection_fields = {}  # FilterConnectionField() per collection without bronwaardes
 
@@ -175,7 +176,7 @@ def get_graphene_query():
         missing_rels = missing_relations.get(catalog_name, {}).get(collection_name, [])
 
         model_name = model.get_table_name(catalog_name, collection_name)
-        base_model = models[model_name]  # SQLAlchemy model
+        base_model = sqlalchemy_models[model_name]  # SQLAlchemy model
         object_type_fields = {
             "__repr__": lambda self: f"SQLAlchemyObjectType {model_name}",
             **{connection["field_name"]: connection["connection_field"] for connection in connections},
@@ -272,7 +273,7 @@ def get_inverse_relation_resolvers(inverse_connections):
 
     for connection in inverse_connections:
         resolvers[f"resolve_{connection['field_name']}"] = get_resolve_inverse_attribute(
-            models[model.get_table_name(connection['src_catalog'], connection['src_collection'])],
+            sqlalchemy_models[model.get_table_name(connection['src_catalog'], connection['src_collection'])],
             connection['src_relation_name']
         )
     return resolvers
@@ -292,7 +293,7 @@ def get_relation_resolvers(connections):
     for connection in connections:
         try:
             resolvers[f"resolve_{connection['field_name']}"] = get_resolve_attribute(
-                models[connection['dst_name']],
+                sqlalchemy_models[connection['dst_name']],
                 connection['field_name'])
         except KeyError:
             pass

@@ -71,7 +71,7 @@ views = {}
 
 
 class MockGOBModel:
-    def __init__(self):
+    def __init__(self, legacy=False):
         pass
 
     def get_catalogs(self):

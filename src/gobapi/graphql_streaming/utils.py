@@ -10,7 +10,7 @@ def resolve_schema_collection_name(schema_collection_name: str):
     :param schema_collection_name:
     :return:
     """
-    model = GOBModel()
+    model = GOBModel(legacy=True)
     names = to_snake(schema_collection_name).split('.')[-1].split('_')
     for n in range(1, len(names)):
         catalog_name = '_'.join(names[:-n])
