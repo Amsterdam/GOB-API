@@ -163,7 +163,7 @@ class SqlGenerator:
         self.relation_parents = visitor.relationParents
         self.relation_aliases = visitor.relationAliases
         self.relation_info = {}
-        self.model = GOBModel()
+        self.model = GOBModel(legacy=True)
 
     def _get_arguments_with_defaults(self, arguments: dict) -> dict:
         args = {

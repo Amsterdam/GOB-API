@@ -21,7 +21,7 @@ from sqlalchemy.sql import label, functions
 
 from gobcore.model import GOBModel, NotInModelException
 from gobcore.model.relations import get_relation_name
-from gobcore.model.sa.gob import Base, models
+from gobcore.model.sa.gob import get_base, get_sqlalchemy_models
 from gobcore.typesystem import get_gob_type_from_sql_type, get_gob_type_from_info
 from gobcore.model.metadata import PUBLIC_META_FIELDS, PRIVATE_META_FIELDS, FIXED_COLUMNS, FIELD
 
@@ -55,7 +55,7 @@ def connect():
                                           autoflush=False,
                                           bind=engine,
                                           query_cls=AuthorizedQuery))
-    create_legacy_views(GOBModel(), engine)
+    create_legacy_views(GOBModel(legacy=True), engine)
 
     with warnings.catch_warnings():
         # Ignore warnings for unsupported reflection for expression-based indexes
@@ -63,6 +63,7 @@ def connect():
         _Base = automap_base()
         _Base.prepare(engine, reflect=True)     # Long running statement !
 
+    Base = get_base()
     Base.metadata.bind = engine  # Bind engine to metadata of the base class
     Base.query = session.query_property()  # Used by graphql to execute queries
 
@@ -106,7 +107,11 @@ def get_table_and_model(catalog_name, collection_name, view=None):
     if view:
         return Table(view, metadata, autoload=True), None
     else:
-        return models[f'{catalog_name}_{collection_name}'], GOBModel().get_collection(catalog_name, collection_name)
+        gobmodel = GOBModel(legacy=True)
+        return get_sqlalchemy_models(gobmodel)[f'{catalog_name}_{collection_name}'], gobmodel.get_collection(
+            catalog_name,
+            collection_name
+        )
 
 
 def _create_reference_link(reference, catalog, collection):
@@ -249,9 +254,10 @@ def _add_relation_dates_to_manyreference(entity_reference, relation_dates):
 
 def _flatten_join_result(result):
     entity = result[0]
+    Base = get_base()
 
     for key, value in result._asdict().items():
-        if isinstance(value, Base):
+        if isinstance(value, Base.__class__):
             # First item is Base object
             continue
         else:
@@ -329,8 +335,10 @@ def _add_resolve_attrs_to_columns(columns):
         catalog_abbreviation, collection_abbreviation, attribute_name = match.groups()
 
         try:
-            catalog, collection = GOBModel().get_catalog_collection_from_abbr(catalog_abbreviation,
-                                                                              collection_abbreviation)
+            catalog, collection = GOBModel(legacy=True).get_catalog_collection_from_abbr(
+                catalog_abbreviation,
+                collection_abbreviation
+            )
             attribute = collection['attributes'][attribute_name]
         except (NotInModelException, KeyError):
             continue
@@ -413,7 +421,7 @@ def _get_convert_for_table(table, filter=None):
         collection_abbreviation = str(column_name_array[-1])
 
         # Get a reference string by abbreviation (e.g. gebieden:buurten)
-        ref = GOBModel().get_reference_by_abbreviations(catalog_abbreviation, collection_abbreviation)
+        ref = GOBModel(legacy=True).get_reference_by_abbreviations(catalog_abbreviation, collection_abbreviation)
         gob_type = 'GOB.ManyReference' if c.name.startswith('_mref') else 'GOB.Reference'
 
         # Create the reference specification
@@ -588,7 +596,7 @@ def get_max_eventid(catalog: str, collection: str) -> int:
 
 
 def _add_relations(query, catalog_name, collection_name):
-    gob_model = GOBModel()
+    gob_model = GOBModel(legacy=True)
     collection = gob_model.get_collection(catalog_name, collection_name)
     has_states = collection.get('has_states', False)
 
@@ -696,7 +704,7 @@ def query_reference_entities(catalog, collection, reference_name, src_id):
     assert _Base
     _session = get_session()
 
-    gob_model = GOBModel()
+    gob_model = GOBModel(legacy=True)
 
     rel_catalog_name = 'rel'
     rel_collection_name = get_relation_name(gob_model, catalog, collection, reference_name)
@@ -771,7 +779,7 @@ def clear_test_dbs():
 
     :return:
     """
-    model = GOBModel()
+    model = GOBModel(legacy=True)
 
     # Test data is contained in the test_catalog and relation catalog
     test_catalog = "test_catalogue"

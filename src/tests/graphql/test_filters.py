@@ -4,10 +4,9 @@ from unittest.mock import patch, MagicMock, call
 
 from sqlalchemy.sql.elements import AsBoolean
 from graphene_sqlalchemy import SQLAlchemyConnectionField
-from gobcore.model.sa.gob import Base, FIELD
 from gobapi.graphql.filters import FilterConnectionField, get_resolve_attribute, \
     get_resolve_inverse_attribute, get_resolve_json_attribute, \
-    get_resolve_attribute_missing_relation, models, RelationQuery, InverseRelationQuery, \
+    get_resolve_attribute_missing_relation, sqlalchemy_models, RelationQuery, InverseRelationQuery, \
     _get_catalog_collection_name_from_table_name
 
 
@@ -380,7 +379,7 @@ class TestRelationQuery(TestCase):
         rq._add_sort.assert_called_with(rq._add_dst_table_join.return_value, ['column_asc'])
         self.assertEqual(rq._add_sort.return_value, result)
 
-    @patch("gobapi.graphql.filters.models", {'dst_table': 'mocked_table'})
+    @patch.dict(sqlalchemy_models, {'dst_table': 'mocked_table'}, clear=True)
     def test_get_results(self):
         rq = RelationQuery('src', type('DstModel', (), {'__tablename__': 'dst_table'}), 'attribute')
         rq._build_query = MagicMock()
@@ -398,19 +397,15 @@ class TestRelationQuery(TestCase):
             call('c', 'mocked_table'),
         ])
 
-    @patch("gobapi.graphql.filters.models")
-    def test_populate_source_infos(self, mock_models):
-        mock_table = MagicMock()
-        
+    @patch.dict(sqlalchemy_models, {'dst_table': MagicMock()}, clear=True)
+    def test_populate_source_infos(self):
         class MockSrc:
             def __init__(self, source_values):
                 self.the_attribute = source_values
 
         class MockDst:
-            __tablename__ = mock_table
+            __tablename__ = 'dst_table'
             query = MagicMock()
-
-        mock_models['dst_table'] = mock_table
 
         # Single Reference
         rq = RelationQuery(MockSrc({'bronwaarde': 'bw1', 'broninfo': {'bron': 'info'}}), MockDst(), 'the_attribute')
@@ -455,9 +450,14 @@ class TestRelationQuery(TestCase):
         ]
         rq.populate_source_info(results)
 
-    def test_flatten_join_query_result(self):
+    class MockEntity:
+        pass
 
-        mock_base = Base()
+    @patch("gobapi.graphql.filters.get_base")
+    def test_flatten_join_query_result(self, mock_get_base):
+
+        mock_base = self.MockEntity()
+        mock_get_base.return_value = mock_base
 
         class MockKeyedTuple(tuple):
 
@@ -476,6 +476,7 @@ class TestRelationQuery(TestCase):
         # Expect the variables to be set as attributes of the mock_base
         self.assertEqual(mock_base.variable1, 'value1')
         self.assertEqual(mock_base.variable2, 'value2')
+        self.assertFalse(hasattr(mock_base, 'reference'))
 
         # Should create a new base object
         mock_result = MockKeyedTuple((None, 'value1', 'value2'), ['reference', 'variable1', 'variable2'])
@@ -494,7 +495,7 @@ class TestRelationQuery(TestCase):
 
         rq = RelationQuery(MockObj('src_table'), MockObj('dst_table'), 'attribute')
 
-        with patch.dict(models, {'rel_src_table_attribute': 'src model', 'rel_dst_table_attribute': 'dst model'},
+        with patch.dict(sqlalchemy_models, {'rel_src_table_attribute': 'src model', 'rel_dst_table_attribute': 'dst model'},
                         clear=True):
 
             self.assertEqual('src model', rq._get_relation_model())

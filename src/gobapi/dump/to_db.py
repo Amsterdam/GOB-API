@@ -79,7 +79,7 @@ class DbDumper:
 
         if schema == 'rel':
             # Schema is the catalog name from the catalog that owns this relation
-            return GOBModel().get_catalog_from_abbr(collection_name.split('_')[0])['name']
+            return GOBModel(legacy=True).get_catalog_from_abbr(collection_name.split('_')[0])['name']
 
         return schema
 
@@ -317,7 +317,7 @@ class DbDumper:
 
         for relation in self.model['references'].keys():
             # Add a join and selects for each relation
-            relation_name = get_relation_name(GOBModel(), self.catalog_name, self.collection_name, relation)
+            relation_name = get_relation_name(GOBModel(legacy=True), self.catalog_name, self.collection_name, relation)
 
             if not relation_name:
                 # Undefined relation
@@ -331,8 +331,8 @@ class DbDumper:
 
             # Determine if ManyReference and if destination has states
             src_field = self.model['all_fields'].get(relation)
-            dst_catalog_name, dst_collection_name = GOBModel().split_ref(src_field['ref'])
-            dst_has_states = GOBModel().has_states(dst_catalog_name, dst_collection_name)
+            dst_catalog_name, dst_collection_name = GOBModel(legacy=True).split_ref(src_field['ref'])
+            dst_has_states = GOBModel(legacy=True).has_states(dst_catalog_name, dst_collection_name)
             is_many = src_field['type'] == fully_qualified_type_name(GOB.ManyReference)
 
             on = f'{relation}.src_id = {main_alias}.{FIELD.ID}' + (
@@ -466,7 +466,7 @@ def _dump_relations(catalog_name, collection_name, config):
     _, model = get_table_and_model(catalog_name, collection_name)
 
     for relation in [k for k in model['references'].keys()]:
-        relation_name = get_relation_name(GOBModel(), catalog_name, collection_name, relation)
+        relation_name = get_relation_name(GOBModel(legacy=True), catalog_name, collection_name, relation)
 
         if not relation_name or relation_name in SKIP_RELATIONS:
             # relation_name is None when relation does not exist (yet)

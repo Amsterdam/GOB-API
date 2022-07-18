@@ -11,7 +11,7 @@ from gobcore.model.metadata import FIELD
 
 
 class MockGOBModel:
-    def __init__(self):
+    def __init__(self, legacy):
         self.model = {
             'catalog': {
                 'collection': {
