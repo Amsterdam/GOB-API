@@ -77,7 +77,7 @@ class MockClasses:
 
 
 class MockBase:
-    def prepare(self, engine, reflect):
+    def prepare(self, engine, reflect, schema):
         return None
 
     classes = MockClasses()
