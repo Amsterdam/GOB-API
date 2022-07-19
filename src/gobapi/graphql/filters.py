@@ -218,7 +218,7 @@ class RelationQuery:
         Base = get_base()
 
         for key, value in result._asdict().items():
-            if isinstance(value, Base.__class__):
+            if isinstance(value, Base):
                 continue
             else:
                 setattr(dst_object, key, value)

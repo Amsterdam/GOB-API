@@ -257,7 +257,7 @@ def _flatten_join_result(result):
     Base = get_base()
 
     for key, value in result._asdict().items():
-        if isinstance(value, Base.__class__):
+        if isinstance(value, Base):
             # First item is Base object
             continue
         else:

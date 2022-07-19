@@ -457,7 +457,7 @@ class TestRelationQuery(TestCase):
     def test_flatten_join_query_result(self, mock_get_base):
 
         mock_base = self.MockEntity()
-        mock_get_base.return_value = mock_base
+        mock_get_base.return_value = self.MockEntity
 
         class MockKeyedTuple(tuple):
 
