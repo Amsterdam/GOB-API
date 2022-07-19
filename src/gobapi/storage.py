@@ -39,6 +39,19 @@ _Base = None
 metadata = None
 
 
+class MigrationLock:
+    MIGRATION_LOCK_ID = 184041041  # Random number, but the same for all API instances
+
+    def __init__(self, engine):
+        self.engine = engine
+
+    def __enter__(self):
+        self.engine.execute(f"SELECT pg_advisory_lock({self.MIGRATION_LOCK_ID})")
+
+    def __exit__(self, type, value, traceback):
+        self.engine.execute(f"SELECT pg_advisory_unlock({self.MIGRATION_LOCK_ID})")
+
+
 def connect():
     """Module initialisation
 
@@ -56,8 +69,10 @@ def connect():
                                           autoflush=False,
                                           bind=engine,
                                           query_cls=AuthorizedQuery))
-    create_legacy_views(GOBModel(legacy=True), engine)
-    initialise_api_views(engine)  # Can use the legacy views, so should be initialised after the legacy views
+
+    with MigrationLock(engine):
+        create_legacy_views(GOBModel(legacy=True), engine)
+        initialise_api_views(engine)  # Can use the legacy views, so should be initialised after the legacy views
 
     with warnings.catch_warnings():
         # Ignore warnings for unsupported reflection for expression-based indexes
