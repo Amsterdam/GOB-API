@@ -32,6 +32,7 @@ from gobapi.auth.auth_query import AuthorizedQuery, SUPPRESSED_COLUMNS, Authorit
 from gobapi.constants import API_FIELD
 
 import gobapi.profiled_query as profiled_query
+from gobapi.views import initialise_api_views
 
 session = None
 _Base = None
@@ -56,12 +57,13 @@ def connect():
                                           bind=engine,
                                           query_cls=AuthorizedQuery))
     create_legacy_views(GOBModel(legacy=True), engine)
+    initialise_api_views(engine)  # Can use the legacy views, so should be initialised after the legacy views
 
     with warnings.catch_warnings():
         # Ignore warnings for unsupported reflection for expression-based indexes
         warnings.simplefilter("ignore", category=sa_exc.SAWarning)
         _Base = automap_base()
-        _Base.prepare(engine, reflect=True)     # Long running statement !
+        _Base.prepare(engine, reflect=True, schema="legacy")     # Long running statement !
 
     Base = get_base()
     Base.metadata.bind = engine  # Bind engine to metadata of the base class
@@ -257,7 +259,7 @@ def _flatten_join_result(result):
     Base = get_base()
 
     for key, value in result._asdict().items():
-        if isinstance(value, Base.__class__):
+        if isinstance(value, Base):
             # First item is Base object
             continue
         else:
