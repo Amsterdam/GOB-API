@@ -9,7 +9,7 @@ import importlib
 import sqlalchemy
 
 from unittest import mock, TestCase
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, call
 
 from gobapi.storage import _get_convert_for_state, filter_deleted, connect, _format_reference, _get_table, \
     _to_gob_value, _add_resolve_attrs_to_columns, _get_convert_for_table, _add_relation_dates_to_manyreference, \
@@ -175,7 +175,7 @@ class MockEngine:
         pass
 
     def execution_options(self, **kwargs):
-        return 'engine'
+        return MagicMock()
 
 
 def mock_create_engine(url, **kwargs):
@@ -648,9 +648,15 @@ class TestStorage(TestCase):
     def test_connect_autocommit(self, mock_sessionmaker, mock_create_engine):
         connect()
 
+        mocked_engine = mock_create_engine.return_value.execution_options.return_value
+
         # Autocommit should always be set to True, to avoid problems with auto-creation of transactions that block
         # other processes.
-        mock_sessionmaker.assert_called_with(autocommit=True, autoflush=False, bind=mock_create_engine.return_value.execution_options.return_value, query_cls=AuthorizedQuery)
+        mock_sessionmaker.assert_called_with(autocommit=True, autoflush=False, bind=mocked_engine, query_cls=AuthorizedQuery)
+        mocked_engine.execute.assert_has_calls([
+            call("SELECT pg_advisory_lock(184041041)"),
+            call("SELECT pg_advisory_unlock(184041041)"),
+        ])
 
     def test_format_reference(self):
         reference = {
