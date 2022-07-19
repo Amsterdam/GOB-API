@@ -3,7 +3,7 @@ from gobcore.views import GOBViews
 
 def initialise_api_views(engine):
     """
-    Initialize the views for the gobviews.
+    Initialise the views for the gobviews.
     """
 
     print("Initialising API Views")
