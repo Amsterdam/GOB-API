@@ -858,7 +858,7 @@ class TestStorage(TestCase):
 
     @mock.patch("gobapi.storage.get_base")
     def test_flatten_join_result(self, mock_get_base):
-        mock_get_base.return_value = MockEntity()
+        mock_get_base.return_value = MockEntity
         mock_entity = MockEntity()
         mock_entity.some_attr = 'some value'
 
