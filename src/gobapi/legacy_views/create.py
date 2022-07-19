@@ -73,13 +73,6 @@ def _create_views_for_materialized_views(model: GOBModel, connection):
         connection.execute(_create_or_replace_default_view_query(mv_name))
 
 
-def _create_views_for_special_tables(connection):
-    # These won't be used, but model initialisation needs these
-    tables = ["spatial_ref_sys", "alembic_version", "events"]
-    for table_name in tables:
-        connection.execute(_create_or_replace_default_view_query(table_name))
-
-
 def create_legacy_views(model: GOBModel, engine: Engine):
     """Creates views in legacy schema that maps the AMS Schema model in public to the legacy GOB Model so that the
     API still exposes the GOB Model.
@@ -92,6 +85,5 @@ def create_legacy_views(model: GOBModel, engine: Engine):
 
         _create_views_for_object_tables(model, connection)
         _create_views_for_materialized_views(model, connection)
-        _create_views_for_special_tables(connection)
 
     print("Done initialising legacy schema")

@@ -61,7 +61,7 @@ def connect():
         # Ignore warnings for unsupported reflection for expression-based indexes
         warnings.simplefilter("ignore", category=sa_exc.SAWarning)
         _Base = automap_base()
-        _Base.prepare(engine, reflect=True)     # Long running statement !
+        _Base.prepare(engine, reflect=True, schema="legacy")     # Long running statement !
 
     Base = get_base()
     Base.metadata.bind = engine  # Bind engine to metadata of the base class

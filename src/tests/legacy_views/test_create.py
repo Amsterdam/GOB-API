@@ -109,7 +109,4 @@ FROM public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok"""
             call(f"CREATE OR REPLACE VIEW legacy.rel_nap_pmk_gbd_bbk_ligt_in_bouwblok AS {expected_rel_query}"),
             call("CREATE OR REPLACE VIEW legacy.mv_gbd_brt_abc_abc AS SELECT * FROM public.mv_gbd_brt_abc_abc"),
             call("CREATE OR REPLACE VIEW legacy.mv_gbd_brt_def_def AS SELECT * FROM public.mv_gbd_brt_def_def"),
-            call("CREATE OR REPLACE VIEW legacy.spatial_ref_sys AS SELECT * FROM public.spatial_ref_sys"),
-            call("CREATE OR REPLACE VIEW legacy.alembic_version AS SELECT * FROM public.alembic_version"),
-            call("CREATE OR REPLACE VIEW legacy.events AS SELECT * FROM public.events"),
         ])
