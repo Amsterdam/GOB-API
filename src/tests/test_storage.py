@@ -391,6 +391,7 @@ def before_each_storage_test(monkeypatch):
     importlib.reload(gobapi.config)
 
     import gobapi.legacy_views.create
+    import gobapi.views
 
     monkeypatch.setattr(sqlalchemy, 'create_engine', mock_create_engine)
     monkeypatch.setattr(sqlalchemy, 'Table', MockTable)
@@ -405,6 +406,8 @@ def before_each_storage_test(monkeypatch):
     monkeypatch.setattr(gobcore.model.relations, 'get_relation_name', lambda m, a, o, r: 'relation_name')
 
     monkeypatch.setattr(gobapi.legacy_views.create, 'create_legacy_views', lambda x, y: 'create_legacy_views')
+
+    monkeypatch.setattr(gobapi.views, 'initialise_api_views', lambda e: 'initialise_api_views')
 
     import gobapi.storage
     importlib.reload(gobapi.storage)
