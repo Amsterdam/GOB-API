@@ -496,6 +496,7 @@ def dump_to_db(catalog_name, collection_name, config):
     except Exception as e:
         print("Dump failed", traceback.format_exc(limit=-5))
         yield f"ERROR: Dump failed - {str(e)}\n"
+        raise e
     finally:
         if dumper:
             dumper.disconnect()

@@ -843,9 +843,9 @@ class TestModuleFunctions(TestCase):
         list(dump_to_db('rel', 'collection_name', config))
         mock_dumper.return_value.create_utility_view.assert_not_called()
 
-
     def test_dump_to_db_exception(self, mock_dumper):
         mock_dumper.side_effect = Exception
 
-        result = "".join(list(dump_to_db('catalog_name', 'collection_name', {})))
-        self.assertIn("ERROR: Dump failed", result)
+        with self.assertRaises(Exception):
+            result = "".join(list(dump_to_db('catalog_name', 'collection_name', {})))
+            self.assertIn("ERROR: Dump failed", result)
