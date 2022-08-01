@@ -70,7 +70,14 @@ def _create_views_for_object_tables(model: GOBModel, connection):
 def _create_views_for_materialized_views(model: GOBModel, connection):
     for relation_name in relations.get_relations(model)['collections'].keys():
         mv_name = f"mv_{relation_name}"
-        connection.execute(_create_or_replace_default_view_query(mv_name))
+
+        if view_definition := _get_custom_view_definition(f"rel_{relation_name}"):
+            mv_name_in_public = view_definition.table_name.replace("rel_", "mv_", 1)
+
+            query = f"CREATE OR REPLACE VIEW legacy.{mv_name} AS SELECT * FROM public.{mv_name_in_public}"
+            connection.execute(query)
+        else:
+            connection.execute(_create_or_replace_default_view_query(mv_name))
 
 
 def create_legacy_views(model: GOBModel, engine: Engine):
