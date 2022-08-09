@@ -1,13 +1,7 @@
-import importlib
 from unittest.mock import patch
 
 import gobapi
-importlib.reload(gobapi)
-
 import gobapi.api
-importlib.reload(gobapi.api)
-
-import gobapi.config
 
 
 class MockApp:
