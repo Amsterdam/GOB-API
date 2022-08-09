@@ -117,3 +117,8 @@ The API is exposed at the same address as for the local installation.
     docker-compose -f src/.jenkins/test/docker-compose.yml build
     docker-compose -f src/.jenkins/test/docker-compose.yml run --rm test
 ```
+
+#### Test database
+The API test suit runs a database to test the legacy views. This database is automatically initialised with the test
+data.
+For information on how to update the data and/or schema in this database, refer to [the database README](src/.jenkins/test/database/README.md)

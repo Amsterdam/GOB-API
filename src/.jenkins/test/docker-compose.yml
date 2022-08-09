@@ -1,11 +1,28 @@
 version: "3.4"
 
 services:
+
+  test_db:
+    build: database
+    container_name: ${DATABASE_HOST}
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "5532:5432"
+    volumes:
+      - "~/.ssh/datapunt.key:/root/.ssh/datapunt.key"
+
   test:
     build:
       context: ../..
       target: test
+    env_file: ./.env
+    depends_on:
+      - test_db
     environment:
       GOB_SHARED_DIR: /app/shared
+      DATABASE_HOST_OVERRIDE: ${DATABASE_HOST}
     command: >
       bash -c "./test.sh"

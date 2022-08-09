@@ -1,0 +1,18 @@
+version: "3.4"
+
+services:
+
+  migrate:
+    build:
+      context: ../../../../GOB-Upload/src
+      target: migrate
+    env_file: ./.env
+    environment:
+      DATABASE_HOST_OVERRIDE: ${DATABASE_HOST}
+    depends_on:
+      - test_db
+    command: bash -c "alembic upgrade head && python -m gobupload --migrate"
+
+  test:
+    command: >
+      echo "Service is disabled for migration"
