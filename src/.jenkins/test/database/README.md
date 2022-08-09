@@ -28,7 +28,8 @@ Note: Make sure you have GOB-Upload checked out locally at the same level as GOB
 should have).
 
 After having applied the alembic migrations to the running container, use the `dumpschema.sh` script (see above) to
-update the schema definition that is used to initialise the container on a fresh run.
+update the schema definition that is used to initialise the container on a fresh run. Also, update the alembic version
+in the `fixtures/alembic_version.csv` fixture.
 
 ## Initialising data
 The data in `fixtures/` is automatically imported when a new instance of the database container is created. File names
