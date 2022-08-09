@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose -f src/.jenkins/test/docker-compose.yml -f src/.jenkins/test/docker-compose.migrate.yml run --rm migrate
+docker-compose -f ../docker-compose.yml -f ../docker-compose.migrate.yml run --rm migrate
