@@ -24,5 +24,4 @@ services:
     environment:
       GOB_SHARED_DIR: /app/shared
       DATABASE_HOST_OVERRIDE: ${DATABASE_HOST}
-    command: >
-      bash -c "./test.sh"
+    command: './wait-for-postgres.sh test_db bash -c "./test.sh"'

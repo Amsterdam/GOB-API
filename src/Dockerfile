@@ -76,6 +76,8 @@ COPY tests tests
 COPY .flake8 .flake8
 COPY test.sh test.sh
 COPY .coveragerc .coveragerc
+COPY wait-for-postgres.sh wait-for-postgres.sh
+RUN chmod +x wait-for-postgres.sh
 
 # Copy jenkins files
 COPY .jenkins /.jenkins
