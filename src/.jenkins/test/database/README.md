@@ -15,7 +15,7 @@ database container (`test_db`) is running.
 sh utils/dumpschema.sh > init/schema.sql
 ```
 
-## Apply alembic migrations to test database (`refresh-materialized-views.sql`)
+## Apply alembic migrations to test database (`alembic-migrations.sql`)
 In a fully running GOB environment, GOB-Upload is responsible for handling database migrations. This means that
 sometimes we need to update the database schema in the test database as well. To do this, make sure the `test_db`
 container is running and run:
