@@ -5,7 +5,7 @@ services:
   migrate:
     build:
       context: ../../../../GOB-Upload/src
-      target: migrate
+      target: application
     env_file: ./.env
     environment:
       DATABASE_HOST_OVERRIDE: ${DATABASE_HOST}
