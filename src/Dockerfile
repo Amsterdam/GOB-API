@@ -56,7 +56,7 @@ RUN pip install -e /app/GOB-Config
 USER datapunt
 
 
-# Development.
+# Test.
 FROM application as test
 USER root
 # Remove gobcore/gobconfig tests

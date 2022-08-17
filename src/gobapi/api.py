@@ -390,8 +390,8 @@ def _add_route(app, paths, rule, view_func, methods):
     For every rule add a public and a secure endpoint
 
     Both the public and the secure endpoints are protected.
-    The secure endpoint expects the keycloak headers to be present and the endpoint is protected by gatekeeper
-    The public endpoint assures that none of the keycloak headers is present
+    The secure endpoint expects the Keycloak headers to be present and the endpoint is protected by OAuth2 Proxy.
+    The public endpoint assures that none of the Keycloak headers is present
 
     :param app:
     :param rule:

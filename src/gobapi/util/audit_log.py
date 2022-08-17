@@ -71,7 +71,7 @@ class DatabaseHandler(logging.StreamHandler):
 
 def get_user_from_request() -> dict:
     """
-    Gets the user information from the request header set by keycloak
+    Gets the user information from the request header set by Keycloak
     and returns a dict with the user information for the Datapunt Audit Logger
     """
     user = {
