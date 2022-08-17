@@ -17,7 +17,7 @@ services:
     environment:
       GOB_SHARED_DIR: /app/shared
       DATABASE_PORT_OVERRIDE: 5432
-      DATABASE_HOST_OVERRIDE: database
+      DATABASE_HOST_OVERRIDE: "${DATABASE_HOST_OVERRIDE:-database}"
       MESSAGE_BROKER_ADDRESS: rabbitmq
       API_INFRA_SERVICES: MESSAGE_SERVICE
       SECURE_SALT: insecure
@@ -61,5 +61,5 @@ volumes:
 
 networks:
   default:
-    external:
-      name: gob-network
+    name: gob-network
+    external: true
