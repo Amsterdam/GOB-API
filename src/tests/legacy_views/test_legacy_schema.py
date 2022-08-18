@@ -34,7 +34,7 @@ class TestLegacySchema(TestCase):
                 # Encoding result to json first using GOBTypeJSONEncoder before decoding again, so that
                 # Postgres types are cast correctly
                 transformed_result = json.loads(json.dumps([dict(row) for row in exec_result], cls=GobTypeJSONEncoder))
-                self.assertEqual(expected, transformed_result)
+                self.assertEqual(expected, transformed_result, f"Data in legacy schema does not match expected data for {tablename}")
 
 
 @patch("gobapi.api.AuditLogMiddleware", MagicMock())
