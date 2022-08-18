@@ -1,0 +1,5 @@
+table_name: gebieden_ggwgebieden
+override_columns:
+  bestaat_uit_buurten: bestaat_uit_gebieden_buurten
+  ligt_in_stadsdeel: ligt_in_gebieden_stadsdeel
+  ligt_in_gemeente: ligt_in_brk_gemeente
