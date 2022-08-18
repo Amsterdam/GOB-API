@@ -359,6 +359,838 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: events; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.events (
+    eventid integer NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (catalogue);
+
+
+ALTER TABLE public.events OWNER TO gobtest;
+
+--
+-- Name: events_eventid_seq1; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.events_eventid_seq1
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.events_eventid_seq1 OWNER TO gobtest;
+
+--
+-- Name: events_eventid_seq1; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.events_eventid_seq1 OWNED BY public.events.eventid;
+
+
+--
+-- Name: rel; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (entity);
+ALTER TABLE ONLY public.events ATTACH PARTITION events.rel FOR VALUES IN ('rel');
+
+
+ALTER TABLE events.rel OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente FOR VALUES IN ('gbd_bbk_brk_gme_ligt_in_brk_gemeente');
+
+
+ALTER TABLE events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente ATTACH PARTITION events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt FOR VALUES IN ('gbd_bbk_gbd_brt_ligt_in_gebieden_buurt');
+
+
+ALTER TABLE events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt ATTACH PARTITION events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente FOR VALUES IN ('gbd_brt_brk_gme_ligt_in_brk_gemeente');
+
+
+ALTER TABLE events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente ATTACH PARTITION events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied FOR VALUES IN ('gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied');
+
+
+ALTER TABLE events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied ATTACH PARTITION events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied FOR VALUES IN ('gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied');
+
+
+ALTER TABLE events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied ATTACH PARTITION events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk FOR VALUES IN ('gbd_brt_gbd_wijk_ligt_in_gebieden_wijk');
+
+
+ALTER TABLE events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk ATTACH PARTITION events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente FOR VALUES IN ('gbd_ggp_brk_gme_ligt_in_brk_gemeente');
+
+
+ALTER TABLE events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente ATTACH PARTITION events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten FOR VALUES IN ('gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten');
+
+
+ALTER TABLE events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten ATTACH PARTITION events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel FOR VALUES IN ('gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel');
+
+
+ALTER TABLE events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel ATTACH PARTITION events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente FOR VALUES IN ('gbd_ggw_brk_gme_ligt_in_brk_gemeente');
+
+
+ALTER TABLE events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente ATTACH PARTITION events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten FOR VALUES IN ('gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten');
+
+
+ALTER TABLE events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten ATTACH PARTITION events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel FOR VALUES IN ('gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel');
+
+
+ALTER TABLE events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel ATTACH PARTITION events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente FOR VALUES IN ('gbd_sdl_brk_gme_ligt_in_brk_gemeente');
+
+
+ALTER TABLE events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente ATTACH PARTITION events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente FOR VALUES IN ('gbd_wijk_brk_gme_ligt_in_brk_gemeente');
+
+
+ALTER TABLE events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente ATTACH PARTITION events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied FOR VALUES IN ('gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied');
+
+
+ALTER TABLE events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied ATTACH PARTITION events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel FOR VALUES IN ('gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel');
+
+
+ALTER TABLE events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ATTACH PARTITION events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob OWNER TO gobtest;
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+)
+PARTITION BY LIST (source);
+ALTER TABLE ONLY events.rel ATTACH PARTITION events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok FOR VALUES IN ('nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok');
+
+
+ALTER TABLE events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok OWNER TO gobtest;
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob; Type: TABLE; Schema: events; Owner: gobtest
+--
+
+CREATE TABLE events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob (
+    eventid integer DEFAULT nextval('public.events_eventid_seq1'::regclass) NOT NULL,
+    "timestamp" timestamp without time zone NOT NULL,
+    catalogue character varying NOT NULL,
+    entity character varying NOT NULL,
+    version character varying NOT NULL,
+    action character varying NOT NULL,
+    source character varying NOT NULL,
+    source_id character varying,
+    contents jsonb NOT NULL,
+    application character varying NOT NULL,
+    tid character varying
+);
+ALTER TABLE ONLY events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok ATTACH PARTITION events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob FOR VALUES IN ('GOB');
+
+
+ALTER TABLE events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob OWNER TO gobtest;
+
+--
 -- Name: alembic_version; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -2281,50 +3113,6 @@ ALTER SEQUENCE public.brp_verblijfplaatsen__gobid_seq OWNED BY public.brp_verbli
 
 
 --
--- Name: events; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.events (
-    eventid integer NOT NULL,
-    "timestamp" timestamp without time zone NOT NULL,
-    catalogue character varying NOT NULL,
-    entity character varying NOT NULL,
-    version character varying NOT NULL,
-    action character varying NOT NULL,
-    source character varying NOT NULL,
-    source_id character varying,
-    contents jsonb NOT NULL,
-    application character varying NOT NULL,
-    tid character varying
-)
-PARTITION BY LIST (catalogue);
-
-
-ALTER TABLE public.events OWNER TO gobtest;
-
---
--- Name: events_eventid_seq1; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.events_eventid_seq1
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.events_eventid_seq1 OWNER TO gobtest;
-
---
--- Name: events_eventid_seq1; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.events_eventid_seq1 OWNED BY public.events.eventid;
-
-
---
 -- Name: gebieden_bouwblokken; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -2345,13 +3133,14 @@ CREATE TABLE public.gebieden_bouwblokken (
     code character varying,
     begin_geldigheid timestamp without time zone,
     eind_geldigheid timestamp without time zone,
-    ligt_in_buurt jsonb,
-    geometrie public.geometry(Geometry,28992),
+    ligt_in_gebieden_buurt jsonb,
+    geometrie public.geometry(Polygon,28992),
     _application character varying,
     _hash character varying,
     _expiration_date timestamp without time zone,
     _tid character varying,
-    ligt_in_gemeente jsonb
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
 );
 
 
@@ -2403,16 +3192,17 @@ CREATE TABLE public.gebieden_buurten (
     eind_geldigheid timestamp without time zone,
     documentdatum date,
     documentnummer character varying,
-    ligt_in_wijk jsonb,
+    ligt_in_gebieden_wijk jsonb,
     geometrie public.geometry(Polygon,28992),
     _application character varying,
     cbs_code character varying,
     _hash character varying,
-    ligt_in_ggpgebied jsonb,
-    ligt_in_ggwgebied jsonb,
+    ligt_in_gebieden_ggpgebied jsonb,
+    ligt_in_gebieden_ggwgebied jsonb,
     _expiration_date timestamp without time zone,
     _tid character varying,
-    ligt_in_gemeente jsonb
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
 );
 
 
@@ -2465,13 +3255,14 @@ CREATE TABLE public.gebieden_ggpgebieden (
     eind_geldigheid timestamp without time zone,
     documentdatum date,
     documentnummer character varying,
-    ligt_in_stadsdeel jsonb,
-    bestaat_uit_buurten jsonb,
+    ligt_in_gebieden_stadsdeel jsonb,
+    bestaat_uit_gebieden_buurten jsonb,
     geometrie public.geometry(Polygon,28992),
     _hash character varying,
     _expiration_date timestamp without time zone,
     _tid character varying,
-    ligt_in_gemeente jsonb
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
 );
 
 
@@ -2524,13 +3315,14 @@ CREATE TABLE public.gebieden_ggwgebieden (
     eind_geldigheid timestamp without time zone,
     documentdatum date,
     documentnummer character varying,
-    ligt_in_stadsdeel jsonb,
-    bestaat_uit_buurten jsonb,
+    ligt_in_gebieden_stadsdeel jsonb,
+    bestaat_uit_gebieden_buurten jsonb,
     geometrie public.geometry(Polygon,28992),
     _hash character varying,
     _expiration_date timestamp without time zone,
     _tid character varying,
-    ligt_in_gemeente jsonb
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
 );
 
 
@@ -2582,12 +3374,13 @@ CREATE TABLE public.gebieden_stadsdelen (
     eind_geldigheid timestamp without time zone,
     documentdatum date,
     documentnummer character varying,
-    ligt_in_gemeente jsonb,
+    ligt_in_brk_gemeente jsonb,
     geometrie public.geometry(Polygon,28992),
     _application character varying,
     _hash character varying,
     _expiration_date timestamp without time zone,
-    _tid character varying
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone
 );
 
 
@@ -2639,15 +3432,16 @@ CREATE TABLE public.gebieden_wijken (
     eind_geldigheid timestamp without time zone,
     documentdatum date,
     documentnummer character varying,
-    ligt_in_stadsdeel jsonb,
+    ligt_in_gebieden_stadsdeel jsonb,
     geometrie public.geometry(Polygon,28992),
     _application character varying,
     cbs_code character varying,
     _hash character varying,
-    ligt_in_ggwgebied jsonb,
+    ligt_in_gebieden_ggwgebied jsonb,
     _expiration_date timestamp without time zone,
     _tid character varying,
-    ligt_in_gemeente jsonb
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
 );
 
 
@@ -7679,10 +8473,10 @@ CREATE MATERIALIZED VIEW public.mv_brp_vbl_brp_pvb_heeft_persoonsverblijfplaatse
 ALTER TABLE public.mv_brp_vbl_brp_pvb_heeft_persoonsverblijfplaatsen OWNER TO gobtest;
 
 --
--- Name: rel_gbd_bbk_brk_gme_ligt_in_gemeente; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_bbk_brk_gme_ligt_in_gemeente (
+CREATE TABLE public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -7713,33 +8507,33 @@ CREATE TABLE public.rel_gbd_bbk_brk_gme_ligt_in_gemeente (
 );
 
 
-ALTER TABLE public.rel_gbd_bbk_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: mv_gbd_bbk_brk_gme_ligt_in_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_bbk_brk_gme_ligt_in_gemeente AS
- SELECT rel_gbd_bbk_brk_gme_ligt_in_gemeente._gobid,
-    rel_gbd_bbk_brk_gme_ligt_in_gemeente.src_id,
-    rel_gbd_bbk_brk_gme_ligt_in_gemeente.src_volgnummer,
-    rel_gbd_bbk_brk_gme_ligt_in_gemeente.dst_id,
-    rel_gbd_bbk_brk_gme_ligt_in_gemeente.dst_volgnummer,
-    rel_gbd_bbk_brk_gme_ligt_in_gemeente.begin_geldigheid,
-    rel_gbd_bbk_brk_gme_ligt_in_gemeente.eind_geldigheid,
-    rel_gbd_bbk_brk_gme_ligt_in_gemeente.bronwaarde
-   FROM public.rel_gbd_bbk_brk_gme_ligt_in_gemeente
-  WHERE (rel_gbd_bbk_brk_gme_ligt_in_gemeente._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente AS
+ SELECT rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente._gobid,
+    rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente.src_id,
+    rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente.src_volgnummer,
+    rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente.dst_id,
+    rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente.dst_volgnummer,
+    rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente.begin_geldigheid,
+    rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente.eind_geldigheid,
+    rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente.bronwaarde
+   FROM public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente
+  WHERE (rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_bbk_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: rel_gbd_bbk_gbd_brt_ligt_in_buurt; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_bbk_gbd_brt_ligt_in_buurt (
+CREATE TABLE public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt (
     _gobid integer NOT NULL,
     _id character varying,
     _source character varying,
@@ -7770,33 +8564,33 @@ CREATE TABLE public.rel_gbd_bbk_gbd_brt_ligt_in_buurt (
 );
 
 
-ALTER TABLE public.rel_gbd_bbk_gbd_brt_ligt_in_buurt OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt OWNER TO gobtest;
 
 --
--- Name: mv_gbd_bbk_gbd_brt_ligt_in_buurt; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_bbk_gbd_brt_ligt_in_buurt AS
- SELECT rel_gbd_bbk_gbd_brt_ligt_in_buurt._gobid,
-    rel_gbd_bbk_gbd_brt_ligt_in_buurt.src_id,
-    rel_gbd_bbk_gbd_brt_ligt_in_buurt.src_volgnummer,
-    rel_gbd_bbk_gbd_brt_ligt_in_buurt.dst_id,
-    rel_gbd_bbk_gbd_brt_ligt_in_buurt.dst_volgnummer,
-    rel_gbd_bbk_gbd_brt_ligt_in_buurt.begin_geldigheid,
-    rel_gbd_bbk_gbd_brt_ligt_in_buurt.eind_geldigheid,
-    rel_gbd_bbk_gbd_brt_ligt_in_buurt.bronwaarde
-   FROM public.rel_gbd_bbk_gbd_brt_ligt_in_buurt
-  WHERE (rel_gbd_bbk_gbd_brt_ligt_in_buurt._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt AS
+ SELECT rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt._gobid,
+    rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt.src_id,
+    rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt.src_volgnummer,
+    rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt.dst_id,
+    rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt.dst_volgnummer,
+    rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt.begin_geldigheid,
+    rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt.eind_geldigheid,
+    rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt.bronwaarde
+   FROM public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt
+  WHERE (rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_bbk_gbd_brt_ligt_in_buurt OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt OWNER TO gobtest;
 
 --
--- Name: rel_gbd_brt_brk_gme_ligt_in_gemeente; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_brt_brk_gme_ligt_in_gemeente (
+CREATE TABLE public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -7827,33 +8621,33 @@ CREATE TABLE public.rel_gbd_brt_brk_gme_ligt_in_gemeente (
 );
 
 
-ALTER TABLE public.rel_gbd_brt_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: mv_gbd_brt_brk_gme_ligt_in_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_brt_brk_gme_ligt_in_brk_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_brt_brk_gme_ligt_in_gemeente AS
- SELECT rel_gbd_brt_brk_gme_ligt_in_gemeente._gobid,
-    rel_gbd_brt_brk_gme_ligt_in_gemeente.src_id,
-    rel_gbd_brt_brk_gme_ligt_in_gemeente.src_volgnummer,
-    rel_gbd_brt_brk_gme_ligt_in_gemeente.dst_id,
-    rel_gbd_brt_brk_gme_ligt_in_gemeente.dst_volgnummer,
-    rel_gbd_brt_brk_gme_ligt_in_gemeente.begin_geldigheid,
-    rel_gbd_brt_brk_gme_ligt_in_gemeente.eind_geldigheid,
-    rel_gbd_brt_brk_gme_ligt_in_gemeente.bronwaarde
-   FROM public.rel_gbd_brt_brk_gme_ligt_in_gemeente
-  WHERE (rel_gbd_brt_brk_gme_ligt_in_gemeente._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_brt_brk_gme_ligt_in_brk_gemeente AS
+ SELECT rel_gbd_brt_brk_gme_ligt_in_brk_gemeente._gobid,
+    rel_gbd_brt_brk_gme_ligt_in_brk_gemeente.src_id,
+    rel_gbd_brt_brk_gme_ligt_in_brk_gemeente.src_volgnummer,
+    rel_gbd_brt_brk_gme_ligt_in_brk_gemeente.dst_id,
+    rel_gbd_brt_brk_gme_ligt_in_brk_gemeente.dst_volgnummer,
+    rel_gbd_brt_brk_gme_ligt_in_brk_gemeente.begin_geldigheid,
+    rel_gbd_brt_brk_gme_ligt_in_brk_gemeente.eind_geldigheid,
+    rel_gbd_brt_brk_gme_ligt_in_brk_gemeente.bronwaarde
+   FROM public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente
+  WHERE (rel_gbd_brt_brk_gme_ligt_in_brk_gemeente._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_brt_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_brt_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied (
+CREATE TABLE public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -7884,33 +8678,33 @@ CREATE TABLE public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied (
 );
 
 
-ALTER TABLE public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied OWNER TO gobtest;
 
 --
--- Name: mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied AS
- SELECT rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied._gobid,
-    rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied.src_id,
-    rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied.src_volgnummer,
-    rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied.dst_id,
-    rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied.dst_volgnummer,
-    rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied.begin_geldigheid,
-    rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied.eind_geldigheid,
-    rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied.bronwaarde
-   FROM public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied
-  WHERE (rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied AS
+ SELECT rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied._gobid,
+    rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied.src_id,
+    rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied.src_volgnummer,
+    rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied.dst_id,
+    rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied.dst_volgnummer,
+    rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied.begin_geldigheid,
+    rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied.eind_geldigheid,
+    rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied.bronwaarde
+   FROM public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied
+  WHERE (rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied OWNER TO gobtest;
 
 --
--- Name: rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied (
+CREATE TABLE public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -7941,33 +8735,33 @@ CREATE TABLE public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied (
 );
 
 
-ALTER TABLE public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied OWNER TO gobtest;
 
 --
--- Name: mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied AS
- SELECT rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied._gobid,
-    rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied.src_id,
-    rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied.src_volgnummer,
-    rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied.dst_id,
-    rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied.dst_volgnummer,
-    rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied.begin_geldigheid,
-    rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied.eind_geldigheid,
-    rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied.bronwaarde
-   FROM public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied
-  WHERE (rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied AS
+ SELECT rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied._gobid,
+    rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied.src_id,
+    rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied.src_volgnummer,
+    rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied.dst_id,
+    rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied.dst_volgnummer,
+    rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied.begin_geldigheid,
+    rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied.eind_geldigheid,
+    rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied.bronwaarde
+   FROM public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied
+  WHERE (rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied OWNER TO gobtest;
 
 --
--- Name: rel_gbd_brt_gbd_wijk_ligt_in_wijk; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_brt_gbd_wijk_ligt_in_wijk (
+CREATE TABLE public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk (
     _gobid integer NOT NULL,
     _id character varying,
     _source character varying,
@@ -7998,33 +8792,33 @@ CREATE TABLE public.rel_gbd_brt_gbd_wijk_ligt_in_wijk (
 );
 
 
-ALTER TABLE public.rel_gbd_brt_gbd_wijk_ligt_in_wijk OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk OWNER TO gobtest;
 
 --
--- Name: mv_gbd_brt_gbd_wijk_ligt_in_wijk; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_brt_gbd_wijk_ligt_in_wijk AS
- SELECT rel_gbd_brt_gbd_wijk_ligt_in_wijk._gobid,
-    rel_gbd_brt_gbd_wijk_ligt_in_wijk.src_id,
-    rel_gbd_brt_gbd_wijk_ligt_in_wijk.src_volgnummer,
-    rel_gbd_brt_gbd_wijk_ligt_in_wijk.dst_id,
-    rel_gbd_brt_gbd_wijk_ligt_in_wijk.dst_volgnummer,
-    rel_gbd_brt_gbd_wijk_ligt_in_wijk.begin_geldigheid,
-    rel_gbd_brt_gbd_wijk_ligt_in_wijk.eind_geldigheid,
-    rel_gbd_brt_gbd_wijk_ligt_in_wijk.bronwaarde
-   FROM public.rel_gbd_brt_gbd_wijk_ligt_in_wijk
-  WHERE (rel_gbd_brt_gbd_wijk_ligt_in_wijk._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk AS
+ SELECT rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk._gobid,
+    rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk.src_id,
+    rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk.src_volgnummer,
+    rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk.dst_id,
+    rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk.dst_volgnummer,
+    rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk.begin_geldigheid,
+    rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk.eind_geldigheid,
+    rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk.bronwaarde
+   FROM public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk
+  WHERE (rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_brt_gbd_wijk_ligt_in_wijk OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk OWNER TO gobtest;
 
 --
--- Name: rel_gbd_ggp_brk_gme_ligt_in_gemeente; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_ggp_brk_gme_ligt_in_gemeente (
+CREATE TABLE public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -8055,33 +8849,33 @@ CREATE TABLE public.rel_gbd_ggp_brk_gme_ligt_in_gemeente (
 );
 
 
-ALTER TABLE public.rel_gbd_ggp_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: mv_gbd_ggp_brk_gme_ligt_in_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_ggp_brk_gme_ligt_in_gemeente AS
- SELECT rel_gbd_ggp_brk_gme_ligt_in_gemeente._gobid,
-    rel_gbd_ggp_brk_gme_ligt_in_gemeente.src_id,
-    rel_gbd_ggp_brk_gme_ligt_in_gemeente.src_volgnummer,
-    rel_gbd_ggp_brk_gme_ligt_in_gemeente.dst_id,
-    rel_gbd_ggp_brk_gme_ligt_in_gemeente.dst_volgnummer,
-    rel_gbd_ggp_brk_gme_ligt_in_gemeente.begin_geldigheid,
-    rel_gbd_ggp_brk_gme_ligt_in_gemeente.eind_geldigheid,
-    rel_gbd_ggp_brk_gme_ligt_in_gemeente.bronwaarde
-   FROM public.rel_gbd_ggp_brk_gme_ligt_in_gemeente
-  WHERE (rel_gbd_ggp_brk_gme_ligt_in_gemeente._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente AS
+ SELECT rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente._gobid,
+    rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente.src_id,
+    rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente.src_volgnummer,
+    rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente.dst_id,
+    rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente.dst_volgnummer,
+    rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente.begin_geldigheid,
+    rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente.eind_geldigheid,
+    rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente.bronwaarde
+   FROM public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente
+  WHERE (rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_ggp_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_buurten; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten (
+CREATE TABLE public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten (
     _gobid integer NOT NULL,
     _id character varying,
     _source character varying,
@@ -8112,33 +8906,33 @@ CREATE TABLE public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten (
 );
 
 
-ALTER TABLE public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten OWNER TO gobtest;
 
 --
--- Name: mv_gbd_ggp_gbd_brt_bestaat_uit_buurten; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_ggp_gbd_brt_bestaat_uit_buurten AS
- SELECT rel_gbd_ggp_gbd_brt_bestaat_uit_buurten._gobid,
-    rel_gbd_ggp_gbd_brt_bestaat_uit_buurten.src_id,
-    rel_gbd_ggp_gbd_brt_bestaat_uit_buurten.src_volgnummer,
-    rel_gbd_ggp_gbd_brt_bestaat_uit_buurten.dst_id,
-    rel_gbd_ggp_gbd_brt_bestaat_uit_buurten.dst_volgnummer,
-    rel_gbd_ggp_gbd_brt_bestaat_uit_buurten.begin_geldigheid,
-    rel_gbd_ggp_gbd_brt_bestaat_uit_buurten.eind_geldigheid,
-    rel_gbd_ggp_gbd_brt_bestaat_uit_buurten.bronwaarde
-   FROM public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten
-  WHERE (rel_gbd_ggp_gbd_brt_bestaat_uit_buurten._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten AS
+ SELECT rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten._gobid,
+    rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten.src_id,
+    rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten.src_volgnummer,
+    rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten.dst_id,
+    rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten.dst_volgnummer,
+    rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten.begin_geldigheid,
+    rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten.eind_geldigheid,
+    rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten.bronwaarde
+   FROM public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten
+  WHERE (rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_ggp_gbd_brt_bestaat_uit_buurten OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten OWNER TO gobtest;
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel (
+CREATE TABLE public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel (
     _gobid integer NOT NULL,
     _id character varying,
     _source character varying,
@@ -8169,33 +8963,33 @@ CREATE TABLE public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel (
 );
 
 
-ALTER TABLE public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
 
 --
--- Name: mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel AS
- SELECT rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel._gobid,
-    rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel.src_id,
-    rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel.src_volgnummer,
-    rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel.dst_id,
-    rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel.dst_volgnummer,
-    rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel.begin_geldigheid,
-    rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel.eind_geldigheid,
-    rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel.bronwaarde
-   FROM public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel
-  WHERE (rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel AS
+ SELECT rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel._gobid,
+    rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel.src_id,
+    rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel.src_volgnummer,
+    rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel.dst_id,
+    rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel.dst_volgnummer,
+    rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel.begin_geldigheid,
+    rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel.eind_geldigheid,
+    rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel.bronwaarde
+   FROM public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel
+  WHERE (rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
 
 --
--- Name: rel_gbd_ggw_brk_gme_ligt_in_gemeente; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_ggw_brk_gme_ligt_in_gemeente (
+CREATE TABLE public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -8226,33 +9020,33 @@ CREATE TABLE public.rel_gbd_ggw_brk_gme_ligt_in_gemeente (
 );
 
 
-ALTER TABLE public.rel_gbd_ggw_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: mv_gbd_ggw_brk_gme_ligt_in_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_ggw_brk_gme_ligt_in_gemeente AS
- SELECT rel_gbd_ggw_brk_gme_ligt_in_gemeente._gobid,
-    rel_gbd_ggw_brk_gme_ligt_in_gemeente.src_id,
-    rel_gbd_ggw_brk_gme_ligt_in_gemeente.src_volgnummer,
-    rel_gbd_ggw_brk_gme_ligt_in_gemeente.dst_id,
-    rel_gbd_ggw_brk_gme_ligt_in_gemeente.dst_volgnummer,
-    rel_gbd_ggw_brk_gme_ligt_in_gemeente.begin_geldigheid,
-    rel_gbd_ggw_brk_gme_ligt_in_gemeente.eind_geldigheid,
-    rel_gbd_ggw_brk_gme_ligt_in_gemeente.bronwaarde
-   FROM public.rel_gbd_ggw_brk_gme_ligt_in_gemeente
-  WHERE (rel_gbd_ggw_brk_gme_ligt_in_gemeente._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente AS
+ SELECT rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente._gobid,
+    rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente.src_id,
+    rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente.src_volgnummer,
+    rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente.dst_id,
+    rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente.dst_volgnummer,
+    rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente.begin_geldigheid,
+    rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente.eind_geldigheid,
+    rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente.bronwaarde
+   FROM public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente
+  WHERE (rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_ggw_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_buurten; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten (
+CREATE TABLE public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten (
     _gobid integer NOT NULL,
     _id character varying,
     _source character varying,
@@ -8283,33 +9077,33 @@ CREATE TABLE public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten (
 );
 
 
-ALTER TABLE public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten OWNER TO gobtest;
 
 --
--- Name: mv_gbd_ggw_gbd_brt_bestaat_uit_buurten; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_ggw_gbd_brt_bestaat_uit_buurten AS
- SELECT rel_gbd_ggw_gbd_brt_bestaat_uit_buurten._gobid,
-    rel_gbd_ggw_gbd_brt_bestaat_uit_buurten.src_id,
-    rel_gbd_ggw_gbd_brt_bestaat_uit_buurten.src_volgnummer,
-    rel_gbd_ggw_gbd_brt_bestaat_uit_buurten.dst_id,
-    rel_gbd_ggw_gbd_brt_bestaat_uit_buurten.dst_volgnummer,
-    rel_gbd_ggw_gbd_brt_bestaat_uit_buurten.begin_geldigheid,
-    rel_gbd_ggw_gbd_brt_bestaat_uit_buurten.eind_geldigheid,
-    rel_gbd_ggw_gbd_brt_bestaat_uit_buurten.bronwaarde
-   FROM public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten
-  WHERE (rel_gbd_ggw_gbd_brt_bestaat_uit_buurten._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten AS
+ SELECT rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten._gobid,
+    rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten.src_id,
+    rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten.src_volgnummer,
+    rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten.dst_id,
+    rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten.dst_volgnummer,
+    rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten.begin_geldigheid,
+    rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten.eind_geldigheid,
+    rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten.bronwaarde
+   FROM public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten
+  WHERE (rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_ggw_gbd_brt_bestaat_uit_buurten OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten OWNER TO gobtest;
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel (
+CREATE TABLE public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel (
     _gobid integer NOT NULL,
     _id character varying,
     _source character varying,
@@ -8340,33 +9134,33 @@ CREATE TABLE public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel (
 );
 
 
-ALTER TABLE public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
 
 --
--- Name: mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel AS
- SELECT rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel._gobid,
-    rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel.src_id,
-    rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel.src_volgnummer,
-    rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel.dst_id,
-    rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel.dst_volgnummer,
-    rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel.begin_geldigheid,
-    rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel.eind_geldigheid,
-    rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel.bronwaarde
-   FROM public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel
-  WHERE (rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel AS
+ SELECT rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel._gobid,
+    rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel.src_id,
+    rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel.src_volgnummer,
+    rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel.dst_id,
+    rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel.dst_volgnummer,
+    rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel.begin_geldigheid,
+    rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel.eind_geldigheid,
+    rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel.bronwaarde
+   FROM public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel
+  WHERE (rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
 
 --
--- Name: rel_gbd_sdl_brk_gme_ligt_in_gemeente; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_sdl_brk_gme_ligt_in_gemeente (
+CREATE TABLE public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -8397,33 +9191,33 @@ CREATE TABLE public.rel_gbd_sdl_brk_gme_ligt_in_gemeente (
 );
 
 
-ALTER TABLE public.rel_gbd_sdl_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: mv_gbd_sdl_brk_gme_ligt_in_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_sdl_brk_gme_ligt_in_gemeente AS
- SELECT rel_gbd_sdl_brk_gme_ligt_in_gemeente._gobid,
-    rel_gbd_sdl_brk_gme_ligt_in_gemeente.src_id,
-    rel_gbd_sdl_brk_gme_ligt_in_gemeente.src_volgnummer,
-    rel_gbd_sdl_brk_gme_ligt_in_gemeente.dst_id,
-    rel_gbd_sdl_brk_gme_ligt_in_gemeente.dst_volgnummer,
-    rel_gbd_sdl_brk_gme_ligt_in_gemeente.begin_geldigheid,
-    rel_gbd_sdl_brk_gme_ligt_in_gemeente.eind_geldigheid,
-    rel_gbd_sdl_brk_gme_ligt_in_gemeente.bronwaarde
-   FROM public.rel_gbd_sdl_brk_gme_ligt_in_gemeente
-  WHERE (rel_gbd_sdl_brk_gme_ligt_in_gemeente._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente AS
+ SELECT rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente._gobid,
+    rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente.src_id,
+    rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente.src_volgnummer,
+    rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente.dst_id,
+    rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente.dst_volgnummer,
+    rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente.begin_geldigheid,
+    rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente.eind_geldigheid,
+    rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente.bronwaarde
+   FROM public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente
+  WHERE (rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_sdl_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: rel_gbd_wijk_brk_gme_ligt_in_gemeente; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_wijk_brk_gme_ligt_in_gemeente (
+CREATE TABLE public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -8454,33 +9248,33 @@ CREATE TABLE public.rel_gbd_wijk_brk_gme_ligt_in_gemeente (
 );
 
 
-ALTER TABLE public.rel_gbd_wijk_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: mv_gbd_wijk_brk_gme_ligt_in_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_wijk_brk_gme_ligt_in_gemeente AS
- SELECT rel_gbd_wijk_brk_gme_ligt_in_gemeente._gobid,
-    rel_gbd_wijk_brk_gme_ligt_in_gemeente.src_id,
-    rel_gbd_wijk_brk_gme_ligt_in_gemeente.src_volgnummer,
-    rel_gbd_wijk_brk_gme_ligt_in_gemeente.dst_id,
-    rel_gbd_wijk_brk_gme_ligt_in_gemeente.dst_volgnummer,
-    rel_gbd_wijk_brk_gme_ligt_in_gemeente.begin_geldigheid,
-    rel_gbd_wijk_brk_gme_ligt_in_gemeente.eind_geldigheid,
-    rel_gbd_wijk_brk_gme_ligt_in_gemeente.bronwaarde
-   FROM public.rel_gbd_wijk_brk_gme_ligt_in_gemeente
-  WHERE (rel_gbd_wijk_brk_gme_ligt_in_gemeente._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente AS
+ SELECT rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente._gobid,
+    rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente.src_id,
+    rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente.src_volgnummer,
+    rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente.dst_id,
+    rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente.dst_volgnummer,
+    rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente.begin_geldigheid,
+    rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente.eind_geldigheid,
+    rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente.bronwaarde
+   FROM public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente
+  WHERE (rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_wijk_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente OWNER TO gobtest;
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied (
+CREATE TABLE public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -8511,33 +9305,33 @@ CREATE TABLE public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied (
 );
 
 
-ALTER TABLE public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied OWNER TO gobtest;
 
 --
--- Name: mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied AS
- SELECT rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied._gobid,
-    rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied.src_id,
-    rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied.src_volgnummer,
-    rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied.dst_id,
-    rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied.dst_volgnummer,
-    rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied.begin_geldigheid,
-    rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied.eind_geldigheid,
-    rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied.bronwaarde
-   FROM public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied
-  WHERE (rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied AS
+ SELECT rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied._gobid,
+    rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied.src_id,
+    rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied.src_volgnummer,
+    rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied.dst_id,
+    rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied.dst_volgnummer,
+    rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied.begin_geldigheid,
+    rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied.eind_geldigheid,
+    rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied.bronwaarde
+   FROM public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied
+  WHERE (rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied OWNER TO gobtest;
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel (
+CREATE TABLE public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel (
     _gobid integer NOT NULL,
     _id character varying,
     _source character varying,
@@ -8568,27 +9362,27 @@ CREATE TABLE public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel (
 );
 
 
-ALTER TABLE public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel OWNER TO gobtest;
+ALTER TABLE public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
 
 --
--- Name: mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel AS
- SELECT rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel._gobid,
-    rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel.src_id,
-    rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel.src_volgnummer,
-    rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel.dst_id,
-    rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel.dst_volgnummer,
-    rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel.begin_geldigheid,
-    rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel.eind_geldigheid,
-    rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel.bronwaarde
-   FROM public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel
-  WHERE (rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel AS
+ SELECT rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel._gobid,
+    rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel.src_id,
+    rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel.src_volgnummer,
+    rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel.dst_id,
+    rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel.dst_volgnummer,
+    rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel.begin_geldigheid,
+    rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel.eind_geldigheid,
+    rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel.bronwaarde
+   FROM public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel
+  WHERE (rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel OWNER TO gobtest;
+ALTER TABLE public.mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
 
 --
 -- Name: rel_hr_loc_bag_lps_heeft_ligplaats; Type: TABLE; Schema: public; Owner: gobtest
@@ -17382,7 +18176,7 @@ ALTER TABLE public.rel_gbd_bbk_brk_gme_ligt_in_gemeente__gobid_seq OWNER TO gobt
 -- Name: rel_gbd_bbk_brk_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_bbk_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_bbk_brk_gme_ligt_in_gemeente._gobid;
+ALTER SEQUENCE public.rel_gbd_bbk_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente._gobid;
 
 
 --
@@ -17404,7 +18198,7 @@ ALTER TABLE public.rel_gbd_bbk_gbd_brt_ligt_in_buurt__gobid_seq OWNER TO gobtest
 -- Name: rel_gbd_bbk_gbd_brt_ligt_in_buurt__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_bbk_gbd_brt_ligt_in_buurt__gobid_seq OWNED BY public.rel_gbd_bbk_gbd_brt_ligt_in_buurt._gobid;
+ALTER SEQUENCE public.rel_gbd_bbk_gbd_brt_ligt_in_buurt__gobid_seq OWNED BY public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt._gobid;
 
 
 --
@@ -17426,7 +18220,7 @@ ALTER TABLE public.rel_gbd_brt_brk_gme_ligt_in_gemeente__gobid_seq OWNER TO gobt
 -- Name: rel_gbd_brt_brk_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_brt_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_brt_brk_gme_ligt_in_gemeente._gobid;
+ALTER SEQUENCE public.rel_gbd_brt_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente._gobid;
 
 
 --
@@ -17448,7 +18242,7 @@ ALTER TABLE public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied__gobid_seq OWNER TO gob
 -- Name: rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied__gobid_seq OWNED BY public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied._gobid;
+ALTER SEQUENCE public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied__gobid_seq OWNED BY public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied._gobid;
 
 
 --
@@ -17470,7 +18264,7 @@ ALTER TABLE public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied__gobid_seq OWNER TO gob
 -- Name: rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied__gobid_seq OWNED BY public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied._gobid;
+ALTER SEQUENCE public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied__gobid_seq OWNED BY public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied._gobid;
 
 
 --
@@ -17492,7 +18286,7 @@ ALTER TABLE public.rel_gbd_brt_gbd_wijk_ligt_in_wijk__gobid_seq OWNER TO gobtest
 -- Name: rel_gbd_brt_gbd_wijk_ligt_in_wijk__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_brt_gbd_wijk_ligt_in_wijk__gobid_seq OWNED BY public.rel_gbd_brt_gbd_wijk_ligt_in_wijk._gobid;
+ALTER SEQUENCE public.rel_gbd_brt_gbd_wijk_ligt_in_wijk__gobid_seq OWNED BY public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk._gobid;
 
 
 --
@@ -17514,7 +18308,7 @@ ALTER TABLE public.rel_gbd_ggp_brk_gme_ligt_in_gemeente__gobid_seq OWNER TO gobt
 -- Name: rel_gbd_ggp_brk_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_ggp_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_ggp_brk_gme_ligt_in_gemeente._gobid;
+ALTER SEQUENCE public.rel_gbd_ggp_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente._gobid;
 
 
 --
@@ -17536,7 +18330,7 @@ ALTER TABLE public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten__gobid_seq OWNER TO g
 -- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_buurten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten__gobid_seq OWNED BY public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten._gobid;
+ALTER SEQUENCE public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten__gobid_seq OWNED BY public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten._gobid;
 
 
 --
@@ -17558,7 +18352,7 @@ ALTER TABLE public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNER TO gob
 -- Name: rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNED BY public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel._gobid;
+ALTER SEQUENCE public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNED BY public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel._gobid;
 
 
 --
@@ -17580,7 +18374,7 @@ ALTER TABLE public.rel_gbd_ggw_brk_gme_ligt_in_gemeente__gobid_seq OWNER TO gobt
 -- Name: rel_gbd_ggw_brk_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_ggw_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_ggw_brk_gme_ligt_in_gemeente._gobid;
+ALTER SEQUENCE public.rel_gbd_ggw_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente._gobid;
 
 
 --
@@ -17602,7 +18396,7 @@ ALTER TABLE public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten__gobid_seq OWNER TO g
 -- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_buurten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten__gobid_seq OWNED BY public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten._gobid;
+ALTER SEQUENCE public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten__gobid_seq OWNED BY public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten._gobid;
 
 
 --
@@ -17624,7 +18418,7 @@ ALTER TABLE public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNER TO gob
 -- Name: rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNED BY public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel._gobid;
+ALTER SEQUENCE public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNED BY public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel._gobid;
 
 
 --
@@ -17646,7 +18440,7 @@ ALTER TABLE public.rel_gbd_sdl_brk_gme_ligt_in_gemeente__gobid_seq OWNER TO gobt
 -- Name: rel_gbd_sdl_brk_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_sdl_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_sdl_brk_gme_ligt_in_gemeente._gobid;
+ALTER SEQUENCE public.rel_gbd_sdl_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente._gobid;
 
 
 --
@@ -17668,7 +18462,7 @@ ALTER TABLE public.rel_gbd_wijk_brk_gme_ligt_in_gemeente__gobid_seq OWNER TO gob
 -- Name: rel_gbd_wijk_brk_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_wijk_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_wijk_brk_gme_ligt_in_gemeente._gobid;
+ALTER SEQUENCE public.rel_gbd_wijk_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente._gobid;
 
 
 --
@@ -17690,7 +18484,7 @@ ALTER TABLE public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied__gobid_seq OWNER TO go
 -- Name: rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied__gobid_seq OWNED BY public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied._gobid;
+ALTER SEQUENCE public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied__gobid_seq OWNED BY public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied._gobid;
 
 
 --
@@ -17712,7 +18506,7 @@ ALTER TABLE public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNER TO go
 -- Name: rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNED BY public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel._gobid;
+ALTER SEQUENCE public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNED BY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel._gobid;
 
 
 --
@@ -21337,115 +22131,115 @@ ALTER TABLE ONLY public.rel_brp_vbl_brp_pvb_heeft_persoonsverblijfplaatsen ALTER
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_ligt_in_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_bbk_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
-
-
---
--- Name: rel_gbd_bbk_gbd_brt_ligt_in_buurt _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_buurt ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_bbk_gbd_brt_ligt_in_buurt__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_bbk_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_ligt_in_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_brt_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
-
-
---
--- Name: rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_bbk_gbd_brt_ligt_in_buurt__gobid_seq'::regclass);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied__gobid_seq'::regclass);
-
-
---
--- Name: rel_gbd_brt_gbd_wijk_ligt_in_wijk _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_wijk ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_brt_gbd_wijk_ligt_in_wijk__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_brt_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_ligt_in_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggp_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
-
-
---
--- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_buurten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied__gobid_seq'::regclass);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel__gobid_seq'::regclass);
-
-
---
--- Name: rel_gbd_ggw_brk_gme_ligt_in_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggw_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied__gobid_seq'::regclass);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_buurten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten__gobid_seq'::regclass);
-
-
---
--- Name: rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_brt_gbd_wijk_ligt_in_wijk__gobid_seq'::regclass);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_ligt_in_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_sdl_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
-
-
---
--- Name: rel_gbd_wijk_brk_gme_ligt_in_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_wijk_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggp_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten__gobid_seq'::regclass);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggw_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_sdl_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_wijk_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__gobid_seq'::regclass);
 
 
 --
@@ -21978,6 +22772,294 @@ ALTER TABLE ONLY public.woz_wozdeelobjecten ALTER COLUMN _gobid SET DEFAULT next
 --
 
 ALTER TABLE ONLY public.woz_wozobjecten ALTER COLUMN _gobid SET DEFAULT nextval('public.woz_wozobjecten__gobid_seq'::regclass);
+
+
+--
+-- Name: events events_pkey1; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_pkey1 PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel rel_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel
+    ADD CONSTRAINT rel_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob
+    ADD CONSTRAINT rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt
+    ADD CONSTRAINT rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob
+    ADD CONSTRAINT rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob
+    ADD CONSTRAINT rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied
+    ADD CONSTRAINT rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob
+    ADD CONSTRAINT rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied
+    ADD CONSTRAINT rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob
+    ADD CONSTRAINT rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk
+    ADD CONSTRAINT rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob
+    ADD CONSTRAINT rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob
+    ADD CONSTRAINT rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten
+    ADD CONSTRAINT rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob
+    ADD CONSTRAINT rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel
+    ADD CONSTRAINT rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob
+    ADD CONSTRAINT rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob
+    ADD CONSTRAINT rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten
+    ADD CONSTRAINT rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob
+    ADD CONSTRAINT rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel
+    ADD CONSTRAINT rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob
+    ADD CONSTRAINT rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob
+    ADD CONSTRAINT rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob
+    ADD CONSTRAINT rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied
+    ADD CONSTRAINT rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob
+    ADD CONSTRAINT rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel
+    ADD CONSTRAINT rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob
+    ADD CONSTRAINT rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok
+    ADD CONSTRAINT rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_pkey PRIMARY KEY (eventid, catalogue, entity, source);
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_pkey; Type: CONSTRAINT; Schema: events; Owner: gobtest
+--
+
+ALTER TABLE ONLY events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob
+    ADD CONSTRAINT rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_pkey PRIMARY KEY (eventid, catalogue, entity, source);
 
 
 --
@@ -22754,14 +23836,6 @@ ALTER TABLE ONLY public.brp_verblijfplaatsen
 
 ALTER TABLE ONLY public.brp_verblijfplaatsen
     ADD CONSTRAINT brp_verblijfplaatsen_pkey PRIMARY KEY (_gobid);
-
-
---
--- Name: events events_pkey1; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.events
-    ADD CONSTRAINT events_pkey1 PRIMARY KEY (eventid, catalogue, entity, source);
 
 
 --
@@ -26629,386 +27703,386 @@ ALTER TABLE ONLY public.rel_brp_vbl_brp_pvb_heeft_persoonsverblijfplaatsen
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_ligt_in_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_bbk_brk_gme_ligt_in_gemeente__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_ligt_in_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_bbk_brk_gme_ligt_in_gemeente_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_ligt_in_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_bbk_brk_gme_ligt_in_gemeente_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_ligt_in_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_buurt
+ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt
     ADD CONSTRAINT rel_gbd_bbk_gbd_brt_ligt_in_buurt__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_ligt_in_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_buurt
+ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt
     ADD CONSTRAINT rel_gbd_bbk_gbd_brt_ligt_in_buurt_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_ligt_in_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_buurt
+ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt
     ADD CONSTRAINT rel_gbd_bbk_gbd_brt_ligt_in_buurt_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_ligt_in_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_brt_brk_gme_ligt_in_gemeente__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_ligt_in_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_brt_brk_gme_ligt_in_gemeente_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_ligt_in_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_brt_brk_gme_ligt_in_gemeente_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_ligt_in_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_wijk
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk
     ADD CONSTRAINT rel_gbd_brt_gbd_wijk_ligt_in_wijk__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_ligt_in_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_wijk
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk
     ADD CONSTRAINT rel_gbd_brt_gbd_wijk_ligt_in_wijk_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_ligt_in_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_wijk
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk
     ADD CONSTRAINT rel_gbd_brt_gbd_wijk_ligt_in_wijk_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_ligt_in_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggp_brk_gme_ligt_in_gemeente__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_ligt_in_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggp_brk_gme_ligt_in_gemeente_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_ligt_in_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggp_brk_gme_ligt_in_gemeente_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggp_gbd_brt_bestaat_uit_buurten__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_ligt_in_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggw_brk_gme_ligt_in_gemeente__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_ligt_in_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggw_brk_gme_ligt_in_gemeente_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_ligt_in_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggw_brk_gme_ligt_in_gemeente_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggw_gbd_brt_bestaat_uit_buurten__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_ligt_in_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_sdl_brk_gme_ligt_in_gemeente__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_ligt_in_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_sdl_brk_gme_ligt_in_gemeente_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_ligt_in_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_sdl_brk_gme_ligt_in_gemeente_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_ligt_in_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_wijk_brk_gme_ligt_in_gemeente__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_ligt_in_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_wijk_brk_gme_ligt_in_gemeente_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_ligt_in_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_wijk_brk_gme_ligt_in_gemeente_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_uniq UNIQUE (_source_id);
 
 
@@ -27733,14 +28807,6 @@ ALTER TABLE ONLY public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk
 
 
 --
--- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok rel_nap_pmk_gbd_bbk_ligt_in_bouwblok__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok
-    ADD CONSTRAINT rel_nap_pmk_gbd_bbk_ligt_in_bouwblok__tid_key UNIQUE (_tid);
-
-
---
 -- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok rel_nap_pmk_gbd_bbk_ligt_in_bouwblok_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
@@ -27749,11 +28815,19 @@ ALTER TABLE ONLY public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok
 
 
 --
--- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok rel_nap_pmk_gbd_bbk_ligt_in_bouwblok_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
 ALTER TABLE ONLY public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok
-    ADD CONSTRAINT rel_nap_pmk_gbd_bbk_ligt_in_bouwblok_uniq UNIQUE (_source_id);
+    ADD CONSTRAINT rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok
+    ADD CONSTRAINT rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_uniq UNIQUE (_source_id);
 
 
 --
@@ -28834,6 +29908,510 @@ ALTER TABLE ONLY public.woz_wozobjecten
 
 ALTER TABLE ONLY public.woz_wozobjecten
     ADD CONSTRAINT woz_wozobjecten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: events_action; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX events_action ON ONLY public.events USING btree (action);
+
+
+--
+-- Name: rel_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_action_idx ON ONLY events.rel USING btree (action);
+
+
+--
+-- Name: events_eventid; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX events_eventid ON ONLY public.events USING btree (eventid);
+
+
+--
+-- Name: rel_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_eventid_idx ON ONLY events.rel USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_action_idx ON ONLY events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (action);
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_eventid_idx ON ONLY events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_action_idx ON events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx ON events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_action_idx ON ONLY events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (action);
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_eventid_idx ON ONLY events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_action_idx ON events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_eventid_idx ON events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_action_idx ON ONLY events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (action);
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_eventid_idx ON ONLY events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_action_idx ON events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx ON events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_action_idx ON ONLY events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (action);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_eventid_idx ON ONLY events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_action_idx ON events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_eventid_idx ON events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx ON ONLY events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (action);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx ON ONLY events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_action_idx ON events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_eventid_idx ON events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_action_idx ON ONLY events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (action);
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_eventid_idx ON ONLY events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_action_idx ON events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_eventid_idx ON events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_action_idx ON ONLY events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_eventid_idx ON ONLY events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_action_idx ON events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx ON events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_action_idx ON ONLY events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx ON ONLY events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_go_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_go_eventid_idx ON events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob_action_idx ON events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx ON ONLY events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx ON ONLY events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx ON events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx ON events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_action_idx ON ONLY events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_eventid_idx ON ONLY events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_action_idx ON events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx ON events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_action_idx ON ONLY events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx ON ONLY events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_go_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_go_eventid_idx ON events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob_action_idx ON events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx ON ONLY events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx ON ONLY events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx ON events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx ON events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_action_idx ON ONLY events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (action);
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_eventid_idx ON ONLY events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_action_idx ON events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx ON events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_action_idx ON ONLY events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (action);
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_eventid_idx ON ONLY events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_action_idx ON events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx ON events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx ON ONLY events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (action);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx ON ONLY events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_action_idx ON events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_eventid_idx ON events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx ON ONLY events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (action);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx ON ONLY events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (eventid);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx ON events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob USING btree (action);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx ON events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob USING btree (eventid);
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_action_idx ON ONLY events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (action);
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_eventid_idx ON ONLY events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (eventid);
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_action_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_action_idx ON events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob USING btree (action);
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_eventid_idx; Type: INDEX; Schema: events; Owner: gobtest
+--
+
+CREATE INDEX rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_eventid_idx ON events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob USING btree (eventid);
 
 
 --
@@ -32351,115 +33929,115 @@ CREATE INDEX dst_id_mv_brp_vbl_brp_pvb_heeft_persoonsverblijfplaatsen ON public.
 
 
 --
--- Name: dst_id_mv_gbd_bbk_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_gbd_bbk_brk_gme_ligt_in_gemeente ON public.mv_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_gbd_bbk_gbd_brt_ligt_in_buurt; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_gbd_bbk_gbd_brt_ligt_in_buurt ON public.mv_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (dst_id);
+CREATE INDEX dst_id_mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_gbd_brt_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_gbd_brt_brk_gme_ligt_in_gemeente ON public.mv_gbd_brt_brk_gme_ligt_in_gemeente USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied ON public.mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (dst_id);
+CREATE INDEX dst_id_mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt ON public.mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_gbd_brt_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied ON public.mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_gbd_brt_gbd_wijk_ligt_in_wijk; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_gbd_brt_gbd_wijk_ligt_in_wijk ON public.mv_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (dst_id);
+CREATE INDEX dst_id_mv_gbd_brt_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_gbd_ggp_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_gbd_ggp_brk_gme_ligt_in_gemeente ON public.mv_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_gbd_ggp_gbd_brt_bestaat_uit_buurten; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_gbd_ggp_gbd_brt_bestaat_uit_buurten ON public.mv_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (dst_id);
+CREATE INDEX dst_id_mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied ON public.mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_gbd_ggw_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_gbd_ggw_brk_gme_ligt_in_gemeente ON public.mv_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (dst_id);
+CREATE INDEX dst_id_mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied ON public.mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_gbd_ggw_gbd_brt_bestaat_uit_buurten; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_gbd_ggw_gbd_brt_bestaat_uit_buurten ON public.mv_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (dst_id);
+CREATE INDEX dst_id_mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk ON public.mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_gbd_sdl_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_gbd_sdl_brk_gme_ligt_in_gemeente ON public.mv_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_gbd_wijk_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_gbd_wijk_brk_gme_ligt_in_gemeente ON public.mv_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (dst_id);
+CREATE INDEX dst_id_mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied ON public.mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (dst_id);
+CREATE INDEX dst_id_mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten ON public.mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (dst_id);
+CREATE INDEX dst_id_mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten ON public.mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied ON public.mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id);
 
 
 --
@@ -32862,20 +34440,6 @@ CREATE INDEX dst_id_mv_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten ON public.mv_
 
 
 --
--- Name: events_action; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX events_action ON ONLY public.events USING btree (action);
-
-
---
--- Name: events_eventid; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX events_eventid ON ONLY public.events USING btree (eventid);
-
-
---
 -- Name: gbd_bbk_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -32967,6 +34531,13 @@ CREATE INDEX gbd_bbk_ed3f22b3eec2fb035647f924a5b2136e ON public.gebieden_bouwblo
 
 
 --
+-- Name: gbd_brt_031111c726ab4bd82815f21e45198a8c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_brt_031111c726ab4bd82815f21e45198a8c ON public.gebieden_buurten USING gin (ligt_in_gebieden_wijk);
+
+
+--
 -- Name: gbd_brt_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -33037,13 +34608,6 @@ CREATE INDEX gbd_brt_c13367945d5d4c91047b3b50234aa7ab ON public.gebieden_buurten
 
 
 --
--- Name: gbd_brt_c7be7d04a19bcca4163193766ae76cc1; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gbd_brt_c7be7d04a19bcca4163193766ae76cc1 ON public.gebieden_buurten USING gin (ligt_in_wijk);
-
-
---
 -- Name: gbd_brt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -33100,13 +34664,6 @@ CREATE INDEX gbd_ggp_37abd7da5cbd49b20a1090ba960d82e7 ON public.gebieden_ggpgebi
 
 
 --
--- Name: gbd_ggp_45b8091ac56b14061615d970c99f702a; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gbd_ggp_45b8091ac56b14061615d970c99f702a ON public.gebieden_ggpgebieden USING gin (ligt_in_stadsdeel);
-
-
---
 -- Name: gbd_ggp_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -33125,13 +34682,6 @@ CREATE INDEX gbd_ggp_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.gebieden_ggpgebi
 --
 
 CREATE INDEX gbd_ggp_97beaa21d4819a1131833b897504ce31 ON public.gebieden_ggpgebieden USING btree (_tid);
-
-
---
--- Name: gbd_ggp_982a4d03c48163c3b7e23a677c77128b; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gbd_ggp_982a4d03c48163c3b7e23a677c77128b ON public.gebieden_ggpgebieden USING gin (bestaat_uit_buurten);
 
 
 --
@@ -33198,10 +34748,10 @@ CREATE INDEX gbd_ggw_37abd7da5cbd49b20a1090ba960d82e7 ON public.gebieden_ggwgebi
 
 
 --
--- Name: gbd_ggw_45b8091ac56b14061615d970c99f702a; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gbd_ggw_49f6aa787bda8e3347776f8e84404fb4; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gbd_ggw_45b8091ac56b14061615d970c99f702a ON public.gebieden_ggwgebieden USING gin (ligt_in_stadsdeel);
+CREATE INDEX gbd_ggw_49f6aa787bda8e3347776f8e84404fb4 ON public.gebieden_ggwgebieden USING gin (bestaat_uit_gebieden_buurten);
 
 
 --
@@ -33226,10 +34776,10 @@ CREATE INDEX gbd_ggw_97beaa21d4819a1131833b897504ce31 ON public.gebieden_ggwgebi
 
 
 --
--- Name: gbd_ggw_982a4d03c48163c3b7e23a677c77128b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gbd_ggw_9fbe7908e8f71edc78f85d6a709f3e07; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gbd_ggw_982a4d03c48163c3b7e23a677c77128b ON public.gebieden_ggwgebieden USING gin (bestaat_uit_buurten);
+CREATE INDEX gbd_ggw_9fbe7908e8f71edc78f85d6a709f3e07 ON public.gebieden_ggwgebieden USING gin (ligt_in_gebieden_stadsdeel);
 
 
 --
@@ -33401,13 +34951,6 @@ CREATE INDEX gbd_wijk_37abd7da5cbd49b20a1090ba960d82e7 ON public.gebieden_wijken
 
 
 --
--- Name: gbd_wijk_45b8091ac56b14061615d970c99f702a; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gbd_wijk_45b8091ac56b14061615d970c99f702a ON public.gebieden_wijken USING gin (ligt_in_stadsdeel);
-
-
---
 -- Name: gbd_wijk_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -33426,6 +34969,13 @@ CREATE INDEX gbd_wijk_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.gebieden_wijken
 --
 
 CREATE INDEX gbd_wijk_97beaa21d4819a1131833b897504ce31 ON public.gebieden_wijken USING btree (_tid);
+
+
+--
+-- Name: gbd_wijk_9fbe7908e8f71edc78f85d6a709f3e07; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_wijk_9fbe7908e8f71edc78f85d6a709f3e07 ON public.gebieden_wijken USING gin (ligt_in_gebieden_stadsdeel);
 
 
 --
@@ -34024,115 +35574,115 @@ CREATE INDEX gobid_mv_brp_vbl_brp_pvb_heeft_persoonsverblijfplaatsen ON public.m
 
 
 --
--- Name: gobid_mv_gbd_bbk_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_gbd_bbk_brk_gme_ligt_in_gemeente ON public.mv_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_gobid);
-
-
---
--- Name: gobid_mv_gbd_bbk_gbd_brt_ligt_in_buurt; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_gbd_bbk_gbd_brt_ligt_in_buurt ON public.mv_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_gobid);
+CREATE INDEX gobid_mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_gbd_brt_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_gbd_brt_brk_gme_ligt_in_gemeente ON public.mv_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_gobid);
-
-
---
--- Name: gobid_mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied ON public.mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_gobid);
+CREATE INDEX gobid_mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt ON public.mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_gbd_brt_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied ON public.mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_gobid);
-
-
---
--- Name: gobid_mv_gbd_brt_gbd_wijk_ligt_in_wijk; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_gbd_brt_gbd_wijk_ligt_in_wijk ON public.mv_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_gobid);
+CREATE INDEX gobid_mv_gbd_brt_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_gbd_ggp_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_gbd_ggp_brk_gme_ligt_in_gemeente ON public.mv_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_gobid);
-
-
---
--- Name: gobid_mv_gbd_ggp_gbd_brt_bestaat_uit_buurten; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_gbd_ggp_gbd_brt_bestaat_uit_buurten ON public.mv_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_gobid);
+CREATE INDEX gobid_mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied ON public.mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_gobid);
-
-
---
--- Name: gobid_mv_gbd_ggw_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_gbd_ggw_brk_gme_ligt_in_gemeente ON public.mv_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_gobid);
+CREATE INDEX gobid_mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied ON public.mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_gbd_ggw_gbd_brt_bestaat_uit_buurten; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_gbd_ggw_gbd_brt_bestaat_uit_buurten ON public.mv_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_gobid);
-
-
---
--- Name: gobid_mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_gobid);
+CREATE INDEX gobid_mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk ON public.mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_gbd_sdl_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_gbd_sdl_brk_gme_ligt_in_gemeente ON public.mv_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_gobid);
-
-
---
--- Name: gobid_mv_gbd_wijk_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_gbd_wijk_brk_gme_ligt_in_gemeente ON public.mv_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_gobid);
+CREATE INDEX gobid_mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied ON public.mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_gobid);
+CREATE INDEX gobid_mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten ON public.mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_gobid);
+CREATE INDEX gobid_mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten ON public.mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied ON public.mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
 
 
 --
@@ -35386,6 +36936,13 @@ CREATE INDEX nap_pmk_97beaa21d4819a1131833b897504ce31 ON public.nap_peilmerken U
 --
 
 CREATE INDEX nap_pmk_b80bb7740288fda1f201890375a60c8f ON public.nap_peilmerken USING btree (_id);
+
+
+--
+-- Name: nap_pmk_cadf657ee6f481987a2334dfd3de08a3; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX nap_pmk_cadf657ee6f481987a2334dfd3de08a3 ON public.nap_peilmerken USING gin (ligt_in_gebieden_bouwblok);
 
 
 --
@@ -49851,1907 +51408,1907 @@ CREATE INDEX rel_brp_vbl_brp_pvb_720cc8a4_f49c273bd9b194a2b48ebed02cfba269 ON pu
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_source_id);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_expiration_date);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_application);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_application);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_source);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_source);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441 ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_last_event);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_date_deleted);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (bronwaarde);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_id);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_id);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_gobid);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_last_src_event);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_source_id);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_expiration_date);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_application);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_application);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_source);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_source);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_47c61233d92dd28822986676f8650441 ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_47c61233d92dd28822986676f8650441 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_last_event);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_date_deleted);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (bronwaarde);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_id);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_id);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_gobid);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_last_src_event);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_c567336b_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_bbk_gbd_brt_c567336b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_source_id);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_expiration_date);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_application);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_application);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_source);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_source);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441 ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_last_event);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_date_deleted);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (bronwaarde);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_id);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_id);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_gobid);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_last_src_event);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_brt_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_source_id);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_expiration_date);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_application);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_application);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_source);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_source);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_47c61233d92dd28822986676f8650441 ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_47c61233d92dd28822986676f8650441 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_last_event);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_date_deleted);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (bronwaarde);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_id);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_id);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_gobid);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_last_src_event);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ed4dfe39_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggp_ed4dfe39_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_source_id);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_expiration_date);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_application);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_application);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_source);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_source);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_47c61233d92dd28822986676f8650441 ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_47c61233d92dd28822986676f8650441 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_last_event);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_date_deleted);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (bronwaarde);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_id);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_id);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_gobid);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_last_src_event);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_1796794b_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_ggw_1796794b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_source_id);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_expiration_date);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_application);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_application);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_source);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_source);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_47c61233d92dd28822986676f8650441 ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_47c61233d92dd28822986676f8650441 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_last_event);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_date_deleted);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (bronwaarde);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_id);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_id);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_gobid);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_last_src_event);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_c7be7d04_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_brt_gbd_wijk_c7be7d04_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_source_id);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_expiration_date);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_application);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_application);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_source);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_source);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_last_event);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_date_deleted);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (bronwaarde);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_id);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_id);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_gobid);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_last_src_event);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_source_id);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_expiration_date);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_application);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_application);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_source);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_source);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_last_event);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_date_deleted);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (bronwaarde);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_id);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_id);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_gobid);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_last_src_event);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_982a4d03_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_brt_982a4d03_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_source_id);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_expiration_date);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_application);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_application);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_source);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_last_event);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_date_deleted);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (bronwaarde);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_id);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_id);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_gobid);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_last_src_event);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_45b8091a_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggp_gbd_sdl_45b8091a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_source_id);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_expiration_date);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_application);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_application);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_source);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_source);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_last_event);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_date_deleted);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (bronwaarde);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_id);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_id);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_gobid);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_last_src_event);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_source_id);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_expiration_date);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_application);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_application);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_source);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_source);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_last_event);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_date_deleted);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (bronwaarde);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_id);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_id);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_gobid);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_last_src_event);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_982a4d03_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_brt_982a4d03_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_source_id);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_expiration_date);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_application);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_application);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_source);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_47c61233d92dd28822986676f8650441 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_last_event);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_date_deleted);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (bronwaarde);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_id);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_id);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_gobid);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_last_src_event);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_45b8091a_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_ggw_gbd_sdl_45b8091a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_source_id);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_expiration_date);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_application);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_application);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_source);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_source);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441 ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_last_event);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_date_deleted);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (bronwaarde);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_id);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_id);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_gobid);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_last_src_event);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_sdl_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_source_id);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_expiration_date);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_application);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_application);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_source);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_source);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441 ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_47c61233d92dd28822986676f8650441 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_last_event);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_date_deleted);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (bronwaarde);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_id);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_id);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_gobid);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_last_src_event);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_source_id);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_expiration_date);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_application);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_application);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_source);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_source);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_47c61233d92dd28822986676f8650441 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_47c61233d92dd28822986676f8650441 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_last_event);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_date_deleted);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (bronwaarde);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_id);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_id);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_gobid);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_last_src_event);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_1796794b_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_ggw_1796794b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_last_dst_event);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_source_id);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source_id);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_expiration_date);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_1a9d849ff5a68997176b6144236806ae ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_expiration_date);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_application);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_application);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_source);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_source, _last_event DESC);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_47c61233d92dd28822986676f8650441 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_47c61233d92dd28822986676f8650441 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_last_event);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_613273a0ec2090693894cea102aa8c06 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_event);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_date_deleted);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_date_deleted);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (bronwaarde);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (bronwaarde);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_id);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_id);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_gobid);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_last_src_event);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_dc79a884dc55f09863437f9198baf021 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_src_event);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_e0c02692eaf2daf950e3f61108280a92 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_45b8091a_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_gbd_wijk_gbd_sdl_45b8091a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (_last_dst_event);
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_dst_event);
 
 
 --
@@ -59098,115 +60655,115 @@ CREATE INDEX src_dst_wide_mv_brp_vbl_brp_pvb_heeft_persoonsverblijfplaatsen ON p
 
 
 --
--- Name: src_dst_wide_mv_gbd_bbk_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_gbd_bbk_brk_gme_ligt_in_gemeente ON public.mv_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_gbd_bbk_gbd_brt_ligt_in_buurt; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_gbd_bbk_gbd_brt_ligt_in_buurt ON public.mv_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_gbd_brt_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_gbd_brt_brk_gme_ligt_in_gemeente ON public.mv_gbd_brt_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied ON public.mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt ON public.mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_gbd_brt_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied ON public.mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_gbd_brt_gbd_wijk_ligt_in_wijk; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_gbd_brt_gbd_wijk_ligt_in_wijk ON public.mv_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_gbd_brt_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_gbd_ggp_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_gbd_ggp_brk_gme_ligt_in_gemeente ON public.mv_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_gbd_ggp_gbd_brt_bestaat_uit_buurten; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_gbd_ggp_gbd_brt_bestaat_uit_buurten ON public.mv_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied ON public.mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_gbd_ggw_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_gbd_ggw_brk_gme_ligt_in_gemeente ON public.mv_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied ON public.mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_gbd_ggw_gbd_brt_bestaat_uit_buurten; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_gbd_ggw_gbd_brt_bestaat_uit_buurten ON public.mv_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk ON public.mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_gbd_sdl_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_gbd_sdl_brk_gme_ligt_in_gemeente ON public.mv_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_gbd_wijk_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_gbd_wijk_brk_gme_ligt_in_gemeente ON public.mv_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied ON public.mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten ON public.mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten ON public.mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied ON public.mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
@@ -60169,115 +61726,115 @@ CREATE INDEX src_id_mv_brp_vbl_brp_pvb_heeft_persoonsverblijfplaatsen ON public.
 
 
 --
--- Name: src_id_mv_gbd_bbk_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_gbd_bbk_brk_gme_ligt_in_gemeente ON public.mv_gbd_bbk_brk_gme_ligt_in_gemeente USING btree (src_id);
-
-
---
--- Name: src_id_mv_gbd_bbk_gbd_brt_ligt_in_buurt; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_gbd_bbk_gbd_brt_ligt_in_buurt ON public.mv_gbd_bbk_gbd_brt_ligt_in_buurt USING btree (src_id);
+CREATE INDEX src_id_mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (src_id);
 
 
 --
--- Name: src_id_mv_gbd_brt_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_gbd_brt_brk_gme_ligt_in_gemeente ON public.mv_gbd_brt_brk_gme_ligt_in_gemeente USING btree (src_id);
-
-
---
--- Name: src_id_mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied ON public.mv_gbd_brt_gbd_ggp_ligt_in_ggpgebied USING btree (src_id);
+CREATE INDEX src_id_mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt ON public.mv_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (src_id);
 
 
 --
--- Name: src_id_mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_gbd_brt_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied ON public.mv_gbd_brt_gbd_ggw_ligt_in_ggwgebied USING btree (src_id);
-
-
---
--- Name: src_id_mv_gbd_brt_gbd_wijk_ligt_in_wijk; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_gbd_brt_gbd_wijk_ligt_in_wijk ON public.mv_gbd_brt_gbd_wijk_ligt_in_wijk USING btree (src_id);
+CREATE INDEX src_id_mv_gbd_brt_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (src_id);
 
 
 --
--- Name: src_id_mv_gbd_ggp_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_gbd_ggp_brk_gme_ligt_in_gemeente ON public.mv_gbd_ggp_brk_gme_ligt_in_gemeente USING btree (src_id);
-
-
---
--- Name: src_id_mv_gbd_ggp_gbd_brt_bestaat_uit_buurten; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_gbd_ggp_gbd_brt_bestaat_uit_buurten ON public.mv_gbd_ggp_gbd_brt_bestaat_uit_buurten USING btree (src_id);
+CREATE INDEX src_id_mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied ON public.mv_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (src_id);
 
 
 --
--- Name: src_id_mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_ggp_gbd_sdl_ligt_in_stadsdeel USING btree (src_id);
-
-
---
--- Name: src_id_mv_gbd_ggw_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_gbd_ggw_brk_gme_ligt_in_gemeente ON public.mv_gbd_ggw_brk_gme_ligt_in_gemeente USING btree (src_id);
+CREATE INDEX src_id_mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied ON public.mv_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (src_id);
 
 
 --
--- Name: src_id_mv_gbd_ggw_gbd_brt_bestaat_uit_buurten; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_gbd_ggw_gbd_brt_bestaat_uit_buurten ON public.mv_gbd_ggw_gbd_brt_bestaat_uit_buurten USING btree (src_id);
-
-
---
--- Name: src_id_mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_ggw_gbd_sdl_ligt_in_stadsdeel USING btree (src_id);
+CREATE INDEX src_id_mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk ON public.mv_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (src_id);
 
 
 --
--- Name: src_id_mv_gbd_sdl_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_gbd_sdl_brk_gme_ligt_in_gemeente ON public.mv_gbd_sdl_brk_gme_ligt_in_gemeente USING btree (src_id);
-
-
---
--- Name: src_id_mv_gbd_wijk_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_gbd_wijk_brk_gme_ligt_in_gemeente ON public.mv_gbd_wijk_brk_gme_ligt_in_gemeente USING btree (src_id);
+CREATE INDEX src_id_mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (src_id);
 
 
 --
--- Name: src_id_mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied ON public.mv_gbd_wijk_gbd_ggw_ligt_in_ggwgebied USING btree (src_id);
+CREATE INDEX src_id_mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten ON public.mv_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (src_id);
 
 
 --
--- Name: src_id_mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel ON public.mv_gbd_wijk_gbd_sdl_ligt_in_stadsdeel USING btree (src_id);
+CREATE INDEX src_id_mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten ON public.mv_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente ON public.mv_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied ON public.mv_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (src_id);
 
 
 --
@@ -62241,6 +63798,741 @@ CREATE INDEX woz_wot_ed3f22b3eec2fb035647f924a5b2136e ON public.woz_wozobjecten 
 
 
 --
+-- Name: rel_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX public.events_action ATTACH PARTITION events.rel_action_idx;
+
+
+--
+-- Name: rel_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX public.events_eventid ATTACH PARTITION events.rel_eventid_idx;
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_action_idx;
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_eventid_idx;
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_action_idx ATTACH PARTITION events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_eventid_idx ATTACH PARTITION events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_pkey ATTACH PARTITION events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_gob_pkey;
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente_pkey;
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_action_idx;
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_eventid_idx;
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_action_idx ATTACH PARTITION events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_eventid_idx ATTACH PARTITION events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_pkey ATTACH PARTITION events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_gob_pkey;
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt_pkey;
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_action_idx;
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_eventid_idx;
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_action_idx ATTACH PARTITION events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_eventid_idx ATTACH PARTITION events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_pkey ATTACH PARTITION events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_gob_pkey;
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente_pkey;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_action_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_eventid_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_action_idx ATTACH PARTITION events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_eventid_idx ATTACH PARTITION events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_pkey ATTACH PARTITION events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_gob_pkey;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied_pkey;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx ATTACH PARTITION events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx ATTACH PARTITION events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey ATTACH PARTITION events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_pkey;
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey;
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_action_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_eventid_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_action_idx ATTACH PARTITION events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_eventid_idx ATTACH PARTITION events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_pkey ATTACH PARTITION events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_gob_pkey;
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk_pkey;
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_action_idx;
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_action_idx ATTACH PARTITION events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_eventid_idx ATTACH PARTITION events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_pkey ATTACH PARTITION events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_gob_pkey;
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente_pkey;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_action_idx;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_go_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx ATTACH PARTITION events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_go_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_action_idx ATTACH PARTITION events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_pkey ATTACH PARTITION events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_gob_pkey;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten_pkey;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx ATTACH PARTITION events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx ATTACH PARTITION events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey ATTACH PARTITION events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey;
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey;
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_action_idx;
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_action_idx ATTACH PARTITION events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_eventid_idx ATTACH PARTITION events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_pkey ATTACH PARTITION events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_gob_pkey;
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente_pkey;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_action_idx;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_go_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_eventid_idx ATTACH PARTITION events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_go_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_action_idx ATTACH PARTITION events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_pkey ATTACH PARTITION events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_gob_pkey;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten_pkey;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx ATTACH PARTITION events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx ATTACH PARTITION events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey ATTACH PARTITION events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey;
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey;
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_action_idx;
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_eventid_idx;
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_action_idx ATTACH PARTITION events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_eventid_idx ATTACH PARTITION events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_pkey ATTACH PARTITION events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_gob_pkey;
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente_pkey;
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_action_idx;
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_eventid_idx;
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_action_idx ATTACH PARTITION events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_eventid_idx ATTACH PARTITION events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_pkey ATTACH PARTITION events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_gob_pkey;
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente_pkey;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_action_idx ATTACH PARTITION events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_eventid_idx ATTACH PARTITION events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey ATTACH PARTITION events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_gob_pkey;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied_pkey;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_action_idx ATTACH PARTITION events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_action_idx;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_eventid_idx ATTACH PARTITION events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_eventid_idx;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey ATTACH PARTITION events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_gob_pkey;
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel_pkey;
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_action_idx ATTACH PARTITION events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_action_idx;
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_eventid_idx ATTACH PARTITION events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_eventid_idx;
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_action_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_action_idx ATTACH PARTITION events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_action_idx;
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_eventid_idx; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_eventid_idx ATTACH PARTITION events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_eventid_idx;
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_pkey ATTACH PARTITION events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob_pkey;
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX events.rel_pkey ATTACH PARTITION events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_pkey;
+
+
+--
+-- Name: rel_pkey; Type: INDEX ATTACH; Schema: events; Owner: gobtest
+--
+
+ALTER INDEX public.events_pkey1 ATTACH PARTITION events.rel_pkey;
+
+
+--
 -- Name: events autocall_insertintoevents; Type: RULE; Schema: public; Owner: gobtest
 --
 
@@ -63529,258 +65821,258 @@ ALTER TABLE ONLY public.rel_brp_vbl_brp_pvb_heeft_persoonsverblijfplaatsen
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_ligt_in_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_bbk_brk_gme_ligt_in_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk_gemeentes(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_bbk_brk_gme_ligt_in_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente rel_gbd_bbk_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_bbk_brk_gme_ligt_in_gemeente_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_bouwblokken(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_ligt_in_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_buurt
+ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt
     ADD CONSTRAINT rel_gbd_bbk_gbd_brt_ligt_in_buurt_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_buurten(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_bbk_gbd_brt_ligt_in_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt rel_gbd_bbk_gbd_brt_ligt_in_buurt_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_buurt
+ALTER TABLE ONLY public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt
     ADD CONSTRAINT rel_gbd_bbk_gbd_brt_ligt_in_buurt_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_bouwblokken(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_ligt_in_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_brt_brk_gme_ligt_in_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk_gemeentes(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_brt_brk_gme_ligt_in_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_brk_gme_ligt_in_brk_gemeente rel_gbd_brt_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_brt_brk_gme_ligt_in_gemeente_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_buurten(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_ggpgebieden(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggp_ligt_in_ggpgebied_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_buurten(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_ggwgebieden(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_brt_gbd_ggw_ligt_in_ggwgebied_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_buurten(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_ligt_in_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_wijk
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk
     ADD CONSTRAINT rel_gbd_brt_gbd_wijk_ligt_in_wijk_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_wijken(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_brt_gbd_wijk_ligt_in_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk rel_gbd_brt_gbd_wijk_ligt_in_wijk_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_wijk
+ALTER TABLE ONLY public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk
     ADD CONSTRAINT rel_gbd_brt_gbd_wijk_ligt_in_wijk_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_buurten(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_ligt_in_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggp_brk_gme_ligt_in_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk_gemeentes(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_brk_gme_ligt_in_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente rel_gbd_ggp_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggp_brk_gme_ligt_in_gemeente_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_ggpgebieden(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_buurten(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggp_gbd_brt_bestaat_uit_buurten_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_ggpgebieden(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_stadsdelen(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggp_gbd_sdl_ligt_in_stadsdeel_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_ggpgebieden(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_ligt_in_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggw_brk_gme_ligt_in_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk_gemeentes(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_brk_gme_ligt_in_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente rel_gbd_ggw_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_ggw_brk_gme_ligt_in_gemeente_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_ggwgebieden(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_buurten(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_buurten
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten
     ADD CONSTRAINT rel_gbd_ggw_gbd_brt_bestaat_uit_buurten_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_ggwgebieden(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_stadsdelen(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_ggw_gbd_sdl_ligt_in_stadsdeel_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_ggwgebieden(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_ligt_in_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_sdl_brk_gme_ligt_in_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk_gemeentes(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_sdl_brk_gme_ligt_in_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente rel_gbd_sdl_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_sdl_brk_gme_ligt_in_gemeente_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_stadsdelen(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_ligt_in_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_wijk_brk_gme_ligt_in_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk_gemeentes(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_brk_gme_ligt_in_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente rel_gbd_wijk_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_gemeente
+ALTER TABLE ONLY public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente
     ADD CONSTRAINT rel_gbd_wijk_brk_gme_ligt_in_gemeente_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_wijken(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_ggwgebieden(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied
     ADD CONSTRAINT rel_gbd_wijk_gbd_ggw_ligt_in_ggwgebied_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_wijken(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.gebieden_stadsdelen(_id, volgnummer);
 
 
 --
--- Name: rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel
+ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel
     ADD CONSTRAINT rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.gebieden_wijken(_id, volgnummer);
 
 

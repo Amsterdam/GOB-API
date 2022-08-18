@@ -1,0 +1,3 @@
+table_name: gebieden_stadsdelen
+override_columns:
+  ligt_in_gemeente: ligt_in_brk_gemeente

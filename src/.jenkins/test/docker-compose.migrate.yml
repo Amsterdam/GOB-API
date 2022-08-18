@@ -5,13 +5,18 @@ services:
   migrate:
     build:
       context: ../../../../GOB-Upload/src
-      target: application
-    env_file: ./.env
+      target: development
     environment:
-      DATABASE_HOST_OVERRIDE: ${DATABASE_HOST}
+      DATABASE_HOST_OVERRIDE: test_db
+      DATABASE_PORT_OVERRIDE: 5432
+      DATABASE_NAME: gobtest
+      DATABASE_USER: gobtest
+      DATABASE_PASSWORD: insecure
     depends_on:
       - test_db
     command: bash -c "alembic upgrade head && python -m gobupload --migrate"
+    volumes:
+      - ${GOB_CORE_DIR-../../../../GOB-Core}:/app/GOB-Core
 
   test:
     command: >

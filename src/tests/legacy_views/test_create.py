@@ -1,53 +1,52 @@
 from unittest import TestCase
 from unittest.mock import MagicMock, call, patch
 
-from gobapi.legacy_views.create import create_legacy_views
+from psycopg2.errors import InvalidTableDefinition
+from sqlalchemy.exc import ProgrammingError
+
+from gobapi.legacy_views.create import _create_view_with_drop_fallback, create_legacy_views
 
 
 class MockModel:
-
-    def get_catalogs(self):
-        return {
-            'gebieden': {
-
+    data = {
+        'some_catalog': {
+            'some_collection': {},
+            'some_other_collection': {},
+        },
+        'nap': {
+            'peilmerken': {
+                'all_fields': {
+                    # Bogus fields, plus the fields from the definition
+                    '_id': {},
+                    'ligt_in_bouwblok': {},
+                    'merk': {},
+                    'status': {},
+                    'not_overridden_field': {}
+                }
             },
-            'nap': {
-
-            },
-            'rel': {
-
-            }
-        }
-
-    def get_collections(self, catalog_name):
-        return {
-            'gebieden': {
-                'buurten': {},
-                'bouwblokken': {},
-            },
-            'nap': {
-                'peilmerken': {
-                    'all_fields': {
-                        # Bogus fields, plus the fields from the definition
-                        '_id': {},
-                        'ligt_in_bouwblok': {},
-                        'merk': {},
-                        'status': {},
-                        'not_overridden_field': {}
-                    }
-                },
-            },
-            'rel': {
-                'nap_pmk_gbd_bbk_ligt_in_bouwblok': {
-                    'all_fields': {
-                        # Bogus fields, not important
-                        '_id': {},
-                        'a': {},
-                        'b': {}
-                    }
+        },
+        'rel': {
+            'nap_pmk_gbd_bbk_ligt_in_bouwblok': {
+                'all_fields': {
+                    # Bogus fields, not important
+                    '_id': {},
+                    'a': {},
+                    'b': {}
                 }
             }
-        }[catalog_name]
+        }
+    }
+
+    def __init__(self, data=None):
+        if data:
+            # Overwrite default
+            self.data = data
+
+    def get_catalogs(self):
+        return self.data
+
+    def get_collections(self, catalog_name):
+        return self.data[catalog_name]
 
     def get_collection(self, catalog_name, collection_name):
         return self.get_collections(catalog_name)[collection_name]
@@ -57,15 +56,21 @@ class MockModel:
 
 
 class MockRelations:
+    data = {
+        'collections': {
+            'gbd_brt_abc_abc': {},
+            'gbd_brt_def_def': {},
+            'nap_pmk_gbd_bbk_ligt_in_bouwblok': {}
+        }
+    }
+
+    def __init__(self, data=None):
+        if data is not None:
+            # Overwrite default
+            self.data = data
 
     def get_relations(self, model):
-        return {
-            'collections': {
-                'gbd_brt_abc_abc': {},
-                'gbd_brt_def_def': {},
-                'nap_pmk_gbd_bbk_ligt_in_bouwblok': {}
-            }
-        }
+        return self.data
 
 
 class TestLegacyViews(TestCase):
@@ -104,8 +109,8 @@ FROM public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok"""
 
         connection.__enter__.return_value.execute.assert_has_calls([
             call("CREATE SCHEMA IF NOT EXISTS legacy"),
-            call("CREATE OR REPLACE VIEW legacy.gebieden_buurten AS SELECT * FROM public.gebieden_buurten"),
-            call("CREATE OR REPLACE VIEW legacy.gebieden_bouwblokken AS SELECT * FROM public.gebieden_bouwblokken"),
+            call("CREATE OR REPLACE VIEW legacy.some_catalog_some_collection AS SELECT * FROM public.some_catalog_some_collection"),
+            call("CREATE OR REPLACE VIEW legacy.some_catalog_some_other_collection AS SELECT * FROM public.some_catalog_some_other_collection"),
             call(f"CREATE OR REPLACE VIEW legacy.nap_peilmerken AS {expected_nap_peilmerken_query}"),
             call(f"CREATE OR REPLACE VIEW legacy.rel_nap_pmk_gbd_bbk_ligt_in_bouwblok AS {expected_rel_query}"),
             call("CREATE OR REPLACE VIEW legacy.mv_gbd_brt_abc_abc AS SELECT * FROM public.mv_gbd_brt_abc_abc"),
@@ -114,3 +119,41 @@ FROM public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok"""
             # With overridden tablename
             call("CREATE OR REPLACE VIEW legacy.mv_nap_pmk_gbd_bbk_ligt_in_bouwblok AS SELECT * FROM public.mv_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok")
         ])
+
+    @patch("gobapi.legacy_views.create.relations", MockRelations({"collections": {}}))
+    def test_create_legacy_views_changed_definition(self):
+        engine = MagicMock()
+        connection = engine.connect.return_value
+        execute = connection.__enter__.return_value.execute
+        error = ProgrammingError("some statement", "params", InvalidTableDefinition())
+        execute.side_effect = [None, error, None, None]
+
+        model = MockModel({
+            "some_catalog": {
+                "some_collection": {}
+            }
+        })
+        create_legacy_views(model, engine)
+
+        execute.assert_has_calls([
+            call("CREATE SCHEMA IF NOT EXISTS legacy"),
+            # This call fails on an InvalidTableDefinition ProgrammingError.
+            call(
+                "CREATE OR REPLACE VIEW legacy.some_catalog_some_collection AS SELECT * FROM public.some_catalog_some_collection"),
+            # Then we drop the view
+            call("DROP VIEW legacy.some_catalog_some_collection CASCADE"),
+            # And try again
+            call(
+                "CREATE OR REPLACE VIEW legacy.some_catalog_some_collection AS SELECT * FROM public.some_catalog_some_collection")
+        ])
+
+    def test_create_view_with_drop_fallback_database_error(self):
+        class SomeOtherException(Exception):
+            pass
+
+        connection = MagicMock()
+        error = ProgrammingError("some statement", "params", SomeOtherException())
+        connection.execute.side_effect = error
+
+        with self.assertRaises(ProgrammingError):
+            _create_view_with_drop_fallback("view name", "query", connection)
