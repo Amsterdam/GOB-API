@@ -11,7 +11,7 @@ SECURE_ARGS = []
 
 def secure_route(rule, func):
     """
-    Secure routes start with API_SECURE_BASE_PATH and are protected by gatekeeper
+    Secure routes start with API_SECURE_BASE_PATH and are protected by OAuth2 Proxy
 
     The headers that are used to identify the user and/or role should be present
 
@@ -20,7 +20,7 @@ def secure_route(rule, func):
     """
     def wrapper(*args, **kwargs):
         if is_secured_request(request.headers):
-            """Access Token is forwarded by OAuth2Proxy. Keycloak roles are present in access token"""
+            # Access Token is forwarded by OAuth2 Proxy. Keycloak roles are present in access token.
             setattr(request, 'roles', extract_roles(request.headers))
 
             if _allows_access(rule, *args, **kwargs):
@@ -73,7 +73,7 @@ def _issue_fraud_warning(rule, *args, **kwargs):
 
 def public_route(rule, func, *args, **kwargs):
     """
-    Public routes start with API_BASE_PATH and are not protected by gatekeeper
+    Public routes start with API_BASE_PATH and are not protected by OAuth2 Proxy
 
     The headers that are used to identify the user and/or role should NOT be present.
     If any of these headers are present that means that these headers are falsified

@@ -5,12 +5,11 @@ As it is a unit test all external dependencies are mocked
 
 """
 import datetime
-import importlib
 import sqlalchemy
+import gobapi.storage
 
 from unittest import mock, TestCase
 from unittest.mock import MagicMock, call
-
 from gobapi.storage import _get_convert_for_state, filter_deleted, connect, _format_reference, _get_table, \
     _to_gob_value, _add_resolve_attrs_to_columns, _get_convert_for_table, _add_relation_dates_to_manyreference, \
     _flatten_join_result, get_entity_refs_after, dump_entities, get_max_eventid, exec_statement, \
@@ -377,40 +376,22 @@ def mock_get_gobmodel(legacy=False):
     return model()
 
 def before_each_storage_test(monkeypatch):
-    import sqlalchemy
-    importlib.reload(sqlalchemy)
-    import sqlalchemy.ext.automap
-    importlib.reload(sqlalchemy.ext.automap)
-    import sqlalchemy.orm
-    importlib.reload(sqlalchemy.orm)
 
-    import gobapi.config
-    importlib.reload(gobapi.config)
+    monkeypatch.setattr(gobapi.storage, 'create_engine', mock_create_engine)
+    monkeypatch.setattr(gobapi.storage, 'Table', MockTable)
+    monkeypatch.setattr(gobapi.storage, 'automap_base', mock_automap_base)
+    monkeypatch.setattr(gobapi.storage, 'scoped_session', mock_scoped_session)
+    monkeypatch.setattr(gobapi.storage, 'get_session', mock_scoped_session)
+    monkeypatch.setattr(gobapi.storage, 'current_api_base_path', lambda: '/gob')
 
-    import gobcore.model
-    importlib.reload(gobapi.config)
+    monkeypatch.setattr(gobapi.storage, 'GOBModel', mock_get_gobmodel)
+    monkeypatch.setattr(gobapi.storage, 'PUBLIC_META_FIELDS', mock_PUBLIC_META_FIELDS)
 
-    import gobapi.legacy_views.create
-    import gobapi.views
+    monkeypatch.setattr(gobapi.storage, 'get_relation_name', lambda m, a, o, r: 'relation_name')
 
-    monkeypatch.setattr(sqlalchemy, 'create_engine', mock_create_engine)
-    monkeypatch.setattr(sqlalchemy, 'Table', MockTable)
-    monkeypatch.setattr(sqlalchemy.ext.automap, 'automap_base', mock_automap_base)
-    monkeypatch.setattr(sqlalchemy.orm, 'scoped_session', mock_scoped_session)
-    monkeypatch.setattr(gobapi.session, 'get_session', mock_scoped_session)
-    monkeypatch.setattr(gobapi.config, 'current_api_base_path', lambda: '/gob')
+    monkeypatch.setattr(gobapi.storage, 'create_legacy_views', lambda x, y: 'create_legacy_views')
 
-    monkeypatch.setattr(gobcore.model, 'GOBModel', mock_get_gobmodel)
-    monkeypatch.setattr(gobcore.model.metadata, 'PUBLIC_META_FIELDS', mock_PUBLIC_META_FIELDS)
-
-    monkeypatch.setattr(gobcore.model.relations, 'get_relation_name', lambda m, a, o, r: 'relation_name')
-
-    monkeypatch.setattr(gobapi.legacy_views.create, 'create_legacy_views', lambda x, y: 'create_legacy_views')
-
-    monkeypatch.setattr(gobapi.views, 'initialise_api_views', lambda e: 'initialise_api_views')
-
-    import gobapi.storage
-    importlib.reload(gobapi.storage)
+    monkeypatch.setattr(gobapi.storage, 'initialise_api_views', lambda e: 'initialise_api_views')
 
     monkeypatch.setattr(gobapi.storage, 'get_sqlalchemy_models', mock_get_sqlalchemy_models)
     monkeypatch.setattr(gobapi.storage, '_apply_filters', lambda e, f, t: e)

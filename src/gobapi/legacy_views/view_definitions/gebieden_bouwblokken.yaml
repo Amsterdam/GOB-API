@@ -1,0 +1,4 @@
+table_name: gebieden_bouwblokken
+override_columns:
+  ligt_in_gemeente: ligt_in_brk_gemeente
+  ligt_in_buurt: ligt_in_gebieden_buurt

@@ -1,0 +1,192 @@
+[
+  {
+    "identificatie": "10580007",
+    "hoogte_tov_nap": 3.6852,
+    "jaar": 2000,
+    "merk": {
+      "code": "1",
+      "omschrijving": "Ronde bout of althans aan de bovenzijde ronde bout zonder opschrift of met opschrift anders dan NAP"
+    },
+    "omschrijving": "Oudeschans 2 (Noordwest gevel van de \"Montelbaanstoren\")",
+    "windrichting": "N",
+    "x_coordinaat_muurvlak": 275.0,
+    "y_coordinaat_muurvlak": 96.0,
+    "rws_nummer": "25G0148",
+    "geometrie": "01010000204071000066666666EED5FD40666666662EBD1D41",
+    "status": {
+      "code": 3,
+      "omschrijving": "Vervallen"
+    },
+    "vervaldatum": "2018-05-03",
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10580007",
+    "_last_event": 133,
+    "_hash": "91cad1813d95a989e3cf7ef2bcd2ea44",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-08-01T09:12:23.297254",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 1,
+    "_id": "10580007",
+    "_tid": "10580007"
+  },
+  {
+    "identificatie": "10580010",
+    "hoogte_tov_nap": 1.9169,
+    "jaar": 1999,
+    "merk": {
+      "code": "1",
+      "omschrijving": "Ronde bout of althans aan de bovenzijde ronde bout zonder opschrift of met opschrift anders dan NAP"
+    },
+    "omschrijving": "Zijgevel Kloveniersburgwal 48 van het \"Oost Indisch Huis\" a/d Oude Hoogstraat 24 (X=2e pilaster Y=hardst. plintafd.).",
+    "windrichting": "NO",
+    "x_coordinaat_muurvlak": 22.0,
+    "y_coordinaat_muurvlak": -11.0,
+    "rws_nummer": null,
+    "geometrie": "0101000020407100000000000040B6FD400000000040BB1D41",
+    "status": {
+      "code": 3,
+      "omschrijving": "Vervallen"
+    },
+    "vervaldatum": "2018-05-03",
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "publiceerbaar": false,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10580010",
+    "_last_event": 134,
+    "_hash": "9806b681e0787ee87577b274a12ca3c1",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-08-01T09:12:23.297254",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": "2018-05-03T00:00:00.000000",
+    "_gobid": 2,
+    "_id": "10580010",
+    "_tid": "10580010"
+  },
+  {
+    "identificatie": "10680002",
+    "hoogte_tov_nap": 2.4076,
+    "jaar": 2000,
+    "merk": {
+      "code": "1",
+      "omschrijving": "Ronde bout of althans aan de bovenzijde ronde bout zonder opschrift of met opschrift anders dan NAP"
+    },
+    "omschrijving": "Noordoost pilaster van het zuidoostelijk bruggehoofd van brug (270) bij Wittenburgerhoofd over de Kattenburgervaart",
+    "windrichting": "NO",
+    "x_coordinaat_muurvlak": -50.0,
+    "y_coordinaat_muurvlak": 43.0,
+    "rws_nummer": null,
+    "geometrie": "0101000020407100009A9999994911FE40666666665CBC1D41",
+    "status": {
+      "code": 3,
+      "omschrijving": "Vervallen"
+    },
+    "vervaldatum": "2005-02-01",
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "publiceerbaar": false,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10680002",
+    "_last_event": 135,
+    "_hash": "ef0bd0c67fab7abc30dda0964269c954",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-08-01T09:12:23.297254",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": "2005-02-01T00:00:00.000000",
+    "_gobid": 3,
+    "_id": "10680002",
+    "_tid": "10680002"
+  },
+  {
+    "identificatie": "10780001",
+    "hoogte_tov_nap": 2.927,
+    "jaar": 2000,
+    "merk": {
+      "code": "0",
+      "omschrijving": "Ronde bout met opschrift NAP"
+    },
+    "omschrijving": "Kantoor \"Werkspoor\" aan de Oostenburgervoorstraat (x=rechter dag van het linker kelderraam y=granieten plint)",
+    "windrichting": "NW",
+    "x_coordinaat_muurvlak": 82.0,
+    "y_coordinaat_muurvlak": 12.0,
+    "rws_nummer": null,
+    "geometrie": "010100002040710000000000000028FE400000000088B91D41",
+    "status": {
+      "code": 3,
+      "omschrijving": "Vervallen"
+    },
+    "vervaldatum": "2008-07-08",
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10780001",
+    "_last_event": 136,
+    "_hash": "83f10cf7ac9e75d21609ff29a9a32f50",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-08-01T09:12:23.297254",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 4,
+    "_id": "10780001",
+    "_tid": "10780001"
+  },
+  {
+    "identificatie": "10780002",
+    "hoogte_tov_nap": 1.7377,
+    "jaar": 2000,
+    "merk": {
+      "code": "1",
+      "omschrijving": "Ronde bout of althans aan de bovenzijde ronde bout zonder opschrift of met opschrift anders dan NAP"
+    },
+    "omschrijving": "ZO-vlak van de NO-ingang van het viadukt tussen Parallelweg en Czaar Peterstraat (x = vanaf rechtstand plint; y = voeg)",
+    "windrichting": "ZO",
+    "x_coordinaat_muurvlak": 24.0,
+    "y_coordinaat_muurvlak": 0.0,
+    "rws_nummer": "25G0150",
+    "geometrie": "01010000204071000000000000604AFE400000000070BD1D41",
+    "status": {
+      "code": 3,
+      "omschrijving": "Vervallen"
+    },
+    "vervaldatum": "2008-07-08",
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "publiceerbaar": false,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10780002",
+    "_last_event": 137,
+    "_hash": "b7a67bc7ab35e95cee0f2d26d69ece37",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-08-01T09:12:23.297254",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": "2008-07-08T00:00:00.000000",
+    "_gobid": 5,
+    "_id": "10780002",
+    "_tid": "10780002"
+  }
+]

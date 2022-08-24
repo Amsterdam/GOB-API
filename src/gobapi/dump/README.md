@@ -42,7 +42,7 @@ curl -H "Content-Type: application/json" -d @config.json -X POST https://acc.api
 
 template for config.json:
 
-```
+```json
 {
     "db": {
         "drivername": "postgres",

@@ -7,7 +7,7 @@ As it is a unit test all external dependencies are mocked
 import importlib
 from unittest import TestCase
 from unittest.mock import patch
-
+import gobapi.api
 from gobapi.api import _collection, _reference_collection, _clear_tests
 
 def noop(*args):
@@ -101,25 +101,6 @@ def mock_entities(catalog, collection, offset, limit, view=None, reference_name=
 
 
 def before_each_api_test(monkeypatch):
-    import flask
-    importlib.reload(flask)
-
-    import flask_cors
-    importlib.reload(flask_cors)
-
-    import gobcore.model
-    importlib.reload(gobcore.model)
-
-    import gobapi.response
-    importlib.reload(gobapi.response)
-
-    import gobapi.api
-    importlib.reload(gobapi.config)
-    # override config so we isolate .run()
-
-    import flask_audit_log.middleware
-    importlib.reload(flask_audit_log.middleware)
-
     global catalogs, catalog
     global collections, collection
     global entities, entity
@@ -134,37 +115,28 @@ def before_each_api_test(monkeypatch):
 
     monkeypatch.setattr(gobapi.config, 'API_INFRA_SERVICES', "")
 
-    monkeypatch.setattr(flask, 'Flask', MockFlask)
-    monkeypatch.setattr(flask_cors, 'CORS', MockCORS)
+    monkeypatch.setattr(gobapi.api, 'Flask', MockFlask)
+    monkeypatch.setattr(gobapi.api, 'CORS', MockCORS)
 
-    monkeypatch.setattr(flask, 'request', mockRequest)
+    monkeypatch.setattr(gobapi.api, 'request', mockRequest)
 
-    monkeypatch.setattr(gobapi.response, 'hal_response', lambda data, links=None: ((data, links), 200, {'Content-Type': 'application/json'}))
-    monkeypatch.setattr(gobapi.response, 'not_found', lambda msg: msg)
+    monkeypatch.setattr(gobapi.api, 'hal_response', lambda data, links=None: ((data, links), 200, {'Content-Type': 'application/json'}))
+    monkeypatch.setattr(gobapi.api, 'not_found', lambda msg: msg)
 
-    monkeypatch.setattr(gobcore.views, 'GOBViews', MockGOBViews)
+    monkeypatch.setattr(gobapi.api, 'GOBViews', MockGOBViews)
 
-    monkeypatch.setattr(gobapi.storage, 'connect', noop)
-    monkeypatch.setattr(gobapi.storage, 'get_entities', mock_entities)
-    monkeypatch.setattr(gobapi.storage, 'get_entity', lambda catalog, collection, id, view=None: entity)
+    monkeypatch.setattr(gobapi.api, 'connect', noop)
+    monkeypatch.setattr(gobapi.api, 'get_entities', mock_entities)
+    monkeypatch.setattr(gobapi.api, 'get_entity', lambda catalog, collection, id, view=None: entity)
 
-    monkeypatch.setattr(gobapi.states, 'get_states', lambda collections, offset, limit: ([{'id': '1', 'attribute': 'attribute'}], 1))
+    monkeypatch.setattr(gobapi.api, 'get_states', lambda collections, offset, limit: ([{'id': '1', 'attribute': 'attribute'}], 1))
 
-    monkeypatch.setattr(gobcore.model, 'GOBModel', MockGOBModel)
+    monkeypatch.setattr(gobapi.api, 'GOBModel', MockGOBModel)
 
     monkeypatch.setattr(
-        flask_audit_log.middleware, 'AuditLogMiddleware',
+        gobapi.api, 'AuditLogMiddleware',
         type('MockAuditLogMiddleware', (), {'__init__': lambda *args: None})
     )
-
-    import gobapi.api
-    importlib.reload(gobapi.api)
-
-    import gobapi.storage
-    importlib.reload(gobapi.storage)
-
-    import gobapi.states
-    importlib.reload(gobapi.states)
 
 
 @patch("gobapi.services.threaded_service")

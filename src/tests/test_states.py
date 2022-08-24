@@ -5,7 +5,7 @@ As it is a unit test all external dependencies are mocked
 
 """
 import datetime
-import importlib
+import gobapi.states
 
 from gobcore.model.metadata import FIELD
 
@@ -125,14 +125,8 @@ collections_with_state = {
 def before_each_state_test(monkeypatch):
     global collections_with_state
 
-    import gobcore.model
-    import gobapi.storage
-
-    monkeypatch.setattr(gobapi.storage, 'get_collection_states', lambda catalog, collection: collections_with_state[f'{catalog}:{collection}'])
-    monkeypatch.setattr(gobcore.model, 'GOBModel', MockGOBModel)
-
-    import gobapi.states
-    importlib.reload(gobapi.states)
+    monkeypatch.setattr(gobapi.states, 'get_collection_states', lambda catalog, collection: collections_with_state[f'{catalog}:{collection}'])
+    monkeypatch.setattr(gobapi.states, 'GOBModel', MockGOBModel)
 
 
 def test_get_valid_states_in_timeslot(monkeypatch):

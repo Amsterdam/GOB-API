@@ -4,8 +4,8 @@ The unit tests for the response module.
 As it is a unit test all external dependencies are mocked
 
 """
-import importlib
 import json
+import gobapi.response
 
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
@@ -22,14 +22,8 @@ class MockRequest:
 
 
 def before_each_response_test(monkeypatch):
-    import flask
-    importlib.reload(flask)
-
     mockRequest = MockRequest()
-    monkeypatch.setattr(flask, 'request', mockRequest)
-
-    import gobapi.response
-    importlib.reload(gobapi.response)
+    monkeypatch.setattr(gobapi.response, 'request', mockRequest)
 
 
 def test_not_found(monkeypatch):
@@ -210,4 +204,3 @@ class TestStream(TestCase):
         # Trailing "\n" should be added to signal successful response
         expected_result = [json.dumps(ent) + "\n" for ent in entities] + ["\n"]
         self.assertEqual(expected_result, result)
-

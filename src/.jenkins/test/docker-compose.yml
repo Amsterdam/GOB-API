@@ -1,11 +1,29 @@
 version: "3.4"
 
 services:
+
+  test_db:
+    build: database
+    environment:
+      POSTGRES_USER: gobtest
+      POSTGRES_PASSWORD: insecure
+      POSTGRES_DB: gobtest
+    ports:
+      - "5532:5432"
+    volumes:
+      - "~/.ssh/datapunt.key:/root/.ssh/datapunt.key"
+
   test:
     build:
       context: ../..
       target: test
+    depends_on:
+      - test_db
     environment:
       GOB_SHARED_DIR: /app/shared
-    command: >
-      bash -c "./test.sh"
+      DATABASE_HOST_OVERRIDE: test_db
+      DATABASE_PORT_OVERRIDE: 5432
+      DATABASE_NAME: gobtest
+      DATABASE_USER: gobtest
+      DATABASE_PASSWORD: insecure
+    command: './wait-for-postgres.sh test_db bash -c "./test.sh"'
