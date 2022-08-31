@@ -11,8 +11,8 @@ The endpoints prefixed with `/gob/public` are public, the `/gob` endpoints are p
 
 * docker compose >= 1.25
 * Docker CE >= 18.09
-* Python >= 3.6
-    
+* Python >= 3.9
+
 # Installation
 
 ## Secure data
@@ -33,7 +33,7 @@ In order to access secure data you need to define environment variables:
   - `OAUTH2_PROXY_COOKIE_SECRET`
   - `OAUTH2_PROXY_OIDC_ISSUER_URL`
   - `OAUTH2_PROXY_REDIRECT_URL`
-  
+
 In order to activate OAuth2 Proxy and Keycloak locally see the comments in `docker-compose.yml`.
 
 ## Local
@@ -112,7 +112,7 @@ sh test.sh
 
 ```bash
 docker compose build
-docker compose up
+docker compose up -d
 ```
 
 The API is exposed at the same address as for the local installation.

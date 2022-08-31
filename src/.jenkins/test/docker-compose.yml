@@ -1,9 +1,10 @@
-version: "3.4"
+version: "3.7"
 
 services:
 
   test_db:
     build: database
+    container_name: api_test_database
     environment:
       POSTGRES_USER: gobtest
       POSTGRES_PASSWORD: insecure
