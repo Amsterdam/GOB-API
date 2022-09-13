@@ -9,6 +9,9 @@ shift
 max=60
 current=0
 
+echo "Wait 10 seconds for Postgres to come alive"
+sleep 10
+
 until PGPASSWORD=$DATABASE_PASSWORD psql -h "$host" -U "$DATABASE_USER" -p $DATABASE_PORT_OVERRIDE -c '\q'; do
   >&2 echo "Postgres is unavailable - sleeping"
   sleep 1
@@ -20,5 +23,5 @@ until PGPASSWORD=$DATABASE_PASSWORD psql -h "$host" -U "$DATABASE_USER" -p $DATA
 
 done
 
->&2 echo "Postgres is up - executing command"
+>&2 echo -e "\nPostgres is up - executing command '$@'"
 exec "$@"

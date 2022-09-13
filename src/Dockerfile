@@ -39,20 +39,20 @@ RUN chmod 755 oauth2-proxy
 RUN mkdir -p /var/log/oauth2-proxy && chown datapunt /var/log/oauth2-proxy
 
 USER datapunt
-
 CMD ["uwsgi"]
 
 
 # Development.
 FROM application as development
+USER root
 # Install GOB-Core and GOB-Config in development mode. Will be overridden with
 # mounts from the developer filesystem. Changes made to GOB-Core and GOB-Config
 # will be available immediately.
-USER root
 RUN git clone --depth=1 https://github.com/Amsterdam/GOB-Core.git
 RUN LIBGDAL_VERSION=$(gdal-config --version) pip install -e /app/GOB-Core
 RUN git clone --depth=1 https://github.com/Amsterdam/GOB-Config.git
 RUN pip install -e /app/GOB-Config
+
 USER datapunt
 
 
@@ -63,11 +63,11 @@ USER root
 RUN rm -rf /app/src/gobcore/tests
 RUN rm -rf /app/src/gobconfig/tests
 
-# Copy tests
+# Copy test module and tests.
+COPY .flake8 test.sh .coveragerc pytest.ini ./
 COPY tests tests
-COPY .flake8 .flake8
-COPY test.sh test.sh
-COPY .coveragerc .coveragerc
+
+# Wait for PostgreSQL script.
 COPY wait-for-postgres.sh wait-for-postgres.sh
 RUN chmod +x wait-for-postgres.sh
 
