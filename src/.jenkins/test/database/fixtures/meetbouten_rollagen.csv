@@ -1,0 +1,6 @@
+_gobid,_id,_source,_source_id,_last_event,_version,_date_created,_date_confirmed,_date_modified,_date_deleted,identificatie,is_gemeten_van_gebieden_bouwblok,_application,_hash,_expiration_date,_tid,datum_actueel_tot
+444,AE26,AMSBI,meetbouten/rollagen/AE26.jpg,84901,0.1,2022-09-21 10:35:37.179834,,,,AE26,"{""bronwaarde"": ""AE26""}",Basisinformatie,2265055e342afa692800b667d593cc1d,,AE26,
+445,AE28,AMSBI,meetbouten/rollagen/AE28.jpg,84902,0.1,2022-09-21 10:35:37.179834,,,,AE28,"{""bronwaarde"": ""AE28""}",Basisinformatie,f746ba0059953e4fc41c58584e3fefc4,,AE28,
+446,AA31,AMSBI,meetbouten/rollagen/aa31.jpg,84903,0.1,2022-09-21 10:35:37.179834,,,,AA31,"{""bronwaarde"": ""AA31""}",Basisinformatie,d8514e27334d92f37f3db6ba463a563b,,AA31,
+447,AB01,AMSBI,meetbouten/rollagen/ab01.jpg,84904,0.1,2022-09-21 10:35:37.179834,,,,AB01,"{""bronwaarde"": ""AB01""}",Basisinformatie,40a2ed418f9f37ecb964b8a61b71c399,,AB01,
+448,AB02,AMSBI,meetbouten/rollagen/ab02.jpg,84905,0.1,2022-09-21 10:35:37.179834,,,,AB02,"{""bronwaarde"": ""AB02""}",Basisinformatie,908174af437c503f2203e33cfa42b4fe,,AB02,

@@ -1,0 +1,222 @@
+[
+  {
+    "identificatie": "10281154",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Geuzenstraat 27"
+    },
+    "locatie": null,
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 14,
+      "omschrijving": "Inbusbout"
+    },
+    "x_coordinaat_muurvlak": null,
+    "y_coordinaat_muurvlak": null,
+    "windrichting": null,
+    "ligt_in_bouwblok": {
+      "bronwaarde": "BC15"
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "010100002040710000333333333B27FD406666666686BC1D41",
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10281154",
+    "_last_event": 86054,
+    "_hash": "a0e966341e58628d80ade0b704b69cea",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-09-21T10:31:56.386640",
+    "_date_confirmed": null,
+    "_date_modified": "2022-09-21T11:08:53.307229",
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 14653,
+    "_id": "10281154",
+    "_tid": "10281154"
+  },
+  {
+    "identificatie": "10281155",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Geuzenstraat 15"
+    },
+    "locatie": null,
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 14,
+      "omschrijving": "Inbusbout"
+    },
+    "x_coordinaat_muurvlak": null,
+    "y_coordinaat_muurvlak": null,
+    "windrichting": null,
+    "ligt_in_bouwblok": {
+      "bronwaarde": "BC15"
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "010100002040710000333333335B27FD4033333333FDBB1D41",
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10281155",
+    "_last_event": 86055,
+    "_hash": "823d1477b0f2ac861d80ebd49b4b5f37",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-09-21T10:31:56.386640",
+    "_date_confirmed": null,
+    "_date_modified": "2022-09-21T11:08:53.307229",
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 14654,
+    "_id": "10281155",
+    "_tid": "10281155"
+  },
+  {
+    "identificatie": "10281156",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Korte Geuzenstraat 99"
+    },
+    "locatie": null,
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 14,
+      "omschrijving": "Inbusbout"
+    },
+    "x_coordinaat_muurvlak": null,
+    "y_coordinaat_muurvlak": null,
+    "windrichting": null,
+    "ligt_in_bouwblok": {
+      "bronwaarde": "BC17"
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "010100002040710000CDCCCCCCCC2AFD40CDCCCCCCB6BB1D41",
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10281156",
+    "_last_event": 86056,
+    "_hash": "e0ee58b34ebf55e62d0a74e1540d93f7",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-09-21T10:31:56.386640",
+    "_date_confirmed": null,
+    "_date_modified": "2022-09-21T11:08:53.307229",
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 14655,
+    "_id": "10281156",
+    "_tid": "10281156"
+  },
+  {
+    "identificatie": "10281157",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Korte Geuzenstraat 98"
+    },
+    "locatie": null,
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 14,
+      "omschrijving": "Inbusbout"
+    },
+    "x_coordinaat_muurvlak": null,
+    "y_coordinaat_muurvlak": null,
+    "windrichting": null,
+    "ligt_in_bouwblok": {
+      "bronwaarde": "BC17"
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "01010000204071000033333333C328FD409A99999993BB1D41",
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10281157",
+    "_last_event": 86057,
+    "_hash": "4f6c35bf260003a8a5ea82cda2286019",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-09-21T10:31:56.386640",
+    "_date_confirmed": null,
+    "_date_modified": "2022-09-21T11:08:53.307229",
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 14656,
+    "_id": "10281157",
+    "_tid": "10281157"
+  },
+  {
+    "identificatie": "10281158",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Korte Geuzenstraat 98-100"
+    },
+    "locatie": null,
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 14,
+      "omschrijving": "Inbusbout"
+    },
+    "x_coordinaat_muurvlak": null,
+    "y_coordinaat_muurvlak": null,
+    "windrichting": null,
+    "ligt_in_bouwblok": {
+      "bronwaarde": "BC17"
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "010100002040710000666666661E28FD409A9999994DBB1D41",
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10281158",
+    "_last_event": 86058,
+    "_hash": "666262d109e9c01f42633850ca9aa215",
+    "_version": "ams_2.0.0",
+    "_date_created": "2022-09-21T10:31:56.386640",
+    "_date_confirmed": null,
+    "_date_modified": "2022-09-21T11:08:53.307229",
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 14657,
+    "_id": "10281158",
+    "_tid": "10281158"
+  }
+]

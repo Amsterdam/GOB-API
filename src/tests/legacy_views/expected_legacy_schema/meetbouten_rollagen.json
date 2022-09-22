@@ -1,0 +1,102 @@
+[
+  {
+    "identificatie": "AE26",
+    "is_gemeten_van_bouwblok": {
+      "bronwaarde": "AE26"
+    },
+    "_source": "AMSBI",
+    "_application": "Basisinformatie",
+    "_source_id": "meetbouten/rollagen/AE26.jpg",
+    "_last_event": 84901,
+    "_hash": "2265055e342afa692800b667d593cc1d",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:37.179834",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 444,
+    "_id": "AE26",
+    "_tid": "AE26"
+  },
+  {
+    "identificatie": "AE28",
+    "is_gemeten_van_bouwblok": {
+      "bronwaarde": "AE28"
+    },
+    "_source": "AMSBI",
+    "_application": "Basisinformatie",
+    "_source_id": "meetbouten/rollagen/AE28.jpg",
+    "_last_event": 84902,
+    "_hash": "f746ba0059953e4fc41c58584e3fefc4",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:37.179834",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 445,
+    "_id": "AE28",
+    "_tid": "AE28"
+  },
+  {
+    "identificatie": "AA31",
+    "is_gemeten_van_bouwblok": {
+      "bronwaarde": "AA31"
+    },
+    "_source": "AMSBI",
+    "_application": "Basisinformatie",
+    "_source_id": "meetbouten/rollagen/aa31.jpg",
+    "_last_event": 84903,
+    "_hash": "d8514e27334d92f37f3db6ba463a563b",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:37.179834",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 446,
+    "_id": "AA31",
+    "_tid": "AA31"
+  },
+  {
+    "identificatie": "AB01",
+    "is_gemeten_van_bouwblok": {
+      "bronwaarde": "AB01"
+    },
+    "_source": "AMSBI",
+    "_application": "Basisinformatie",
+    "_source_id": "meetbouten/rollagen/ab01.jpg",
+    "_last_event": 84904,
+    "_hash": "40a2ed418f9f37ecb964b8a61b71c399",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:37.179834",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 447,
+    "_id": "AB01",
+    "_tid": "AB01"
+  },
+  {
+    "identificatie": "AB02",
+    "is_gemeten_van_bouwblok": {
+      "bronwaarde": "AB02"
+    },
+    "_source": "AMSBI",
+    "_application": "Basisinformatie",
+    "_source_id": "meetbouten/rollagen/ab02.jpg",
+    "_last_event": 84905,
+    "_hash": "908174af437c503f2203e33cfa42b4fe",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:37.179834",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 448,
+    "_id": "AB02",
+    "_tid": "AB02"
+  }
+]
