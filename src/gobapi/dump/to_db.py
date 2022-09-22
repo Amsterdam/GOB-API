@@ -1,15 +1,14 @@
 import traceback
-
-from gobcore.typesystem import fully_qualified_type_name, GOB
 from typing import Tuple, List
 
-from gobapi.auth.auth_query import Authority
-from gobapi.storage import dump_entities
-
-from gobcore.model import GOBModel
+from gobcore.typesystem import fully_qualified_type_name, GOB
 from gobcore.model.metadata import FIELD
 from gobcore.model.relations import get_relation_name
 from gobcore.datastore.factory import DatastoreFactory
+
+from gobapi import gob_model
+from gobapi.auth.auth_query import Authority
+from gobapi.storage import dump_entities
 
 from gobapi.dump.config import SKIP_RELATIONS, UNIQUE_ID, UNIQUE_REL_ID, DELIMITER_CHAR
 from gobapi.dump.sql import _create_schema, _create_table, _insert_into_table, _delete_table
@@ -20,11 +19,12 @@ from gobapi.storage import get_entity_refs_after, get_table_and_model, get_max_e
 
 from gobapi.dump.sql import to_sql_string_value, _quoted_tablename
 
-STREAM_PER = 10_000              # Stream per STREAM_PER lines
-COMMIT_PER = 10 * STREAM_PER    # Commit once per COMMIT_PER lines
-BUFFER_PER = 50_000              # Copy read buffer size
 
-MAX_SYNC_ITEMS = 250_000         # Maximum number of items to sync before switching to full dump
+STREAM_PER = 10_000             # Stream per STREAM_PER lines
+COMMIT_PER = 10 * STREAM_PER    # Commit once per COMMIT_PER lines
+BUFFER_PER = 50_000             # Copy read buffer size
+
+MAX_SYNC_ITEMS = 250_000        # Maximum number of items to sync before switching to full dump
 
 
 class DbDumper:
@@ -79,7 +79,7 @@ class DbDumper:
 
         if schema == 'rel':
             # Schema is the catalog name from the catalog that owns this relation
-            return GOBModel(legacy=True).get_catalog_from_abbr(collection_name.split('_')[0])['name']
+            return gob_model.get_catalog_from_abbr(collection_name.split('_')[0])['name']
 
         return schema
 
@@ -269,9 +269,8 @@ class DbDumper:
                         yield "Collection is up-to-date, no actions necessary\n"
                         self._delete_tmp_table()
                         return
-                    else:
-                        yield "Collection counts don't match. Forcing full dump\n"
-                        full_dump = True
+                    yield "Collection counts don't match. Forcing full dump\n"
+                    full_dump = True
             else:
                 # No remote event id, force full dump
                 full_dump = True
@@ -315,9 +314,10 @@ class DbDumper:
         joins = []
         selects = [f'{main_alias}.*']
 
-        for relation in self.model['references'].keys():
+        for relation in self.model['references']:
             # Add a join and selects for each relation
-            relation_name = get_relation_name(GOBModel(legacy=True), self.catalog_name, self.collection_name, relation)
+            relation_name = get_relation_name(
+                gob_model, self.catalog_name, self.collection_name, relation)
 
             if not relation_name:
                 # Undefined relation
@@ -331,8 +331,8 @@ class DbDumper:
 
             # Determine if ManyReference and if destination has states
             src_field = self.model['all_fields'].get(relation)
-            dst_catalog_name, dst_collection_name = GOBModel(legacy=True).split_ref(src_field['ref'])
-            dst_has_states = GOBModel(legacy=True).has_states(dst_catalog_name, dst_collection_name)
+            dst_catalog_name, dst_collection_name = gob_model.split_ref(src_field['ref'])
+            dst_has_states = gob_model.has_states(dst_catalog_name, dst_collection_name)
             is_many = src_field['type'] == fully_qualified_type_name(GOB.ManyReference)
 
             on = f'{relation}.src_id = {main_alias}.{FIELD.ID}' + (
@@ -465,8 +465,8 @@ def _dump_relations(catalog_name, collection_name, config):
     config['schema'] = catalog_name
     _, model = get_table_and_model(catalog_name, collection_name)
 
-    for relation in [k for k in model['references'].keys()]:
-        relation_name = get_relation_name(GOBModel(legacy=True), catalog_name, collection_name, relation)
+    for relation in model['references']:
+        relation_name = get_relation_name(gob_model, catalog_name, collection_name, relation)
 
         if not relation_name or relation_name in SKIP_RELATIONS:
             # relation_name is None when relation does not exist (yet)

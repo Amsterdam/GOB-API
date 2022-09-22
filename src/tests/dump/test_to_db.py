@@ -47,9 +47,9 @@ class TestDbDumper(TestCase):
         db_dumper2 = DbDumper(self.catalog_name, self.collection_name, {'db': {}, 'schema': 'schema'})
         self.assertEqual('schema', db_dumper2.schema)
 
-    @patch("gobapi.dump.to_db.GOBModel")
+    @patch("gobapi.dump.to_db.gob_model")
     def test_init_schema(self, mock_model, mock_datastore_factory):
-        mock_model().get_catalog_from_abbr = lambda abbr: {'name': 'gebieden'} if abbr == 'gbd' else {}
+        mock_model.get_catalog_from_abbr = lambda abbr: {'name': 'gebieden'} if abbr == 'gbd' else {}
 
         # Config schema has priority
         dumper = DbDumper('cat', 'gbd_bbk_bag_vot_la_bla_lda', {'db': {}, 'schema': 'the_schema'})
@@ -243,7 +243,7 @@ class TestDbDumper(TestCase):
                                        src_name=db_dumper.tmp_collection_name,
                                        dst_name=db_dumper.collection_name)
         db_dumper._execute.assert_called_with(mock_copy.return_value)
-        
+
         db_dumper._delete_tmp_table.assert_called()
 
     @patch("gobapi.dump.to_db._delete_table")
@@ -543,22 +543,16 @@ class TestDbDumper(TestCase):
 
         self.assertEqual(strip(expected), strip(query))
 
-    @patch("gobapi.dump.to_db.get_relation_name", lambda m, cat, col, rel: 'relation_name_' + rel if rel != 'refD' else None)
-    @patch("gobapi.dump.to_db.GOBModel")
-    def test_create_utility_view(self, mock_model, mock_datastore_factory):
-        class MockedModel:
-            def has_states(self, cat, col):
-                # Will be called with dstcol or dstcolwithstates
-                return 'withstates' in col
-
-            def get_table_name(self, cat, col):
-                return f'{cat}_{col}'
-
-            def split_ref(self, ref):
-                return ref.split(':')
+    @patch(
+        "gobapi.dump.to_db.get_relation_name",
+        lambda m, cat, col, rel: 'relation_name_' + rel if rel != 'refD' else None)
+    @patch("gobapi.dump.to_db.gob_model")
+    def test_create_utility_view(self, mock_model, mock_get_relation_name):
+        # Will be called with dstcol or dstcolwithstates.
+        mock_model.has_states = lambda cat, col: 'withstates' in col
+        mock_model.split_ref = lambda ref: ref.split(':')
 
         # First test case. src no states and refA a ManyRef and refB a single Reference
-        mock_model.return_value = MockedModel()
         db_dumper = DbDumper('catalog', 'collection', {'db': {}})
         db_dumper._table_exists = lambda relname: relname != 'relation_name_refC'
         db_dumper._execute = MagicMock()
@@ -588,7 +582,7 @@ class TestDbDumper(TestCase):
             }
         }
 
-        expected_query = """create view catalog.v_collection as 
+        expected_query = """create view catalog.v_collection as
 select abbr.*,
        refA.ref refA_ref,
        refA.dst_id refA_id,
@@ -624,7 +618,7 @@ left join catalog.relation_name_refB refB on refB.src_id = abbr._id
         db_dumper.model['all_fields']['refB']['type'] = 'GOB.ManyReference'
         db_dumper._execute.reset_mock()
 
-        expected_query = """create view catalog.v_collection as 
+        expected_query = """create view catalog.v_collection as
 select abbr.*,
        refA.dst_id || '_' || refA.dst_volgnummer refA_ref,
        refA.dst_id refA_id,

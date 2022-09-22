@@ -1,25 +1,24 @@
 """Graphene filters
 
 Filters provide for a way to dynamically filter collections on field values
-
 """
+
 from graphene import Boolean
 from graphene_sqlalchemy import SQLAlchemyConnectionField
 from sqlalchemy import and_
 
 from gobcore.model.metadata import FIELD
-from gobcore.model import GOBModel
 from gobcore.model.relations import get_relation_name
 from gobcore.model.sa.gob import get_base, get_sqlalchemy_models
 
+from gobapi import gob_model
 from gobapi.utils import dict_to_camelcase
 from gobapi.storage import filter_active, filter_deleted
 
 from gobapi.constants import API_FIELD
 from gobapi.graphql_streaming.utils import resolve_schema_collection_name
 
-gobmodel = GOBModel(legacy=True)
-sqlalchemy_models = get_sqlalchemy_models(gobmodel)
+sqlalchemy_models = get_sqlalchemy_models(gob_model)
 
 FILTER_ON_NULL_VALUE = "null"
 
@@ -28,7 +27,7 @@ class FilterConnectionField(SQLAlchemyConnectionField):
 
     def __init__(self, type, *args, **kwargs):
         kwargs.setdefault("active", Boolean(default_value=True))
-        super(FilterConnectionField, self).__init__(type, *args, **kwargs)
+        super().__init__(type, *args, **kwargs)
 
     @classmethod
     def get_query(cls, model, info, **kwargs):
@@ -67,7 +66,7 @@ class FilterConnectionField(SQLAlchemyConnectionField):
             if field not in RELAY_ARGS:
                 # null is defined as a special string value because Python None or JSON null does not work
                 if value == FILTER_ON_NULL_VALUE:
-                    query = query.filter(getattr(model, field) == None)  # noqa: E711
+                    query = query.filter(getattr(model, field) is None)
                 else:
                     query = query.filter(getattr(model, field) == value)
         return query
@@ -220,8 +219,7 @@ class RelationQuery:
         for key, value in result._asdict().items():
             if isinstance(value, Base):
                 continue
-            else:
-                setattr(dst_object, key, value)
+            setattr(dst_object, key, value)
         return dst_object
 
     def _get_relation_model(self):
@@ -231,7 +229,8 @@ class RelationQuery:
         owner_table_name = getattr(relation_owner, '__tablename__')
         owner_catalog_name, owner_collection_name = _get_catalog_collection_name_from_table_name(owner_table_name)
 
-        relation_name = get_relation_name(gobmodel, owner_catalog_name, owner_collection_name, self.attribute_name)
+        relation_name = get_relation_name(
+            gob_model, owner_catalog_name, owner_collection_name, self.attribute_name)
         relation_table_name = f"rel_{relation_name}"
 
         return sqlalchemy_models[relation_table_name]
@@ -283,8 +282,8 @@ def _get_catalog_collection_name_from_table_name(table_name):
     :param table_name:
     """
 
-    catalog_name = GOBModel(legacy=True).get_catalog_from_table_name(table_name)
-    collection_name = GOBModel(legacy=True).get_collection_from_table_name(table_name)
+    catalog_name = gob_model.get_catalog_from_table_name(table_name)
+    collection_name = gob_model.get_collection_from_table_name(table_name)
 
     return catalog_name, collection_name
 

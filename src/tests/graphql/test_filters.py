@@ -133,15 +133,15 @@ class TestFilters(TestCase):
         a.someattr = None
         assert(f(a, None) == None)
 
-    @patch("gobapi.graphql.filters.GOBModel")
+    @patch("gobapi.graphql.filters.gob_model")
     def test_get_catalog_collection_name_from_table_name(self, mock_model):
         result_cat, result_col = _get_catalog_collection_name_from_table_name('table name')
 
-        self.assertEqual(mock_model.return_value.get_catalog_from_table_name.return_value, result_cat)
-        self.assertEqual(mock_model.return_value.get_collection_from_table_name.return_value, result_col)
+        self.assertEqual(mock_model.get_catalog_from_table_name.return_value, result_cat)
+        self.assertEqual(mock_model.get_collection_from_table_name.return_value, result_col)
 
-        mock_model.return_value.get_catalog_from_table_name.assert_called_with('table name')
-        mock_model.return_value.get_collection_from_table_name.assert_called_with('table name')
+        mock_model.get_catalog_from_table_name.assert_called_with('table name')
+        mock_model.get_collection_from_table_name.assert_called_with('table name')
 
     @patch("gobapi.graphql.filters.RelationQuery")
     def test_get_resolve_attribute(self, mock_relation_query):
@@ -485,7 +485,7 @@ class TestRelationQuery(TestCase):
         self.assertEqual(result.variable1, 'value1')
         self.assertEqual(result.variable2, 'value2')
 
-    @patch('gobapi.graphql.filters.gobmodel')
+    @patch('gobapi.graphql.filters.gob_model')
     @patch('gobapi.graphql.filters.get_relation_name', lambda m, cat, col, rel: f'{cat}_{col}_{rel}')
     @patch('gobapi.graphql.filters._get_catalog_collection_name_from_table_name', lambda x: tuple(x.split('_')))
     def test_get_relation_model(self, mock_gobmodel):

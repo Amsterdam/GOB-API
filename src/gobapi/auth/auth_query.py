@@ -2,9 +2,10 @@ from sqlalchemy.orm import Query
 from flask import request
 
 from gobcore.secure.user import User
-from gobcore.model import GOBModel, PUBLIC_META_FIELDS
+from gobcore.model import PUBLIC_META_FIELDS
 from gobcore.typesystem import get_gob_type_from_info, gob_types, gob_secure_types
 
+from gobapi import gob_model
 from gobapi.auth.schemes import GOB_AUTH_SCHEME
 
 SUPPRESSED_COLUMNS = "_suppressed_columns"
@@ -20,8 +21,11 @@ class Authority:
         """
         self._catalog = catalog_name
         self._collection = collection_name
-        collection = GOBModel(legacy=True).get_collection(self._catalog, self._collection)
-        self._attributes = [attr for attr in collection['fields'] | PUBLIC_META_FIELDS] if collection else []
+        try:
+            collection = gob_model[self._catalog]['collections'][self._collection]
+        except KeyError:
+            collection = None
+        self._attributes = list(collection['fields'] | PUBLIC_META_FIELDS) if collection else []
         self._auth_scheme = GOB_AUTH_SCHEME
         self._secured_columns = None
         self._suppressed_columns = None
@@ -76,7 +80,7 @@ class Authority:
     def _is_authorized_for(self, auth):
         roles = self.get_roles()
         auth_roles = auth.get('roles', [])
-        return any([role for role in roles if role in auth_roles]) if auth_roles else True
+        return any(role for role in roles if role in auth_roles) if auth_roles else True
 
     def get_suppressed_columns(self):
         """
@@ -84,7 +88,8 @@ class Authority:
         """
         if not self._suppressed_columns:
             if self.allows_access():
-                cols = [attr for attr, auth in self.get_checked_columns().items() if not self._is_authorized_for(auth)]
+                cols = [attr for attr, auth in self.get_checked_columns().items()
+                        if not self._is_authorized_for(auth)]
             else:
                 cols = self._attributes
             self._suppressed_columns = cols
@@ -95,7 +100,10 @@ class Authority:
         The secured columns are the columns that (may) require decryption
         """
         if not self._secured_columns:
-            collection = GOBModel(legacy=True).get_collection(self._catalog, self._collection)
+            try:
+                collection = gob_model[self._catalog]['collections'][self._collection]
+            except KeyError:
+                collection = None
             if collection:
                 cols = {
                     column: {
@@ -194,12 +202,13 @@ class Authority:
         gob_type = get_gob_type_from_info(spec)
         if issubclass(gob_type, gob_secure_types.Secure):
             return True
-        elif issubclass(gob_type, gob_types.JSON):
+        if issubclass(gob_type, gob_types.JSON):
             attributes = {
                 **spec.get('attributes', {}),
                 **spec.get('secure', {})
             }
-            return any([cls.is_secure_type(attr) for attr in attributes.values()])
+            return any(cls.is_secure_type(attr) for attr in attributes.values())
+        return False
 
     @classmethod
     def get_secure_type(cls, gob_type, spec, value):

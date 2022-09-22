@@ -1,8 +1,7 @@
-"""Storage Unit tests
+"""Storage Unit tests.
 
 The unit tests for the storage module.
-As it is a unit test all external dependencies are mocked
-
+As it is a unit test all external dependencies are mocked.
 """
 import datetime
 import sqlalchemy

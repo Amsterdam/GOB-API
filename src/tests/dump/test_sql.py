@@ -13,7 +13,7 @@ class TestSQL(TestCase):
         result = _create_schema('any_name')
         self.assertTrue("CREATE SCHEMA IF NOT EXISTS \"any_name\"" in result)
 
-    @patch('gobapi.dump.sql.GOBModel', MagicMock())
+    @patch('gobapi.dump.sql.gob_model', MagicMock())
     @patch('gobapi.dump.sql.get_reference_fields', lambda x: REFERENCE_FIELDS)
     @patch('gobapi.dump.sql.Authority')
     @patch('gobapi.dump.sql.get_field_order')
@@ -85,7 +85,7 @@ class TestSQL(TestCase):
         self.assertTrue("COPY \"any_schema\".\"any_collection\" FROM 'any_collection.csv'" in result)
 
     @patch('gobapi.dump.sql.Authority', MagicMock())
-    @patch('gobapi.dump.sql.GOBModel', MagicMock())
+    @patch('gobapi.dump.sql.gob_model', MagicMock())
     @patch('gobapi.dump.sql.get_field_order', MagicMock())
     @patch('gobapi.dump.sql.get_field_specifications')
     @patch('gobapi.dump.sql._create_indexes')
