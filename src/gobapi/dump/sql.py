@@ -5,17 +5,17 @@ Dumps of catalog collections in sql format
 """
 import re
 
-from gobcore.model import GOBModel
 from gobcore.typesystem.gob_types import String
 from gobcore.typesystem import fully_qualified_type_name
+from gobcore.model.metadata import FIELD
 
+from gobapi import gob_model
 from gobapi.auth.auth_query import Authority
 from gobapi.dump.config import DELIMITER_CHAR, JSON_TYPES
 from gobapi.dump.config import UNIQUE_ID, REFERENCE_TYPES, get_reference_fields
 from gobapi.dump.config import SQL_TYPE_CONVERSIONS, SQL_QUOTATION_MARK
 
 from gobapi.dump.config import get_field_specifications, joined_names, get_field_order
-from gobcore.model.metadata import FIELD
 
 
 def _quote(name):
@@ -190,7 +190,7 @@ def _create_table(schema, catalog_name, collection_name, model, tablename=None):
     """
     specs = get_field_specifications(model)
     order = _autorized_order(get_field_order(model), catalog_name, collection_name)
-    catalog = GOBModel(legacy=True).get_catalog(catalog_name)
+    catalog = gob_model[catalog_name]
     catalog_description = quote_sql_string(catalog['description'])
     fields = []
     for field_name in order:

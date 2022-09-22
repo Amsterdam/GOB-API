@@ -1,8 +1,8 @@
 from unittest import TestCase, mock
 from unittest.mock import patch, MagicMock
 
-from gobapi.auth.auth_query import Authority, AuthorizedQuery, GOB_AUTH_SCHEME, gob_types, gob_secure_types, \
-    _handle_secure_columns, set_suppressed_columns
+from gobapi.auth.auth_query import Authority, AuthorizedQuery, GOB_AUTH_SCHEME, gob_types
+from gobapi.auth.auth_query import gob_secure_types, _handle_secure_columns, set_suppressed_columns
 
 role_a = "a"
 role_b = "b"
@@ -260,30 +260,38 @@ class TestAuthority(TestCase):
         authority.get_roles = lambda : []
         self.assertTrue(authority.allows_access())
 
-    @patch("gobapi.auth.auth_query.GOBModel")
+    @patch("gobapi.auth.auth_query.gob_model")
     @patch("gobapi.auth.auth_query.get_gob_type_from_info", lambda spec: gob_secure_types.SecureString)
     def test_get_secured_columns(self, mock_model):
-        mock_model.return_value.get_collection.return_value = {
-            'fields': {
-                'secure column': 'any spec'
+        mock_model.__getitem__.return_value = {
+            'collections': {
+                'any col': {
+                    'fields': {'secure column': 'any spec'}
+                }
             }
         }
         authority = Authority('secure catalog', 'any col')
         secure_columns = authority.get_secured_columns()
-        self.assertEqual(secure_columns, {'secure column': {'gob_type': gob_secure_types.SecureString, 'spec': 'any spec'}})
+        self.assertEqual(
+            secure_columns,
+            {'secure column': {'gob_type': gob_secure_types.SecureString, 'spec': 'any spec'}})
 
-    @patch("gobapi.auth.auth_query.GOBModel")
+    @patch("gobapi.auth.auth_query.gob_model")
     def test_get_secured_json_columns(self, mock_model):
-        mock_model.return_value.get_collection.return_value = {
-            'fields': {
-                'secure column': {
-                    'type': 'GOB.JSON',
-                    'attributes': {
-                        'attr1': {
-                            'type': 'GOB.SecureString'
-                        },
-                        'attr2': {
-                            'type': 'GOB.String'
+        mock_model.__getitem__.return_value = {
+            'collections': {
+                'any col': {
+                    'fields': {
+                        'secure column': {
+                            'type': 'GOB.JSON',
+                            'attributes': {
+                                'attr1': {
+                                    'type': 'GOB.SecureString'
+                                },
+                                'attr2': {
+                                    'type': 'GOB.String'
+                                }
+                            }
                         }
                     }
                 }
