@@ -14,7 +14,7 @@ services:
       DATABASE_PASSWORD: insecure
     depends_on:
       - test_db
-    command: bash -c "alembic upgrade head && python -m gobupload --migrate"
+    command: bash -c "alembic upgrade head && python -m gobupload migrate"
     volumes:
       - ${GOB_CORE_DIR-../../../../GOB-Core}:/app/GOB-Core
 
