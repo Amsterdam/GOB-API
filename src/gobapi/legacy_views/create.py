@@ -3,6 +3,7 @@ from typing import Optional
 import yaml
 
 from gobcore.model import GOBModel, relations
+from gobcore.model.name_compressor import NameCompressor
 from pydantic import BaseModel
 from sqlalchemy.engine import Engine
 from pathlib import Path
@@ -39,11 +40,25 @@ def _open_view_definition(viewdef_path: Path) -> ViewDefinition:
         return ViewDefinition.parse_obj(viewdef)
 
 
-def _get_custom_view_definition(table_name: str) -> ViewDefinition:
-    viewdef_path = _get_view_definitions_path().joinpath(f"{table_name}.yaml")
+def _get_custom_view_definition(table_name: str) -> tuple[ViewDefinition, str]:
+    """Returns a tuple of (ViewDefinition, table_name) where table_name is the name under which the
+    ViewDefinition was found
+    """
+    def get_viewdef(filename: str):
+        viewdef_path = _get_view_definitions_path().joinpath(f"{filename}.yaml")
 
-    if viewdef_path.exists():
-        return _open_view_definition(viewdef_path)
+        if viewdef_path.exists():
+            return _open_view_definition(viewdef_path)
+
+    # Checks for viewdef for table_name, but also for the uncompressed version of the table name.
+    # AMS Schema relation names for example are generally longer, so with the migration to AMS Schema some table names
+    # are not compressed, while in the legacy schema we want the old uncompressed name. E.g.
+    # for rel_mbn_mtg_mbn_rpt_refereert_aan_referentiepunten
+    for name in [table_name, NameCompressor.uncompress_name(table_name)]:
+        if viewdef := get_viewdef(name):
+            return viewdef, name
+
+    return None, None
 
 
 def _get_custom_view_query(viewdef: ViewDefinition, model: GOBModel, catalog_name: str, collection_name: str):
@@ -80,13 +95,12 @@ def _create_view_with_drop_fallback(view_name: str, query: str, connection):
 def _create_views_for_object_tables(model: GOBModel, connection):
 
     for catalog_name, collection_name, table_name in _get_tables(model):
-        view_definition = _get_custom_view_definition(table_name)
+        view_definition, legacy_table_name = _get_custom_view_definition(table_name)
 
         if view_definition:
-            print(f"Have custom view for {table_name} ({catalog_name} {collection_name})")
+            print(f"Have custom view for {legacy_table_name} ({catalog_name} {collection_name})")
             query = _get_custom_view_query(view_definition, model, catalog_name, collection_name)
-
-            _create_view_with_drop_fallback(table_name, query, connection)
+            _create_view_with_drop_fallback(legacy_table_name, query, connection)
         else:
             query = _default_view_query(table_name)
             _create_view_with_drop_fallback(table_name, query, connection)
@@ -94,13 +108,14 @@ def _create_views_for_object_tables(model: GOBModel, connection):
 
 def _create_views_for_materialized_views(model: GOBModel, connection):
     for relation_name in relations.get_relations(model)['collections'].keys():
-        mv_name = f"mv_{relation_name}"
+        view_definition, legacy_table_name = _get_custom_view_definition(f"rel_{relation_name}")
 
-        if view_definition := _get_custom_view_definition(f"rel_{relation_name}"):
+        if view_definition:
             mv_name_in_public = view_definition.table_name.replace("rel_", "mv_", 1)
-
+            mv_name = legacy_table_name.replace("rel_", "mv_", 1)
             query = f"SELECT * FROM public.{mv_name_in_public}"
         else:
+            mv_name = f"mv_{relation_name}"
             query = _default_view_query(mv_name)
 
         connection.execute(f"CREATE OR REPLACE VIEW legacy.{mv_name} AS {query}")
