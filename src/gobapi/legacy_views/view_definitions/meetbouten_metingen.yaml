@@ -1,0 +1,4 @@
+table_name: meetbouten_metingen
+override_columns:
+  hoort_bij_meetbout: hoort_bij_meetbouten_meetbout
+  refereert_aan_referentiepunten: refereert_aan_meetbouten_referentiepunten

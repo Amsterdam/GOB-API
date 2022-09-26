@@ -1,0 +1,6 @@
+table_name: meetbouten_referentiepunten
+override_columns:
+  nabij_nummeraanduiding: json_build_object('bronwaarde', nabij_adres)
+  ligt_in_bouwblok: ligt_in_gebieden_bouwblok
+  ligt_in_buurt: ligt_in_gebieden_buurt
+  ligt_in_stadsdeel: ligt_in_gebieden_stadsdeel

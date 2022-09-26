@@ -1,0 +1,247 @@
+[
+  {
+    "identificatie": "10188002",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Mercatorplein"
+    },
+    "locatie": "(sondeerstaaf; nabij No.102; kiosk)",
+    "hoogte_tov_nap": 0.4476,
+    "datum": "2018-02-18",
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 12,
+      "omschrijving": "Sondeerstaaf"
+    },
+    "x_coordinaat_muurvlak": 0,
+    "y_coordinaat_muurvlak": 0,
+    "windrichting": null,
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "0101000020407100001F85EB51D0EBFC401F85EB51EBB91D41",
+    "is_nap_peilmerk": {
+      "bronwaarde": null
+    },
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10188002",
+    "_last_event": 85344,
+    "_hash": "3dcb25d91688ef200872ec8a8114abd3",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:45.676858",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 711,
+    "_id": "10188002",
+    "_tid": "10188002"
+  },
+  {
+    "identificatie": "10189000",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Mercatorplein 102"
+    },
+    "locatie": "(kiosk)",
+    "hoogte_tov_nap": 0.825,
+    "datum": "2018-06-01",
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 0,
+      "omschrijving": "Ronde bout met opschrift NAP"
+    },
+    "x_coordinaat_muurvlak": 23,
+    "y_coordinaat_muurvlak": 23,
+    "windrichting": "ZW",
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "0101000020407100003333333353EBFC409A999999AFB91D41",
+    "is_nap_peilmerk": {
+      "bronwaarde": null
+    },
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10189000",
+    "_last_event": 85345,
+    "_hash": "312ba0008fd52e15a0b4e56d5bf2fae5",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:45.676858",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 712,
+    "_id": "10189000",
+    "_tid": "10189000"
+  },
+  {
+    "identificatie": "10189001",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Hoofdweg 495"
+    },
+    "locatie": "(tweede kolom)",
+    "hoogte_tov_nap": 2.3003,
+    "datum": "2018-06-01",
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 14,
+      "omschrijving": "Inbusbout (cilinderschroef met binnenzeskant) in slaganker M6"
+    },
+    "x_coordinaat_muurvlak": -5,
+    "y_coordinaat_muurvlak": 20,
+    "windrichting": "O",
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "01010000204071000033333333ABDBFC40CDCCCCCC58C41D41",
+    "is_nap_peilmerk": {
+      "bronwaarde": null
+    },
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10189001",
+    "_last_event": 85346,
+    "_hash": "952804312745035f5b7268fe4096aeb6",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:45.676858",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 713,
+    "_id": "10189001",
+    "_tid": "10189001"
+  },
+  {
+    "identificatie": "10189002",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Fridtjof Nansenhof 43/44"
+    },
+    "locatie": "gevel Jan van Galenstraat",
+    "hoogte_tov_nap": 1.157,
+    "datum": "2018-06-01",
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 2,
+      "omschrijving": "Kleine ronde bout"
+    },
+    "x_coordinaat_muurvlak": -10,
+    "y_coordinaat_muurvlak": 28,
+    "windrichting": "Z",
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "01010000204071000033333333EBD9FC40333333339DBE1D41",
+    "is_nap_peilmerk": {
+      "bronwaarde": null
+    },
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10189002",
+    "_last_event": 85347,
+    "_hash": "9b109b18e9daf2ed389ff83659395c49",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:45.676858",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 714,
+    "_id": "10189002",
+    "_tid": "10189002"
+  },
+  {
+    "identificatie": "10280001",
+    "nabij_nummeraanduiding": {
+      "bronwaarde": "Walmuur tegenover Kostverlorenkade 21"
+    },
+    "locatie": "(x = vanaf rechtstand\nN-vleugel van O-landhoofd van de brug in de Clerqstraat)",
+    "hoogte_tov_nap": 2.0432,
+    "datum": "2018-02-18",
+    "status": {
+      "code": 1,
+      "omschrijving": "Actueel"
+    },
+    "vervaldatum": null,
+    "merk": {
+      "code": 0,
+      "omschrijving": "Ronde bout met opschrift NAP"
+    },
+    "x_coordinaat_muurvlak": 92,
+    "y_coordinaat_muurvlak": -94,
+    "windrichting": "W",
+    "ligt_in_bouwblok": {
+      "bronwaarde": null
+    },
+    "ligt_in_buurt": {
+      "bronwaarde": "geometrie"
+    },
+    "ligt_in_stadsdeel": {
+      "bronwaarde": "geometrie"
+    },
+    "geometrie": "01010000204071000000000000402AFD400000000050BA1D41",
+    "is_nap_peilmerk": {
+      "bronwaarde": "10280001"
+    },
+    "publiceerbaar": true,
+    "_source": "AMSBI",
+    "_application": "Grondslag",
+    "_source_id": "10280001",
+    "_last_event": 85348,
+    "_hash": "ca081340f9e0f186c34196ad2a507084",
+    "_version": "0.1",
+    "_date_created": "2022-09-21T10:35:45.676858",
+    "_date_confirmed": null,
+    "_date_modified": null,
+    "_date_deleted": null,
+    "_expiration_date": null,
+    "_gobid": 715,
+    "_id": "10280001",
+    "_tid": "10280001"
+  }
+]

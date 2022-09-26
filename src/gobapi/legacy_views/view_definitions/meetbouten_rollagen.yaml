@@ -1,0 +1,3 @@
+table_name: meetbouten_rollagen
+override_columns:
+  is_gemeten_van_bouwblok: is_gemeten_van_gebieden_bouwblok
