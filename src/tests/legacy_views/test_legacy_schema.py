@@ -6,6 +6,7 @@ from pathlib import Path
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
+from gobcore.model import GOBModel
 from gobcore.views import GOBViews
 
 from gobapi.api import get_app
@@ -35,6 +36,17 @@ class TestLegacySchema(TestCase):
                 # Postgres types are cast correctly
                 transformed_result = json.loads(json.dumps([dict(row) for row in exec_result], cls=GobTypeJSONEncoder))
                 self.assertEqual(expected, transformed_result, f"Data in legacy schema does not match expected data for {tablename}")
+
+    def test_materialized_views(self):
+        connect()
+
+        model = GOBModel(legacy=True)
+        for collection_name, collection in model['rel']['collections'].items():
+            tablename = model.get_table_name('rel', collection_name)
+            exec_statement(f"SELECT * FROM legacy.{tablename} LIMIT 1")
+
+            mv_name = tablename.replace("rel_", "mv_", 1)
+            exec_statement(f"SELECT * FROM legacy.{mv_name} LIMIT 1")
 
 
 @patch("gobapi.api.AuditLogMiddleware", MagicMock())
