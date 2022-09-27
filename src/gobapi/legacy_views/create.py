@@ -40,9 +40,6 @@ def _open_view_definition(viewdef_path: Path) -> ViewDefinition:
 
 
 def _get_custom_view_definition(table_name: str) -> ViewDefinition:
-    """Returns a tuple of (ViewDefinition, table_name) where table_name is the name under which the
-    ViewDefinition was found
-    """
     viewdef_path = _get_view_definitions_path().joinpath(f"{table_name}.yaml")
 
     if viewdef_path.exists():
