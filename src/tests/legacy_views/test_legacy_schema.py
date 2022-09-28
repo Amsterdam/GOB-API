@@ -38,17 +38,11 @@ class TestLegacySchema(TestCase):
                 self.assertEqual(expected, transformed_result, f"Data in legacy schema does not match expected data for {tablename}")
 
     def test_materialized_views(self):
-        ignore = [
-            'rel_mbn_mbt_bag_nag_nabij_nummeraanduiding',
-            'rel_mbn_rpt_bag_nag_nabij_nummeraanduiding',
-        ]
         connect()
 
         model = GOBModel(legacy=True)
         for collection_name, collection in model['rel']['collections'].items():
             tablename = model.get_table_name('rel', collection_name)
-            if tablename in ignore:
-                continue
             exec_statement(f"SELECT * FROM legacy.{tablename} LIMIT 1")
 
             mv_name = tablename.replace("rel_", "mv_", 1)
