@@ -13,4 +13,4 @@ echo "Running coverage report"
 coverage report --show-missing --fail-under=100
 
 echo "Running style checks"
-flake8
+flake8 ./gobapi

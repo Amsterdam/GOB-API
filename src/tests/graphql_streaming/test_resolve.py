@@ -1,10 +1,9 @@
-import unittest
-from unittest import mock
+from unittest import TestCase, mock
 
 from gobapi.graphql_streaming.resolve import Resolver
 
 
-class TestResolve(unittest.TestCase):
+class TestResolve(TestCase):
 
     def testResolver(self):
         resolver = Resolver()
@@ -12,16 +11,13 @@ class TestResolve(unittest.TestCase):
         self.assertEqual(resolver._attributes, {})
 
     @mock.patch('gobapi.graphql_streaming.resolve.Authority')
-    @mock.patch('gobapi.graphql_streaming.resolve.GOBModel')
+    @mock.patch('gobapi.graphql_streaming.resolve.gob_model', spec_set=True)
     @mock.patch('gobapi.graphql_streaming.resolve._SEC_TYPES', ['GOB.SecureString', 'GOB.SecureDateTime'])
-    def testResolverWithAttributes(self, mock_model_class, mock_authority_class):
-        mock_model = mock.MagicMock()
-        mock_model_class.return_value = mock_model
-
+    def testResolverWithAttributes(self, mock_model, mock_authority_class):
         mock_authority = mock.MagicMock()
         mock_authority_class.return_value = mock_authority
 
-        collection = {
+        attributes = {
             'attributes': {
                 'a_b': {
                     'type': 'GOB.SecureString'
@@ -34,8 +30,9 @@ class TestResolve(unittest.TestCase):
                 }
             }
         }
-
-        mock_model.get_collection.return_value = collection
+        mock_model.__getitem__.return_value = {
+            'collections': {'col': attributes}
+        }
 
         resolver = Resolver()
 
@@ -54,21 +51,28 @@ class TestResolve(unittest.TestCase):
         resolver.resolve_row(row, result)
         mock_authority_class.assert_called_with('cat', 'col')
         self.assertEqual(mock_authority.filter_row.call_count, 2)  # for row and for result
-        mock_model.get_collection.assert_called_with('cat', 'col')
-        self.assertEqual(resolver._attributes, {'cat': {'col': {'a_b': 'aB', 'c_d': 'cD', 'e_f': 'eF'}}})
+        mock_model.__getitem__.assert_called_with('cat')
+        self.assertEqual(
+            resolver._attributes, {'cat': {'col': {'a_b': 'aB', 'c_d': 'cD', 'e_f': 'eF'}}})
 
-    @mock.patch('gobapi.graphql_streaming.resolve.GOBModel')
-    def test_init_catalog_collection(self, mock_model_class):
-        mock_model = mock.MagicMock()
-        mock_model_class.return_value = mock_model
-
-        mock_model.get_collection.return_value = {
+    @mock.patch('gobapi.graphql_streaming.resolve.gob_model', spec_set=True)
+    def test_init_catalog_collection(self, mock_model):
+        attributes = {
             'attributes': {
                 'a_b': 1,
                 'b_c': 2
             }
         }
 
+        mock_model.__getitem__.side_effect = KeyError
+        resolver = Resolver()
+        resolver._init_catalog_collection('cat', 'col')
+        self.assertEqual(resolver._attributes, {'cat': {'col': {}}})
+        mock_model.reset_mock(side_effect=True)
+
+        mock_model.__getitem__.return_value = {
+            'collections': {'col': attributes}
+        }
         resolver = Resolver()
         resolver._init_catalog_collection(None, None)
         self.assertEqual(resolver._attributes, {None: {None: {}}})

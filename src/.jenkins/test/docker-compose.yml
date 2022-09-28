@@ -1,7 +1,5 @@
 version: "3.7"
 
-name: "api_test"
-
 services:
 
   test_db:
