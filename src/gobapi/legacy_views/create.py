@@ -14,9 +14,6 @@ class ViewDefinition(BaseModel):
     table_name: str
     override_columns: Optional[dict[str, str]]
 
-    # Skip creation of this view. Use with caution!
-    skip: Optional[bool]
-
     def get_override_column(self, column_name: str):
         if self.override_columns and column_name in self.override_columns:
             return self.override_columns[column_name]
@@ -86,9 +83,6 @@ def _create_views_for_object_tables(model: GOBModel, connection):
         view_definition = get_custom_view_definition(table_name)
 
         if view_definition:
-            if view_definition.skip:
-                print(f"Skip creation of view for {table_name}")
-                continue
             print(f"Have custom view for {table_name} ({catalog_name} {collection_name})")
             query = _get_custom_view_query(view_definition, model, catalog_name, collection_name)
             _create_view_with_drop_fallback(table_name, query, connection)
@@ -103,9 +97,6 @@ def _create_views_for_materialized_views(model: GOBModel, connection):
         view_definition = get_custom_view_definition(table_name)
 
         if view_definition:
-            if view_definition.skip:
-                print(f"Skip creation of mv in legacy schema for {table_name}")
-                continue
             mv_name_in_public = view_definition.table_name.replace("rel_", "mv_", 1)
             mv_name = table_name.replace("rel_", "mv_", 1)
             query = f"SELECT * FROM public.{mv_name_in_public}"
