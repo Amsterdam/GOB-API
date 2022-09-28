@@ -39,6 +39,11 @@ class MockModel:
                     # Will be the full fieldset in the non-mocked version
                     '_id': {}
                 }
+            },
+            'mbn_mbt_bag_nag_nabij_nummeraanduiding': {
+                'all_fields': {
+                    '_id': {},
+                }
             }
         }
     }
@@ -68,6 +73,7 @@ class MockRelations:
             'gbd_brt_def_def': {},
             'nap_pmk_gbd_bbk_ligt_in_bouwblok': {},
             'mbn_mtg_mbn_rpt__rft_n__referentiepunten': {},
+            'mbn_mbt_bag_nag_nabij_nummeraanduiding': {}
         }
     }
 
