@@ -1,6 +1,6 @@
-from gobcore.model import GOBModel
 from gobcore.typesystem import GOB_SECURE_TYPES
 
+from gobapi import gob_model
 from gobapi.utils import to_camelcase
 from gobapi.auth.auth_query import Authority
 
@@ -37,8 +37,11 @@ class Resolver:
             return
 
         if (catalog_name and collection_name):
-            collection = GOBModel(legacy=True).get_collection(catalog_name, collection_name)
-            attributes = collection['attributes'].keys()
+            try:
+                collection = gob_model[catalog_name]['collections'][collection_name]
+                attributes = collection['attributes'].keys()
+            except KeyError:
+                attributes = []
         else:
             attributes = []
 
