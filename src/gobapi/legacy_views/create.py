@@ -42,7 +42,7 @@ def _open_view_definition(viewdef_path: Path) -> ViewDefinition:
         return ViewDefinition.parse_obj(viewdef)
 
 
-def _get_custom_view_definition(table_name: str) -> ViewDefinition:
+def get_custom_view_definition(table_name: str) -> ViewDefinition:
     viewdef_path = _get_view_definitions_path().joinpath(f"{table_name}.yaml")
 
     if viewdef_path.exists():
@@ -83,7 +83,7 @@ def _create_view_with_drop_fallback(view_name: str, query: str, connection):
 def _create_views_for_object_tables(model: GOBModel, connection):
 
     for catalog_name, collection_name, table_name in _get_tables(model):
-        view_definition = _get_custom_view_definition(table_name)
+        view_definition = get_custom_view_definition(table_name)
 
         if view_definition:
             if view_definition.skip:
@@ -100,7 +100,7 @@ def _create_views_for_object_tables(model: GOBModel, connection):
 def _create_views_for_materialized_views(model: GOBModel, connection):
     for relation_name in relations.get_relations(model)['collections'].keys():
         table_name = f"rel_{relation_name}"
-        view_definition = _get_custom_view_definition(table_name)
+        view_definition = get_custom_view_definition(table_name)
 
         if view_definition:
             if view_definition.skip:
