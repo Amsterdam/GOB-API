@@ -710,7 +710,7 @@ class TestStorage(TestCase):
                 self.name = name
 
         model = GOBModel(legacy=True)
-        model._data = {
+        model.data = {
             'the_catalog': {
                 'abbreviation': 'cat',
                 'name': 'the_catalog',
