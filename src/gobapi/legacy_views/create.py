@@ -1,26 +1,9 @@
-from typing import Optional
-
-import yaml
-
 from gobcore.model import GOBModel, relations
-from pydantic import BaseModel
 from sqlalchemy.engine import Engine
-from pathlib import Path
 from psycopg2.errors import InvalidTableDefinition
 from sqlalchemy.exc import ProgrammingError
 
-
-class ViewDefinition(BaseModel):
-    table_name: str
-    override_columns: Optional[dict[str, str]]
-
-    def get_override_column(self, column_name: str):
-        if self.override_columns and column_name in self.override_columns:
-            return self.override_columns[column_name]
-
-
-def _get_view_definitions_path() -> Path:
-    return Path(__file__).parent.joinpath("view_definitions")
+from gobapi.legacy_views.legacy_views import ViewDefinition, get_custom_view_definition
 
 
 def _get_tables(model: GOBModel):
@@ -31,19 +14,6 @@ def _get_tables(model: GOBModel):
 
 def _default_view_query(table_name: str):
     return f"SELECT * FROM public.{table_name}"
-
-
-def _open_view_definition(viewdef_path: Path) -> ViewDefinition:
-    with open(viewdef_path, 'r') as f:
-        viewdef = yaml.safe_load(f)
-        return ViewDefinition.parse_obj(viewdef)
-
-
-def get_custom_view_definition(table_name: str) -> ViewDefinition:
-    viewdef_path = _get_view_definitions_path().joinpath(f"{table_name}.yaml")
-
-    if viewdef_path.exists():
-        return _open_view_definition(viewdef_path)
 
 
 def _get_custom_view_query(viewdef: ViewDefinition, model: GOBModel, catalog_name: str, collection_name: str):
