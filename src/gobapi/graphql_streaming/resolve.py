@@ -13,19 +13,17 @@ _SEC_TYPES = [f"GOB.{type.name}" for type in GOB_SECURE_TYPES]
 class Resolver:
 
     def __init__(self):
-        """
-        Initialize a resolver
+        """Initialize a resolver.
 
-        Get the GOB types for all attributes that need to be resolved
-        Currently only secure attributes are resolved
+        Get the GOB types for all attributes that need to be resolved.
+        Currently only secure attributes are resolved.
 
         :param info:
         """
         self._attributes = {}
 
     def _init_catalog_collection(self, catalog_name, collection_name):
-        """
-        Initialize the attributes mapping for the given catalog and collection
+        """Initialize the attributes mapping for the given catalog and collection.
 
         :param catalog_name:
         :param collection_name:
@@ -50,9 +48,9 @@ class Resolver:
         }
 
     def resolve_row(self, row, result):
-        """
-        Resolve all values in the row
-        Update the resolved value in the result
+        """Resolve all values in the row.
+
+        Update the resolved value in the result.
 
         :param row:
         :param result:

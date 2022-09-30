@@ -1,7 +1,7 @@
 [flake8]
 exclude =
 	__pycache__
-	gobapi/graphql_streaming/graphql2sql/grammar/*,
+	gobapi/graphql_streaming/graphql2sql/grammar
 max-complexity = 6
 max-line-length = 119
 show_source = True
