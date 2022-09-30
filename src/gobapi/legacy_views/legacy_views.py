@@ -21,7 +21,7 @@ def _get_view_definitions_path() -> Path:
 
 
 def _open_view_definition(viewdef_path: Path) -> ViewDefinition:
-    with open(viewdef_path, 'r') as f:
+    with open(viewdef_path, 'r', encoding='utf-8') as f:
         viewdef = yaml.safe_load(f)
         return ViewDefinition.parse_obj(viewdef)
 
