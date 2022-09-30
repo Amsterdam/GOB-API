@@ -17,6 +17,8 @@ from flask import Flask, request, Response
 from flask_cors import CORS
 
 from flask_audit_log.middleware import AuditLogMiddleware
+
+from gobapi.legacy_views.legacy_views import get_all_table_renames
 from gobapi.middleware import CustomDirectivesMiddleware
 
 from gobapi.context import set_request_id, set_request_id_header
@@ -193,6 +195,19 @@ def _reference_entities(src_catalog_name, src_collection_name, reference_name, s
            }
 
 
+def _get_legacy_collection_name(catalog_name, collection_name):
+    """Returns the legacy collection name for given catalog, collection combination.
+    The collection_name may already be in 'legacy' format, in which case the collection_name is returned.
+
+    Used for renamed collection names; this happens (currently) only for the rel catalog.
+    """
+    renamed = [k for k, v in get_all_table_renames().get(catalog_name, {}).items() if v == collection_name]
+
+    if renamed:
+        return renamed[0]
+    return collection_name
+
+
 def _dump(catalog_name, collection_name):
     """
     Dump all entities in the requested format. Currently only csv
@@ -202,6 +217,9 @@ def _dump(catalog_name, collection_name):
     :return: Streaming response of all entities in csv format with header
     """
     method = request.method
+
+    # Because the dump job only knows the current name in public. Transform to legacy name.
+    collection_name = _get_legacy_collection_name(catalog_name, collection_name)
 
     if method == 'GET':
         format = request.args.get('format')

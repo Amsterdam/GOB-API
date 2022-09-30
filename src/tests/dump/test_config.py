@@ -183,6 +183,22 @@ class TestDumpApi(TestCase):
             self.assertIsInstance(result, Response)
 
     @patch('gobapi.api.dump_entities')
+    def test_dump_renamed_collection(self, mock_dump_entities):
+        mock_request = MagicMock()
+        mock_request.method = 'GET'
+        mock_request.args = {'format': 'csv'}
+        mock_dump_entities.return_value = ([], {})
+
+        with patch('gobapi.api.request', mock_request):
+            # Should get the renamed table
+            api._dump('rel', 'gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten')
+            mock_dump_entities.assert_called_with('rel', 'gbd_ggp_gbd_brt_bestaat_uit_buurten', filter=None)
+
+            # No rename
+            api._dump('rel', 'gbd_ggp_gbd_brt_bestaat_uit_buurten')
+            mock_dump_entities.assert_called_with('rel', 'gbd_ggp_gbd_brt_bestaat_uit_buurten', filter=None)
+
+    @patch('gobapi.api.dump_entities')
     def test_dump_exclude_deleted(self, mock_dump_entities):
         mock_request = MagicMock()
 
