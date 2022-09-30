@@ -203,11 +203,7 @@ class SqlGenerator:
         if not (catalog_name and collection_name):
             raise InvalidQueryException(f"{schema_collection_name} is not a valid entity")
 
-        try:
-            collection = gob_model[catalog_name]['collections'][collection_name]
-        except KeyError:
-            collection = None
-
+        collection = gob_model[catalog_name]['collections'][collection_name]
         abbr = collection['abbreviation'].lower()
         abbr_cnt = len([item for item in self.relation_info.values() if item['abbr'] == abbr])
 
