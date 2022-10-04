@@ -1,10 +1,10 @@
 from collections import defaultdict
 from typing import Optional
+from pathlib import Path
 
 import yaml
 
 from pydantic import BaseModel
-from pathlib import Path
 
 
 class ViewDefinition(BaseModel):

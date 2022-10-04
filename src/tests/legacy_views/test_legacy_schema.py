@@ -78,8 +78,9 @@ query napPeilmerken {
 
     def test_rest_api(self):
         """Simple test for REST API, making sure that legacy schema is used.
-        To test contents of legacy schema, use test_legacy_schema above. No need to implement this one for every
-        collection.
+
+        To test contents of legacy schema, use test_legacy_schema above. No need to implement
+        this one for every collection.
         """
         res = self.get_client().get('/gob/public/nap/peilmerken/')
 
@@ -168,8 +169,9 @@ query napPeilmerken {
 
     def test_graphql_api(self):
         """Simple test for GraphQL API, making sure that legacy schema is used.
-        To test contents of legacy schema, use test_legacy_schema above. No need to implement this one for every
-        collection.
+
+        To test contents of legacy schema, use test_legacy_schema above. No need to implement
+        this one for every collection.
         """
 
         res = self.get_client().post('/gob/public/graphql/', json={
