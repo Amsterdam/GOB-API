@@ -10,36 +10,42 @@ from gobapi.legacy_views.create import _create_view_with_drop_fallback, create_l
 class MockModel:
     data = {
         'some_catalog': {
-            'some_collection': {},
-            'some_other_collection': {},
+            'collections': {
+                'some_collection': {},
+                'some_other_collection': {},
+            }
         },
         'nap': {
-            'peilmerken': {
-                'all_fields': {
-                    # Bogus fields, plus the fields from the definition
-                    '_id': {},
-                    'ligt_in_bouwblok': {},
-                    'merk': {},
-                    'status': {},
-                    'not_overridden_field': {}
-                }
-            },
+            'collections': {
+                'peilmerken': {
+                    'all_fields': {
+                        # Bogus fields, plus the fields from the definition
+                        '_id': {},
+                        'ligt_in_bouwblok': {},
+                        'merk': {},
+                        'status': {},
+                        'not_overridden_field': {}
+                    }
+                },
+            }
         },
         'rel': {
-            'nap_pmk_gbd_bbk_ligt_in_bouwblok': {
-                'all_fields': {
-                    # Bogus fields, not important
-                    '_id': {},
-                    'a': {},
-                    'b': {}
-                }
-            },
-            'mbn_mtg_mbn_rpt__rft_n__referentiepunten': {
-                'all_fields': {
-                    # Will be the full fieldset in the non-mocked version
-                    '_id': {}
-                }
-            },
+            'collections': {
+                'nap_pmk_gbd_bbk_ligt_in_bouwblok': {
+                    'all_fields': {
+                        # Bogus fields, not important
+                        '_id': {},
+                        'a': {},
+                        'b': {}
+                    }
+                },
+                'mbn_mtg_mbn_rpt__rft_n__referentiepunten': {
+                    'all_fields': {
+                        # Will be the full fieldset in the non-mocked version
+                        '_id': {}
+                    }
+                },
+            }
         }
     }
 
@@ -48,14 +54,11 @@ class MockModel:
             # Overwrite default
             self.data = data
 
-    def get_catalogs(self):
-        return self.data
-
-    def get_collections(self, catalog_name):
+    def __getitem__(self, catalog_name):
         return self.data[catalog_name]
 
-    def get_collection(self, catalog_name, collection_name):
-        return self.get_collections(catalog_name)[collection_name]
+    def items(self):
+        return self.data.items()
 
     def get_table_name(self, catalog_name, collection_name):
         return f"{catalog_name}_{collection_name}"
@@ -120,7 +123,7 @@ FROM public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok"""
             call("CREATE OR REPLACE VIEW legacy.some_catalog_some_other_collection AS SELECT * FROM public.some_catalog_some_other_collection"),
             call(f"CREATE OR REPLACE VIEW legacy.nap_peilmerken AS {expected_nap_peilmerken_query}"),
             call(f"CREATE OR REPLACE VIEW legacy.rel_nap_pmk_gbd_bbk_ligt_in_bouwblok AS {expected_rel_query}"),
-            call(f"CREATE OR REPLACE VIEW legacy.rel_mbn_mtg_mbn_rpt__rft_n__referentiepunten AS SELECT\n  _id\nFROM public.rel_mbn_mtg_mbn_rpt__rft_n__meetbouten_referentiepunten"),
+            call("CREATE OR REPLACE VIEW legacy.rel_mbn_mtg_mbn_rpt__rft_n__referentiepunten AS SELECT\n  _id\nFROM public.rel_mbn_mtg_mbn_rpt__rft_n__meetbouten_referentiepunten"),
             call("CREATE OR REPLACE VIEW legacy.mv_gbd_brt_abc_abc AS SELECT * FROM public.mv_gbd_brt_abc_abc"),
             call("CREATE OR REPLACE VIEW legacy.mv_gbd_brt_def_def AS SELECT * FROM public.mv_gbd_brt_def_def"),
 
@@ -139,7 +142,9 @@ FROM public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok"""
 
         model = MockModel({
             "some_catalog": {
-                "some_collection": {}
+                "collections": {
+                    "some_collection": {}
+                }
             }
         })
         create_legacy_views(model, engine)
