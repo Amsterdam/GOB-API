@@ -14,16 +14,15 @@ SUPPRESSED_COLUMNS = "_suppressed_columns"
 class Authority:
 
     def __init__(self, catalog_name, collection_name):
-        """
-        An authority checks entities for columns that should not be communicated.
+        """An authority checks entities for columns that should not be communicated.
 
         The default authorization scheme is GOB_AUTH_SCHEME
         """
         self._catalog = catalog_name
         self._collection = collection_name
-        try:
-            collection = gob_model[self._catalog]['collections'][self._collection]
-        except KeyError:
+        if self._catalog in gob_model:
+            collection = gob_model[self._catalog]['collections'].get(self._collection)
+        else:
             collection = None
         self._attributes = list(collection['fields'] | PUBLIC_META_FIELDS) if collection else []
         self._auth_scheme = GOB_AUTH_SCHEME
@@ -31,16 +30,11 @@ class Authority:
         self._suppressed_columns = None
 
     def get_roles(self):
-        """
-        Gets the user roles from the request. Assumes the roles are set by middleware
-
-        """
+        """Gets the user roles from the request. Assumes the roles are set by middleware."""
         return getattr(request, 'roles', [])
 
     def get_checked_columns(self):
-        """
-        The checked columns are the columns that requires one or more roles
-        """
+        """The checked columns are the columns that requires one or more roles."""
         catalog_scheme = self._auth_scheme.get(self._catalog)
         if not catalog_scheme:
             return {}
@@ -50,7 +44,7 @@ class Authority:
         return collection_scheme.get('attributes', {})
 
     def is_secured(self):
-        """Returns True if there are any restrictions on this catalog/collection combination
+        """Returns True if there are any restrictions on this catalog/collection combination.
 
         :return:
         """
@@ -62,9 +56,7 @@ class Authority:
         return bool(catalog_scheme.get('roles') or catalog_scheme['collections'].get(self._collection))
 
     def allows_access(self):
-        """
-        Test if the request has access to the catalog/collection
-        """
+        """Test if the request has access to the catalog/collection."""
         catalog_scheme = self._auth_scheme.get(self._catalog, {})
         if self._allows_access(catalog_scheme):
             collection_scheme = catalog_scheme.get('collections', {}).get(self._collection, {})
@@ -72,9 +64,7 @@ class Authority:
         return False
 
     def _allows_access(self, auth_schema):
-        """
-        Test if the request has access to the given authorisation scheme
-        """
+        """Test if the request has access to the given authorisation scheme."""
         return self._is_authorized_for(auth_schema) if auth_schema else True
 
     def _is_authorized_for(self, auth):
@@ -83,9 +73,7 @@ class Authority:
         return any(role for role in roles if role in auth_roles) if auth_roles else True
 
     def get_suppressed_columns(self):
-        """
-        The suppressed columns are the columns that require a role that the user doesn't have
-        """
+        """The suppressed columns are the columns that require a role that the user doesn't have."""
         if not self._suppressed_columns:
             if self.allows_access():
                 cols = [attr for attr, auth in self.get_checked_columns().items()
@@ -96,32 +84,28 @@ class Authority:
         return self._suppressed_columns
 
     def get_secured_columns(self):
-        """
-        The secured columns are the columns that (may) require decryption
-        """
+        """The secured columns are the columns that (may) require decryption."""
         if not self._secured_columns:
             try:
-                collection = gob_model[self._catalog]['collections'][self._collection]
-            except KeyError:
-                collection = None
-            if collection:
-                cols = {
-                    column: {
-                        'gob_type': get_gob_type_from_info(spec),
-                        'spec': spec
+                collection = gob_model[self._catalog]['collections'].get(self._collection)
+                if collection:
+                    cols = {
+                        column: {
+                            'gob_type': get_gob_type_from_info(spec),
+                            'spec': spec
+                        }
+                        for column, spec in collection['fields'].items()
+                        if self.is_secure_type(spec)
                     }
-                    for column, spec in collection['fields'].items()
-                    if self.is_secure_type(spec)
-                }
-            else:
+                else:
+                    cols = {}
+            except KeyError:
                 cols = {}
             self._secured_columns = cols
         return self._secured_columns
 
     def filter_row(self, row, mapping=None):
-        """
-        Set all columns in the row that should be suppressed to None
-        """
+        """Set all columns in the row that should be suppressed to None."""
         if self.allows_access():
             """
             Note:    This is a best-effort solution. For regular REST and GraphQL traffic it is OK
@@ -147,8 +131,8 @@ class Authority:
         return row
 
     def _handle_secured_columns(self, mapping, row):
-        """
-        Handle secure columns by resolving their values.
+        """Handle secure columns by resolving their values.
+
         The exposed value is None if not authorized, else the decrypted value
 
         :param mapping: mapping between column names in the row and column names in the GOB model
@@ -163,8 +147,7 @@ class Authority:
                 pass
 
     def _handle_suppressed_columns(self, mapping, row):
-        """
-        Handle suppressed columns by removing their values
+        """Handle suppressed columns by removing their values.
 
         :param mapping: mapping between column names in the row and column names in the GOB model
         :param row: the row to process
@@ -177,8 +160,7 @@ class Authority:
 
     @classmethod
     def exposed_value(cls, entity_value, info):
-        """
-        Get the exposed value for any encrypted entity value.
+        """Get the exposed value for any encrypted entity value.
 
         :param entity_value:
         :param info: dictionary containing gob_type and type_spec
@@ -192,9 +174,9 @@ class Authority:
 
     @classmethod
     def is_secure_type(cls, spec):
-        """
-        Tells if spec is a secure type
-        Either a plain secure type or a JSON that contains a secure type
+        """Tells if spec is a secure type.
+
+        Either a plain secure type or a JSON that contains a secure type.
 
         :param spec:
         :return:
@@ -212,8 +194,7 @@ class Authority:
 
     @classmethod
     def get_secure_type(cls, gob_type, spec, value):
-        """
-        Returns a Secure GOB type instance for the given type, spec and value
+        """Returns a Secure GOB type instance for the given type, spec and value.
 
         Example:
         get_secure_type(GOB.SecureString, <<the gob model spec>>, <<any encrypted string value>>_
@@ -228,9 +209,7 @@ class Authority:
 
     @classmethod
     def get_secured_value(cls, sec_type):
-        """
-        Create a user for his request and use this user to retrieve the value of the secure type
-        """
+        """Create a user for his request and use this user to retrieve the value of the secure type."""
         user = User(request)
         return sec_type.get_value(user)
 
@@ -240,16 +219,12 @@ class AuthorizedQuery(Query):
     EXPIRE_PER = None
 
     def __init__(self, *args, **kwargs):
-        """
-        An authorized query checks every entity for columns that should not be communicated.
-        """
+        """An authorized query checks every entity for columns that should not be communicated."""
         self._authority = None
         super().__init__(*args, **kwargs)
 
     def set_catalog_collection(self, catalog, collection):
-        """
-        Register the catalog and collection for the entities to be checked
-        """
+        """Register the catalog and collection for the entities to be checked."""
         self._authority = Authority(catalog, collection)
 
     def expire_per(self, size: int):
@@ -257,9 +232,9 @@ class AuthorizedQuery(Query):
             self.EXPIRE_PER = size
 
     def __iter__(self):
-        """
-        Iterator that yields entities for which the non-authorized columns have been cleared.
-        An extra attribute is set on the entity that specifies the cleared columns
+        """Iterator that yields entities for which the non-authorized columns have been cleared.
+
+        An extra attribute is set on the entity that specifies the cleared columns.
         """
         if self._authority:
             suppressed_columns = self._authority.get_suppressed_columns()

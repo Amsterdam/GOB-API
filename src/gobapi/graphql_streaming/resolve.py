@@ -35,11 +35,7 @@ class Resolver:
             return
 
         if (catalog_name and collection_name):
-            try:
-                collection = gob_model[catalog_name]['collections'][collection_name]
-                attributes = collection['attributes'].keys()
-            except KeyError:
-                attributes = []
+            attributes = gob_model[catalog_name]['collections'][collection_name]['attributes'].keys()
         else:
             attributes = []
 

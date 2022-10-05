@@ -270,11 +270,16 @@ class TestAuthority(TestCase):
                 }
             }
         }
+
         authority = Authority('secure catalog', 'any col')
         secure_columns = authority.get_secured_columns()
         self.assertEqual(
             secure_columns,
             {'secure column': {'gob_type': gob_secure_types.SecureString, 'spec': 'any spec'}})
+
+        authority = Authority('secure catalog', 'missing col')
+        secure_columns = authority.get_secured_columns()
+        self.assertEqual(secure_columns, {})
 
     @patch("gobapi.auth.auth_query.gob_model")
     def test_get_secured_json_columns(self, mock_model):
@@ -347,9 +352,6 @@ class TestAuthority(TestCase):
         spec = {
             "type": "GOB.JSON",
             "attributes": {
-                "attr": {
-                    "type": "GOB.String"
-                },
                 "attr": {
                     "type": "GOB.SecureString"
                 }
