@@ -485,7 +485,6 @@ class TestStreams(TestCase):
         }
         mock_gobmodel.get.side_effect = data.get
         mock_gobmodel.__getitem__.side_effect = data.__getitem__
-        mock_gobmodel.get_collection.return_value = data['catalog']['collections']['collection']
         mock_entity.return_value = {'id': 'reference'}
         mock_query.side_effect = lambda cat, col, ref, entity_id: ([], lambda e: e)
 
