@@ -272,8 +272,9 @@ def _collection(catalog_name, collection_name):
             entities, convert = query_entities(catalog_name, collection_name, view_name)
             result = ndjson_entities(entities, convert)
             return WorkerResponse.stream_with_context(result, mimetype='application/x-ndjson')
-        result, links = _entities(catalog_name, collection_name, page, page_size, view_name)
-        return hal_response(data=result, links=links)
+        else:
+            result, links = _entities(catalog_name, collection_name, page, page_size, view_name)
+            return hal_response(data=result, links=links)
     return not_found(f'{catalog_name}.{collection_name} not found')
 
 
