@@ -269,8 +269,9 @@ class DbDumper:
                         yield "Collection is up-to-date, no actions necessary\n"
                         self._delete_tmp_table()
                         return
-                    yield "Collection counts don't match. Forcing full dump\n"
-                    full_dump = True
+                    else:
+                        yield "Collection counts don't match. Forcing full dump\n"
+                        full_dump = True
             else:
                 # No remote event id, force full dump
                 full_dump = True
