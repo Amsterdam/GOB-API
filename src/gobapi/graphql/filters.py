@@ -51,7 +51,7 @@ class FilterConnectionField(SQLAlchemyConnectionField):
         """Build a query to filter a model on the contents of kwargs
 
         :param query: the query to start with
-        :param model: the model to filter
+        :param model: the model class of the referenced collection
         :param kwargs: the filter arguments
         :return: the query to filter model on the filter arguments
         """
@@ -66,7 +66,7 @@ class FilterConnectionField(SQLAlchemyConnectionField):
             if field not in RELAY_ARGS:
                 # null is defined as a special string value because Python None or JSON null does not work
                 if value == FILTER_ON_NULL_VALUE:
-                    query = query.filter(getattr(model, field) is None)
+                    query = query.filter(getattr(model, field) == None)  # noqa: E711
                 else:
                     query = query.filter(getattr(model, field) == value)
         return query
