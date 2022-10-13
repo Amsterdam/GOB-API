@@ -263,13 +263,17 @@ class TestAuthority(TestCase):
     @patch("gobapi.auth.auth_query.gob_model")
     @patch("gobapi.auth.auth_query.get_gob_type_from_info", lambda spec: gob_secure_types.SecureString)
     def test_get_secured_columns(self, mock_model):
-        mock_model.__getitem__.return_value = {
-            'collections': {
-                'any col': {
-                    'fields': {'secure column': 'any spec'}
+        data = {
+                'secure catalog': {
+                    'collections': {
+                        'any col': {
+                            'fields': {'secure column': 'any spec'}
+                        }
+                    }
                 }
             }
-        }
+        mock_model.__getitem__.side_effect = data.__getitem__
+        mock_model.get.side_effect = data.get
 
         authority = Authority('secure catalog', 'any col')
         secure_columns = authority.get_secured_columns()

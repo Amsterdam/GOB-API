@@ -86,7 +86,7 @@ class Authority:
     def get_secured_columns(self):
         """The secured columns are the columns that (may) require decryption."""
         if not self._secured_columns:
-            try:
+            if gob_model.get(self._catalog):
                 collection = gob_model[self._catalog]['collections'].get(self._collection)
                 if collection:
                     cols = {
@@ -99,7 +99,7 @@ class Authority:
                     }
                 else:
                     cols = {}
-            except KeyError:
+            else:
                 cols = {}
             self._secured_columns = cols
         return self._secured_columns
