@@ -1,10 +1,9 @@
-
 from flask import request
 
-from gobapi.auth.auth_query import Authority
 from gobcore.secure.request import is_secured_request, extract_roles
+from gobapi.auth.auth_query import Authority
 
-# Request args that require authorisation
+# Request args that require authorisation.
 # SECURE_ARGS = ['view']  # view results are not checked for secure data!
 SECURE_ARGS = []
 

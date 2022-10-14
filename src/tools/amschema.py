@@ -1,7 +1,5 @@
-"""
-Utility to convert GOB Data to Amsterdam Schema
+"""Utility to convert GOB Data to Amsterdam Schema."""
 
-"""
 import argparse
 import re
 import json
@@ -22,16 +20,15 @@ from gobcore.model import GOBModel  # noqa: E402, module level import not at top
 from gobcore.model.metadata import FIELD  # noqa: E402, module level import not at top of file
 from gobcore.sources import GOBSources  # noqa: E402, module level import not at top of file
 
-model = GOBModel(legacy=True)
-sources = GOBSources()
+gob_model = GOBModel(legacy=True)
+sources = GOBSources(gob_model)
 sys.stdout = sys.__stdout__
 
 
 def get_schema(catalog_name, collection_name=None):
-    """
-    Get a Amsterdam Schema for the given catalog
+    """Get a Amsterdam Schema for the given catalog.
 
-    If a collection is specified only the schema for the given collection is returned
+    If a collection is specified only the schema for the given collection is returned.
 
     :param catalog_name:
     :param collection_name:
@@ -41,7 +38,7 @@ def get_schema(catalog_name, collection_name=None):
         schema = _get_collection_schema(catalog_name, collection_name)
     else:
         tables = []
-        collections = model.get_collections(catalog_name)
+        collections = gob_model[catalog_name]['collections']
         include_temporal = False
         for collection_name, collection in collections.items():
             include_temporal = include_temporal or collection.get('has_states', False)
@@ -76,17 +73,16 @@ def get_schema(catalog_name, collection_name=None):
 
 
 def _get_collection_schema(catalog_name, collection_name):
-    """
-    Get the schema for a single collection
+    """Get the schema for a single collection.
 
     :param catalog_name:
     :param collection_name:
     :return:
     """
-    collection = GOBModel(legacy=True).get_collection(catalog_name, collection_name)
+    collection = gob_model[catalog_name]['collections'][collection_name]
     fields = collection['all_fields']
     required = ["schema", "id", "identificatie"]
-    has_states = model.has_states(catalog_name, collection_name)
+    has_states = gob_model.has_states(catalog_name, collection_name)
     if has_states:
         required.append(FIELD.SEQNR)
     properties = {
@@ -181,8 +177,7 @@ def _get_field_property(field_name, field, description=None):
 
 
 def to_camel_case(snake_str):
-    """
-    Convert a camel case string to snake case
+    """Convert a camel case string to snake case.
 
     :param snake_str:
     :return:
@@ -192,22 +187,21 @@ def to_camel_case(snake_str):
 
 
 def get_graphql_query(catalog_name, collection_name):  # noqa: C901, too complex
-    """
-    Get the GraphQL query for the given catalog collection
+    """Get the GraphQL query for the given catalog collection.
 
     Build a dict with '' values and then afterwards convert it to JSON
-    and remove the '' values to get a nicely formatted GraphQL query
+    and remove the '' values to get a nicely formatted GraphQL query.
 
     :param catalog_name:
     :param collection_name:
     :return:
     """
-    collection = model.get_collection(catalog_name, collection_name)
+    collection = gob_model[catalog_name]['collections'][collection_name]
     node = {
         collection['entity_id']: '',
         '#cursor': ''   # Add cursor as comment field
     }
-    if model.has_states(catalog_name, collection_name):
+    if gob_model.has_states(catalog_name, collection_name):
         node[FIELD.SEQNR] = ''
     fields = collection['all_fields']
     for field_name, field in fields.items():
@@ -216,15 +210,15 @@ def get_graphql_query(catalog_name, collection_name):  # noqa: C901, too complex
         if re.match(r'^_', field_name):
             # Skip meta fields
             continue
-        elif re.match(r'^GOB\.(?!Very).*Reference', field_type):
+        if re.match(r'^GOB\.(?!Very).*Reference', field_type):
             # Build an edges-nodes structure for any reference field (except VeryManyReference)
             ref = field['ref']
             ref_catalog_name, ref_collection_name = ref.split(':')
-            ref_collection = model.get_collection(ref_catalog_name, ref_collection_name)
+            ref_collection = gob_model[ref_catalog_name]['collections'][ref_collection_name]
 
             if ref_collection:
                 ref_node = {ref_collection['entity_id']: ''}
-                if model.has_states(ref_catalog_name, ref_collection_name):
+                if gob_model.has_states(ref_catalog_name, ref_collection_name):
                     ref_node[FIELD.SEQNR] = ''
                 node[cc_field_name] = {
                     'edges': {
@@ -255,14 +249,13 @@ def get_graphql_query(catalog_name, collection_name):  # noqa: C901, too complex
 
 
 def get_url(catalog_name, collection_name, path):
-    """
-    Get the URL, including all required parameters, to use when issueing a POST request to retrieve the data
+    """Get the URL, including all required parameters, to use when issuing a POST request to retrieve the data.
 
     :param catalog_name:
     :param collection_name:
     :return:
     """
-    collection = model.get_collection(catalog_name, collection_name)
+    collection = gob_model[catalog_name]['collections'][collection_name]
     fields = collection['all_fields']
     # geojson parameter
     geojson = []
@@ -271,7 +264,7 @@ def get_url(catalog_name, collection_name, path):
         if re.match(r'^GOB\.Geo\.', field_type):
             geojson.append(field_name)
 
-    args = {
+    query_dict = {
         'condens': "node,edges,id",
         'lowercase': "true",
         'flatten': "true",
@@ -282,8 +275,8 @@ def get_url(catalog_name, collection_name, path):
         args['geojson'] = ",".join(geojson)
 
     # Construct the query string
-    args = '&'.join([f'{arg}={args[arg]}' for arg in args.keys()])
-    return f'{path}?{args}'
+    query_str = '&'.join([f'{key}={value}' for key, value in query_dict.items()])
+    return f'{path}?{query_str}'
 
 
 def print_yellow(msg):
@@ -291,8 +284,7 @@ def print_yellow(msg):
 
 
 def get_curl(catalog_name, collection_name, path):
-    """
-    Get the curl statement to retrieve the dataset in the Amsterdam Schema format
+    """Get the curl statement to retrieve the dataset in the Amsterdam Schema format.
 
     :param catalog_name:
     :param collection_name:
@@ -325,14 +317,14 @@ if __name__ == "__main__":  # noqa: C901, too complex
         def __call__(self, parser, namespace, values, option_string=None):
             if namespace.format in ['query', 'curl'] and values is None:
                 parser.error('query or curl require a collection')
-            elif values and not GOBModel(legacy=True).get_collection(namespace.catalog, values):
+            elif values and not gob_model[namespace.catalog]['collections'].get(values):
                 parser.error(f"GOB Collection '{values}' does not exist within GOB Catalog '{namespace.catalog}'")
             else:
                 namespace.collection = values
 
     class CatalogAction(argparse.Action):
         def __call__(self, parser, namespace, values, option_string=None):
-            if not GOBModel(legacy=True).get_catalog(values):
+            if not values in gob_model:
                 parser.error(f"GOB Catalog '{values}' does not exist")
             else:
                 namespace.catalog = values

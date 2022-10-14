@@ -1,4 +1,4 @@
-"""API
+"""API.
 
 This module contains the API endpoints.
 Endpoints can use storage methods to retrieve data from the GOB Storage.
@@ -7,24 +7,23 @@ Responses are created in a uniform way by using the response module.
 The endpoints are defined in the ROUTES variable.
 The only public method is get_app() which returns a Flask application object.
 The API can be started by get_app().run()
-
 """
+
 import json
 from logging.config import dictConfig
 
 from flask_graphql import GraphQLView
 from flask import Flask, request, Response
 from flask_cors import CORS
-
 from flask_audit_log.middleware import AuditLogMiddleware
 
-from gobapi.legacy_views.legacy_views import get_all_table_renames
-from gobapi.middleware import CustomDirectivesMiddleware
-
-from gobapi.context import set_request_id, set_request_id_header
-from gobcore.model import GOBModel
 from gobcore.model.metadata import FIELD
 from gobcore.views import GOBViews
+
+from gobapi import gob_model
+from gobapi.legacy_views.legacy_views import get_all_table_renames
+from gobapi.middleware import CustomDirectivesMiddleware
+from gobapi.context import set_request_id, set_request_id_header
 
 from gobapi.config import API_BASE_PATH, API_SECURE_BASE_PATH, API_LOGGING
 from gobapi.fat_file import fat_file
@@ -51,7 +50,7 @@ dictConfig(API_LOGGING)
 
 
 def _catalogs():
-    """Returns the GOB catalogs
+    """Returns the GOB catalogs.
 
     :return: a list of catalogs (name, href)
     """
@@ -67,7 +66,7 @@ def _catalogs():
                             'href': f'{API_BASE_PATH}/{catalog_name}/'
                         }
                     }
-                } for catalog_name, catalog in GOBModel(legacy=True).get_catalogs().items()
+                } for catalog_name, catalog in gob_model.items()
             ]
         }
     }
@@ -75,19 +74,19 @@ def _catalogs():
 
 
 def _catalog(catalog_name):
-    """Return the details of a specific GOB catalog
+    """Return the details of a specific GOB catalog.
 
     :param catalog_name: e.g. meetbouten
     :return: the details of the specified catalog {name, href}
     """
-    catalog = GOBModel(legacy=True).get_catalog(catalog_name)
+    catalog = gob_model.get(catalog_name)
     if catalog:
         result = {
             'name': catalog_name,
             'abbreviation': catalog['abbreviation'],
             'description': catalog['description'],
             'version': catalog['version'],
-            'collections': [a for a in catalog['collections'].keys()],
+            'collections': list(catalog['collections'].keys()),
             '_embedded': {
                 'collections': [
                     {
@@ -98,23 +97,22 @@ def _catalog(catalog_name):
                                 'href': f'/gob/{catalog_name}/{collection_name}/'
                             }
                         }
-                    } for collection_name, collection in GOBModel(legacy=True).get_collections(catalog_name).items()
+                    } for collection_name, collection in gob_model[catalog_name]['collections'].items()
                 ]
             }
         }
         return hal_response(result)
-    else:
-        return not_found(f"Catalog {catalog_name} not found")
+    return not_found(f"Catalog {catalog_name} not found")
 
 
 def _entities(catalog_name, collection_name, page, page_size, view=None):
-    """Returns the entities in the specified catalog collection
+    """Returns the entities in the specified catalog collection.
 
-    The page and page_size are used to calculate the offset and number of entities to return
+    The page and page_size are used to calculate the offset and number of entities to return.
 
     A result, links tuple is returned.
-    Result is an object containing relevant metadata about the result
-    Links contain the references to any next or previous page
+    Result is an object containing relevant metadata about the result.
+    Links contain the references to any next or previous page.
 
     :param catalog_name: e.g. meetbouten
     :param collection_name: e.g. meting
@@ -123,13 +121,14 @@ def _entities(catalog_name, collection_name, page, page_size, view=None):
     :param view: the database view that's being used to get the entities, defaults to the entity table
     :return: (result, links)
     """
-    assert (GOBModel(legacy=True).get_collection(catalog_name, collection_name))
-    assert (page >= 1)
-    assert (page_size >= 1)
+    assert (gob_model.get(catalog_name) and gob_model[catalog_name]['collections'].get(collection_name))
+    assert page >= 1
+    assert page_size >= 1
 
     offset = (page - 1) * page_size
 
-    entities, total_count = get_entities(catalog_name, collection_name, offset=offset, limit=page_size, view=view)
+    entities, total_count = get_entities(
+        catalog_name, collection_name, offset=offset, limit=page_size, view=view)
 
     if view:
         # For views always show next page unless no results are returned. Count is slow on large views
@@ -154,12 +153,12 @@ def _clear_tests():
 
 
 def _reference_entities(src_catalog_name, src_collection_name, reference_name, src_id, page, page_size):
-    """Returns the entities for a reference with specified source entity
+    """Returns the entities for a reference with specified source entity.
 
-    The page and page_size are used to calculate the offset and number of entities to return
+    The page and page_size are used to calculate the offset and number of entities to return.
 
     A result, links tuple is returned.
-    Result is an object containing relevant metadata about the result
+    Result is an object containing relevant metadata about the result.
     Links contain the references to any next or previous page
 
     :param src_catalog_name: e.g. meetbouten
@@ -170,12 +169,10 @@ def _reference_entities(src_catalog_name, src_collection_name, reference_name, s
     :param page_size: the number of entities per page
     :return: (result, links)
     """
-    assert (GOBModel(legacy=True).get_collection(
-        src_catalog_name,
-        src_collection_name
-    )['references'].get(reference_name))
-    assert (page >= 1)
-    assert (page_size >= 1)
+    assert (gob_model[src_catalog_name]['collections'][
+        src_collection_name]['references'].get(reference_name))
+    assert page >= 1
+    assert page_size >= 1
 
     offset = (page - 1) * page_size
 
@@ -197,6 +194,7 @@ def _reference_entities(src_catalog_name, src_collection_name, reference_name, s
 
 def _get_legacy_collection_name(catalog_name, collection_name):
     """Returns the legacy collection name for given catalog, collection combination.
+
     The collection_name may already be in 'legacy' format, in which case the collection_name is returned.
 
     Used for renamed collection names; this happens (currently) only for the rel catalog.
@@ -209,8 +207,7 @@ def _get_legacy_collection_name(catalog_name, collection_name):
 
 
 def _dump(catalog_name, collection_name):
-    """
-    Dump all entities in the requested format. Currently only csv
+    """Dump all entities in the requested format. Currently only csv.
 
     :param catalog_name:
     :param collection_name:
@@ -231,31 +228,28 @@ def _dump(catalog_name, collection_name):
         if format == "csv":
             result = CsvDumper(entities, model=model)
             return WorkerResponse.stream_with_context(result, mimetype='text/csv')
-        elif format == "sql":
+        if format == "sql":
             return Response(sql_entities(catalog_name, collection_name, model), mimetype='application/sql')
-        else:
-            return f"Unrecognised format parameter '{format}'" if format else "Format parameter not set", 400
-    elif method == 'POST':
+        return f"Unrecognised format parameter '{format}'" if format else "Format parameter not set", 400
+    if method == 'POST':
         content_type = request.content_type
         if content_type == 'application/json':
             config = json.loads(request.data)
             result = dump_to_db(catalog_name, collection_name, config)
             return WorkerResponse.stream_with_context(result, mimetype='text/plain')
-        else:
-            return f"Unrecognised content type '{content_type}'", 400
+        return f"Unrecognised content type '{content_type}'", 400
 
 
 def _collection(catalog_name, collection_name):
-    """Returns the list of entities within the specified collection
+    """Returns the list of entities within the specified collection.
 
-    A list of entities is returned. This output is paged, default page 1 page size 100
+    A list of entities is returned. This output is paged, default page 1 page size 100.
 
     :param catalog_name: e.g. meetbouten
     :param collection_name: e.g. meting
     :return:
     """
-
-    if GOBModel(legacy=True).get_collection(catalog_name, collection_name):
+    if gob_model.get(catalog_name) and gob_model[catalog_name]['collections'].get(collection_name):
         page = int(request.args.get('page', 1))
         page_size = int(request.args.get('page_size', 100))
 
@@ -274,19 +268,18 @@ def _collection(catalog_name, collection_name):
             entities, convert = query_entities(catalog_name, collection_name, view_name)
             result = stream_entities(entities, convert)
             return WorkerResponse.stream_with_context(result, mimetype='application/json')
-        elif ndjson:
+        if ndjson:
             entities, convert = query_entities(catalog_name, collection_name, view_name)
             result = ndjson_entities(entities, convert)
             return WorkerResponse.stream_with_context(result, mimetype='application/x-ndjson')
         else:
             result, links = _entities(catalog_name, collection_name, page, page_size, view_name)
             return hal_response(data=result, links=links)
-    else:
-        return not_found(f'{catalog_name}.{collection_name} not found')
+    return not_found(f'{catalog_name}.{collection_name} not found')
 
 
 def _entity(catalog_name, collection_name, entity_id, view=None):
-    """Returns the entity within the specified collection with the specified id
+    """Returns the entity within the specified collection with the specified id.
 
     An individual entity is returned.
 
@@ -296,7 +289,10 @@ def _entity(catalog_name, collection_name, entity_id, view=None):
     :param view: the database view that's being used to get the entity, defaults to the entity table
     :return:
     """
-    if GOBModel(legacy=True).get_collection(catalog_name, collection_name):
+    if not gob_model.get(catalog_name):
+        return not_found(f'{catalog_name} not found')
+
+    if gob_model[catalog_name]['collections'].get(collection_name):
         view = request.args.get('view', None)
 
         # If a view is requested and doesn't exist return a 404
@@ -308,13 +304,12 @@ def _entity(catalog_name, collection_name, entity_id, view=None):
         result = get_entity(catalog_name, collection_name, entity_id, view_name)
         return hal_response(result) if result is not None else not_found(
             f'{catalog_name}.{collection_name}:{entity_id} not found')
-    else:
-        return not_found(f'{catalog_name}.{collection_name} not found')
+    return not_found(f'{catalog_name}.{collection_name} not found')
 
 
 def _reference_collection(catalog_name, collection_name, entity_id, reference_path):
     """Returns the (very many) references from an entity within the specified collection
-    with the specified id
+    with the specified id.
 
     An list of references is returned.
 
@@ -325,13 +320,14 @@ def _reference_collection(catalog_name, collection_name, entity_id, reference_pa
     :param view: the database view that's being used to get the entity, defaults to the entity table
     :return:
     """
-    model = GOBModel(legacy=True)
-    entity_collection = model.get_collection(catalog_name, collection_name)
+    if not gob_model.get(catalog_name):
+        return not_found(f'{catalog_name} not found')
 
-    if entity_collection:
+    collection = gob_model[catalog_name]['collections'].get(collection_name)
+    if collection:
         # Get the reference
         reference_name = reference_path.replace('-', '_')
-        reference = model.get_collection(catalog_name, collection_name)['references'].get(reference_name)
+        reference = collection['references'].get(reference_name)
         # Check if the source entity exists
         entity = get_entity(catalog_name, collection_name, entity_id)
 
@@ -343,25 +339,26 @@ def _reference_collection(catalog_name, collection_name, entity_id, reference_pa
             ndjson = request.args.get('ndjson', None) == "true"
 
             if stream:
-                entities, convert = query_reference_entities(catalog_name, collection_name, reference_name, entity_id)
+                entities, convert = query_reference_entities(
+                    catalog_name, collection_name, reference_name, entity_id)
                 return Response(stream_entities(entities, convert), mimetype='application/json')
-            elif ndjson:
-                entities, convert = query_reference_entities(catalog_name, collection_name, reference_name, entity_id)
+            if ndjson:
+                entities, convert = query_reference_entities(
+                    catalog_name, collection_name, reference_name, entity_id)
                 return Response(ndjson_entities(entities, convert), mimetype='application/x-ndjson')
-            else:
-                result, links = _reference_entities(catalog_name, collection_name, reference_name, entity_id,
-                                                    page, page_size)
-                return hal_response(data=result, links=links)
+            result, links = _reference_entities(
+                catalog_name, collection_name, reference_name, entity_id, page, page_size)
+            return hal_response(data=result, links=links)
 
-        response = not_found(f'{catalog_name}.{collection_name}:{entity_id} not found') \
-            if not entity else not_found(f'{catalog_name}.{collection_name}:{entity_id}:{reference_name} not found')
+        response = not_found(
+                f'{catalog_name}.{collection_name}:{entity_id} not found') if not entity else not_found(
+                f'{catalog_name}.{collection_name}:{entity_id}:{reference_name} not found')
         return response
-    else:
-        return not_found(f'{catalog_name}.{collection_name} not found')
+    return not_found(f'{catalog_name}.{collection_name} not found')
 
 
 def _states():
-    """Returns the states for the supplied list of collections
+    """Returns the states for the supplied list of collections.
 
     All states for a collection with the related collections are returned.
     The list of collections can be passed as an URL parameter:
@@ -377,8 +374,8 @@ def _states():
 
     if collection_names:
         collections = []
-        for c in collection_names.split(','):
-            collections.append(c.split(':'))
+        for col in collection_names.split(','):
+            collections.append(col.split(':'))
 
         entities, total_count = get_states(collections, offset=offset, limit=page_size)
 
@@ -395,8 +392,7 @@ def _states():
             'previous': get_page_ref(page - 1, num_pages)
             }
         return hal_response(result, links)
-    else:
-        return not_found('No collections requested')
+    return not_found('No collections requested')
 
 
 def _health():
@@ -404,12 +400,11 @@ def _health():
 
 
 def _add_route(app, paths, rule, view_func, methods):
-    """
-    For every rule add a public and a secure endpoint
+    """For every rule add a public and a secure endpoint.
 
     Both the public and the secure endpoints are protected.
     The secure endpoint expects the Keycloak headers to be present and the endpoint is protected by OAuth2 Proxy.
-    The public endpoint assures that none of the Keycloak headers is present
+    The public endpoint assures that none of the Keycloak headers is present.
 
     :param app:
     :param rule:
@@ -428,11 +423,11 @@ def _add_route(app, paths, rule, view_func, methods):
 
 
 def get_app():
-    """Returns a Flask application object
+    """Returns a Flask application object.
 
-    The rules are maintained in the ROUTES variable (Note: By default a rule just listens for GET)
+    The rules are maintained in the ROUTES variable (Note: By default a rule just listens for GET).
 
-    CORS is used to allow CORS for all domains on all routes
+    CORS is used to allow CORS for all domains on all routes.
 
     :return: a Flask application object
     """

@@ -1,8 +1,9 @@
 from unittest import TestCase, mock
 from unittest.mock import patch, MagicMock
 
-from gobapi.auth.routes import secure_route, public_route
 from gobcore.secure.request import ACCESS_TOKEN_HEADER
+from gobapi.auth.routes import secure_route, public_route
+
 
 class TestAuth(TestCase):
 

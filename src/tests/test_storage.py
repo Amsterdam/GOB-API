@@ -1,23 +1,25 @@
-"""Storage Unit tests
+"""Storage Unit tests.
 
 The unit tests for the storage module.
-As it is a unit test all external dependencies are mocked
-
+As it is a unit test all external dependencies are mocked.
 """
-import datetime
-import sqlalchemy
-import gobapi.storage
 
-from unittest import mock, TestCase
-from unittest.mock import MagicMock, call
+import datetime
+from unittest import TestCase
+from unittest.mock import MagicMock, patch, call
+
+import sqlalchemy
+
+from gobcore.model.metadata import FIELD
+
+from gobapi import gob_model
+import gobapi.storage
 from gobapi.storage import _get_convert_for_state, filter_deleted, connect, _format_reference, _get_table, \
     _to_gob_value, _add_resolve_attrs_to_columns, _get_convert_for_table, _add_relation_dates_to_manyreference, \
     _flatten_join_result, get_entity_refs_after, dump_entities, get_max_eventid, exec_statement, \
     _create_reference_link, _create_reference_view, _create_reference, _add_relations, _apply_filters, \
     get_id_columns, clear_test_dbs, get_count
 from gobapi.auth.auth_query import AuthorizedQuery
-from gobcore.model import GOBModel
-from gobcore.model.metadata import FIELD
 
 
 class MockEntity:
@@ -198,13 +200,10 @@ mock_PUBLIC_META_FIELDS = {
 }
 
 
-def mock_get_gobmodel(legacy=False):
-    class model:
-        def get_catalog(self, catalog_name):
-            return catalog_name
-
-        def get_collection(self, catalog_name, collection_name):
-            return {
+class Mock_Model:
+    data = {
+        'catalog': {
+            'collections': {
                 'collection1': {
                     'entity_id': 'identificatie',
                     'attributes': {
@@ -363,20 +362,22 @@ def mock_get_gobmodel(legacy=False):
                         },
                     },
                 }
-            }[collection_name]
-        def get_table_name(self, catalog_name, collection_name):
-            return f'{catalog_name}_{collection_name}'
+            }
+        }
+    }
+    # Add relations for get_entities().
+    data['rel'] = data['catalog']
 
-        def get_reference_by_abbreviations(self, catalog_abbreviation, collection_abbreviation):
-            return 'catalog:collection'
+    def __getitem__(self, catalog_name):
+        return self.data[catalog_name]
 
-        def _extract_references(self, attributes):
-            return {field_name: spec for field_name, spec in attributes.items()
-                    if spec['type'] in ['GOB.Reference', 'GOB.ManyReference', 'GOB.VeryManyReference']}
-    return model()
+    def get_table_name(self, catalog_name, collection_name):
+        return f'{catalog_name}_{collection_name}'.lower()
+
+    def get_reference_by_abbreviations(self, catalog_abbreviation, collection_abbreviation):
+        return 'catalog:collection'
 
 def before_each_storage_test(monkeypatch):
-
     monkeypatch.setattr(gobapi.storage, 'create_engine', mock_create_engine)
     monkeypatch.setattr(gobapi.storage, 'Table', MockTable)
     monkeypatch.setattr(gobapi.storage, 'automap_base', mock_automap_base)
@@ -384,7 +385,7 @@ def before_each_storage_test(monkeypatch):
     monkeypatch.setattr(gobapi.storage, 'get_session', mock_scoped_session)
     monkeypatch.setattr(gobapi.storage, 'current_api_base_path', lambda: '/gob')
 
-    monkeypatch.setattr(gobapi.storage, 'GOBModel', mock_get_gobmodel)
+    monkeypatch.setattr(gobapi.storage, 'gob_model', Mock_Model())
     monkeypatch.setattr(gobapi.storage, 'PUBLIC_META_FIELDS', mock_PUBLIC_META_FIELDS)
 
     monkeypatch.setattr(gobapi.storage, 'get_relation_name', lambda m, a, o, r: 'relation_name')
@@ -407,19 +408,21 @@ def test_entities(monkeypatch):
 
     from gobapi.storage import get_entities
     MockEntities.all_entities = []
-    assert(get_entities('catalog', 'collection1', 0, 1) == ([], 0))
+    assert get_entities('catalog', 'collection1', 0, 1) == ([], 0)
 
     mockEntity = MockEntity('identificatie', 'attribute')
-    MockEntities.all_entities = [
-        mockEntity
-    ]
-    assert(get_entities('catalog', 'collection1', 0, 1) == ([{'attribute': 'attribute', 'identificatie': 'identificatie', '_links': {'self': {'href': '/gob/catalog/collection1/1/'}}}], 1))
+    MockEntities.all_entities = [mockEntity]
+    assert get_entities('catalog', 'collection1', 0, 1) == ([{
+        'attribute': 'attribute', 'identificatie': 'identificatie', '_links': {
+            'self': {'href': '/gob/catalog/collection1/1/'}}}], 1)
 
     mockEntity = MockEntity('identificatie', 'attribute', 'non_existing_attribute')
     MockEntities.all_entities = [
         mockEntity
     ]
-    assert(get_entities('catalog', 'collection1', 0, 1) == ([{'attribute': 'attribute', 'identificatie': 'identificatie', '_links': {'self': {'href': '/gob/catalog/collection1/1/'}}}], 1))
+    assert get_entities('catalog', 'collection1', 0, 1) == ([{
+        'attribute': 'attribute', 'identificatie': 'identificatie', '_links': {
+            'self': {'href': '/gob/catalog/collection1/1/'}}}], 1)
 
 
 def test_entities_with_references(monkeypatch):
@@ -428,11 +431,9 @@ def test_entities_with_references(monkeypatch):
     from gobapi.storage import get_entities
 
     mockEntity = MockEntity('identificatie', 'attribute')
-    MockEntities.all_entities = [
-        mockEntity
-    ]
+    MockEntities.all_entities = [mockEntity]
     # The private reference should't be visible on the entities list
-    assert(get_entities('catalog', 'collection2', 0, 1) == ([{
+    assert get_entities('catalog', 'collection2', 0, 1) == ([{
         'attribute': 'attribute',
         'identificatie': 'identificatie',
         '_links': {
@@ -443,7 +444,7 @@ def test_entities_with_references(monkeypatch):
             'manyreference': [{'reference': {'id': '1', 'bronwaarde': '1'}},
                               {'reference': {'id': '2', 'bronwaarde': '2'}}]
         }
-    }], 1))
+    }], 1)
 
 
 def test_entities_without_reference_id(monkeypatch):
@@ -452,11 +453,9 @@ def test_entities_without_reference_id(monkeypatch):
 
     mockEntity = MockEntity('identificatie', 'attribute')
     mockEntity.reference[FIELD.REFERENCE_ID] = None
-    MockEntities.all_entities = [
-        mockEntity
-    ]
+    MockEntities.all_entities = [mockEntity]
 
-    assert(get_entities('catalog', 'collection2', 0, 1) == ([{
+    assert get_entities('catalog', 'collection2', 0, 1) == ([{
         'attribute': 'attribute',
         'identificatie': 'identificatie',
         '_links': {
@@ -467,7 +466,7 @@ def test_entities_without_reference_id(monkeypatch):
             'manyreference': [{'reference': {'id': '1', 'bronwaarde': '1'}},
                               {'reference': {'id': '2', 'bronwaarde': '2'}}]
         }
-    }], 1))
+    }], 1)
 
 
 def test_entities_with_verymanyreferences(monkeypatch):
@@ -476,18 +475,16 @@ def test_entities_with_verymanyreferences(monkeypatch):
     from gobapi.storage import get_entities
 
     mockEntity = MockEntity('identificatie', 'attribute')
-    MockEntities.all_entities = [
-        mockEntity
-    ]
+    MockEntities.all_entities = [mockEntity]
     # It should have a reference link to the verymanyreference
-    assert(get_entities('catalog', 'collection3', 0, 1) == ([{
+    assert get_entities('catalog', 'collection3', 0, 1) == ([{
         'attribute': 'attribute',
         'identificatie': 'identificatie',
         '_links': {
             'self': {'href': '/gob/catalog/collection3/1/'},
             'verymanyreference': {'href': '/gob/catalog/collection3/1/verymanyreference/'}
         }
-    }], 1))
+    }], 1)
 
 
 def test_reference_entities(monkeypatch):
@@ -496,11 +493,9 @@ def test_reference_entities(monkeypatch):
     from gobapi.storage import get_entities
 
     mockEntity = MockEntity('identificatie', 'attribute')
-    MockEntities.all_entities = [
-        mockEntity
-    ]
+    MockEntities.all_entities = [mockEntity]
     # A list of entities of catalog:collection2 should be returned
-    assert(get_entities('catalog', 'collection3', 0, 1, None, 'verymanyreference', '1') == ([{
+    assert get_entities('catalog', 'collection3', 0, 1, None, 'verymanyreference', '1') == ([{
         'attribute': 'attribute',
         'identificatie': 'identificatie',
         '_links': {
@@ -508,9 +503,10 @@ def test_reference_entities(monkeypatch):
         },
         '_embedded': {
             'reference': [{'reference': {'bronwaarde': '1', 'id': '1'}}],
-            'manyreference': [{'reference': {'id': '1', 'bronwaarde': '1'}}, {'reference': {'id': '2', 'bronwaarde': '2'}}]
+            'manyreference': [{'reference': {'id': '1', 'bronwaarde': '1'}}, {'reference': {
+                'id': '2', 'bronwaarde': '2'}}]
         }
-    }], 1))
+    }], 1)
 
 
 def test_entities_with_view(monkeypatch):
@@ -519,32 +515,28 @@ def test_entities_with_view(monkeypatch):
     from gobapi.storage import get_entities
     MockEntities.all_entities = []
     # Views return total_count None to prevent slow count on large tables
-    assert(get_entities('catalog', 'collection1', 0, 1, 'enhanced') == ([], None))
+    assert get_entities('catalog', 'collection1', 0, 1, 'enhanced') == ([], None)
 
     mockEntity = MockEntity('identificatie', 'attribute', '_private_attribute')
-    MockEntities.all_entities = [
-        mockEntity
-    ]
-    assert(get_entities('catalog', 'collection1', 0, 1, 'enhanced') == ([{'attribute': 'attribute', 'identificatie': 'identificatie'}], None))
+    MockEntities.all_entities = [mockEntity]
+    assert get_entities('catalog', 'collection1', 0, 1, 'enhanced') == ([{
+        'attribute': 'attribute', 'identificatie': 'identificatie'}], None)
 
     mockEntity = MockEntity('identificatie', 'attribute', 'non_existing_attribute')
-    MockEntities.all_entities = [
-        mockEntity
-    ]
-    assert(get_entities('catalog', 'collection1', 0, 1, 'enhanced') == ([{'attribute': 'attribute', 'identificatie': 'identificatie'}], None))
+    MockEntities.all_entities = [mockEntity]
+    assert get_entities('catalog', 'collection1', 0, 1, 'enhanced') == ([{
+        'attribute': 'attribute', 'identificatie': 'identificatie'}], None)
 
     # Add a reference to the table columns
     MockTable.columns = [MockColumn('identificatie'), MockColumn('attribute'), MockColumn('_ref_is_test_tse_tst')]
     mockEntity = MockEntity('identificatie', 'attribute', '_ref_is_test_tse_tst')
     mockEntity._ref_is_test_tse_tst = {FIELD.REFERENCE_ID: '1234'}
-    MockEntities.all_entities = [
-        mockEntity
-    ]
+    MockEntities.all_entities = [mockEntity]
     expect_ref = MagicMock()
     expect_ref._string = '{"reference": {"%s": "1234"}}' % FIELD.REFERENCE_ID
-    assert(get_entities('catalog', 'collection1', 0, 1, 'enhanced') ==
-           ([{'attribute': 'attribute', 'identificatie': 'identificatie',
-              '_embedded': {'is_test': expect_ref}}], None))
+    assert get_entities('catalog', 'collection1', 0, 1, 'enhanced') == ([{
+        'attribute': 'attribute', 'identificatie': 'identificatie',
+        '_embedded': {'is_test': expect_ref}}], None)
 
     # Reset the table columns
     MockTable.columns = [MockColumn('identificatie'), MockColumn('attribute'), MockColumn('meta')]
@@ -555,21 +547,19 @@ def test_collection_states(monkeypatch):
 
     from gobapi.storage import get_collection_states
     MockEntities.all_entities = []
-    assert(get_collection_states('catalog', 'collection1') == {})
+    assert not get_collection_states('catalog', 'collection1')
 
     mockEntity = MockEntity('identificatie', 'attribute')
-    MockEntities.all_entities = [
-        mockEntity
-    ]
+    MockEntities.all_entities = [mockEntity]
 
-    assert(get_collection_states('catalog', 'collection1') == {'1': [mockEntity]})
+    assert get_collection_states('catalog', 'collection1') == {'1': [mockEntity]}
 
 
 def test_entity(monkeypatch):
     before_each_storage_test(monkeypatch)
 
     from gobapi.storage import get_entity
-    assert(get_entity('catalog', 'collection1', 'identificatie') == None)
+    assert get_entity('catalog', 'collection1', 'identificatie') is None
 
     mockEntity = MockEntity('identificatie', 'attribute', '_private_attribute', 'meta')
     MockEntities.one_entity = mockEntity
@@ -583,7 +573,7 @@ def test_entity(monkeypatch):
         '_links': {'self': {'href': '/gob/catalog/collection1/1/'}}
     }
 
-    assert(get_entity('catalog', 'collection1', 'identificatie') == expected)
+    assert get_entity('catalog', 'collection1', 'identificatie') == expected
 
 
 def test_entity_with_view(monkeypatch):
@@ -591,41 +581,41 @@ def test_entity_with_view(monkeypatch):
 
     MockEntities.one_entity = None
     from gobapi.storage import get_entity
-    assert(get_entity('catalog', 'collection1', 'identificatie', 'enhanced') == None)
+    assert get_entity('catalog', 'collection1', 'identificatie', 'enhanced') is None
 
     mockEntity = MockEntity('identificatie', 'attribute', 'meta')
     MockEntities.one_entity = mockEntity
-    assert(get_entity('catalog', 'collection1', 'identificatie', 'enhanced') ==
-           {'attribute': 'attribute', 'identificatie': 'identificatie', 'meta': 'meta'})
+    assert get_entity('catalog', 'collection1', 'identificatie', 'enhanced') == {
+        'attribute': 'attribute', 'identificatie': 'identificatie', 'meta': 'meta'}
 
 
 def test_get_convert_for_state(monkeypatch):
     before_each_storage_test(monkeypatch)
 
-    MockGOBModel = mock_get_gobmodel()
-    model = MockGOBModel.get_collection('catalog', 'collection1')
-    convert = _get_convert_for_state(model)
+    mock_gob_model = Mock_Model()
+    collection = mock_gob_model['catalog']['collections']['collection1']
+    convert = _get_convert_for_state(collection)
     mockEntity = MockEntity('identificatie', 'attribute')
     result = convert(mockEntity)
 
-    assert(result == {'identificatie': 'identificatie', 'attribute': 'attribute'})
+    assert result == {'identificatie': 'identificatie', 'attribute': 'attribute'}
 
 def test_filter_deleted(monkeypatch):
     # Assert query is returned unchanged, when date_deleted is absent
     table = {}
-    assert('query' == filter_deleted('query', table))
+    assert 'query' == filter_deleted('query', table)
 
 
-@mock.patch("gobapi.storage.current_api_base_path", lambda: '/gob')
+@patch("gobapi.storage.current_api_base_path", lambda: '/gob')
 class TestStorage(TestCase):
 
-    @mock.patch("gobapi.storage.create_engine")
-    @mock.patch("gobapi.storage.URL", mock.MagicMock())
-    @mock.patch("gobapi.storage.scoped_session", mock.MagicMock())
-    @mock.patch("gobapi.storage.sessionmaker")
-    @mock.patch("gobapi.storage.automap_base", mock.MagicMock())
-    @mock.patch("gobapi.storage.MetaData", mock.MagicMock())
-    @mock.patch("gobapi.storage.set_session", mock.MagicMock())
+    @patch("gobapi.storage.create_engine")
+    @patch("gobapi.storage.URL", MagicMock())
+    @patch("gobapi.storage.scoped_session", MagicMock())
+    @patch("gobapi.storage.sessionmaker")
+    @patch("gobapi.storage.automap_base", MagicMock())
+    @patch("gobapi.storage.MetaData", MagicMock())
+    @patch("gobapi.storage.set_session", MagicMock())
     def test_connect_autocommit(self, mock_sessionmaker, mock_create_engine):
         connect()
 
@@ -661,7 +651,7 @@ class TestStorage(TestCase):
             }
         }, res)
 
-    @mock.patch("gobapi.storage.get_gob_type_from_info")
+    @patch("gobapi.storage.get_gob_type_from_info")
     def test_format_reference_secure_bronwaarde(self, mock_get_gob_type):
         reference = {
             'bronwaarde': 'bronwaarde_val',
@@ -709,8 +699,7 @@ class TestStorage(TestCase):
             def __init__(self, name):
                 self.name = name
 
-        model = GOBModel(legacy=True)
-        model.data = {
+        mock_gobmodel_data = {
             'the_catalog': {
                 'abbreviation': 'cat',
                 'name': 'the_catalog',
@@ -749,7 +738,7 @@ class TestStorage(TestCase):
             MockColumn('cat:col2:nonexisting'),
         ]
 
-        with mock.patch("gobapi.storage.GOBModel", return_value=model):
+        with patch.dict(gob_model.data, mock_gobmodel_data):
             _add_resolve_attrs_to_columns(columns)
 
         self.assertFalse(hasattr(columns[0], 'attribute'))
@@ -772,8 +761,8 @@ class TestStorage(TestCase):
         self.assertFalse(hasattr(columns[3], 'attribute'))
         self.assertFalse(hasattr(columns[3], 'public_name'))
 
-    @mock.patch("gobapi.storage._add_resolve_attrs_to_columns")
-    @mock.patch("gobapi.storage._to_gob_value")
+    @patch("gobapi.storage._add_resolve_attrs_to_columns")
+    @patch("gobapi.storage._to_gob_value")
     def test_get_convert_for_table(self, mock_to_gob_value, mock_resolve_attrs):
         """Tests the resolve_column method and result when using _add_resolve_attrs_to_columns.
         Tests if _to_gob_value is called with the right parameters, and if the result matches.
@@ -816,8 +805,8 @@ class TestStorage(TestCase):
         }, result)
 
         mock_to_gob_value.assert_has_calls([
-            mock.call(entity, 'columna', type('the type'), resolve_secure=True),
-            mock.call(entity, 'columnb', 'the attribute', resolve_secure=True),
+            call(entity, 'columna', type('the type'), resolve_secure=True),
+            call(entity, 'columnb', 'the attribute', resolve_secure=True),
         ])
         mock_resolve_attrs.assert_called_with(table.columns)
 
@@ -846,7 +835,7 @@ class TestStorage(TestCase):
 
         self.assertEqual(result, expected_result)
 
-    @mock.patch("gobapi.storage.get_base")
+    @patch("gobapi.storage.get_base")
     def test_flatten_join_result(self, mock_get_base):
         mock_get_base.return_value = MockEntity
         mock_entity = MockEntity()
@@ -874,10 +863,10 @@ class TestStorage(TestCase):
         self.assertEqual('the bronwaardes list2', getattr(result, 'relation_attr_name2'))
         self.assertEqual('some value', getattr(result, 'some_attr'))
 
-    @mock.patch("gobapi.storage._Base", mock.MagicMock())
-    @mock.patch("gobapi.storage.get_table_and_model")
-    @mock.patch("gobapi.storage.get_session")
-    @mock.patch("gobapi.storage.functions.concat", lambda *args: "".join(args))
+    @patch("gobapi.storage._Base", MagicMock())
+    @patch("gobapi.storage.get_table_and_model")
+    @patch("gobapi.storage.get_session")
+    @patch("gobapi.storage.functions.concat", lambda *args: "".join(args))
     def test_get_entity_refs_after(self, mock_get_session, mock_get_table_and_model):
 
         table_no_seqnr = type('MockTableNoSeqnr', (object,), {'_id': '230', '_last_event': 2000})
@@ -912,10 +901,10 @@ class TestStorage(TestCase):
 
         mock_get_table_and_model.assert_called_with('catalog', 'collection')
 
-    @mock.patch("gobapi.storage._Base", mock.MagicMock())
-    @mock.patch("gobapi.storage.get_table_and_model")
-    @mock.patch("gobapi.storage.get_session")
-    @mock.patch("gobapi.storage.func.max", lambda x: 'max(' + str(x) + ')')
+    @patch("gobapi.storage._Base", MagicMock())
+    @patch("gobapi.storage.get_table_and_model")
+    @patch("gobapi.storage.get_session")
+    @patch("gobapi.storage.func.max", lambda x: 'max(' + str(x) + ')')
     def test_get_max_eventid(self, mock_get_session, mock_get_table_and_model):
         table = type('MockTable', (object,), {'_last_event': 82404})
 
@@ -930,9 +919,9 @@ class TestStorage(TestCase):
         # Scalar value is returned
         self.assertEqual(mock_get_session.return_value.query.return_value.scalar.return_value, result)
 
-    @mock.patch("gobapi.storage._Base", mock.MagicMock())
-    @mock.patch("gobapi.storage.get_table_and_model")
-    @mock.patch("gobapi.storage.get_session")
+    @patch("gobapi.storage._Base", MagicMock())
+    @patch("gobapi.storage.get_table_and_model")
+    @patch("gobapi.storage.get_session")
     def test_get_count(self, mock_get_session, mock_get_table_and_model):
         table = type('MockTable', (object,), {'_last_event': 82404})
 
@@ -946,13 +935,13 @@ class TestStorage(TestCase):
         # Scalar value is returned
         self.assertEqual(mock_get_session.return_value.query.return_value.count.return_value, result)
 
-    @mock.patch("gobapi.storage._Base", mock.MagicMock())
-    @mock.patch("gobapi.storage.get_table_and_model")
-    @mock.patch("gobapi.storage.get_session")
+    @patch("gobapi.storage._Base", MagicMock())
+    @patch("gobapi.storage.get_table_and_model")
+    @patch("gobapi.storage.get_session")
     def test_dump_entities_with_filter(self, mock_get_session, mock_get_table_and_model):
         mock_table = type('MockTable', (object,), {'_id': '9204940'})
         mock_model = {}
-        mock_filter = mock.MagicMock()
+        mock_filter = MagicMock()
 
         mock_get_table_and_model.return_value = mock_table, mock_model
 
@@ -971,9 +960,9 @@ class TestStorage(TestCase):
         mock_model['collection'] = 'collection_name'
         self.assertEqual((entities.yield_per.return_value, mock_model), result)
 
-    @mock.patch("gobapi.storage._Base", mock.MagicMock())
-    @mock.patch("gobapi.storage.get_table_and_model")
-    @mock.patch("gobapi.storage.get_session")
+    @patch("gobapi.storage._Base", MagicMock())
+    @patch("gobapi.storage.get_table_and_model")
+    @patch("gobapi.storage.get_session")
     def test_dump_entities_order_by(self, mock_get_session, mock_get_table_and_model):
         mock_table = type('MockTable', (object,), {'_id': '9204940', '_order_by_column': 'orderval'})
         mock_model = {}
@@ -987,8 +976,8 @@ class TestStorage(TestCase):
         # Assert order_by is added and used
         mock_get_session.return_value.query.return_value.order_by.assert_called_with('orderval')
 
-    @mock.patch("gobapi.storage.get_gob_type_from_info")
-    @mock.patch("gobapi.storage.Authority")
+    @patch("gobapi.storage.get_gob_type_from_info")
+    @patch("gobapi.storage.Authority")
     def test_to_gob_value(self, mock_Authority, mock_get_type):
         # Assume that the spec refers to a secure type
         mock_get_type.return_value = "secure type"
@@ -1008,9 +997,9 @@ class TestStorage(TestCase):
         mock_Authority.get_secure_type.assert_called_with("secure type", spec, None)
         mock_Authority.get_secured_value.assert_called_with("secure GOB type")
 
-    @mock.patch("gobapi.storage.session")
+    @patch("gobapi.storage.session")
     def test_exec_statement(self, mock_session):
-        mock_engine = mock.MagicMock()
+        mock_engine = MagicMock()
         mock_session.get_bind.return_value = mock_engine
         result = exec_statement("any statement")
         mock_engine.execute.assert_called_with("any statement")
@@ -1019,8 +1008,8 @@ class TestStorage(TestCase):
     def test_create_reference_link_empty(self):
         self.assertEqual({}, _create_reference_link({}, 'cat', 'col'))
 
-    @mock.patch("gobapi.storage._to_gob_value")
-    @mock.patch("gobapi.storage._format_reference")
+    @patch("gobapi.storage._to_gob_value")
+    @patch("gobapi.storage._format_reference")
     def test_create_reference_view_many(self, mock_format_reference, mock_to_gob_value):
         mock_to_gob_value.return_value = type('', (), {
             'to_db': ['a', 'b', 'c']
@@ -1034,16 +1023,18 @@ class TestStorage(TestCase):
     def test_create_reference_nonref(self):
         self.assertEqual({}, _create_reference({}, 'field', {'ref': None}))
 
-    @mock.patch("gobapi.storage.GOBModel")
-    @mock.patch("gobapi.storage.get_table_and_model")
-    @mock.patch("gobapi.storage.func.json_agg")
-    @mock.patch("gobapi.storage.func.json_build_object")
-    @mock.patch("gobapi.storage.session")
-    @mock.patch("gobapi.storage.and_")
-    @mock.patch("gobapi.storage.or_")
-    @mock.patch("gobapi.storage.func.now")
-    @mock.patch("gobapi.storage.get_relation_name", lambda m, cat, col, ref: None if ref is None else f'{cat}_{col}_{ref}')
-    def test_add_relations(self, mock_now, mock_or, mock_and, mock_session, mock_json_build_object, mock_json_agg, mock_get_table_and_model, mock_model):
+    @patch("gobapi.storage.gob_model", spec_set=True)
+    @patch("gobapi.storage.get_table_and_model")
+    @patch("gobapi.storage.func.json_agg")
+    @patch("gobapi.storage.func.json_build_object")
+    @patch("gobapi.storage.session")
+    @patch("gobapi.storage.and_")
+    @patch("gobapi.storage.or_")
+    @patch("gobapi.storage.func.now")
+    @patch("gobapi.storage.get_relation_name",
+        lambda m, cat, col, ref: None if ref is None else f'{cat}_{col}_{ref}')
+    def test_add_relations(self, mock_now, mock_or, mock_and, mock_session, mock_json_build_object,
+            mock_json_agg, mock_get_table_and_model, mock_model):
         mock_src_table = type('MockSrcTable', (), {
             '_id': 'the src id',
             'volgnummer': 'the src volgnummer',
@@ -1066,9 +1057,14 @@ class TestStorage(TestCase):
             }),
             '_expiration_date': expiration_date
         })
-        mock_model.return_value.get_collection.return_value = {
-            'has_states': False,
-            'references': ['reference1', None],  # None triggers None relation name in mocked function
+        mock_model.__getitem__.return_value = {
+                'collections': {
+                    'col': {
+                        'has_states': False,
+                        # None triggers None relation name in mocked function
+                        'references': ['reference1', None],
+                }
+            }
         }
 
         mock_get_table_and_model.side_effect = lambda cat, col: {
@@ -1141,7 +1137,7 @@ class TestStorage(TestCase):
         with self.assertRaises(NotImplementedError):
             _apply_filters(query, filters, model)
 
-    @mock.patch("gobapi.storage.get_table_and_model")
+    @patch("gobapi.storage.get_table_and_model")
     def test_get_id_columns(self, mock_table_and_model):
         mock_table_and_model.return_value = MagicMock(), None
         result = get_id_columns("rel", "any collection")
@@ -1149,22 +1145,31 @@ class TestStorage(TestCase):
         result = get_id_columns("any catalogue", "any collection")
         self.assertEqual(len(result), 2)
 
-    @mock.patch("gobapi.storage.get_relation_name", lambda model, cat, col, ref: f"{col}_{ref}")
-    @mock.patch("gobapi.storage.GOBModel")
-    @mock.patch("gobapi.storage.exec_statement")
-    def test_clear_test_dbs(self, mock_exec, mock_gob_model):
-        mock_model = MagicMock()
-        mock_gob_model.return_value = mock_model
-        mock_model.get_collections.return_value = ["col1", "col2"]
-        mock_model.get_collection.return_value = {
-            'references': {
-                'ref1': None,
-            },
-            'very_many_references': {
-                'ref2': None
+    @patch("gobapi.storage.get_relation_name", lambda model, cat, col, ref: f"{col}_{ref}")
+    @patch("gobapi.storage.gob_model", spec_set=True)
+    @patch("gobapi.storage.exec_statement")
+    def test_clear_test_dbs(self, mock_exec, mock_model):
+        mock_model.__getitem__.return_value = {
+                'collections': {
+                    'col1': {
+                        'references': {
+                            'ref1': None,
+                        },
+                        'very_many_references': {
+                            'ref2': None
+                        }
+                    },
+                    'col2': {
+                        'references': {
+                            'ref1': None,
+                        },
+                        'very_many_references': {
+                            'ref2': None
+                        }
+                    }
+                }
             }
-        }
-        mock_model.get_table_name.side_effect = lambda cat, col: f"{cat}_{col}"
+        mock_model.get_table_name.side_effect = lambda cat, col: f"{cat}_{col}".lower()
         clear_test_dbs()
         mock_exec.assert_called_with("""
 -- Truncate test tables

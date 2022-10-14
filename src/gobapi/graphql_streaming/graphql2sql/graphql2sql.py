@@ -2,11 +2,12 @@ import re
 from typing import List
 
 from antlr4 import CommonTokenStream, InputStream
-from gobcore.model import GOBModel
+
 from gobcore.model.metadata import FIELD
 from gobcore.model.relations import get_relation_name
 from gobcore.typesystem import gob_types, is_gob_geo_type
 
+from gobapi import gob_model
 from gobapi.auth.auth_query import Authority
 from gobapi.constants import API_FIELD
 from gobapi.graphql_streaming.graphql2sql.grammar.GraphQLLexer import GraphQLLexer
@@ -20,12 +21,12 @@ from gobapi.utils import to_snake
 class GraphQLVisitor(BaseVisitor):
     """Visitor for ANTLR4 GraphQL parse tree, generated with the GraphQL.g4 grammar.
 
-    Visitor uses a relationStack to keep track of to which relation the visited selects and arguments belong. Visitor
-    also puts the parent of each relation in the relationParents dict.
+    Visitor uses a relationStack to keep track of to which relation the visited selects and arguments
+    belong. Visitor also puts the parent of each relation in the relationParents dict.
 
-    Note: This visitor does not implement the full parse tree. The current implementation is the minimal implmentation
-    to support parsing of the GraphQL queries GOB currently sends to the endpoint. NotImplementedErrors are raised
-    to avoid unexpected behaviour in not-implemented parts of the parse tree.
+    Note: This visitor does not implement the full parse tree. The current implementation is the minimal
+    implementation to support parsing of the GraphQL queries GOB currently sends to the endpoint.
+    NotImplementedErrors are raised to avoid unexpected behaviour in not-implemented parts of the parse tree.
     """
 
     def __init__(self):
@@ -96,13 +97,12 @@ class GraphQLVisitor(BaseVisitor):
         if ctx.value():
             if isinstance(ctx.value(), GraphQLParser.StringValueContext):
                 return self.visitStringValue(ctx.value())
-            elif isinstance(ctx.value(), GraphQLParser.NumberValueContext):
+            if isinstance(ctx.value(), GraphQLParser.NumberValueContext):
                 return self.visitNumberValue(ctx.value())
-            elif isinstance(ctx.value(), GraphQLParser.BooleanValueContext):
+            if isinstance(ctx.value(), GraphQLParser.BooleanValueContext):
                 return self.visitBooleanValue(ctx.value())
-            else:
-                raise NotImplementedError("Not implemented value type")
-        elif ctx.variable():
+            raise NotImplementedError("Not implemented value type")
+        if ctx.variable():
             return self.visitVariable(ctx.variable())
 
     def visitStringValue(self, ctx: GraphQLParser.StringValueContext):
@@ -143,9 +143,7 @@ class InvalidQueryException(Exception):
 
 
 class SqlGenerator:
-    """SqlGenerator generates SQL from the the GraphQLVisitor output.
-
-    """
+    """SqlGenerator generates SQL from the the GraphQLVisitor output."""
     CURSOR_ID = "cursor"
     SCHEMA = "legacy"
 
@@ -154,7 +152,7 @@ class SqlGenerator:
     relvalues_attributes = [API_FIELD.START_VALIDITY_RELATION, API_FIELD.END_VALIDITY_RELATION]
 
     def __init__(self, visitor: GraphQLVisitor):
-        """
+        """SqlGenerator initialisation.
 
         :param visitor:
         """
@@ -163,7 +161,6 @@ class SqlGenerator:
         self.relation_parents = visitor.relationParents
         self.relation_aliases = visitor.relationAliases
         self.relation_info = {}
-        self.model = GOBModel(legacy=True)
 
     def _get_arguments_with_defaults(self, arguments: dict) -> dict:
         args = {
@@ -173,9 +170,9 @@ class SqlGenerator:
         return args
 
     def _get_filter_arguments(self, arguments: dict) -> dict:
-        """Returns filter arguments from arguments dict
+        """Returns filter arguments from arguments dict.
 
-        Changes GraphQL strings with double quotes to single quotes for Postgres
+        Changes GraphQL strings with double quotes to single quotes for Postgres.
 
         :param arguments:
         :return:
@@ -206,8 +203,7 @@ class SqlGenerator:
         if not (catalog_name and collection_name):
             raise InvalidQueryException(f"{schema_collection_name} is not a valid entity")
 
-        collection = self.model.get_collection(catalog_name, collection_name)
-
+        collection = gob_model[catalog_name]['collections'][collection_name]
         abbr = collection['abbreviation'].lower()
         abbr_cnt = len([item for item in self.relation_info.values() if item['abbr'] == abbr])
 
@@ -215,7 +211,7 @@ class SqlGenerator:
             'abbr': abbr,
             'collection_name': collection_name,
             'catalog_name': catalog_name,
-            'tablename': self.model.get_table_name(catalog_name, collection_name),
+            'tablename': gob_model.get_table_name(catalog_name, collection_name),
             'alias': f'{abbr}_{abbr_cnt}',
             'has_states': collection.get('has_states', False),
             'collection': collection,
@@ -233,10 +229,9 @@ class SqlGenerator:
             self._validate_attribute(relation_info, attribute, relation_name)
 
     def _validate_attribute(self, relation_info: dict, attribute: str, relation_name: str):
-        if to_snake(attribute) not in list(relation_info['all_fields']) + [FIELD.SOURCE_VALUE,
-                                                                           FIELD.SOURCE_INFO,
-                                                                           API_FIELD.START_VALIDITY_RELATION,
-                                                                           API_FIELD.END_VALIDITY_RELATION]:
+        if to_snake(attribute) not in list(relation_info['all_fields']) + [
+                FIELD.SOURCE_VALUE, FIELD.SOURCE_INFO,
+                API_FIELD.START_VALIDITY_RELATION, API_FIELD.END_VALIDITY_RELATION]:
             raise InvalidQueryException(f"Attribute {attribute} does not exist for {relation_name}")
 
     def _select_expression(self, relation: dict, field: str):
@@ -352,8 +347,10 @@ class SqlGenerator:
             self.relcnt += 1
 
     def _add_srcvalue_selection(self, src_relation: dict, src_attr_name: str, is_many: bool):
-        """Add _src_* selection to query. Returns the field containing the bronwaarde for this row as string so that
-        the remainder of the query can match on this bronwaarde.
+        """Add _src_* selection to query.
+
+        Returns the field containing the bronwaarde for this row as string so that the remainder
+        of the query can match on this bronwaarde.
 
         :param src_relation:
         :param src_attr_name:
@@ -379,7 +376,7 @@ class SqlGenerator:
 
     def _join_relation_table(self, src_relation: dict, relation_name: str, rel_table_alias: str, arguments: dict,
                              src_value_requested: bool, src_attr_name: str, is_many: bool, is_inverse: bool):
-        """Generates the SQL for the relation table join, see _add_relation_joins
+        """Generates the SQL for the relation table join, see _add_relation_joins.
 
         :param src_relation:
         :param relation_name:
@@ -425,8 +422,9 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
 
     def _join_dst_table(self, dst_relation: dict, rel_table_alias: str, arguments: dict, is_inverse: bool):
         """Generates the SQL for the destination table join part of a relation:
-        A -> B -> C, where A is the src_relation, B the relation_table join and C the dst_relation. See
-        _add_relation_joins
+
+        A -> B -> C, where A is the src_relation, B the relation_table join and C the dst_relation.
+        See _add_relation_joins
 
         :param dst_relation:
         :param rel_table_alias:
@@ -454,9 +452,9 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
     def _add_relation_joins(self, src_relation: dict, dst_relation: dict, relation_name: str, arguments: dict,
                             src_value_requested: bool = False, src_attr_name: str = None,
                             is_many: bool = False, is_inverse=False):
-        """Joins dst_relation to src_relation using relation_table
+        """Joins dst_relation to src_relation using relation_table.
 
-        Resulting SQL will create a join of the form A -> B -> C, where
+        Resulting SQL will create a join of the form A -> B -> C, where:
         A is the src_relation
         B is the relation_table, and
         C is the dst_relation
@@ -512,10 +510,10 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         return json_attrs
 
     def _is_srcvalue_requested(self, attributes: list):
-        return any([to_snake(attr) in self.srcvalues_attributes for attr in attributes])
+        return any(to_snake(attr) in self.srcvalues_attributes for attr in attributes)
 
     def _is_relvalue_requested(self, attributes: list):
-        return any([to_snake(attr) in self.relvalues_attributes for attr in attributes])
+        return any(to_snake(attr) in self.relvalues_attributes for attr in attributes)
 
     def _join_relation(self, relation_name: str, attributes: list, arguments: dict):
         parent = self.relation_parents[relation_name]
@@ -524,7 +522,7 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
 
         self._validate_attribute(parent_info, relation_attr_name, parent)
 
-        dst_catalog_name, dst_collection_name = self.model.get_catalog_collection_names_from_ref(
+        dst_catalog_name, dst_collection_name = gob_model.get_catalog_collection_names_from_ref(
             parent_info['collection']['attributes'][relation_attr_name]['ref']
         )
 
@@ -536,7 +534,7 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         json_attrs = f"{json_attrs}, '_catalog', '{dst_catalog_name}', '_collection', '{dst_collection_name}'"
 
         relation_name = get_relation_name(
-            self.model,
+            gob_model,
             parent_info['catalog_name'],
             parent_info['collection_name'],
             relation_attr_name
@@ -558,7 +556,7 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         relation_attr_name = '_'.join(relation_name_snake[1:-2])
         dst_catalog_name = relation_name_snake[-2]
         dst_collection_name = relation_name_snake[-1]
-        dst_model_name = self.model.get_table_name(dst_catalog_name, dst_collection_name)
+        dst_model_name = gob_model.get_table_name(dst_catalog_name, dst_collection_name)
         dst_info = self._collect_relation_info(relation_name, f'{dst_model_name}')
         self._validate_attributes(dst_info, attributes, relation_name)
 
@@ -568,7 +566,7 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
 
         self._validate_attribute(dst_info, relation_attr_name, dst_collection_name)
         relation_name = get_relation_name(
-            self.model,
+            gob_model,
             dst_info['catalog_name'],
             dst_info['collection_name'],
             relation_attr_name
@@ -581,8 +579,8 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
 class GraphQL2SQL:
     """GraphQL2SQL class. Parses the input graphql_query and outputs an SQL-equivalent for Postgres.
 
-    Current implementation does not implement the full GraphQL grammar and a this implementation is very specific to
-    the GOB use and data model.
+    Current implementation does not implement the full GraphQL grammar and a this implementation is
+    very specific to the GOB use and data model.
     """
 
     def __init__(self, graphql_query: str):

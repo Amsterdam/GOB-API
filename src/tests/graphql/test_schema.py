@@ -10,15 +10,17 @@ from graphene.types.generic import GenericScalar
 class TestGraphqlSchema(TestCase):
     def test_sorted_references_empty_model(self):
         class MockModel():
-            def get_catalogs(self):
-                return {}
+            def __iter__(self):
+                """Catalog iterator."""
+                return iter({})
 
-        assert (_get_sorted_references(MockModel()) == [])
+        self.assertEqual(_get_sorted_references(MockModel()), [])
 
     def test_sorted_references(self):
         class MockModel():
-            def get_catalogs(self):
-                return {"catalog": {}}
+            def __iter__(self):
+                """Catalog iterator."""
+                return iter({"catalog": {}})
 
             def ref_to(self, other):
                 return {
@@ -26,12 +28,12 @@ class TestGraphqlSchema(TestCase):
                     "ref": other
                 }
 
-            def get_collections(self, catalog_name):
+            def __getitem__(self, catalog_name):
                 refs_1 = {"attr1": self.ref_to("catalog:collection3")}
                 refs_2 = {"attr1": self.ref_to("catalog:collection1")}
                 refs_3 = {}
                 refs_4 = {"attr1": self.ref_to("catalog:collection2")}
-                return {
+                collections = {
                     "collection1": {
                         "references": refs_1,
                         "attributes": refs_1
@@ -49,6 +51,7 @@ class TestGraphqlSchema(TestCase):
                         "attributes": refs_4
                     },
                 }
+                return {'collections': collections}
 
         sorted_refs = _get_sorted_references(MockModel())
         # 1 => 3 implies 3 before 1
@@ -70,7 +73,7 @@ class TestGraphqlSchema(TestCase):
             return item
 
     @patch("gobapi.graphql.schema.get_resolve_inverse_attribute")
-    @patch("gobapi.graphql.schema.model")
+    @patch("gobapi.graphql.schema.gob_model")
     @patch.dict("gobapi.graphql.schema.sqlalchemy_models", {'table_name_a': 'table_name_a', 'table_name_b': 'table_name_b'}, clear=True)
     def test_get_inverse_relation_resolvers(self, mock_model, mock_resolve):
         connections = [
@@ -80,7 +83,7 @@ class TestGraphqlSchema(TestCase):
              'field_name': 'field_b'},
         ]
         mock_model.get_table_name.side_effect = ['table_name_a', 'table_name_b']
-        mock_model._data = {
+        mock_model.data = {
             'cata': {'collections': {'cola': {'attributes': {'relation_a': {'type': 'GOB.ManyReference'}}}}},
             'catb': {'collections': {'colb': {'attributes': {'relation_b': {'type': 'GOB.Reference'}}}}},
 
@@ -99,7 +102,7 @@ class TestGraphqlSchema(TestCase):
             call('table_name_b', 'relation_b'),
         ])
 
-    @patch("gobapi.graphql.schema.model")
+    @patch("gobapi.graphql.schema.gob_model")
     def test_get_inverse_references(self, mock_model):
         mock_model.get_inverse_relations.return_value = {
             "cat1": {

@@ -1,10 +1,10 @@
-"""Storage
+"""Storage.
 
 This module encapsulates the GOB storage.
 The API returns GOB data by calling any of the methods in this module.
-By using this module the API does not need to have any knowledge about the underlying storage
-
+By using this module the API does not need to have any knowledge about the underlying storage.
 """
+
 import datetime
 import re
 import warnings
@@ -19,11 +19,11 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.sql import label, functions
 
-from gobcore.model import GOBModel, NotInModelException
+from gobcore.model import NotInModelException
 from gobcore.model.relations import get_relation_name
 from gobcore.model.sa.gob import get_base, get_sqlalchemy_models
-from gobcore.typesystem import get_gob_type_from_sql_type, get_gob_type_from_info
 from gobcore.model.metadata import PUBLIC_META_FIELDS, PRIVATE_META_FIELDS, FIXED_COLUMNS, FIELD
+from gobcore.typesystem import get_gob_type_from_sql_type, get_gob_type_from_info
 
 from gobapi.config import GOB_DB, current_api_base_path
 from gobapi.legacy_views.create import create_legacy_views
@@ -31,7 +31,8 @@ from gobapi.session import set_session, get_session
 from gobapi.auth.auth_query import AuthorizedQuery, SUPPRESSED_COLUMNS, Authority
 from gobapi.constants import API_FIELD
 
-import gobapi.profiled_query as profiled_query
+from gobapi import gob_model
+from gobapi import profiled_query
 from gobapi.views import initialise_api_views
 
 session = None
@@ -48,12 +49,12 @@ class MigrationLock:
     def __enter__(self):
         self.engine.execute(f"SELECT pg_advisory_lock({self.MIGRATION_LOCK_ID})")
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, exc_type, value, traceback):
         self.engine.execute(f"SELECT pg_advisory_unlock({self.MIGRATION_LOCK_ID})")
 
 
 def connect():
-    """Module initialisation
+    """Module initialisation.
 
     The connection with the underlying storage is initialised.
     Meta information is available via the Base variale.
@@ -71,7 +72,7 @@ def connect():
                                           query_cls=AuthorizedQuery))
 
     with MigrationLock(engine):
-        create_legacy_views(GOBModel(legacy=True), engine)
+        create_legacy_views(gob_model, engine)
         initialise_api_views(engine)  # Can use the legacy views, so should be initialised after the legacy views
 
     with warnings.catch_warnings():
@@ -96,8 +97,8 @@ def exec_statement(statement):
 
 
 def _get_table(table_names, table_name):
-    """
-    Return the name of the table as it exists in the database.
+    """Return the name of the table as it exists in the database.
+
     The name can possibly be truncated, like in PostgreSQL to 63 characters
 
     :param table_names:
@@ -112,7 +113,7 @@ def _get_table(table_names, table_name):
 
 
 def get_table_and_model(catalog_name, collection_name, view=None):
-    """Table and Model
+    """Table and Model.
 
     Utility method to retrieve the Table and Model for a specific collection.
     When a view is provided use the and do not return the GOBModel.
@@ -123,20 +124,16 @@ def get_table_and_model(catalog_name, collection_name, view=None):
     """
     if view:
         return Table(view, metadata, autoload=True), None
-    else:
-        gobmodel = GOBModel(legacy=True)
-        return get_sqlalchemy_models(gobmodel)[f'{catalog_name}_{collection_name}'], gobmodel.get_collection(
-            catalog_name,
-            collection_name
-        )
+    return get_sqlalchemy_models(gob_model)[f'{catalog_name}_{collection_name}'], gob_model[
+            catalog_name]['collections'][collection_name]
 
 
 def _create_reference_link(reference, catalog, collection):
     identificatie = reference.get(FIELD.REFERENCE_ID)
     if identificatie:
-        return {'_links': {'self': {'href': f'{current_api_base_path()}/{catalog}/{collection}/{identificatie}/'}}}
-    else:
-        return {}
+        return {'_links': {'self': {
+            'href': f'{current_api_base_path()}/{catalog}/{collection}/{identificatie}/'}}}
+    return {}
 
 
 def _format_reference(reference, catalog, collection, spec):
@@ -159,7 +156,8 @@ def _format_reference(reference, catalog, collection, spec):
 def _create_external_reference_link(entity, field, entity_catalog, entity_collection):
     identificatie = getattr(entity, FIELD.ID)
     field_path = field.replace('_', '-')
-    return {'href': f'{current_api_base_path()}/{entity_catalog}/{entity_collection}/{identificatie}/{field_path}/'}
+    return {'href':
+            f'{current_api_base_path()}/{entity_catalog}/{entity_collection}/{identificatie}/{field_path}/'}
 
 
 def _create_reference_view(entity, field, spec):
@@ -179,13 +177,13 @@ def _create_reference_view(entity, field, spec):
 
 
 def _create_reference(entity, field, spec, entity_catalog=None, entity_collection=None):
-    """Create an embedded reference
+    """Create an embedded reference.
 
     :param entity: The entity
     :param field: The field a reference is being created for
     :param spec: The field specification
-    :param entity_catalog: The catalog of the entity
-    :param entity_collection: The collection of the entity
+    :param entity_catalog: The catalog of the entity -- not used
+    :param entity_collection: The collection of the entity -- not used
     :return:
     """
     if spec['ref'] is not None:
@@ -203,14 +201,13 @@ def _create_reference(entity, field, spec, entity_catalog=None, entity_collectio
 
 
 def _to_gob_value(entity, field, spec, resolve_secure=False):
-    """
-    Transforms a entity field value into a GOB type value
+    """Transforms a entity field value into a GOB type value.
 
     Attention:
-    Resolve secure is normally False as this is all handled by the Authority classes
+    Resolve secure is normally False as this is all handled by the Authority classes.
     For enhanced views however, this is not possible.
-    These queries are based upon a view and cannot directly be related to a GOB Model
-    If the field names of the view are properly named the decryption will be handled here
+    These queries are based upon a view and cannot directly be related to a GOB Model.
+    If the field names of the view are properly named the decryption will be handled here.
 
     :param entity:
     :param field:
@@ -227,18 +224,17 @@ def _to_gob_value(entity, field, spec, resolve_secure=False):
             # Return decrypted value
             return Authority.get_secured_value(secure_type)
         return gob_type.from_value(entity_value, **spec)
-    else:
-        gob_type = get_gob_type_from_sql_type(spec)
-        return gob_type.from_value(entity_value)
+    gob_type = get_gob_type_from_sql_type(spec)
+    return gob_type.from_value(entity_value)
 
 
-def _get_convert_for_state(model, fields=None, private_attributes=False):
-    """Get the entity to dict convert function for GOBModels with state
+def _get_convert_for_state(collection, fields=None, private_attributes=False):
+    """Get the entity to dict convert function for GOBModels with state.
 
-    The model is used to extract only the public attributes of the entity,
-    fields can be used to only select certain attributes
+    The collection model is used to extract only the public attributes of the entity,
+    fields can be used to only select certain attributes.
 
-    :param model:
+    :param collection:
     :param fields:
     :return:
     """
@@ -250,10 +246,10 @@ def _get_convert_for_state(model, fields=None, private_attributes=False):
 
     # Select all attributes except if it's a reference, unless a specific list was passed
     if not fields:
-        fields = [field for field in model['fields'].keys()
-                  if field not in model['references'].keys()
+        fields = [field for field in collection['fields'].keys()
+                  if field not in collection['references'].keys()
                   and (not field.startswith('_') or private_attributes)]
-    attributes = {k: v for k, v in model['fields'].items() if k in fields}
+    attributes = {k: v for k, v in collection['fields'].items() if k in fields}
     items = list(attributes.items())
     return convert
 
@@ -277,17 +273,15 @@ def _flatten_join_result(result):
         if isinstance(value, Base):
             # First item is Base object
             continue
-        else:
-            # Other items are of the form { 'ref:ligt_in_wijk': [{'bronwaarde': X, 'id': Y}] }
-            _, reference = key.split(':')
-
-            setattr(entity, reference, value)
+        # Other items are of the form { 'ref:ligt_in_wijk': [{'bronwaarde': X, 'id': Y}] }
+        _, reference = key.split(':')
+        setattr(entity, reference, value)
 
     return entity
 
 
 def _get_convert_for_model(catalog, collection, model, meta=None, private_attributes=False):
-    """Get the entity to dict convert function for GOBModels
+    """Get the entity to dict convert function for GOBModels.
 
     The model is used to extract only the public attributes of the entity.
 
@@ -337,10 +331,11 @@ def _get_convert_for_model(catalog, collection, model, meta=None, private_attrib
 def _add_resolve_attrs_to_columns(columns):
     """Adds attributes to columns necessary to resolve model attributes from a view.
 
-    Looks for attributes of the form brk:sjt:heeft_bsn_voor, and will try to find the attribute heeft_bsn_voor in the
-    catalog brk and collection sjt.
+    Looks for attributes of the form brk:sjt:heeft_bsn_voor, and will try to find the attribute
+    heeft_bsn_voor in the catalog brk and collection sjt.
 
-    Adds attribute, authority and public_name (heeft_bsn_voor in this case) to columns matching the pattern above.
+    Adds attribute, authority and public_name (heeft_bsn_voor in this case) to columns matching
+    the pattern above.
     """
     resolve_attr_pattern = re.compile(r"^(\w+):(\w+):(\w+)$")
 
@@ -352,7 +347,7 @@ def _add_resolve_attrs_to_columns(columns):
         catalog_abbreviation, collection_abbreviation, attribute_name = match.groups()
 
         try:
-            catalog, collection = GOBModel(legacy=True).get_catalog_collection_from_abbr(
+            _, collection = gob_model.get_catalog_collection_from_abbr(
                 catalog_abbreviation,
                 collection_abbreviation
             )
@@ -365,7 +360,7 @@ def _add_resolve_attrs_to_columns(columns):
 
 
 def _get_convert_for_table(table, filter=None):
-    """Get the entity to dict convert function for database Tables or Views
+    """Get the entity to dict convert function for database Tables or Views.
 
     The table columns are used to extract only the public attributes of the entity.
 
@@ -373,11 +368,11 @@ def _get_convert_for_table(table, filter=None):
     """
     def convert(entity):
         def resolve_column(column):
-            """Resolves the name and value of the given column for entity using _to_gob_value
+            """Resolves the name and value of the given column for entity using _to_gob_value.
             Uses attributes set by _add_resolve_attrs_to_columns to determine how values are resolved.
 
-            If 'attribute' is set on column, pass 'attribute' to _to_gob_value, in which case the GOB type will be
-            used. Otherwise, pass SQL type of the column.
+            If 'attribute' is set on column, pass 'attribute' to _to_gob_value, in which case the
+            GOB type will be used. Otherwise, pass SQL type of the column.
             """
             value = _to_gob_value(
                 entity,
@@ -391,7 +386,7 @@ def _get_convert_for_table(table, filter=None):
 
             return name, value
 
-        hal_entity = {name: value for name, value in [resolve_column(column) for column in columns]}
+        hal_entity = dict([resolve_column(column) for column in columns])
 
         # Add references to other entities
         if references:
@@ -402,7 +397,7 @@ def _get_convert_for_table(table, filter=None):
 
     filter = filter or {}
     # Get all metadata or reference fields and filter them from the columns returned by the database view
-    metadata_column_list = [k for k in filter.keys()]
+    metadata_column_list = list(filter.keys())
     columns = [c for c in table.columns
                if c.name not in metadata_column_list
                and not isReference(c.name)]
@@ -438,7 +433,7 @@ def _get_convert_for_table(table, filter=None):
         collection_abbreviation = str(column_name_array[-1])
 
         # Get a reference string by abbreviation (e.g. gebieden:buurten)
-        ref = GOBModel(legacy=True).get_reference_by_abbreviations(catalog_abbreviation, collection_abbreviation)
+        ref = gob_model.get_reference_by_abbreviations(catalog_abbreviation, collection_abbreviation)
         gob_type = 'GOB.ManyReference' if c.name.startswith('_mref') else 'GOB.Reference'
 
         # Create the reference specification
@@ -453,12 +448,12 @@ def _get_convert_for_table(table, filter=None):
 
 
 def isReference(column_name):
-    """ isReference
+    """isReference.
 
     Receives a table column_name and checks if it's a reference or many reference based on the
-    column name
+    column name.
 
-    Returns a boolean
+    Returns a boolean.
 
     :param column_name:
     :return: boolean
@@ -467,10 +462,10 @@ def isReference(column_name):
 
 
 def get_entities(catalog, collection, offset, limit, view=None, reference_name=None, src_id=None):
-    """Entities
+    """Entities.
 
     Returns the list of entities within a collection.
-    Starting at offset (>= 0) and limiting the result to <limit> items
+    Starting at offset (>= 0) and limiting the result to <limit> items.
 
     :param collection:
     :param offset:
@@ -496,8 +491,7 @@ def get_entities(catalog, collection, offset, limit, view=None, reference_name=N
 
 
 def dump_entities(catalog, collection, filter=None, order_by=None):
-    """
-    Get all entities in the given catalog collection
+    """Get all entities in the given catalog collection.
 
     :param catalog:
     :param collection:
@@ -535,8 +529,7 @@ def dump_entities(catalog, collection, filter=None, order_by=None):
 
 
 def get_id_columns(catalog, collection):
-    """
-    Get the id columns of the given catalog and collection
+    """Get the id columns of the given catalog and collection.
 
     :param catalog:
     :param collection:
@@ -554,8 +547,7 @@ def get_id_columns(catalog, collection):
 
 
 def get_entity_refs_after(catalog: str, collection: str, last_eventid: int) -> List[str]:
-    """
-    Returns refs of entities with _last_event greater than last_eventid
+    """Returns refs of entities with _last_event greater than last_eventid.
 
     :param catalog:
     :param collection:
@@ -578,8 +570,7 @@ def get_entity_refs_after(catalog: str, collection: str, last_eventid: int) -> L
 
 
 def get_count(catalog: str, collection: str) -> int:
-    """
-    Returns the number of entities present in the object table for given catalog and collection
+    """Returns the number of entities present in the object table for given catalog and collection.
 
     :param catalog:
     :param collection:
@@ -596,7 +587,7 @@ def get_count(catalog: str, collection: str) -> int:
 
 
 def get_max_eventid(catalog: str, collection: str) -> int:
-    """Returns max eventid present in the object table for given catalog and collection
+    """Returns max eventid present in the object table for given catalog and collection.
 
     :param catalog:
     :param collection:
@@ -613,8 +604,7 @@ def get_max_eventid(catalog: str, collection: str) -> int:
 
 
 def _add_relations(query, catalog_name, collection_name):
-    gob_model = GOBModel(legacy=True)
-    collection = gob_model.get_collection(catalog_name, collection_name)
+    collection = gob_model[catalog_name]['collections'][collection_name]
     has_states = collection.get('has_states', False)
 
     src_table, _ = get_table_and_model(catalog_name, collection_name)
@@ -721,15 +711,13 @@ def query_reference_entities(catalog, collection, reference_name, src_id):
     assert _Base
     _session = get_session()
 
-    gob_model = GOBModel(legacy=True)
-
     rel_catalog_name = 'rel'
     rel_collection_name = get_relation_name(gob_model, catalog, collection, reference_name)
 
-    rel_table, rel_model = get_table_and_model(rel_catalog_name, rel_collection_name)
+    rel_table, _ = get_table_and_model(rel_catalog_name, rel_collection_name)
 
-    dst_catalog_name, dst_collection_name = gob_model.get_collection(
-        catalog, collection)['references'][reference_name]['ref'].split(':')
+    dst_catalog_name, dst_collection_name = gob_model[catalog]['collections'][
+        collection]['references'][reference_name]['ref'].split(':')
 
     # Destination table and model
     dst_table, dst_model = get_table_and_model(dst_catalog_name, dst_collection_name)
@@ -750,9 +738,9 @@ def query_reference_entities(catalog, collection, reference_name, src_id):
 
 
 def get_collection_states(catalog, collection):
-    """States
+    """States.
 
-    Returns all entities with state from the specified collection
+    Returns all entities with state from the specified collection.
 
     :param catalog:
     :param collection:
@@ -761,7 +749,7 @@ def get_collection_states(catalog, collection):
     assert _Base
     _session = get_session()
 
-    entity, model = get_table_and_model(catalog, collection)
+    entity, _ = get_table_and_model(catalog, collection)
 
     # Get the max sequence number for every id + start validity combination
     sub = _session.query(getattr(entity, FIELD.ID),
@@ -791,13 +779,10 @@ def get_collection_states(catalog, collection):
 
 
 def clear_test_dbs():
-    """
-    Clear the GOB test databases
+    """Clear the GOB test databases.
 
     :return:
     """
-    model = GOBModel(legacy=True)
-
     # Test data is contained in the test_catalog and relation catalog
     test_catalog = "test_catalogue"
     rel_catalog = "rel"
@@ -807,23 +792,23 @@ def clear_test_dbs():
     test_entities = []
     rel_entities = []
 
-    for collection_name in model.get_collections(test_catalog):
-        collection = model.get_collection(test_catalog, collection_name)
-        tables.append(model.get_table_name(test_catalog, collection_name))
+    for collection_name in gob_model[test_catalog]['collections']:
+        tables.append(gob_model.get_table_name(test_catalog, collection_name))
         test_entities.append(collection_name)
 
+        collection = gob_model[test_catalog]['collections'][collection_name]
         refs = {
             **collection['references'],
             **collection['very_many_references']
         }
         for ref in refs:
-            ref_name = get_relation_name(model, test_catalog, collection_name, ref)
-            tables.append(model.get_table_name(rel_catalog, ref_name))
+            ref_name = get_relation_name(gob_model, test_catalog, collection_name, ref)
+            tables.append(gob_model.get_table_name(rel_catalog, ref_name))
             rel_entities.append(ref_name)
 
     # Nicely format the SQL statement
     indent = ",\n" + ' ' * 17
-    table_length = max([len(table) for table in tables])
+    table_length = max(len(table) for table in tables)
 
     # Provide for SQL statements
     truncate_tables = ";\n".join([f"TRUNCATE TABLE {table:{table_length}} CASCADE" for table in tables])
@@ -853,10 +838,10 @@ COMMIT;
 
 
 def get_entity(catalog, collection, id, view=None):
-    """Entity
+    """Entity.
 
     Returns the entity from the specified collection or the view identied by the id parameter.
-    If the entity cannot be found, None is returned
+    If the entity cannot be found, None is returned.
 
     :param id:
     :param view:
@@ -893,17 +878,17 @@ def get_entity(catalog, collection, id, view=None):
 
     entity = entity.one_or_none()
     if view:
-        entity_convert = _get_convert_for_table(table,
-                                                {**PRIVATE_META_FIELDS, **FIXED_COLUMNS})
+        entity_convert = _get_convert_for_table(
+            table, {**PRIVATE_META_FIELDS, **FIXED_COLUMNS})
     else:
-        entity_convert = _get_convert_for_model(catalog, collection, model,
-                                                meta=PUBLIC_META_FIELDS, private_attributes=True)
+        entity_convert = _get_convert_for_model(
+            catalog, collection, model, meta=PUBLIC_META_FIELDS, private_attributes=True)
 
     return entity_convert(entity) if entity else None
 
 
 def filter_deleted(query, model):
-    """Filter a query to exclude records with date deleted
+    """Filter a query to exclude records with date deleted.
 
     :param query:
     :param model: The SQLAlchemy model
@@ -918,7 +903,7 @@ def filter_deleted(query, model):
 
 
 def filter_active(query, model):
-    """Filter a query to return only the active records
+    """Filter a query to return only the active records.
 
     :param query:
     :param model: The SQLAlchemy model
@@ -927,4 +912,4 @@ def filter_active(query, model):
     return query.filter(or_(
         getattr(model, FIELD.EXPIRATION_DATE) > datetime.datetime.now(),
         getattr(model, FIELD.EXPIRATION_DATE) == None  # noqa: E711 (== None)
-    ))  # noqa: E711 (== None)
+    ))

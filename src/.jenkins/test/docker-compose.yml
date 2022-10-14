@@ -22,9 +22,9 @@ services:
       - test_db
     environment:
       GOB_SHARED_DIR: /app/shared
-      DATABASE_HOST_OVERRIDE: test_db
+      DATABASE_HOST_OVERRIDE: api_test_database
       DATABASE_PORT_OVERRIDE: 5432
       DATABASE_NAME: gobtest
       DATABASE_USER: gobtest
       DATABASE_PASSWORD: insecure
-    command: './wait-for-postgres.sh test_db bash -c "./test.sh"'
+    command: './wait-for-postgres.sh api_test_database bash -c "./test.sh"'
