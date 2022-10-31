@@ -18,7 +18,7 @@ from gobapi.storage import _get_convert_for_state, filter_deleted, connect, _for
     _to_gob_value, _add_resolve_attrs_to_columns, _get_convert_for_table, _add_relation_dates_to_manyreference, \
     _flatten_join_result, get_entity_refs_after, dump_entities, get_max_eventid, exec_statement, \
     _create_reference_link, _create_reference_view, _create_reference, _add_relations, _apply_filters, \
-    get_id_columns, clear_test_dbs, get_count
+    get_id_columns, clear_test_dbs, get_count, migrate_legacy_views
 from gobapi.auth.auth_query import AuthorizedQuery
 
 
@@ -628,6 +628,42 @@ class TestStorage(TestCase):
             call("SELECT pg_advisory_lock(184041041)"),
             call("SELECT pg_advisory_unlock(184041041)"),
         ])
+
+    @patch("gobapi.storage.initialise_api_views")
+    @patch("gobapi.storage.create_legacy_views")
+    def test_migrate_legacy_views_with_uwsgi(self, mock_create_views, mock_init_api):
+        engine = MagicMock()
+
+        with patch("gobapi.storage.UwsgiCache.get", side_effect=[False, True]):
+            migrate_legacy_views(engine)
+        with patch("gobapi.storage.UwsgiCache.get", side_effect=[True, False]):
+            migrate_legacy_views(engine)
+
+        mock_create_views.assert_not_called()
+        mock_init_api.assert_not_called()
+
+        with patch("gobapi.storage.UwsgiCache.get", side_effect=[False, False]), \
+             patch("gobapi.storage.UwsgiCache.set") as mock_cache_set:
+            migrate_legacy_views(engine)
+
+        mock_cache_set.assert_called_with("migrated", "1")
+        mock_create_views.assert_called_once()
+        mock_init_api.assert_called_once()
+        engine.execute.assert_has_calls([
+            call("SELECT pg_advisory_lock(184041041)"),
+            call("SELECT pg_advisory_unlock(184041041)"),
+        ])
+
+    @patch("gobapi.storage.initialise_api_views")
+    @patch("gobapi.storage.create_legacy_views")
+    def test_migrate_legacy_views_without_uwsgi(self, mock_create_views, mock_init_api):
+        engine = MagicMock()
+
+        with patch("gobapi.storage.UwsgiCache.get", lambda *args: False):
+            migrate_legacy_views(engine)
+
+        mock_create_views.assert_called()
+        mock_init_api.assert_called()
 
     def test_format_reference(self):
         reference = {
