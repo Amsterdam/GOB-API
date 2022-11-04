@@ -13,7 +13,7 @@ from typing import List
 from collections import defaultdict
 
 from sqlalchemy import create_engine, Table, MetaData, func, and_, or_, exc as sa_exc
-from sqlalchemy.engine import Row
+from sqlalchemy.engine import Row, Engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.automap import automap_base
@@ -35,9 +35,32 @@ from gobapi import gob_model
 from gobapi import profiled_query
 from gobapi.views import initialise_api_views
 
+try:
+    import uwsgi
+except ImportError:
+    uwsgi = None
+
+
 session = None
 _Base = None
 metadata = None
+
+
+class UwsgiCache:
+
+    @staticmethod
+    def get(item):
+        try:
+            return uwsgi.cache_get(item)
+        except (KeyError, AttributeError):
+            pass
+
+    @staticmethod
+    def set(key, value):
+        try:
+            return uwsgi.cache_set(key, value)
+        except AttributeError:
+            pass
 
 
 class MigrationLock:
@@ -51,6 +74,33 @@ class MigrationLock:
 
     def __exit__(self, exc_type, value, traceback):
         self.engine.execute(f"SELECT pg_advisory_unlock({self.MIGRATION_LOCK_ID})")
+
+
+def migrate_legacy_views(engine: Engine):
+    """
+    Migrate the legacy gob views.
+
+    When the app is loaded in uWSGI, we don't need to run the migration on every worker (re)start.
+    Implemented by checking the global uWSGI cache system, available to all workers.
+    Just starting the Flask app should trigger a migration.
+    """
+    key = "migrated"
+
+    if UwsgiCache.get(key):
+        print("Skipped migration legacy views")
+        return
+
+    with MigrationLock(engine):
+        # check again, we may have waited some time when running concurrent migration(s)
+        if UwsgiCache.get(key):
+            print("Skipped migration legacy views")
+            return
+
+        create_legacy_views(gob_model, engine)
+        # Can use the legacy views, so should be initialised after the legacy views
+        initialise_api_views(engine)
+
+        UwsgiCache.set(key, "1")
 
 
 def connect():
@@ -71,9 +121,7 @@ def connect():
                                           bind=engine,
                                           query_cls=AuthorizedQuery))
 
-    with MigrationLock(engine):
-        create_legacy_views(gob_model, engine)
-        initialise_api_views(engine)  # Can use the legacy views, so should be initialised after the legacy views
+    migrate_legacy_views(engine)
 
     with warnings.catch_warnings():
         # Ignore warnings for unsupported reflection for expression-based indexes
