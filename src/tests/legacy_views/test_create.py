@@ -39,7 +39,7 @@ class MockModel:
                         'b': {}
                     }
                 },
-                'mbn_mtg_mbn_rpt__rft_n__referentiepunten': {
+                'mbn_mtg_mbn_rpt_refereert_aan_referentiepunten': {
                     'all_fields': {
                         # Will be the full fieldset in the non-mocked version
                         '_id': {}
@@ -70,7 +70,7 @@ class MockRelations:
             'gbd_brt_abc_abc': {},
             'gbd_brt_def_def': {},
             'nap_pmk_gbd_bbk_ligt_in_bouwblok': {},
-            'mbn_mtg_mbn_rpt__rft_n__referentiepunten': {},
+            'mbn_mtg_mbn_rpt_refereert_aan_referentiepunten': {},
         }
     }
 
@@ -123,13 +123,13 @@ FROM public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok"""
             call("CREATE OR REPLACE VIEW legacy.some_catalog_some_other_collection AS SELECT * FROM public.some_catalog_some_other_collection"),
             call(f"CREATE OR REPLACE VIEW legacy.nap_peilmerken AS {expected_nap_peilmerken_query}"),
             call(f"CREATE OR REPLACE VIEW legacy.rel_nap_pmk_gbd_bbk_ligt_in_bouwblok AS {expected_rel_query}"),
-            call("CREATE OR REPLACE VIEW legacy.rel_mbn_mtg_mbn_rpt__rft_n__referentiepunten AS SELECT\n  _id\nFROM public.rel_mbn_mtg_mbn_rpt__rft_n__meetbouten_referentiepunten"),
+            call("CREATE OR REPLACE VIEW legacy.rel_mbn_mtg_mbn_rpt_refereert_aan_referentiepunten AS SELECT\n  _id\nFROM public.rel_mbn_mtg_mbn_rpt__meetbouten_refpnt_rft_aan_"),
             call("CREATE OR REPLACE VIEW legacy.mv_gbd_brt_abc_abc AS SELECT * FROM public.mv_gbd_brt_abc_abc"),
             call("CREATE OR REPLACE VIEW legacy.mv_gbd_brt_def_def AS SELECT * FROM public.mv_gbd_brt_def_def"),
 
             # With overridden tablename
             call("CREATE OR REPLACE VIEW legacy.mv_nap_pmk_gbd_bbk_ligt_in_bouwblok AS SELECT * FROM public.mv_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok"),
-            call("CREATE OR REPLACE VIEW legacy.mv_mbn_mtg_mbn_rpt__rft_n__referentiepunten AS SELECT * FROM public.mv_mbn_mtg_mbn_rpt__rft_n__meetbouten_referentiepunten"),
+            call("CREATE OR REPLACE VIEW legacy.mv_mbn_mtg_mbn_rpt_refereert_aan_referentiepunten AS SELECT * FROM public.mv_mbn_mtg_mbn_rpt__meetbouten_refpnt_rft_aan_"),
         ])
 
     @patch("gobapi.legacy_views.create.relations", MockRelations({"collections": {}}))
