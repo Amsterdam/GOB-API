@@ -4,7 +4,6 @@ Dump GOB
 Dumps of catalog collections in csv format
 """
 import re
-from io import StringIO
 
 from gobapi.dump.config import DELIMITER_CHAR, QUOTATION_CHAR
 from gobapi.dump.config import REFERENCE_TYPES, get_reference_fields
@@ -187,28 +186,3 @@ class CsvDumper:
                 _header_yielded = True
 
             yield self._csv_record(entity)
-
-
-class CsvStream:
-
-    def __init__(self, lines, size: int):
-        self.size = size
-        self.lines = lines
-
-    def __iter__(self):
-        count = 0
-
-        with StringIO() as buffer:
-            for line in self.lines:
-                buffer.write(line)
-                count += 1
-
-                if not count % self.size:
-                    buffer.seek(0)
-                    yield buffer, count
-
-                    buffer.truncate(0)
-                    buffer.seek(0)
-            else:
-                buffer.seek(0)
-                yield buffer, count

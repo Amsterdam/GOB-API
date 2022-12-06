@@ -1,8 +1,8 @@
 from unittest import TestCase
-from unittest.mock import Mock, patch, call
+from unittest.mock import Mock
 
 from gobapi.dump.config import JSON_TYPES
-from gobapi.dump.csv import _csv_line, _csv_value, _csv_reference_values, _csv_values, CsvDumper, CsvStream
+from gobapi.dump.csv import _csv_line, _csv_value, _csv_reference_values, _csv_values, CsvDumper
 
 
 class TestCsvDumper(TestCase):
@@ -184,23 +184,3 @@ class TestCSV(TestCase):
             spec = {'type': json_type, 'attributes': {'a': 'some a', 'b': 'some b'}}
             result = _csv_values(value, spec)
             self.assertEqual(result, ['', ''])
-
-
-class TestCsvStream(TestCase):
-
-    def test_iter(self):
-        lines = ['a;b;c\n', 'd;e;f\n']
-        obj = CsvStream(lines, size=1)
-
-        result = ''
-        for stream, line_nr in obj:
-            result += stream.read()
-
-        self.assertEqual(line_nr, 2)
-        self.assertEqual(result, ''.join(lines))
-
-    @patch('gobapi.dump.csv.StringIO')
-    def test_buffer_closed(self, mock_io):
-        result = [_ for _, _ in CsvStream([], size=1)]
-        obj = mock_io()
-        obj.__exit__.assert_called_once()
