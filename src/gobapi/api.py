@@ -9,7 +9,6 @@ The only public method is get_app() which returns a Flask application object.
 The API can be started by get_app().run()
 """
 
-import json
 from logging.config import dictConfig
 
 from flask_graphql import GraphQLView
@@ -29,8 +28,6 @@ from gobapi.config import API_BASE_PATH, API_SECURE_BASE_PATH, API_LOGGING
 from gobapi.fat_file import fat_file
 from gobapi.response import hal_response, not_found, get_page_ref, ndjson_entities, stream_entities
 from gobapi.dump.csv import CsvDumper
-from gobapi.dump.sql import sql_entities
-from gobapi.dump.to_db import dump_to_db
 from gobapi.auth.routes import secure_route, public_route
 
 from gobapi.worker.response import WorkerResponse
@@ -213,31 +210,19 @@ def _dump(catalog_name, collection_name):
     :param collection_name:
     :return: Streaming response of all entities in csv format with header
     """
-    method = request.method
-
     # Because the dump job only knows the current name in public. Transform to legacy name.
     collection_name = _get_legacy_collection_name(catalog_name, collection_name)
 
-    if method == 'GET':
-        format = request.args.get('format')
-        exclude_deleted = request.args.get('exclude_deleted') == 'true'
+    format = request.args.get('format')
+    exclude_deleted = request.args.get('exclude_deleted') == 'true'
 
-        filter = (lambda table: getattr(table, FIELD.DATE_DELETED).is_(None)) if exclude_deleted else None
-        entities, model = dump_entities(catalog_name, collection_name, filter=filter)
+    filter = (lambda table: getattr(table, FIELD.DATE_DELETED).is_(None)) if exclude_deleted else None
+    entities, model = dump_entities(catalog_name, collection_name, filter=filter)
 
-        if format == "csv":
-            result = CsvDumper(entities, model=model)
-            return WorkerResponse.stream_with_context(result, mimetype='text/csv')
-        if format == "sql":
-            return Response(sql_entities(catalog_name, collection_name, model), mimetype='application/sql')
-        return f"Unrecognised format parameter '{format}'" if format else "Format parameter not set", 400
-    if method == 'POST':
-        content_type = request.content_type
-        if content_type == 'application/json':
-            config = json.loads(request.data)
-            result = dump_to_db(catalog_name, collection_name, config)
-            return WorkerResponse.stream_with_context(result, mimetype='text/plain')
-        return f"Unrecognised content type '{content_type}'", 400
+    if format == "csv":
+        result = CsvDumper(entities, model=model)
+        return WorkerResponse.stream_with_context(result, mimetype='text/csv')
+    return f"Unrecognised format parameter '{format}'" if format else "Format parameter not set", 400
 
 
 def _collection(catalog_name, collection_name):
@@ -470,7 +455,7 @@ def get_app():
         (PUBLIC, '/toestanden/', _states, ['GET']),
         (PUBLIC, '/graphql/', graphql, ['GET', 'POST']),
         (PUBLIC, '/graphql/streaming/', graphql_streaming.entrypoint, ['POST']),
-        (PUBLIC, '/dump/<catalog_name>/<collection_name>/', _dump, ['GET', 'POST']),
+        (PUBLIC, '/dump/<catalog_name>/<collection_name>/', _dump, ['GET']),
         (PUBLIC, '/worker/<worker_id>', worker_result, ['GET']),
         (PUBLIC, '/worker/end/<worker_id>', worker_end, ['DELETE']),
         (PUBLIC, '/worker/status/<worker_id>', worker_status, ['GET']),

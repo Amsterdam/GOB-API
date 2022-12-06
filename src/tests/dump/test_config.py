@@ -7,7 +7,7 @@ from gobapi import api, storage
 
 from gobapi.dump.config import (
     get_unique_reference, add_unique_reference, get_field_specifications, get_field_value,
-    joined_names, get_field_order, get_reference_fields, REFERENCE_FIELDS, FIELD, REL_FIELDS, get_skip_fields
+    joined_names, get_field_order, get_reference_fields, FIELD, REL_FIELDS, get_skip_fields
 )
 
 
@@ -235,17 +235,6 @@ class TestDumpApi(TestCase):
             self.assertEqual(is_mock.is_.return_value, kwargs.get('filter')(table_mock))
 
     @patch('gobapi.api.dump_entities', lambda cat, col, **kwargs: ([], {}))
-    @patch('gobapi.api.sql_entities', lambda cat, col, model: [])
-    def test_dump_sql(self):
-        mock_request = MagicMock()
-        mock_request.method = 'GET'
-
-        with patch('gobapi.api.request', mock_request):
-            mock_request.args = {'format': 'sql'}
-            result = api._dump("any catalog", "any collection")
-            self.assertIsInstance(result, Response)
-
-    @patch('gobapi.api.dump_entities', lambda cat, col, **kwargs: ([], {}))
     def test_dump_other(self):
         mock_request = MagicMock()
         with patch('gobapi.api.request', mock_request):
@@ -258,26 +247,6 @@ class TestDumpApi(TestCase):
             mock_request.args = {}
             msg, status = api._dump("any catalog", "any collection")
             self.assertEqual(status, 400)
-
-    @patch('gobapi.api.dump_to_db')
-    @patch('gobapi.api.json')
-    @patch('gobapi.api.WorkerResponse.stream_with_context', lambda f, mimetype: f)
-    def test_dump_db(self, mock_json, mock_dump):
-        mock_request = MagicMock()
-        mock_request.method = 'POST'
-        mock_request.content_type = 'application/json'
-
-        with patch('gobapi.api.request', mock_request):
-
-            mock_json.loads.return_value = {}
-
-            result = api._dump("any catalog", "any collection")
-            mock_dump.assert_called_with("any catalog", "any collection", {})
-
-            mock_request.content_type = 'any content type'
-            mock_dump.reset_mock()
-            result = api._dump("any catalog", "any collection")
-            mock_dump.assert_not_called()
 
 
 class TestDumpStorage(TestCase):
