@@ -26,6 +26,15 @@ CREATE SCHEMA events;
 ALTER SCHEMA events OWNER TO gobtest;
 
 --
+-- Name: legacy; Type: SCHEMA; Schema: -; Owner: gobtest
+--
+
+CREATE SCHEMA legacy;
+
+
+ALTER SCHEMA legacy OWNER TO gobtest;
+
+--
 -- Name: postgis; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -59,15 +68,24 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 
 CREATE FUNCTION public.clear_materialized_views() RETURNS void
     LANGUAGE plpgsql
-    AS $$
-    DECLARE
-        c_views CURSOR FOR
-        SELECT * FROM pg_matviews WHERE schemaname='public' and matviewowner != 'postgres';
-    BEGIN
-        FOR v in c_views LOOP
-            EXECUTE 'DROP MATERIALIZED VIEW IF EXISTS ' || v.matviewname || ' CASCADE';
-        END LOOP;
-    END;
+    AS $$
+
+    DECLARE
+
+        c_views CURSOR FOR
+
+        SELECT * FROM pg_matviews WHERE schemaname='public' and matviewowner != 'postgres';
+
+    BEGIN
+
+        FOR v in c_views LOOP
+
+            EXECUTE 'DROP MATERIALIZED VIEW IF EXISTS ' || v.matviewname || ' CASCADE';
+
+        END LOOP;
+
+    END;
+
     $$;
 
 
@@ -79,16 +97,26 @@ ALTER FUNCTION public.clear_materialized_views() OWNER TO gobtest;
 
 CREATE FUNCTION public.clear_relations() RETURNS void
     LANGUAGE plpgsql
-    AS $$
-DECLARE
-    c_tables CURSOR FOR
-    SELECT * FROM pg_tables WHERE tablename LIKE 'rel_%' AND schemaname='public';
-BEGIN
-    FOR t in c_tables LOOP
-        EXECUTE 'TRUNCATE ' || t.tablename;
-    END LOOP;
-    DELETE FROM events WHERE catalogue='rel';
-END;
+    AS $$
+
+DECLARE
+
+    c_tables CURSOR FOR
+
+    SELECT * FROM pg_tables WHERE tablename LIKE 'rel_%' AND schemaname='public';
+
+BEGIN
+
+    FOR t in c_tables LOOP
+
+        EXECUTE 'TRUNCATE ' || t.tablename;
+
+    END LOOP;
+
+    DELETE FROM events WHERE catalogue='rel';
+
+END;
+
 $$;
 
 
@@ -100,18 +128,30 @@ ALTER FUNCTION public.clear_relations() OWNER TO gobtest;
 
 CREATE FUNCTION public.clear_views() RETURNS void
     LANGUAGE plpgsql
-    AS $$
-    DECLARE
-        c_views CURSOR FOR
-        SELECT * FROM pg_views 
-        WHERE schemaname='public' and viewowner != 'postgres' and viewname NOT IN (
-            'geography_columns', 'geometry_columns', 'raster_columns', 'raster_overviews'
-        );
-    BEGIN
-        FOR v in c_views LOOP
-            EXECUTE 'DROP VIEW IF EXISTS ' || v.viewname || ' CASCADE';
-        END LOOP;
-    END;
+    AS $$
+
+    DECLARE
+
+        c_views CURSOR FOR
+
+        SELECT * FROM pg_views 
+
+        WHERE schemaname='public' and viewowner != 'postgres' and viewname NOT IN (
+
+            'geography_columns', 'geometry_columns', 'raster_columns', 'raster_overviews'
+
+        );
+
+    BEGIN
+
+        FOR v in c_views LOOP
+
+            EXECUTE 'DROP VIEW IF EXISTS ' || v.viewname || ' CASCADE';
+
+        END LOOP;
+
+    END;
+
     $$;
 
 
@@ -123,92 +163,178 @@ ALTER FUNCTION public.clear_views() OWNER TO gobtest;
 
 CREATE FUNCTION public.insertintoevents(ev record) RETURNS void
     LANGUAGE plpgsql
-    AS $$
-DECLARE
-    schema_name TEXT;
-    cat_part    TEXT;
-    ent_part    TEXT;
-    src_part    TEXT;
-BEGIN
-    -- Construct catalogue and entity partition table names
-    schema_name := 'events';
-    -- catalogue partition: event_parts.events_catalogue
-    cat_part    := schema_name || '.' || ev.catalogue;
-    -- entity partition:    event_parts.events_catalogue_entity
-    ent_part    := cat_part || '_' || ev.entity;
-    -- source partition:    event_parts.events_catalogue_entity_source
-    src_part    := ent_part || '_' || lower(ev.source);
-    -- Create catalogue partition if not yet exists
-    IF to_regclass(cat_part) IS NULL THEN
-        -- CREATE TABLE cat_part PARTITION OF events FOR VALUES IN (catalogue) PARTITION BY LIST (entity)
-        EXECUTE 'CREATE TABLE ' ||
-                cat_part ||
-                ' PARTITION OF events FOR VALUES IN (' ||
-                quote_literal(ev.catalogue) ||
-                ') PARTITION BY LIST(entity)';
-    END IF;
-    -- Create entity partition exists if not yet exists
-    IF to_regclass(ent_part) IS NULL THEN
-        -- CREATE TABLE ent_part PARTITION OF cat_part FOR VALUES IN (entity) PARTITION BY LIST (source)
-        EXECUTE 'CREATE TABLE IF NOT EXISTS ' ||
-                ent_part ||
-                ' PARTITION OF ' || cat_part || ' FOR VALUES in (' ||
-                quote_literal(ev.entity) ||
-                ') PARTITION BY LIST(source)';
-    END IF;
-    -- Create source partition exists if not yet exists
-    IF to_regclass(src_part) IS NULL THEN
-        -- CREATE TABLE src_part PARTITION OF ent_part FOR VALUES IN (source)
-        EXECUTE 'CREATE TABLE IF NOT EXISTS ' ||
-                src_part ||
-                ' PARTITION OF ' || ent_part || ' FOR VALUES in (' ||
-                quote_literal(ev.source) ||
-                ')';
-    END IF;
-    -- Insert event in the corresponding catalogue-entity-source partition
-    -- INSERT INTO src_part (...) VALUES () RETURNING ()
-    EXECUTE 'INSERT INTO ' ||
-            src_part || ' ' ||
-            '(' ||
-            'eventid, ' ||
-            '"timestamp", ' ||
-            'catalogue, ' ||
-            'entity, ' ||
-            '"version", ' ||
-            '"action", ' ||
-            '"source", ' ||
-            'source_id, ' ||
-            'contents, ' ||
-            'application,' ||
-            'tid' ||
-            ') ' ||
-            'VALUES (' ||
-            ev.eventid                    || ', ' ||
-            quote_literal(ev.timestamp)   || ', ' ||
-            quote_literal(ev.catalogue)   || ', ' ||
-            quote_literal(ev.entity)      || ', ' ||
-            quote_literal(ev.version)     || ', ' ||
-            quote_literal(ev.action)      || ', ' ||
-            quote_literal(ev.source)      || ', ' ||
-            coalesce(quote_literal(ev.source_id), 'NULL') || ', ' ||
-            quote_literal(ev.contents)    || ', ' ||
-            quote_literal(ev.application) || ', ' ||
-            quote_literal(ev.tid) ||
-            ') ' ||
-            'RETURNING (' ||
-            ev.eventid                    || ', ' ||
-            quote_literal(ev.timestamp)   || ', ' ||
-            quote_literal(ev.catalogue)   || ', ' ||
-            quote_literal(ev.entity)      || ', ' ||
-            quote_literal(ev.version)     || ', ' ||
-            quote_literal(ev.action)      || ', ' ||
-            quote_literal(ev.source)      || ', ' ||
-            coalesce(quote_literal(ev.source_id), 'NULL') || ', ' ||
-            quote_literal(ev.contents)    || ', ' ||
-            quote_literal(ev.application) || ', ' ||
-            quote_literal(ev.tid) ||
-            ')';
-END;
+    AS $$
+
+DECLARE
+
+    schema_name TEXT;
+
+    cat_part    TEXT;
+
+    ent_part    TEXT;
+
+    src_part    TEXT;
+
+BEGIN
+
+    -- Construct catalogue and entity partition table names
+
+    schema_name := 'events';
+
+    -- catalogue partition: event_parts.events_catalogue
+
+    cat_part    := schema_name || '.' || ev.catalogue;
+
+    -- entity partition:    event_parts.events_catalogue_entity
+
+    ent_part    := cat_part || '_' || ev.entity;
+
+    -- source partition:    event_parts.events_catalogue_entity_source
+
+    src_part    := ent_part || '_' || lower(ev.source);
+
+    -- Create catalogue partition if not yet exists
+
+    IF to_regclass(cat_part) IS NULL THEN
+
+        -- CREATE TABLE cat_part PARTITION OF events FOR VALUES IN (catalogue) PARTITION BY LIST (entity)
+
+        EXECUTE 'CREATE TABLE ' ||
+
+                cat_part ||
+
+                ' PARTITION OF events FOR VALUES IN (' ||
+
+                quote_literal(ev.catalogue) ||
+
+                ') PARTITION BY LIST(entity)';
+
+    END IF;
+
+    -- Create entity partition exists if not yet exists
+
+    IF to_regclass(ent_part) IS NULL THEN
+
+        -- CREATE TABLE ent_part PARTITION OF cat_part FOR VALUES IN (entity) PARTITION BY LIST (source)
+
+        EXECUTE 'CREATE TABLE IF NOT EXISTS ' ||
+
+                ent_part ||
+
+                ' PARTITION OF ' || cat_part || ' FOR VALUES in (' ||
+
+                quote_literal(ev.entity) ||
+
+                ') PARTITION BY LIST(source)';
+
+    END IF;
+
+    -- Create source partition exists if not yet exists
+
+    IF to_regclass(src_part) IS NULL THEN
+
+        -- CREATE TABLE src_part PARTITION OF ent_part FOR VALUES IN (source)
+
+        EXECUTE 'CREATE TABLE IF NOT EXISTS ' ||
+
+                src_part ||
+
+                ' PARTITION OF ' || ent_part || ' FOR VALUES in (' ||
+
+                quote_literal(ev.source) ||
+
+                ')';
+
+    END IF;
+
+    -- Insert event in the corresponding catalogue-entity-source partition
+
+    -- INSERT INTO src_part (...) VALUES () RETURNING ()
+
+    EXECUTE 'INSERT INTO ' ||
+
+            src_part || ' ' ||
+
+            '(' ||
+
+            'eventid, ' ||
+
+            '"timestamp", ' ||
+
+            'catalogue, ' ||
+
+            'entity, ' ||
+
+            '"version", ' ||
+
+            '"action", ' ||
+
+            '"source", ' ||
+
+            'source_id, ' ||
+
+            'contents, ' ||
+
+            'application,' ||
+
+            'tid' ||
+
+            ') ' ||
+
+            'VALUES (' ||
+
+            ev.eventid                    || ', ' ||
+
+            quote_literal(ev.timestamp)   || ', ' ||
+
+            quote_literal(ev.catalogue)   || ', ' ||
+
+            quote_literal(ev.entity)      || ', ' ||
+
+            quote_literal(ev.version)     || ', ' ||
+
+            quote_literal(ev.action)      || ', ' ||
+
+            quote_literal(ev.source)      || ', ' ||
+
+            coalesce(quote_literal(ev.source_id), 'NULL') || ', ' ||
+
+            quote_literal(ev.contents)    || ', ' ||
+
+            quote_literal(ev.application) || ', ' ||
+
+            quote_literal(ev.tid) ||
+
+            ') ' ||
+
+            'RETURNING (' ||
+
+            ev.eventid                    || ', ' ||
+
+            quote_literal(ev.timestamp)   || ', ' ||
+
+            quote_literal(ev.catalogue)   || ', ' ||
+
+            quote_literal(ev.entity)      || ', ' ||
+
+            quote_literal(ev.version)     || ', ' ||
+
+            quote_literal(ev.action)      || ', ' ||
+
+            quote_literal(ev.source)      || ', ' ||
+
+            coalesce(quote_literal(ev.source_id), 'NULL') || ', ' ||
+
+            quote_literal(ev.contents)    || ', ' ||
+
+            quote_literal(ev.application) || ', ' ||
+
+            quote_literal(ev.tid) ||
+
+            ')';
+
+END;
+
 $$;
 
 
@@ -242,22 +368,38 @@ ALTER FUNCTION public.refreshmvs() OWNER TO gobtest;
 
 CREATE FUNCTION public.remove_indexes_brp() RETURNS void
     LANGUAGE plpgsql
-    AS $$
-declare
-    indices CURSOR FOR
-	select
-		indexname
-	from
-		pg_catalog.pg_indexes
-	where
-		schemaname = 'public'
-		and tablename = 'brp_persoonsverblijfplaatsen'
-		and indexname like 'brp_pvb_%';
-begin
-    for i in indices loop
-        execute 'drop index ' || i.indexname;
-    end loop;
-end;
+    AS $$
+
+declare
+
+    indices CURSOR FOR
+
+	select
+
+		indexname
+
+	from
+
+		pg_catalog.pg_indexes
+
+	where
+
+		schemaname = 'public'
+
+		and tablename = 'brp_persoonsverblijfplaatsen'
+
+		and indexname like 'brp_pvb_%';
+
+begin
+
+    for i in indices loop
+
+        execute 'drop index ' || i.indexname;
+
+    end loop;
+
+end;
+
 $$;
 
 
@@ -269,22 +411,38 @@ ALTER FUNCTION public.remove_indexes_brp() OWNER TO gobtest;
 
 CREATE FUNCTION public.set_rel_ids() RETURNS void
     LANGUAGE plpgsql
-    AS $$
-declare
-    tables CURSOR FOR
-    SELECT * FROM pg_tables WHERE tablename LIKE 'rel_%'
-                              AND schemaname='public';
-begin
-    -- Update ADD events first. Add _id to events
-    update events e
-    set contents = e.contents #- '{entity}' || jsonb_build_object('entity', e.contents->'entity' || jsonb_build_object('_id', e.contents->'entity'->'id'))
-    where e.catalogue='rel' and e.action = 'ADD' and e.contents->'entity'->'_id' is null;
-
-    -- Now update all relation tables
-    for t in tables loop
-        execute 'update ' || t.tablename || ' set _id=id';
-    end loop;
-end;
+    AS $$
+
+declare
+
+    tables CURSOR FOR
+
+    SELECT * FROM pg_tables WHERE tablename LIKE 'rel_%'
+
+                              AND schemaname='public';
+
+begin
+
+    -- Update ADD events first. Add _id to events
+
+    update events e
+
+    set contents = e.contents #- '{entity}' || jsonb_build_object('entity', e.contents->'entity' || jsonb_build_object('_id', e.contents->'entity'->'id'))
+
+    where e.catalogue='rel' and e.action = 'ADD' and e.contents->'entity'->'_id' is null;
+
+
+
+    -- Now update all relation tables
+
+    for t in tables loop
+
+        execute 'update ' || t.tablename || ' set _id=id';
+
+    end loop;
+
+end;
+
 $$;
 
 
@@ -296,26 +454,46 @@ ALTER FUNCTION public.set_rel_ids() OWNER TO gobtest;
 
 CREATE FUNCTION public.set_rel_table_tids() RETURNS void
     LANGUAGE plpgsql
-    AS $$
-declare
-    tables CURSOR FOR
-    SELECT * FROM pg_tables WHERE tablename LIKE 'rel_%'
-                              AND schemaname='public';
-    relation varchar;
-    catalogue varchar;
-begin
-    catalogue := 'rel';
-    for t in tables loop
-        relation := substring(t.tablename, 5);
-
-
-        execute 'update events e
-        set tid = o._tid
-        from ' || t.tablename || ' o
-        where o._source_id = e.source_id and o._source = e.source and
-        e.catalogue=' || quote_literal(catalogue) || ' and e.entity=' || quote_literal(relation) || ' and e.tid is null';
-    end loop;
-end;
+    AS $$
+
+declare
+
+    tables CURSOR FOR
+
+    SELECT * FROM pg_tables WHERE tablename LIKE 'rel_%'
+
+                              AND schemaname='public';
+
+    relation varchar;
+
+    catalogue varchar;
+
+begin
+
+    catalogue := 'rel';
+
+    for t in tables loop
+
+        relation := substring(t.tablename, 5);
+
+
+
+
+
+        execute 'update events e
+
+        set tid = o._tid
+
+        from ' || t.tablename || ' o
+
+        where o._source_id = e.source_id and o._source = e.source and
+
+        e.catalogue=' || quote_literal(catalogue) || ' and e.entity=' || quote_literal(relation) || ' and e.tid is null';
+
+    end loop;
+
+end;
+
 $$;
 
 
@@ -327,50 +505,94 @@ ALTER FUNCTION public.set_rel_table_tids() OWNER TO gobtest;
 
 CREATE FUNCTION public.set_tids() RETURNS void
     LANGUAGE plpgsql
-    AS $_$
-declare
-    tables CURSOR FOR
-    SELECT * FROM pg_tables WHERE tablename NOT LIKE 'rel_%'
-                              AND tablename NOT LIKE 'test_catalogue_%'
-                              AND tablename NOT IN ('events', 'spatial_ref_sys', 'alembic_version')
-                              AND schemaname='public';
-    res_cnt int;
-    catalogue varchar;
-    collection varchar;
-begin
-    for t in tables loop
-        catalogue := split_part(t.tablename, '_', 1);
-
-        if catalogue = 'qa' then
-            collection := split_part(t.tablename, '_', 2) || '_' || split_part(t.tablename, '_', 3);
-        else
-            collection := split_part(t.tablename, '_', 2);
-        end if;
-
-        execute 'select count(*) from information_schema.columns where table_name=$1 and column_name=$2' into res_cnt using t.tablename, '_original_value';
-
-        if res_cnt > 0 then
-            -- This is an (old) temporary table. Ignore.
-            continue;
-        end if;
-
-        -- Check if table has 'volgnummer' column
-        execute 'select count(*) from information_schema.columns where table_name=$1 and column_name=$2' into res_cnt using t.tablename, 'volgnummer';
-
-        if res_cnt > 0 and catalogue <> 'qa' then
-            -- QA catalogue has volgnummer defined, but is not used. Handle as exception to this case.
-            execute 'update ' || t.tablename || ' set _tid=_id || ' || quote_literal('.') || ' || volgnummer where true';
-        else
-            execute 'update ' || t.tablename || ' set _tid=_id where true';
-
-        execute 'update events e
-        set tid = o._tid
-        from ' || t.tablename || ' o
-        where o._source_id = e.source_id and o._source = e.source and
-        e.catalogue=' || quote_literal(catalogue) || ' and e.entity=' || quote_literal(collection) || ' and e.tid is null';
-        end if;
-    end loop;
-end;
+    AS $_$
+
+declare
+
+    tables CURSOR FOR
+
+    SELECT * FROM pg_tables WHERE tablename NOT LIKE 'rel_%'
+
+                              AND tablename NOT LIKE 'test_catalogue_%'
+
+                              AND tablename NOT IN ('events', 'spatial_ref_sys', 'alembic_version')
+
+                              AND schemaname='public';
+
+    res_cnt int;
+
+    catalogue varchar;
+
+    collection varchar;
+
+begin
+
+    for t in tables loop
+
+        catalogue := split_part(t.tablename, '_', 1);
+
+
+
+        if catalogue = 'qa' then
+
+            collection := split_part(t.tablename, '_', 2) || '_' || split_part(t.tablename, '_', 3);
+
+        else
+
+            collection := split_part(t.tablename, '_', 2);
+
+        end if;
+
+
+
+        execute 'select count(*) from information_schema.columns where table_name=$1 and column_name=$2' into res_cnt using t.tablename, '_original_value';
+
+
+
+        if res_cnt > 0 then
+
+            -- This is an (old) temporary table. Ignore.
+
+            continue;
+
+        end if;
+
+
+
+        -- Check if table has 'volgnummer' column
+
+        execute 'select count(*) from information_schema.columns where table_name=$1 and column_name=$2' into res_cnt using t.tablename, 'volgnummer';
+
+
+
+        if res_cnt > 0 and catalogue <> 'qa' then
+
+            -- QA catalogue has volgnummer defined, but is not used. Handle as exception to this case.
+
+            execute 'update ' || t.tablename || ' set _tid=_id || ' || quote_literal('.') || ' || volgnummer where true';
+
+        else
+
+            execute 'update ' || t.tablename || ' set _tid=_id where true';
+
+
+
+        execute 'update events e
+
+        set tid = o._tid
+
+        from ' || t.tablename || ' o
+
+        where o._source_id = e.source_id and o._source = e.source and
+
+        e.catalogue=' || quote_literal(catalogue) || ' and e.entity=' || quote_literal(collection) || ' and e.tid is null';
+
+        end if;
+
+    end loop;
+
+end;
+
 $_$;
 
 
@@ -1618,17 +1840,6 @@ ALTER TABLE ONLY events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok ATTACH PAR
 ALTER TABLE events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob OWNER TO gobtest;
 
 --
--- Name: alembic_version; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.alembic_version (
-    version_num character varying(32) NOT NULL
-);
-
-
-ALTER TABLE public.alembic_version OWNER TO gobtest;
-
---
 -- Name: bag_brondocumenten; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -1658,26 +1869,33 @@ CREATE TABLE public.bag_brondocumenten (
 ALTER TABLE public.bag_brondocumenten OWNER TO gobtest;
 
 --
--- Name: bag_brondocumenten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_brondocumenten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_brondocumenten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_brondocumenten AS
+ SELECT bag_brondocumenten._gobid,
+    bag_brondocumenten._id,
+    bag_brondocumenten._source,
+    bag_brondocumenten._application,
+    bag_brondocumenten._source_id,
+    bag_brondocumenten._last_event,
+    bag_brondocumenten._hash,
+    bag_brondocumenten._version,
+    bag_brondocumenten._date_created,
+    bag_brondocumenten._date_confirmed,
+    bag_brondocumenten._date_modified,
+    bag_brondocumenten._date_deleted,
+    bag_brondocumenten.documentnummer,
+    bag_brondocumenten.bronleverancier,
+    bag_brondocumenten.type_dossier,
+    bag_brondocumenten.type_brondocument,
+    bag_brondocumenten.registratiedatum,
+    bag_brondocumenten._expiration_date,
+    bag_brondocumenten._tid
+   FROM public.bag_brondocumenten;
 
 
-ALTER TABLE public.bag_brondocumenten__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_brondocumenten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_brondocumenten__gobid_seq OWNED BY public.bag_brondocumenten._gobid;
-
+ALTER TABLE legacy.bag_brondocumenten OWNER TO gobtest;
 
 --
 -- Name: bag_dossiers; Type: TABLE; Schema: public; Owner: gobtest
@@ -1706,26 +1924,30 @@ CREATE TABLE public.bag_dossiers (
 ALTER TABLE public.bag_dossiers OWNER TO gobtest;
 
 --
--- Name: bag_dossiers__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_dossiers; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_dossiers__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_dossiers AS
+ SELECT bag_dossiers.dossier,
+    bag_dossiers.heeft_brondocumenten,
+    bag_dossiers._source,
+    bag_dossiers._application,
+    bag_dossiers._source_id,
+    bag_dossiers._last_event,
+    bag_dossiers._hash,
+    bag_dossiers._version,
+    bag_dossiers._date_created,
+    bag_dossiers._date_confirmed,
+    bag_dossiers._date_modified,
+    bag_dossiers._date_deleted,
+    bag_dossiers._expiration_date,
+    bag_dossiers._gobid,
+    bag_dossiers._id,
+    bag_dossiers._tid
+   FROM public.bag_dossiers;
 
 
-ALTER TABLE public.bag_dossiers__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_dossiers__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_dossiers__gobid_seq OWNED BY public.bag_dossiers._gobid;
-
+ALTER TABLE legacy.bag_dossiers OWNER TO gobtest;
 
 --
 -- Name: bag_ligplaatsen; Type: TABLE; Schema: public; Owner: gobtest
@@ -1770,26 +1992,46 @@ CREATE TABLE public.bag_ligplaatsen (
 ALTER TABLE public.bag_ligplaatsen OWNER TO gobtest;
 
 --
--- Name: bag_ligplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_ligplaatsen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_ligplaatsen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_ligplaatsen AS
+ SELECT bag_ligplaatsen._gobid,
+    bag_ligplaatsen._id,
+    bag_ligplaatsen._source,
+    bag_ligplaatsen._application,
+    bag_ligplaatsen._source_id,
+    bag_ligplaatsen._last_event,
+    bag_ligplaatsen._version,
+    bag_ligplaatsen._date_created,
+    bag_ligplaatsen._date_confirmed,
+    bag_ligplaatsen._date_modified,
+    bag_ligplaatsen._date_deleted,
+    bag_ligplaatsen.volgnummer,
+    bag_ligplaatsen.registratiedatum,
+    bag_ligplaatsen.identificatie,
+    bag_ligplaatsen.geconstateerd,
+    bag_ligplaatsen.status,
+    bag_ligplaatsen.heeft_hoofdadres,
+    bag_ligplaatsen.heeft_nevenadres,
+    bag_ligplaatsen.geometrie,
+    bag_ligplaatsen.begin_geldigheid,
+    bag_ligplaatsen.eind_geldigheid,
+    bag_ligplaatsen.documentdatum,
+    bag_ligplaatsen.documentnummer,
+    bag_ligplaatsen.ligt_in_buurt,
+    bag_ligplaatsen.bagproces,
+    bag_ligplaatsen._hash,
+    bag_ligplaatsen._expiration_date,
+    bag_ligplaatsen.heeft_dossier,
+    bag_ligplaatsen.heeft_onderzoeken,
+    bag_ligplaatsen.gebruiksdoel,
+    bag_ligplaatsen._tid,
+    bag_ligplaatsen.ligt_in_gemeente
+   FROM public.bag_ligplaatsen;
 
 
-ALTER TABLE public.bag_ligplaatsen__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_ligplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_ligplaatsen__gobid_seq OWNED BY public.bag_ligplaatsen._gobid;
-
+ALTER TABLE legacy.bag_ligplaatsen OWNER TO gobtest;
 
 --
 -- Name: bag_nummeraanduidingen; Type: TABLE; Schema: public; Owner: gobtest
@@ -1839,26 +2081,51 @@ CREATE TABLE public.bag_nummeraanduidingen (
 ALTER TABLE public.bag_nummeraanduidingen OWNER TO gobtest;
 
 --
--- Name: bag_nummeraanduidingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_nummeraanduidingen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_nummeraanduidingen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_nummeraanduidingen AS
+ SELECT bag_nummeraanduidingen._gobid,
+    bag_nummeraanduidingen._id,
+    bag_nummeraanduidingen._source,
+    bag_nummeraanduidingen._application,
+    bag_nummeraanduidingen._source_id,
+    bag_nummeraanduidingen._last_event,
+    bag_nummeraanduidingen._hash,
+    bag_nummeraanduidingen._version,
+    bag_nummeraanduidingen._date_created,
+    bag_nummeraanduidingen._date_confirmed,
+    bag_nummeraanduidingen._date_modified,
+    bag_nummeraanduidingen._date_deleted,
+    bag_nummeraanduidingen.volgnummer,
+    bag_nummeraanduidingen.registratiedatum,
+    bag_nummeraanduidingen.identificatie,
+    bag_nummeraanduidingen.huisnummer,
+    bag_nummeraanduidingen.geconstateerd,
+    bag_nummeraanduidingen.huisletter,
+    bag_nummeraanduidingen.huisnummertoevoeging,
+    bag_nummeraanduidingen.postcode,
+    bag_nummeraanduidingen.ligt_in_woonplaats,
+    bag_nummeraanduidingen.begin_geldigheid,
+    bag_nummeraanduidingen.eind_geldigheid,
+    bag_nummeraanduidingen.ligt_aan_openbareruimte,
+    bag_nummeraanduidingen.type_adresseerbaar_object,
+    bag_nummeraanduidingen.documentdatum,
+    bag_nummeraanduidingen.documentnummer,
+    bag_nummeraanduidingen.status,
+    bag_nummeraanduidingen.type_adres,
+    bag_nummeraanduidingen.adresseert_verblijfsobject,
+    bag_nummeraanduidingen.adresseert_ligplaats,
+    bag_nummeraanduidingen.adresseert_standplaats,
+    bag_nummeraanduidingen.bagproces,
+    bag_nummeraanduidingen._expiration_date,
+    bag_nummeraanduidingen.heeft_dossier,
+    bag_nummeraanduidingen.heeft_onderzoeken,
+    bag_nummeraanduidingen._tid
+   FROM public.bag_nummeraanduidingen;
 
 
-ALTER TABLE public.bag_nummeraanduidingen__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_nummeraanduidingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_nummeraanduidingen__gobid_seq OWNED BY public.bag_nummeraanduidingen._gobid;
-
+ALTER TABLE legacy.bag_nummeraanduidingen OWNER TO gobtest;
 
 --
 -- Name: bag_onderzoeken; Type: TABLE; Schema: public; Owner: gobtest
@@ -1898,26 +2165,41 @@ CREATE TABLE public.bag_onderzoeken (
 ALTER TABLE public.bag_onderzoeken OWNER TO gobtest;
 
 --
--- Name: bag_onderzoeken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_onderzoeken; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_onderzoeken__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_onderzoeken AS
+ SELECT bag_onderzoeken.volgnummer,
+    bag_onderzoeken.registratiedatum,
+    bag_onderzoeken.identificatie,
+    bag_onderzoeken.object_identificatie,
+    bag_onderzoeken.objecttype,
+    bag_onderzoeken.kenmerk,
+    bag_onderzoeken.in_onderzoek,
+    bag_onderzoeken.begin_geldigheid,
+    bag_onderzoeken.eind_geldigheid,
+    bag_onderzoeken.documentdatum,
+    bag_onderzoeken.documentnummer,
+    bag_onderzoeken.tijdstip_registratie,
+    bag_onderzoeken.eind_registratie,
+    bag_onderzoeken._source,
+    bag_onderzoeken._application,
+    bag_onderzoeken._source_id,
+    bag_onderzoeken._last_event,
+    bag_onderzoeken._hash,
+    bag_onderzoeken._version,
+    bag_onderzoeken._date_created,
+    bag_onderzoeken._date_confirmed,
+    bag_onderzoeken._date_modified,
+    bag_onderzoeken._date_deleted,
+    bag_onderzoeken._expiration_date,
+    bag_onderzoeken._gobid,
+    bag_onderzoeken._id,
+    bag_onderzoeken._tid
+   FROM public.bag_onderzoeken;
 
 
-ALTER TABLE public.bag_onderzoeken__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_onderzoeken__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_onderzoeken__gobid_seq OWNED BY public.bag_onderzoeken._gobid;
-
+ALTER TABLE legacy.bag_onderzoeken OWNER TO gobtest;
 
 --
 -- Name: bag_openbareruimtes; Type: TABLE; Schema: public; Owner: gobtest
@@ -1964,26 +2246,48 @@ CREATE TABLE public.bag_openbareruimtes (
 ALTER TABLE public.bag_openbareruimtes OWNER TO gobtest;
 
 --
--- Name: bag_openbareruimtes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_openbareruimtes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_openbareruimtes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_openbareruimtes AS
+ SELECT bag_openbareruimtes._gobid,
+    bag_openbareruimtes._id,
+    bag_openbareruimtes._source,
+    bag_openbareruimtes._application,
+    bag_openbareruimtes._source_id,
+    bag_openbareruimtes._last_event,
+    bag_openbareruimtes._version,
+    bag_openbareruimtes._date_created,
+    bag_openbareruimtes._date_confirmed,
+    bag_openbareruimtes._date_modified,
+    bag_openbareruimtes._date_deleted,
+    bag_openbareruimtes.volgnummer,
+    bag_openbareruimtes.registratiedatum,
+    bag_openbareruimtes.identificatie,
+    bag_openbareruimtes.status,
+    bag_openbareruimtes.begin_geldigheid,
+    bag_openbareruimtes.eind_geldigheid,
+    bag_openbareruimtes.geconstateerd,
+    bag_openbareruimtes.type,
+    bag_openbareruimtes.documentdatum,
+    bag_openbareruimtes.documentnummer,
+    bag_openbareruimtes.naam,
+    bag_openbareruimtes.naam_nen,
+    bag_openbareruimtes.ligt_in_woonplaats,
+    bag_openbareruimtes.beschrijving_naam,
+    bag_openbareruimtes.bagproces,
+    bag_openbareruimtes.geometrie,
+    bag_openbareruimtes._hash,
+    bag_openbareruimtes._expiration_date,
+    bag_openbareruimtes.heeft_dossier,
+    bag_openbareruimtes.straatcode,
+    bag_openbareruimtes.straatnaam_ptt,
+    bag_openbareruimtes.heeft_onderzoeken,
+    bag_openbareruimtes._tid
+   FROM public.bag_openbareruimtes;
 
 
-ALTER TABLE public.bag_openbareruimtes__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_openbareruimtes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_openbareruimtes__gobid_seq OWNED BY public.bag_openbareruimtes._gobid;
-
+ALTER TABLE legacy.bag_openbareruimtes OWNER TO gobtest;
 
 --
 -- Name: bag_panden; Type: TABLE; Schema: public; Owner: gobtest
@@ -2032,26 +2336,50 @@ CREATE TABLE public.bag_panden (
 ALTER TABLE public.bag_panden OWNER TO gobtest;
 
 --
--- Name: bag_panden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_panden; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_panden__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_panden AS
+ SELECT bag_panden._gobid,
+    bag_panden._id,
+    bag_panden._source,
+    bag_panden._application,
+    bag_panden._source_id,
+    bag_panden._last_event,
+    bag_panden._hash,
+    bag_panden._version,
+    bag_panden._date_created,
+    bag_panden._date_confirmed,
+    bag_panden._date_modified,
+    bag_panden._date_deleted,
+    bag_panden.volgnummer,
+    bag_panden.registratiedatum,
+    bag_panden.identificatie,
+    bag_panden.geconstateerd,
+    bag_panden.geometrie,
+    bag_panden.oorspronkelijk_bouwjaar,
+    bag_panden.status,
+    bag_panden.begin_geldigheid,
+    bag_panden.eind_geldigheid,
+    bag_panden.documentdatum,
+    bag_panden.documentnummer,
+    bag_panden.naam,
+    bag_panden.ligging,
+    bag_panden.type_woonobject,
+    bag_panden.ligt_in_bouwblok,
+    bag_panden.aantal_bouwlagen,
+    bag_panden.hoogste_bouwlaag,
+    bag_panden.laagste_bouwlaag,
+    bag_panden.bagproces,
+    bag_panden._expiration_date,
+    bag_panden.heeft_dossier,
+    bag_panden.heeft_onderzoeken,
+    bag_panden._tid,
+    bag_panden.ligt_in_buurt
+   FROM public.bag_panden;
 
 
-ALTER TABLE public.bag_panden__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_panden__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_panden__gobid_seq OWNED BY public.bag_panden._gobid;
-
+ALTER TABLE legacy.bag_panden OWNER TO gobtest;
 
 --
 -- Name: bag_standplaatsen; Type: TABLE; Schema: public; Owner: gobtest
@@ -2096,26 +2424,46 @@ CREATE TABLE public.bag_standplaatsen (
 ALTER TABLE public.bag_standplaatsen OWNER TO gobtest;
 
 --
--- Name: bag_standplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_standplaatsen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_standplaatsen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_standplaatsen AS
+ SELECT bag_standplaatsen._gobid,
+    bag_standplaatsen._id,
+    bag_standplaatsen._source,
+    bag_standplaatsen._application,
+    bag_standplaatsen._source_id,
+    bag_standplaatsen._last_event,
+    bag_standplaatsen._version,
+    bag_standplaatsen._date_created,
+    bag_standplaatsen._date_confirmed,
+    bag_standplaatsen._date_modified,
+    bag_standplaatsen._date_deleted,
+    bag_standplaatsen.volgnummer,
+    bag_standplaatsen.registratiedatum,
+    bag_standplaatsen.identificatie,
+    bag_standplaatsen.geconstateerd,
+    bag_standplaatsen.status,
+    bag_standplaatsen.heeft_hoofdadres,
+    bag_standplaatsen.heeft_nevenadres,
+    bag_standplaatsen.geometrie,
+    bag_standplaatsen.begin_geldigheid,
+    bag_standplaatsen.eind_geldigheid,
+    bag_standplaatsen.documentdatum,
+    bag_standplaatsen.documentnummer,
+    bag_standplaatsen.ligt_in_buurt,
+    bag_standplaatsen.bagproces,
+    bag_standplaatsen._hash,
+    bag_standplaatsen._expiration_date,
+    bag_standplaatsen.heeft_dossier,
+    bag_standplaatsen.heeft_onderzoeken,
+    bag_standplaatsen.gebruiksdoel,
+    bag_standplaatsen._tid,
+    bag_standplaatsen.ligt_in_gemeente
+   FROM public.bag_standplaatsen;
 
 
-ALTER TABLE public.bag_standplaatsen__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_standplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_standplaatsen__gobid_seq OWNED BY public.bag_standplaatsen._gobid;
-
+ALTER TABLE legacy.bag_standplaatsen OWNER TO gobtest;
 
 --
 -- Name: bag_verblijfsobjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2178,26 +2526,64 @@ CREATE TABLE public.bag_verblijfsobjecten (
 ALTER TABLE public.bag_verblijfsobjecten OWNER TO gobtest;
 
 --
--- Name: bag_verblijfsobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_verblijfsobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_verblijfsobjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_verblijfsobjecten AS
+ SELECT bag_verblijfsobjecten._gobid,
+    bag_verblijfsobjecten._id,
+    bag_verblijfsobjecten._source,
+    bag_verblijfsobjecten._application,
+    bag_verblijfsobjecten._source_id,
+    bag_verblijfsobjecten._last_event,
+    bag_verblijfsobjecten._hash,
+    bag_verblijfsobjecten._version,
+    bag_verblijfsobjecten._date_created,
+    bag_verblijfsobjecten._date_confirmed,
+    bag_verblijfsobjecten._date_modified,
+    bag_verblijfsobjecten._date_deleted,
+    bag_verblijfsobjecten.volgnummer,
+    bag_verblijfsobjecten.registratiedatum,
+    bag_verblijfsobjecten.identificatie,
+    bag_verblijfsobjecten.geconstateerd,
+    bag_verblijfsobjecten.heeft_hoofdadres,
+    bag_verblijfsobjecten.heeft_nevenadres,
+    bag_verblijfsobjecten.geometrie,
+    bag_verblijfsobjecten.gebruiksdoel,
+    bag_verblijfsobjecten.oppervlakte,
+    bag_verblijfsobjecten.status,
+    bag_verblijfsobjecten.ligt_in_panden,
+    bag_verblijfsobjecten.begin_geldigheid,
+    bag_verblijfsobjecten.eind_geldigheid,
+    bag_verblijfsobjecten.documentdatum,
+    bag_verblijfsobjecten.documentnummer,
+    bag_verblijfsobjecten.gebruiksdoel_woonfunctie,
+    bag_verblijfsobjecten.gebruiksdoel_gezondheidszorgfunctie,
+    bag_verblijfsobjecten.aantal_eenheden_complex,
+    bag_verblijfsobjecten.verdieping_toegang,
+    bag_verblijfsobjecten.aantal_bouwlagen,
+    bag_verblijfsobjecten.hoogste_bouwlaag,
+    bag_verblijfsobjecten.laagste_bouwlaag,
+    bag_verblijfsobjecten.aantal_kamers,
+    bag_verblijfsobjecten.feitelijk_gebruik,
+    bag_verblijfsobjecten.toegang,
+    bag_verblijfsobjecten.redenopvoer,
+    bag_verblijfsobjecten.redenafvoer,
+    bag_verblijfsobjecten.ligt_in_buurt,
+    bag_verblijfsobjecten.bagproces,
+    bag_verblijfsobjecten.eigendomsverhouding,
+    bag_verblijfsobjecten._expiration_date,
+    bag_verblijfsobjecten.heeft_dossier,
+    bag_verblijfsobjecten.cbs_nummer,
+    bag_verblijfsobjecten.financieringscode,
+    bag_verblijfsobjecten.indicatie_woningvoorraad,
+    bag_verblijfsobjecten.heeft_onderzoeken,
+    bag_verblijfsobjecten._tid,
+    bag_verblijfsobjecten.ligt_in_gemeente
+   FROM public.bag_verblijfsobjecten;
 
 
-ALTER TABLE public.bag_verblijfsobjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_verblijfsobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_verblijfsobjecten__gobid_seq OWNED BY public.bag_verblijfsobjecten._gobid;
-
+ALTER TABLE legacy.bag_verblijfsobjecten OWNER TO gobtest;
 
 --
 -- Name: bag_woonplaatsen; Type: TABLE; Schema: public; Owner: gobtest
@@ -2240,26 +2626,44 @@ CREATE TABLE public.bag_woonplaatsen (
 ALTER TABLE public.bag_woonplaatsen OWNER TO gobtest;
 
 --
--- Name: bag_woonplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_woonplaatsen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_woonplaatsen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_woonplaatsen AS
+ SELECT bag_woonplaatsen._gobid,
+    bag_woonplaatsen._id,
+    bag_woonplaatsen._source,
+    bag_woonplaatsen._application,
+    bag_woonplaatsen._source_id,
+    bag_woonplaatsen._last_event,
+    bag_woonplaatsen._version,
+    bag_woonplaatsen._date_created,
+    bag_woonplaatsen._date_confirmed,
+    bag_woonplaatsen._date_modified,
+    bag_woonplaatsen._date_deleted,
+    bag_woonplaatsen.volgnummer,
+    bag_woonplaatsen.registratiedatum,
+    bag_woonplaatsen.identificatie,
+    bag_woonplaatsen.naam,
+    bag_woonplaatsen.geometrie,
+    bag_woonplaatsen.geconstateerd,
+    bag_woonplaatsen.begin_geldigheid,
+    bag_woonplaatsen.eind_geldigheid,
+    bag_woonplaatsen.documentdatum,
+    bag_woonplaatsen.documentnummer,
+    bag_woonplaatsen.status,
+    bag_woonplaatsen.ligt_in_gemeente,
+    bag_woonplaatsen.bagproces,
+    bag_woonplaatsen._hash,
+    bag_woonplaatsen._expiration_date,
+    bag_woonplaatsen.heeft_dossier,
+    bag_woonplaatsen.woonplaats_ptt,
+    bag_woonplaatsen.heeft_onderzoeken,
+    bag_woonplaatsen._tid
+   FROM public.bag_woonplaatsen;
 
 
-ALTER TABLE public.bag_woonplaatsen__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_woonplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_woonplaatsen__gobid_seq OWNED BY public.bag_woonplaatsen._gobid;
-
+ALTER TABLE legacy.bag_woonplaatsen OWNER TO gobtest;
 
 --
 -- Name: bgt_onderbouw; Type: TABLE; Schema: public; Owner: gobtest
@@ -2293,26 +2697,35 @@ CREATE TABLE public.bgt_onderbouw (
 ALTER TABLE public.bgt_onderbouw OWNER TO gobtest;
 
 --
--- Name: bgt_onderbouw__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bgt_onderbouw; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bgt_onderbouw__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bgt_onderbouw AS
+ SELECT bgt_onderbouw.identificatie,
+    bgt_onderbouw.volgnummer,
+    bgt_onderbouw.begin_geldigheid,
+    bgt_onderbouw.eind_geldigheid,
+    bgt_onderbouw.registratiedatum,
+    bgt_onderbouw.relatieve_hoogteligging,
+    bgt_onderbouw.geometrie,
+    bgt_onderbouw._source,
+    bgt_onderbouw._application,
+    bgt_onderbouw._source_id,
+    bgt_onderbouw._last_event,
+    bgt_onderbouw._hash,
+    bgt_onderbouw._version,
+    bgt_onderbouw._date_created,
+    bgt_onderbouw._date_confirmed,
+    bgt_onderbouw._date_modified,
+    bgt_onderbouw._date_deleted,
+    bgt_onderbouw._expiration_date,
+    bgt_onderbouw._gobid,
+    bgt_onderbouw._id,
+    bgt_onderbouw._tid
+   FROM public.bgt_onderbouw;
 
 
-ALTER TABLE public.bgt_onderbouw__gobid_seq OWNER TO gobtest;
-
---
--- Name: bgt_onderbouw__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bgt_onderbouw__gobid_seq OWNED BY public.bgt_onderbouw._gobid;
-
+ALTER TABLE legacy.bgt_onderbouw OWNER TO gobtest;
 
 --
 -- Name: bgt_overbouw; Type: TABLE; Schema: public; Owner: gobtest
@@ -2346,26 +2759,35 @@ CREATE TABLE public.bgt_overbouw (
 ALTER TABLE public.bgt_overbouw OWNER TO gobtest;
 
 --
--- Name: bgt_overbouw__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bgt_overbouw; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bgt_overbouw__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bgt_overbouw AS
+ SELECT bgt_overbouw.volgnummer,
+    bgt_overbouw.registratiedatum,
+    bgt_overbouw.identificatie,
+    bgt_overbouw.begin_geldigheid,
+    bgt_overbouw.eind_geldigheid,
+    bgt_overbouw.relatieve_hoogteligging,
+    bgt_overbouw.geometrie,
+    bgt_overbouw._source,
+    bgt_overbouw._application,
+    bgt_overbouw._source_id,
+    bgt_overbouw._last_event,
+    bgt_overbouw._hash,
+    bgt_overbouw._version,
+    bgt_overbouw._date_created,
+    bgt_overbouw._date_confirmed,
+    bgt_overbouw._date_modified,
+    bgt_overbouw._date_deleted,
+    bgt_overbouw._expiration_date,
+    bgt_overbouw._gobid,
+    bgt_overbouw._id,
+    bgt_overbouw._tid
+   FROM public.bgt_overbouw;
 
 
-ALTER TABLE public.bgt_overbouw__gobid_seq OWNER TO gobtest;
-
---
--- Name: bgt_overbouw__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bgt_overbouw__gobid_seq OWNED BY public.bgt_overbouw._gobid;
-
+ALTER TABLE legacy.bgt_overbouw OWNER TO gobtest;
 
 --
 -- Name: brk2_kadastraleobjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2424,33 +2846,79 @@ CREATE TABLE public.brk2_kadastraleobjecten (
     _expiration_date timestamp without time zone,
     _gobid integer NOT NULL,
     _id character varying,
-    _tid character varying
+    _tid character varying,
+    aangeduid_door_gemeente jsonb,
+    aangeduid_door_kadastralegemeente jsonb,
+    aangeduid_door_kadastralegemeentecode jsonb,
+    aangeduid_door_kadastralesectie character varying,
+    indicatie_voorlopige_kadastrale_grens character varying
 );
 
 
 ALTER TABLE public.brk2_kadastraleobjecten OWNER TO gobtest;
 
 --
--- Name: brk2_kadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_kadastraleobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_kadastraleobjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_kadastraleobjecten AS
+ SELECT brk2_kadastraleobjecten.volgnummer,
+    brk2_kadastraleobjecten.registratiedatum,
+    brk2_kadastraleobjecten.begin_geldigheid,
+    brk2_kadastraleobjecten.eind_geldigheid,
+    brk2_kadastraleobjecten.identificatie,
+    brk2_kadastraleobjecten.id,
+    brk2_kadastraleobjecten.kadastrale_aanduiding,
+    brk2_kadastraleobjecten.perceelnummer,
+    brk2_kadastraleobjecten.indexletter,
+    brk2_kadastraleobjecten.indexnummer,
+    brk2_kadastraleobjecten.soort_grootte,
+    brk2_kadastraleobjecten.grootte,
+    brk2_kadastraleobjecten.soort_cultuur_onbebouwd,
+    brk2_kadastraleobjecten.soort_cultuur_bebouwd,
+    brk2_kadastraleobjecten.status,
+    brk2_kadastraleobjecten.referentie,
+    brk2_kadastraleobjecten.oudst_digitaal_bekend,
+    brk2_kadastraleobjecten.mutatie_id,
+    brk2_kadastraleobjecten.meettarief_verschuldigd,
+    brk2_kadastraleobjecten.toelichting_bewaarder,
+    brk2_kadastraleobjecten.tijdstip_ontstaan_object,
+    brk2_kadastraleobjecten.hoofdsplitsing_identificatie,
+    brk2_kadastraleobjecten.afwijking_lijst_rechthebbenden,
+    brk2_kadastraleobjecten.geometrie,
+    brk2_kadastraleobjecten.plaatscoordinaten,
+    brk2_kadastraleobjecten.perceelnummer_rotatie,
+    brk2_kadastraleobjecten.perceelnummer_verschuiving_x,
+    brk2_kadastraleobjecten.perceelnummer_verschuiving_y,
+    brk2_kadastraleobjecten.bijpijling_geometrie,
+    brk2_kadastraleobjecten.koopsom,
+    brk2_kadastraleobjecten.koopsom_valutacode,
+    brk2_kadastraleobjecten.koopjaar,
+    brk2_kadastraleobjecten.indicatie_meer_objecten,
+    brk2_kadastraleobjecten.toestandsdatum,
+    brk2_kadastraleobjecten.in_onderzoek,
+    brk2_kadastraleobjecten.datum_actueel_tot,
+    brk2_kadastraleobjecten.is_ontstaan_uit_g_perceel,
+    brk2_kadastraleobjecten.heeft_een_relatie_met_verblijfsobject,
+    brk2_kadastraleobjecten.is_ontstaan_uit_kadastraalobject,
+    brk2_kadastraleobjecten._source,
+    brk2_kadastraleobjecten._application,
+    brk2_kadastraleobjecten._source_id,
+    brk2_kadastraleobjecten._last_event,
+    brk2_kadastraleobjecten._hash,
+    brk2_kadastraleobjecten._version,
+    brk2_kadastraleobjecten._date_created,
+    brk2_kadastraleobjecten._date_confirmed,
+    brk2_kadastraleobjecten._date_modified,
+    brk2_kadastraleobjecten._date_deleted,
+    brk2_kadastraleobjecten._expiration_date,
+    brk2_kadastraleobjecten._gobid,
+    brk2_kadastraleobjecten._id,
+    brk2_kadastraleobjecten._tid
+   FROM public.brk2_kadastraleobjecten;
 
 
-ALTER TABLE public.brk2_kadastraleobjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_kadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_kadastraleobjecten__gobid_seq OWNED BY public.brk2_kadastraleobjecten._gobid;
-
+ALTER TABLE legacy.brk2_kadastraleobjecten OWNER TO gobtest;
 
 --
 -- Name: brk_aantekeningenkadastraleobjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2490,26 +2958,41 @@ CREATE TABLE public.brk_aantekeningenkadastraleobjecten (
 ALTER TABLE public.brk_aantekeningenkadastraleobjecten OWNER TO gobtest;
 
 --
--- Name: brk_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_aantekeningenkadastraleobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_aantekeningenkadastraleobjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_aantekeningenkadastraleobjecten AS
+ SELECT brk_aantekeningenkadastraleobjecten.volgnummer,
+    brk_aantekeningenkadastraleobjecten.registratiedatum,
+    brk_aantekeningenkadastraleobjecten.id,
+    brk_aantekeningenkadastraleobjecten.begin_geldigheid,
+    brk_aantekeningenkadastraleobjecten.eind_geldigheid,
+    brk_aantekeningenkadastraleobjecten.identificatie,
+    brk_aantekeningenkadastraleobjecten.aard,
+    brk_aantekeningenkadastraleobjecten.omschrijving,
+    brk_aantekeningenkadastraleobjecten.heeft_betrokken_persoon,
+    brk_aantekeningenkadastraleobjecten.heeft_betrekking_op_kadastraal_object,
+    brk_aantekeningenkadastraleobjecten.is_gebaseerd_op_stukdeel,
+    brk_aantekeningenkadastraleobjecten.einddatum,
+    brk_aantekeningenkadastraleobjecten._source,
+    brk_aantekeningenkadastraleobjecten._application,
+    brk_aantekeningenkadastraleobjecten._source_id,
+    brk_aantekeningenkadastraleobjecten._last_event,
+    brk_aantekeningenkadastraleobjecten._hash,
+    brk_aantekeningenkadastraleobjecten._version,
+    brk_aantekeningenkadastraleobjecten._date_created,
+    brk_aantekeningenkadastraleobjecten._date_confirmed,
+    brk_aantekeningenkadastraleobjecten._date_modified,
+    brk_aantekeningenkadastraleobjecten._date_deleted,
+    brk_aantekeningenkadastraleobjecten._expiration_date,
+    brk_aantekeningenkadastraleobjecten._gobid,
+    brk_aantekeningenkadastraleobjecten._id,
+    brk_aantekeningenkadastraleobjecten.toestandsdatum,
+    brk_aantekeningenkadastraleobjecten._tid
+   FROM public.brk_aantekeningenkadastraleobjecten;
 
 
-ALTER TABLE public.brk_aantekeningenkadastraleobjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_aantekeningenkadastraleobjecten__gobid_seq OWNED BY public.brk_aantekeningenkadastraleobjecten._gobid;
-
+ALTER TABLE legacy.brk_aantekeningenkadastraleobjecten OWNER TO gobtest;
 
 --
 -- Name: brk_aantekeningenrechten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2545,26 +3028,37 @@ CREATE TABLE public.brk_aantekeningenrechten (
 ALTER TABLE public.brk_aantekeningenrechten OWNER TO gobtest;
 
 --
--- Name: brk_aantekeningenrechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_aantekeningenrechten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_aantekeningenrechten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_aantekeningenrechten AS
+ SELECT brk_aantekeningenrechten.identificatie,
+    brk_aantekeningenrechten.aard,
+    brk_aantekeningenrechten.omschrijving,
+    brk_aantekeningenrechten.betrokken_tenaamstelling,
+    brk_aantekeningenrechten.heeft_betrokken_persoon,
+    brk_aantekeningenrechten.is_gebaseerd_op_stukdeel,
+    brk_aantekeningenrechten.einddatum,
+    brk_aantekeningenrechten._source,
+    brk_aantekeningenrechten._application,
+    brk_aantekeningenrechten._source_id,
+    brk_aantekeningenrechten._last_event,
+    brk_aantekeningenrechten._hash,
+    brk_aantekeningenrechten._version,
+    brk_aantekeningenrechten._date_created,
+    brk_aantekeningenrechten._date_confirmed,
+    brk_aantekeningenrechten._date_modified,
+    brk_aantekeningenrechten._date_deleted,
+    brk_aantekeningenrechten._expiration_date,
+    brk_aantekeningenrechten._gobid,
+    brk_aantekeningenrechten._id,
+    brk_aantekeningenrechten.id,
+    brk_aantekeningenrechten.toestandsdatum,
+    brk_aantekeningenrechten._tid
+   FROM public.brk_aantekeningenrechten;
 
 
-ALTER TABLE public.brk_aantekeningenrechten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_aantekeningenrechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_aantekeningenrechten__gobid_seq OWNED BY public.brk_aantekeningenrechten._gobid;
-
+ALTER TABLE legacy.brk_aantekeningenrechten OWNER TO gobtest;
 
 --
 -- Name: brk_aardzakelijkerechten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2597,26 +3091,34 @@ CREATE TABLE public.brk_aardzakelijkerechten (
 ALTER TABLE public.brk_aardzakelijkerechten OWNER TO gobtest;
 
 --
--- Name: brk_aardzakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_aardzakelijkerechten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_aardzakelijkerechten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_aardzakelijkerechten AS
+ SELECT brk_aardzakelijkerechten.code,
+    brk_aardzakelijkerechten.waarde,
+    brk_aardzakelijkerechten.datum_vanaf,
+    brk_aardzakelijkerechten.datum_tot,
+    brk_aardzakelijkerechten.toelichting,
+    brk_aardzakelijkerechten.akr_code,
+    brk_aardzakelijkerechten._source,
+    brk_aardzakelijkerechten._application,
+    brk_aardzakelijkerechten._source_id,
+    brk_aardzakelijkerechten._last_event,
+    brk_aardzakelijkerechten._hash,
+    brk_aardzakelijkerechten._version,
+    brk_aardzakelijkerechten._date_created,
+    brk_aardzakelijkerechten._date_confirmed,
+    brk_aardzakelijkerechten._date_modified,
+    brk_aardzakelijkerechten._date_deleted,
+    brk_aardzakelijkerechten._expiration_date,
+    brk_aardzakelijkerechten._gobid,
+    brk_aardzakelijkerechten._id,
+    brk_aardzakelijkerechten._tid
+   FROM public.brk_aardzakelijkerechten;
 
 
-ALTER TABLE public.brk_aardzakelijkerechten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_aardzakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_aardzakelijkerechten__gobid_seq OWNED BY public.brk_aardzakelijkerechten._gobid;
-
+ALTER TABLE legacy.brk_aardzakelijkerechten OWNER TO gobtest;
 
 --
 -- Name: brk_gemeentes; Type: TABLE; Schema: public; Owner: gobtest
@@ -2650,26 +3152,35 @@ CREATE TABLE public.brk_gemeentes (
 ALTER TABLE public.brk_gemeentes OWNER TO gobtest;
 
 --
--- Name: brk_gemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_gemeentes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_gemeentes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_gemeentes AS
+ SELECT brk_gemeentes.identificatie,
+    brk_gemeentes.naam,
+    brk_gemeentes.begin_geldigheid,
+    brk_gemeentes.eind_geldigheid,
+    brk_gemeentes.geometrie,
+    brk_gemeentes._source,
+    brk_gemeentes._application,
+    brk_gemeentes._source_id,
+    brk_gemeentes._last_event,
+    brk_gemeentes._hash,
+    brk_gemeentes._version,
+    brk_gemeentes._date_created,
+    brk_gemeentes._date_confirmed,
+    brk_gemeentes._date_modified,
+    brk_gemeentes._date_deleted,
+    brk_gemeentes._expiration_date,
+    brk_gemeentes._gobid,
+    brk_gemeentes._id,
+    brk_gemeentes._tid,
+    brk_gemeentes.volgnummer,
+    brk_gemeentes.registratiedatum
+   FROM public.brk_gemeentes;
 
 
-ALTER TABLE public.brk_gemeentes__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_gemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_gemeentes__gobid_seq OWNED BY public.brk_gemeentes._gobid;
-
+ALTER TABLE legacy.brk_gemeentes OWNER TO gobtest;
 
 --
 -- Name: brk_kadastralegemeentecodes; Type: TABLE; Schema: public; Owner: gobtest
@@ -2699,26 +3210,31 @@ CREATE TABLE public.brk_kadastralegemeentecodes (
 ALTER TABLE public.brk_kadastralegemeentecodes OWNER TO gobtest;
 
 --
--- Name: brk_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastralegemeentecodes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastralegemeentecodes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastralegemeentecodes AS
+ SELECT brk_kadastralegemeentecodes.identificatie,
+    brk_kadastralegemeentecodes.is_onderdeel_van_kadastralegemeente,
+    brk_kadastralegemeentecodes.geometrie,
+    brk_kadastralegemeentecodes._source,
+    brk_kadastralegemeentecodes._application,
+    brk_kadastralegemeentecodes._source_id,
+    brk_kadastralegemeentecodes._last_event,
+    brk_kadastralegemeentecodes._hash,
+    brk_kadastralegemeentecodes._version,
+    brk_kadastralegemeentecodes._date_created,
+    brk_kadastralegemeentecodes._date_confirmed,
+    brk_kadastralegemeentecodes._date_modified,
+    brk_kadastralegemeentecodes._date_deleted,
+    brk_kadastralegemeentecodes._expiration_date,
+    brk_kadastralegemeentecodes._gobid,
+    brk_kadastralegemeentecodes._id,
+    brk_kadastralegemeentecodes._tid
+   FROM public.brk_kadastralegemeentecodes;
 
 
-ALTER TABLE public.brk_kadastralegemeentecodes__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastralegemeentecodes__gobid_seq OWNED BY public.brk_kadastralegemeentecodes._gobid;
-
+ALTER TABLE legacy.brk_kadastralegemeentecodes OWNER TO gobtest;
 
 --
 -- Name: brk_kadastralegemeentes; Type: TABLE; Schema: public; Owner: gobtest
@@ -2748,26 +3264,31 @@ CREATE TABLE public.brk_kadastralegemeentes (
 ALTER TABLE public.brk_kadastralegemeentes OWNER TO gobtest;
 
 --
--- Name: brk_kadastralegemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastralegemeentes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastralegemeentes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastralegemeentes AS
+ SELECT brk_kadastralegemeentes.identificatie,
+    brk_kadastralegemeentes.ligt_in_gemeente,
+    brk_kadastralegemeentes.geometrie,
+    brk_kadastralegemeentes._source,
+    brk_kadastralegemeentes._application,
+    brk_kadastralegemeentes._source_id,
+    brk_kadastralegemeentes._last_event,
+    brk_kadastralegemeentes._hash,
+    brk_kadastralegemeentes._version,
+    brk_kadastralegemeentes._date_created,
+    brk_kadastralegemeentes._date_confirmed,
+    brk_kadastralegemeentes._date_modified,
+    brk_kadastralegemeentes._date_deleted,
+    brk_kadastralegemeentes._expiration_date,
+    brk_kadastralegemeentes._gobid,
+    brk_kadastralegemeentes._id,
+    brk_kadastralegemeentes._tid
+   FROM public.brk_kadastralegemeentes;
 
 
-ALTER TABLE public.brk_kadastralegemeentes__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastralegemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastralegemeentes__gobid_seq OWNED BY public.brk_kadastralegemeentes._gobid;
-
+ALTER TABLE legacy.brk_kadastralegemeentes OWNER TO gobtest;
 
 --
 -- Name: brk_kadastraleobjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2829,26 +3350,63 @@ CREATE TABLE public.brk_kadastraleobjecten (
 ALTER TABLE public.brk_kadastraleobjecten OWNER TO gobtest;
 
 --
--- Name: brk_kadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastraleobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastraleobjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastraleobjecten AS
+ SELECT brk_kadastraleobjecten._gobid,
+    brk_kadastraleobjecten._id,
+    brk_kadastraleobjecten._source,
+    brk_kadastraleobjecten._application,
+    brk_kadastraleobjecten._source_id,
+    brk_kadastraleobjecten._last_event,
+    brk_kadastraleobjecten._hash,
+    brk_kadastraleobjecten._version,
+    brk_kadastraleobjecten._date_created,
+    brk_kadastraleobjecten._date_confirmed,
+    brk_kadastraleobjecten._date_modified,
+    brk_kadastraleobjecten._date_deleted,
+    brk_kadastraleobjecten._expiration_date,
+    brk_kadastraleobjecten.volgnummer,
+    brk_kadastraleobjecten.registratiedatum,
+    brk_kadastraleobjecten.identificatie,
+    brk_kadastraleobjecten.aangeduid_door_gemeente,
+    brk_kadastraleobjecten.aangeduid_door_kadastralegemeente,
+    brk_kadastraleobjecten.aangeduid_door_kadastralegemeentecode,
+    brk_kadastraleobjecten.aangeduid_door_kadastralesectie,
+    brk_kadastraleobjecten.perceelnummer,
+    brk_kadastraleobjecten.indexletter,
+    brk_kadastraleobjecten.indexnummer,
+    brk_kadastraleobjecten.gemeente,
+    brk_kadastraleobjecten.soort_grootte,
+    brk_kadastraleobjecten.grootte,
+    brk_kadastraleobjecten.soort_cultuur_bebouwd,
+    brk_kadastraleobjecten.soort_cultuur_onbebouwd,
+    brk_kadastraleobjecten.status,
+    brk_kadastraleobjecten.geometrie,
+    brk_kadastraleobjecten.plaatscoordinaten,
+    brk_kadastraleobjecten.perceelnummer_rotatie,
+    brk_kadastraleobjecten.perceelnummer_verschuiving,
+    brk_kadastraleobjecten.indicatie_voorlopige_geometrie,
+    brk_kadastraleobjecten.koopsom,
+    brk_kadastraleobjecten.koopsom_valutacode,
+    brk_kadastraleobjecten.koopjaar,
+    brk_kadastraleobjecten.indicatie_meer_objecten,
+    brk_kadastraleobjecten.toestandsdatum,
+    brk_kadastraleobjecten.begin_geldigheid,
+    brk_kadastraleobjecten.eind_geldigheid,
+    brk_kadastraleobjecten.in_onderzoek,
+    brk_kadastraleobjecten.is_ontstaan_uit_g_perceel,
+    brk_kadastraleobjecten.heeft_een_relatie_met_verblijfsobject,
+    brk_kadastraleobjecten.id,
+    brk_kadastraleobjecten.is_ontstaan_uit_kadastraalobject,
+    brk_kadastraleobjecten.bijpijling_geometrie,
+    brk_kadastraleobjecten.kadastrale_aanduiding,
+    brk_kadastraleobjecten._tid
+   FROM public.brk_kadastraleobjecten;
 
 
-ALTER TABLE public.brk_kadastraleobjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastraleobjecten__gobid_seq OWNED BY public.brk_kadastraleobjecten._gobid;
-
+ALTER TABLE legacy.brk_kadastraleobjecten OWNER TO gobtest;
 
 --
 -- Name: brk_kadastralesecties; Type: TABLE; Schema: public; Owner: gobtest
@@ -2879,26 +3437,32 @@ CREATE TABLE public.brk_kadastralesecties (
 ALTER TABLE public.brk_kadastralesecties OWNER TO gobtest;
 
 --
--- Name: brk_kadastralesecties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastralesecties; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastralesecties__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastralesecties AS
+ SELECT brk_kadastralesecties.identificatie,
+    brk_kadastralesecties.code,
+    brk_kadastralesecties.geometrie,
+    brk_kadastralesecties._source,
+    brk_kadastralesecties._application,
+    brk_kadastralesecties._source_id,
+    brk_kadastralesecties._last_event,
+    brk_kadastralesecties._hash,
+    brk_kadastralesecties._version,
+    brk_kadastralesecties._date_created,
+    brk_kadastralesecties._date_confirmed,
+    brk_kadastralesecties._date_modified,
+    brk_kadastralesecties._date_deleted,
+    brk_kadastralesecties._expiration_date,
+    brk_kadastralesecties._gobid,
+    brk_kadastralesecties._id,
+    brk_kadastralesecties.is_onderdeel_van_kadastralegemeentecode,
+    brk_kadastralesecties._tid
+   FROM public.brk_kadastralesecties;
 
 
-ALTER TABLE public.brk_kadastralesecties__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastralesecties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastralesecties__gobid_seq OWNED BY public.brk_kadastralesecties._gobid;
-
+ALTER TABLE legacy.brk_kadastralesecties OWNER TO gobtest;
 
 --
 -- Name: brk_kadastralesubjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2954,26 +3518,57 @@ CREATE TABLE public.brk_kadastralesubjecten (
 ALTER TABLE public.brk_kadastralesubjecten OWNER TO gobtest;
 
 --
--- Name: brk_kadastralesubjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastralesubjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastralesubjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastralesubjecten AS
+ SELECT brk_kadastralesubjecten.identificatie,
+    brk_kadastralesubjecten.type_subject,
+    brk_kadastralesubjecten.beschikkingsbevoegdheid,
+    brk_kadastralesubjecten.heeft_bsn_voor,
+    brk_kadastralesubjecten.voornamen,
+    brk_kadastralesubjecten.voorvoegsels,
+    brk_kadastralesubjecten.geslachtsnaam,
+    brk_kadastralesubjecten.geslacht,
+    brk_kadastralesubjecten.naam_gebruik,
+    brk_kadastralesubjecten.geboortedatum,
+    brk_kadastralesubjecten.geboorteplaats,
+    brk_kadastralesubjecten.geboorteland,
+    brk_kadastralesubjecten.datum_overlijden,
+    brk_kadastralesubjecten.indicatie_overleden,
+    brk_kadastralesubjecten.voornamen_partner,
+    brk_kadastralesubjecten.voorvoegsels_partner,
+    brk_kadastralesubjecten.geslachtsnaam_partner,
+    brk_kadastralesubjecten.heeft_rsin_voor,
+    brk_kadastralesubjecten.heeft_kvknummer_voor,
+    brk_kadastralesubjecten.rechtsvorm,
+    brk_kadastralesubjecten.statutaire_naam,
+    brk_kadastralesubjecten.statutaire_zetel,
+    brk_kadastralesubjecten.woonadres,
+    brk_kadastralesubjecten.land_waarnaar_vertrokken,
+    brk_kadastralesubjecten.woonadres_buitenland,
+    brk_kadastralesubjecten.postadres,
+    brk_kadastralesubjecten.postadres_buitenland,
+    brk_kadastralesubjecten.postadres_postbus,
+    brk_kadastralesubjecten._source,
+    brk_kadastralesubjecten._application,
+    brk_kadastralesubjecten._source_id,
+    brk_kadastralesubjecten._last_event,
+    brk_kadastralesubjecten._hash,
+    brk_kadastralesubjecten._version,
+    brk_kadastralesubjecten._date_created,
+    brk_kadastralesubjecten._date_confirmed,
+    brk_kadastralesubjecten._date_modified,
+    brk_kadastralesubjecten._date_deleted,
+    brk_kadastralesubjecten._expiration_date,
+    brk_kadastralesubjecten._gobid,
+    brk_kadastralesubjecten._id,
+    brk_kadastralesubjecten.id,
+    brk_kadastralesubjecten._tid
+   FROM public.brk_kadastralesubjecten;
 
 
-ALTER TABLE public.brk_kadastralesubjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastralesubjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastralesubjecten__gobid_seq OWNED BY public.brk_kadastralesubjecten._gobid;
-
+ALTER TABLE legacy.brk_kadastralesubjecten OWNER TO gobtest;
 
 --
 -- Name: brk_meta; Type: TABLE; Schema: public; Owner: gobtest
@@ -3002,26 +3597,30 @@ CREATE TABLE public.brk_meta (
 ALTER TABLE public.brk_meta OWNER TO gobtest;
 
 --
--- Name: brk_meta__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_meta; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_meta__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_meta AS
+ SELECT brk_meta.id,
+    brk_meta.kennisgevingsdatum,
+    brk_meta._source,
+    brk_meta._application,
+    brk_meta._source_id,
+    brk_meta._last_event,
+    brk_meta._hash,
+    brk_meta._version,
+    brk_meta._date_created,
+    brk_meta._date_confirmed,
+    brk_meta._date_modified,
+    brk_meta._date_deleted,
+    brk_meta._expiration_date,
+    brk_meta._gobid,
+    brk_meta._id,
+    brk_meta._tid
+   FROM public.brk_meta;
 
 
-ALTER TABLE public.brk_meta__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_meta__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_meta__gobid_seq OWNED BY public.brk_meta._gobid;
-
+ALTER TABLE legacy.brk_meta OWNER TO gobtest;
 
 --
 -- Name: brk_stukdelen; Type: TABLE; Schema: public; Owner: gobtest
@@ -3065,26 +3664,45 @@ CREATE TABLE public.brk_stukdelen (
 ALTER TABLE public.brk_stukdelen OWNER TO gobtest;
 
 --
--- Name: brk_stukdelen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_stukdelen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_stukdelen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_stukdelen AS
+ SELECT brk_stukdelen.id,
+    brk_stukdelen.identificatie,
+    brk_stukdelen.aard,
+    brk_stukdelen.bedrag_transactie,
+    brk_stukdelen.is_bron_voor_tenaamstelling,
+    brk_stukdelen.is_bron_voor_aantekening_kadastraal_object,
+    brk_stukdelen.is_bron_voor_aantekening_recht,
+    brk_stukdelen.is_bron_voor_zakelijk_recht,
+    brk_stukdelen.stukidentificatie,
+    brk_stukdelen.portefeuillenummer_akr,
+    brk_stukdelen.tijdstip_aanbieding_stuk,
+    brk_stukdelen.reeks,
+    brk_stukdelen.volgnummer_stuk,
+    brk_stukdelen.registercode_stuk,
+    brk_stukdelen.soort_register_stuk,
+    brk_stukdelen.deel_soort_stuk,
+    brk_stukdelen._source,
+    brk_stukdelen._application,
+    brk_stukdelen._source_id,
+    brk_stukdelen._last_event,
+    brk_stukdelen._hash,
+    brk_stukdelen._version,
+    brk_stukdelen._date_created,
+    brk_stukdelen._date_confirmed,
+    brk_stukdelen._date_modified,
+    brk_stukdelen._date_deleted,
+    brk_stukdelen._expiration_date,
+    brk_stukdelen._gobid,
+    brk_stukdelen._id,
+    brk_stukdelen.toestandsdatum,
+    brk_stukdelen._tid
+   FROM public.brk_stukdelen;
 
 
-ALTER TABLE public.brk_stukdelen__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_stukdelen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_stukdelen__gobid_seq OWNED BY public.brk_stukdelen._gobid;
-
+ALTER TABLE legacy.brk_stukdelen OWNER TO gobtest;
 
 --
 -- Name: brk_tenaamstellingen; Type: TABLE; Schema: public; Owner: gobtest
@@ -3125,26 +3743,42 @@ CREATE TABLE public.brk_tenaamstellingen (
 ALTER TABLE public.brk_tenaamstellingen OWNER TO gobtest;
 
 --
--- Name: brk_tenaamstellingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_tenaamstellingen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_tenaamstellingen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_tenaamstellingen AS
+ SELECT brk_tenaamstellingen.identificatie,
+    brk_tenaamstellingen.van_kadastraalsubject,
+    brk_tenaamstellingen.aandeel,
+    brk_tenaamstellingen.geldt_voor,
+    brk_tenaamstellingen.burgerlijke_staat_ten_tijde_van_verkrijging,
+    brk_tenaamstellingen.verkregen_namens_samenwerkingsverband,
+    brk_tenaamstellingen.in_onderzoek,
+    brk_tenaamstellingen.van_zakelijkrecht,
+    brk_tenaamstellingen._source,
+    brk_tenaamstellingen._application,
+    brk_tenaamstellingen._source_id,
+    brk_tenaamstellingen._last_event,
+    brk_tenaamstellingen._hash,
+    brk_tenaamstellingen._version,
+    brk_tenaamstellingen._date_created,
+    brk_tenaamstellingen._date_confirmed,
+    brk_tenaamstellingen._date_modified,
+    brk_tenaamstellingen._date_deleted,
+    brk_tenaamstellingen._expiration_date,
+    brk_tenaamstellingen._gobid,
+    brk_tenaamstellingen._id,
+    brk_tenaamstellingen.begin_geldigheid,
+    brk_tenaamstellingen.eind_geldigheid,
+    brk_tenaamstellingen.volgnummer,
+    brk_tenaamstellingen.id,
+    brk_tenaamstellingen.is_gebaseerd_op_stukdeel,
+    brk_tenaamstellingen.toestandsdatum,
+    brk_tenaamstellingen._tid
+   FROM public.brk_tenaamstellingen;
 
 
-ALTER TABLE public.brk_tenaamstellingen__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_tenaamstellingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_tenaamstellingen__gobid_seq OWNED BY public.brk_tenaamstellingen._gobid;
-
+ALTER TABLE legacy.brk_tenaamstellingen OWNER TO gobtest;
 
 --
 -- Name: brk_zakelijkerechten; Type: TABLE; Schema: public; Owner: gobtest
@@ -3190,6 +3824,2411 @@ CREATE TABLE public.brk_zakelijkerechten (
 
 
 ALTER TABLE public.brk_zakelijkerechten OWNER TO gobtest;
+
+--
+-- Name: brk_zakelijkerechten; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.brk_zakelijkerechten AS
+ SELECT brk_zakelijkerechten.identificatie,
+    brk_zakelijkerechten.is_beperkt_tot,
+    brk_zakelijkerechten.appartementsrechtsplitsingidentificatie,
+    brk_zakelijkerechten.appartementsrechtsplitsingtype,
+    brk_zakelijkerechten.einddatum_appartementsrechtsplitsing,
+    brk_zakelijkerechten.indicatie_actueel_appartementsrechtsplitsing,
+    brk_zakelijkerechten.aard_zakelijk_recht,
+    brk_zakelijkerechten.akr_aard_zakelijk_recht,
+    brk_zakelijkerechten.toestandsdatum,
+    brk_zakelijkerechten._source,
+    brk_zakelijkerechten._application,
+    brk_zakelijkerechten._source_id,
+    brk_zakelijkerechten._last_event,
+    brk_zakelijkerechten._hash,
+    brk_zakelijkerechten._version,
+    brk_zakelijkerechten._date_created,
+    brk_zakelijkerechten._date_confirmed,
+    brk_zakelijkerechten._date_modified,
+    brk_zakelijkerechten._date_deleted,
+    brk_zakelijkerechten._expiration_date,
+    brk_zakelijkerechten._gobid,
+    brk_zakelijkerechten._id,
+    brk_zakelijkerechten.begin_geldigheid,
+    brk_zakelijkerechten.eind_geldigheid,
+    brk_zakelijkerechten.registratiedatum,
+    brk_zakelijkerechten.volgnummer,
+    brk_zakelijkerechten.belast_met_zakelijkerechten,
+    brk_zakelijkerechten.belast_zakelijkerechten,
+    brk_zakelijkerechten.betrokken_bij_zakelijkerechten,
+    brk_zakelijkerechten.ontstaan_uit_zakelijkerechten,
+    brk_zakelijkerechten.rust_op_kadastraalobject,
+    brk_zakelijkerechten.id,
+    brk_zakelijkerechten.betrokken_bij_appartementsrechtsplitsing_vve,
+    brk_zakelijkerechten.ontstaan_uit_appartementsrechtsplitsing_vve,
+    brk_zakelijkerechten._tid
+   FROM public.brk_zakelijkerechten;
+
+
+ALTER TABLE legacy.brk_zakelijkerechten OWNER TO gobtest;
+
+--
+-- Name: gebieden_bouwblokken; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.gebieden_bouwblokken (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    code character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    ligt_in_gebieden_buurt jsonb,
+    geometrie public.geometry(Polygon,28992),
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.gebieden_bouwblokken OWNER TO gobtest;
+
+--
+-- Name: gebieden_bouwblokken; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.gebieden_bouwblokken AS
+ SELECT gebieden_bouwblokken.volgnummer,
+    gebieden_bouwblokken.registratiedatum,
+    gebieden_bouwblokken.begin_geldigheid,
+    gebieden_bouwblokken.eind_geldigheid,
+    gebieden_bouwblokken.identificatie,
+    gebieden_bouwblokken.code,
+    gebieden_bouwblokken.ligt_in_gebieden_buurt AS ligt_in_buurt,
+    gebieden_bouwblokken.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_bouwblokken.geometrie,
+    gebieden_bouwblokken._source,
+    gebieden_bouwblokken._application,
+    gebieden_bouwblokken._source_id,
+    gebieden_bouwblokken._last_event,
+    gebieden_bouwblokken._hash,
+    gebieden_bouwblokken._version,
+    gebieden_bouwblokken._date_created,
+    gebieden_bouwblokken._date_confirmed,
+    gebieden_bouwblokken._date_modified,
+    gebieden_bouwblokken._date_deleted,
+    gebieden_bouwblokken._expiration_date,
+    gebieden_bouwblokken._gobid,
+    gebieden_bouwblokken._id,
+    gebieden_bouwblokken._tid
+   FROM public.gebieden_bouwblokken;
+
+
+ALTER TABLE legacy.gebieden_bouwblokken OWNER TO gobtest;
+
+--
+-- Name: gebieden_buurten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.gebieden_buurten (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    naam character varying,
+    code character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    documentdatum date,
+    documentnummer character varying,
+    ligt_in_gebieden_wijk jsonb,
+    geometrie public.geometry(Polygon,28992),
+    _application character varying,
+    cbs_code character varying,
+    _hash character varying,
+    ligt_in_gebieden_ggpgebied jsonb,
+    ligt_in_gebieden_ggwgebied jsonb,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.gebieden_buurten OWNER TO gobtest;
+
+--
+-- Name: gebieden_buurten; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.gebieden_buurten AS
+ SELECT gebieden_buurten.volgnummer,
+    gebieden_buurten.registratiedatum,
+    gebieden_buurten.begin_geldigheid,
+    gebieden_buurten.eind_geldigheid,
+    gebieden_buurten.identificatie,
+    gebieden_buurten.naam,
+    gebieden_buurten.code,
+    gebieden_buurten.documentdatum,
+    gebieden_buurten.documentnummer,
+    gebieden_buurten.cbs_code,
+    gebieden_buurten.ligt_in_gebieden_wijk AS ligt_in_wijk,
+    gebieden_buurten.geometrie,
+    gebieden_buurten.ligt_in_gebieden_ggpgebied AS ligt_in_ggpgebied,
+    gebieden_buurten.ligt_in_gebieden_ggwgebied AS ligt_in_ggwgebied,
+    gebieden_buurten.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_buurten._source,
+    gebieden_buurten._application,
+    gebieden_buurten._source_id,
+    gebieden_buurten._last_event,
+    gebieden_buurten._hash,
+    gebieden_buurten._version,
+    gebieden_buurten._date_created,
+    gebieden_buurten._date_confirmed,
+    gebieden_buurten._date_modified,
+    gebieden_buurten._date_deleted,
+    gebieden_buurten._expiration_date,
+    gebieden_buurten._gobid,
+    gebieden_buurten._id,
+    gebieden_buurten._tid
+   FROM public.gebieden_buurten;
+
+
+ALTER TABLE legacy.gebieden_buurten OWNER TO gobtest;
+
+--
+-- Name: gebieden_ggpgebieden; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.gebieden_ggpgebieden (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    naam character varying,
+    code character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    documentdatum date,
+    documentnummer character varying,
+    ligt_in_gebieden_stadsdeel jsonb,
+    bestaat_uit_gebieden_buurten jsonb,
+    geometrie public.geometry(Polygon,28992),
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.gebieden_ggpgebieden OWNER TO gobtest;
+
+--
+-- Name: gebieden_ggpgebieden; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.gebieden_ggpgebieden AS
+ SELECT gebieden_ggpgebieden.volgnummer,
+    gebieden_ggpgebieden.registratiedatum,
+    gebieden_ggpgebieden.begin_geldigheid,
+    gebieden_ggpgebieden.eind_geldigheid,
+    gebieden_ggpgebieden.identificatie,
+    gebieden_ggpgebieden.naam,
+    gebieden_ggpgebieden.code,
+    gebieden_ggpgebieden.documentdatum,
+    gebieden_ggpgebieden.documentnummer,
+    gebieden_ggpgebieden.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    gebieden_ggpgebieden.bestaat_uit_gebieden_buurten AS bestaat_uit_buurten,
+    gebieden_ggpgebieden.geometrie,
+    gebieden_ggpgebieden.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_ggpgebieden._source,
+    gebieden_ggpgebieden._application,
+    gebieden_ggpgebieden._source_id,
+    gebieden_ggpgebieden._last_event,
+    gebieden_ggpgebieden._hash,
+    gebieden_ggpgebieden._version,
+    gebieden_ggpgebieden._date_created,
+    gebieden_ggpgebieden._date_confirmed,
+    gebieden_ggpgebieden._date_modified,
+    gebieden_ggpgebieden._date_deleted,
+    gebieden_ggpgebieden._expiration_date,
+    gebieden_ggpgebieden._gobid,
+    gebieden_ggpgebieden._id,
+    gebieden_ggpgebieden._tid
+   FROM public.gebieden_ggpgebieden;
+
+
+ALTER TABLE legacy.gebieden_ggpgebieden OWNER TO gobtest;
+
+--
+-- Name: gebieden_ggwgebieden; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.gebieden_ggwgebieden (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    naam character varying,
+    code character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    documentdatum date,
+    documentnummer character varying,
+    ligt_in_gebieden_stadsdeel jsonb,
+    bestaat_uit_gebieden_buurten jsonb,
+    geometrie public.geometry(Polygon,28992),
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.gebieden_ggwgebieden OWNER TO gobtest;
+
+--
+-- Name: gebieden_ggwgebieden; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.gebieden_ggwgebieden AS
+ SELECT gebieden_ggwgebieden.volgnummer,
+    gebieden_ggwgebieden.registratiedatum,
+    gebieden_ggwgebieden.begin_geldigheid,
+    gebieden_ggwgebieden.eind_geldigheid,
+    gebieden_ggwgebieden.identificatie,
+    gebieden_ggwgebieden.naam,
+    gebieden_ggwgebieden.code,
+    gebieden_ggwgebieden.documentdatum,
+    gebieden_ggwgebieden.documentnummer,
+    gebieden_ggwgebieden.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    gebieden_ggwgebieden.bestaat_uit_gebieden_buurten AS bestaat_uit_buurten,
+    gebieden_ggwgebieden.geometrie,
+    gebieden_ggwgebieden.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_ggwgebieden._source,
+    gebieden_ggwgebieden._application,
+    gebieden_ggwgebieden._source_id,
+    gebieden_ggwgebieden._last_event,
+    gebieden_ggwgebieden._hash,
+    gebieden_ggwgebieden._version,
+    gebieden_ggwgebieden._date_created,
+    gebieden_ggwgebieden._date_confirmed,
+    gebieden_ggwgebieden._date_modified,
+    gebieden_ggwgebieden._date_deleted,
+    gebieden_ggwgebieden._expiration_date,
+    gebieden_ggwgebieden._gobid,
+    gebieden_ggwgebieden._id,
+    gebieden_ggwgebieden._tid
+   FROM public.gebieden_ggwgebieden;
+
+
+ALTER TABLE legacy.gebieden_ggwgebieden OWNER TO gobtest;
+
+--
+-- Name: gebieden_stadsdelen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.gebieden_stadsdelen (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    naam character varying,
+    code character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    documentdatum date,
+    documentnummer character varying,
+    ligt_in_brk_gemeente jsonb,
+    geometrie public.geometry(Polygon,28992),
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.gebieden_stadsdelen OWNER TO gobtest;
+
+--
+-- Name: gebieden_stadsdelen; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.gebieden_stadsdelen AS
+ SELECT gebieden_stadsdelen.volgnummer,
+    gebieden_stadsdelen.registratiedatum,
+    gebieden_stadsdelen.begin_geldigheid,
+    gebieden_stadsdelen.eind_geldigheid,
+    gebieden_stadsdelen.identificatie,
+    gebieden_stadsdelen.naam,
+    gebieden_stadsdelen.code,
+    gebieden_stadsdelen.documentdatum,
+    gebieden_stadsdelen.documentnummer,
+    gebieden_stadsdelen.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_stadsdelen.geometrie,
+    gebieden_stadsdelen._source,
+    gebieden_stadsdelen._application,
+    gebieden_stadsdelen._source_id,
+    gebieden_stadsdelen._last_event,
+    gebieden_stadsdelen._hash,
+    gebieden_stadsdelen._version,
+    gebieden_stadsdelen._date_created,
+    gebieden_stadsdelen._date_confirmed,
+    gebieden_stadsdelen._date_modified,
+    gebieden_stadsdelen._date_deleted,
+    gebieden_stadsdelen._expiration_date,
+    gebieden_stadsdelen._gobid,
+    gebieden_stadsdelen._id,
+    gebieden_stadsdelen._tid
+   FROM public.gebieden_stadsdelen;
+
+
+ALTER TABLE legacy.gebieden_stadsdelen OWNER TO gobtest;
+
+--
+-- Name: gebieden_wijken; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.gebieden_wijken (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    naam character varying,
+    code character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    documentdatum date,
+    documentnummer character varying,
+    ligt_in_gebieden_stadsdeel jsonb,
+    geometrie public.geometry(Polygon,28992),
+    _application character varying,
+    cbs_code character varying,
+    _hash character varying,
+    ligt_in_gebieden_ggwgebied jsonb,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    ligt_in_brk_gemeente jsonb,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.gebieden_wijken OWNER TO gobtest;
+
+--
+-- Name: gebieden_wijken; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.gebieden_wijken AS
+ SELECT gebieden_wijken.volgnummer,
+    gebieden_wijken.registratiedatum,
+    gebieden_wijken.begin_geldigheid,
+    gebieden_wijken.eind_geldigheid,
+    gebieden_wijken.identificatie,
+    gebieden_wijken.naam,
+    gebieden_wijken.code,
+    gebieden_wijken.documentdatum,
+    gebieden_wijken.documentnummer,
+    gebieden_wijken.cbs_code,
+    gebieden_wijken.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    gebieden_wijken.geometrie,
+    gebieden_wijken.ligt_in_gebieden_ggwgebied AS ligt_in_ggwgebied,
+    gebieden_wijken.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_wijken._source,
+    gebieden_wijken._application,
+    gebieden_wijken._source_id,
+    gebieden_wijken._last_event,
+    gebieden_wijken._hash,
+    gebieden_wijken._version,
+    gebieden_wijken._date_created,
+    gebieden_wijken._date_confirmed,
+    gebieden_wijken._date_modified,
+    gebieden_wijken._date_deleted,
+    gebieden_wijken._expiration_date,
+    gebieden_wijken._gobid,
+    gebieden_wijken._id,
+    gebieden_wijken._tid
+   FROM public.gebieden_wijken;
+
+
+ALTER TABLE legacy.gebieden_wijken OWNER TO gobtest;
+
+--
+-- Name: meetbouten_meetbouten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.meetbouten_meetbouten (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    locatie character varying,
+    status jsonb,
+    vervaldatum date,
+    merk jsonb,
+    x_coordinaat_muurvlak numeric,
+    y_coordinaat_muurvlak numeric,
+    windrichting character varying,
+    ligt_in_gebieden_bouwblok jsonb,
+    ligt_in_gebieden_buurt jsonb,
+    ligt_in_gebieden_stadsdeel jsonb,
+    geometrie public.geometry(Point,28992),
+    publiceerbaar boolean,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone,
+    nabij_adres character varying
+);
+
+
+ALTER TABLE public.meetbouten_meetbouten OWNER TO gobtest;
+
+--
+-- Name: meetbouten_meetbouten; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.meetbouten_meetbouten AS
+ SELECT meetbouten_meetbouten.identificatie,
+    json_build_object('bronwaarde', meetbouten_meetbouten.nabij_adres) AS nabij_nummeraanduiding,
+    meetbouten_meetbouten.locatie,
+    meetbouten_meetbouten.status,
+    meetbouten_meetbouten.vervaldatum,
+    meetbouten_meetbouten.merk,
+    meetbouten_meetbouten.x_coordinaat_muurvlak,
+    meetbouten_meetbouten.y_coordinaat_muurvlak,
+    meetbouten_meetbouten.windrichting,
+    meetbouten_meetbouten.ligt_in_gebieden_bouwblok AS ligt_in_bouwblok,
+    meetbouten_meetbouten.ligt_in_gebieden_buurt AS ligt_in_buurt,
+    meetbouten_meetbouten.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    meetbouten_meetbouten.geometrie,
+    meetbouten_meetbouten.publiceerbaar,
+    meetbouten_meetbouten._source,
+    meetbouten_meetbouten._application,
+    meetbouten_meetbouten._source_id,
+    meetbouten_meetbouten._last_event,
+    meetbouten_meetbouten._hash,
+    meetbouten_meetbouten._version,
+    meetbouten_meetbouten._date_created,
+    meetbouten_meetbouten._date_confirmed,
+    meetbouten_meetbouten._date_modified,
+    meetbouten_meetbouten._date_deleted,
+    meetbouten_meetbouten._expiration_date,
+    meetbouten_meetbouten._gobid,
+    meetbouten_meetbouten._id,
+    meetbouten_meetbouten._tid
+   FROM public.meetbouten_meetbouten;
+
+
+ALTER TABLE legacy.meetbouten_meetbouten OWNER TO gobtest;
+
+--
+-- Name: meetbouten_metingen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.meetbouten_metingen (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    hoort_bij_meetbouten_meetbout jsonb,
+    datum date,
+    type_meting character(1),
+    wijze_van_inwinnen jsonb,
+    hoogte_tov_nap numeric,
+    zakking numeric,
+    refereert_aan_meetbouten_referentiepunten jsonb,
+    zakkingssnelheid numeric,
+    zakking_cumulatief numeric,
+    is_gemeten_door character varying,
+    hoeveelste_meting integer,
+    aantal_dagen integer,
+    publiceerbaar boolean,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.meetbouten_metingen OWNER TO gobtest;
+
+--
+-- Name: meetbouten_metingen; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.meetbouten_metingen AS
+ SELECT meetbouten_metingen.identificatie,
+    meetbouten_metingen.hoort_bij_meetbouten_meetbout AS hoort_bij_meetbout,
+    meetbouten_metingen.datum,
+    meetbouten_metingen.type_meting,
+    meetbouten_metingen.wijze_van_inwinnen,
+    meetbouten_metingen.hoogte_tov_nap,
+    meetbouten_metingen.zakking,
+    meetbouten_metingen.refereert_aan_meetbouten_referentiepunten AS refereert_aan_referentiepunten,
+    meetbouten_metingen.zakkingssnelheid,
+    meetbouten_metingen.zakking_cumulatief,
+    meetbouten_metingen.is_gemeten_door,
+    meetbouten_metingen.hoeveelste_meting,
+    meetbouten_metingen.aantal_dagen,
+    meetbouten_metingen.publiceerbaar,
+    meetbouten_metingen._source,
+    meetbouten_metingen._application,
+    meetbouten_metingen._source_id,
+    meetbouten_metingen._last_event,
+    meetbouten_metingen._hash,
+    meetbouten_metingen._version,
+    meetbouten_metingen._date_created,
+    meetbouten_metingen._date_confirmed,
+    meetbouten_metingen._date_modified,
+    meetbouten_metingen._date_deleted,
+    meetbouten_metingen._expiration_date,
+    meetbouten_metingen._gobid,
+    meetbouten_metingen._id,
+    meetbouten_metingen._tid
+   FROM public.meetbouten_metingen;
+
+
+ALTER TABLE legacy.meetbouten_metingen OWNER TO gobtest;
+
+--
+-- Name: meetbouten_referentiepunten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.meetbouten_referentiepunten (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    locatie character varying,
+    hoogte_tov_nap numeric,
+    datum date,
+    status jsonb,
+    vervaldatum date,
+    merk jsonb,
+    x_coordinaat_muurvlak numeric,
+    y_coordinaat_muurvlak numeric,
+    windrichting character varying,
+    ligt_in_gebieden_bouwblok jsonb,
+    ligt_in_gebieden_buurt jsonb,
+    ligt_in_gebieden_stadsdeel jsonb,
+    geometrie public.geometry(Point,28992),
+    is_nap_peilmerk jsonb,
+    publiceerbaar boolean,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone,
+    nabij_adres character varying
+);
+
+
+ALTER TABLE public.meetbouten_referentiepunten OWNER TO gobtest;
+
+--
+-- Name: meetbouten_referentiepunten; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.meetbouten_referentiepunten AS
+ SELECT meetbouten_referentiepunten.identificatie,
+    json_build_object('bronwaarde', meetbouten_referentiepunten.nabij_adres) AS nabij_nummeraanduiding,
+    meetbouten_referentiepunten.locatie,
+    meetbouten_referentiepunten.hoogte_tov_nap,
+    meetbouten_referentiepunten.datum,
+    meetbouten_referentiepunten.status,
+    meetbouten_referentiepunten.vervaldatum,
+    meetbouten_referentiepunten.merk,
+    meetbouten_referentiepunten.x_coordinaat_muurvlak,
+    meetbouten_referentiepunten.y_coordinaat_muurvlak,
+    meetbouten_referentiepunten.windrichting,
+    meetbouten_referentiepunten.ligt_in_gebieden_bouwblok AS ligt_in_bouwblok,
+    meetbouten_referentiepunten.ligt_in_gebieden_buurt AS ligt_in_buurt,
+    meetbouten_referentiepunten.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    meetbouten_referentiepunten.geometrie,
+    meetbouten_referentiepunten.is_nap_peilmerk,
+    meetbouten_referentiepunten.publiceerbaar,
+    meetbouten_referentiepunten._source,
+    meetbouten_referentiepunten._application,
+    meetbouten_referentiepunten._source_id,
+    meetbouten_referentiepunten._last_event,
+    meetbouten_referentiepunten._hash,
+    meetbouten_referentiepunten._version,
+    meetbouten_referentiepunten._date_created,
+    meetbouten_referentiepunten._date_confirmed,
+    meetbouten_referentiepunten._date_modified,
+    meetbouten_referentiepunten._date_deleted,
+    meetbouten_referentiepunten._expiration_date,
+    meetbouten_referentiepunten._gobid,
+    meetbouten_referentiepunten._id,
+    meetbouten_referentiepunten._tid
+   FROM public.meetbouten_referentiepunten;
+
+
+ALTER TABLE legacy.meetbouten_referentiepunten OWNER TO gobtest;
+
+--
+-- Name: meetbouten_rollagen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.meetbouten_rollagen (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    is_gemeten_van_gebieden_bouwblok jsonb,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.meetbouten_rollagen OWNER TO gobtest;
+
+--
+-- Name: meetbouten_rollagen; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.meetbouten_rollagen AS
+ SELECT meetbouten_rollagen.identificatie,
+    meetbouten_rollagen.is_gemeten_van_gebieden_bouwblok AS is_gemeten_van_bouwblok,
+    meetbouten_rollagen._source,
+    meetbouten_rollagen._application,
+    meetbouten_rollagen._source_id,
+    meetbouten_rollagen._last_event,
+    meetbouten_rollagen._hash,
+    meetbouten_rollagen._version,
+    meetbouten_rollagen._date_created,
+    meetbouten_rollagen._date_confirmed,
+    meetbouten_rollagen._date_modified,
+    meetbouten_rollagen._date_deleted,
+    meetbouten_rollagen._expiration_date,
+    meetbouten_rollagen._gobid,
+    meetbouten_rollagen._id,
+    meetbouten_rollagen._tid
+   FROM public.meetbouten_rollagen;
+
+
+ALTER TABLE legacy.meetbouten_rollagen OWNER TO gobtest;
+
+--
+-- Name: nap_peilmerken; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.nap_peilmerken (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    hoogte_tov_nap numeric,
+    jaar integer,
+    omschrijving character varying,
+    windrichting character varying,
+    x_coordinaat_muurvlak numeric,
+    y_coordinaat_muurvlak numeric,
+    rws_nummer character varying,
+    geometrie public.geometry(Point,28992),
+    vervaldatum date,
+    ligt_in_gebieden_bouwblok jsonb,
+    publiceerbaar boolean,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    merk_code character varying,
+    merk_omschrijving character varying,
+    status_code integer,
+    status_omschrijving character varying,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.nap_peilmerken OWNER TO gobtest;
+
+--
+-- Name: nap_peilmerken; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.nap_peilmerken AS
+ SELECT nap_peilmerken.identificatie,
+    nap_peilmerken.hoogte_tov_nap,
+    nap_peilmerken.jaar,
+    jsonb_build_object('code', nap_peilmerken.merk_code, 'omschrijving', nap_peilmerken.merk_omschrijving) AS merk,
+    nap_peilmerken.omschrijving,
+    nap_peilmerken.windrichting,
+    nap_peilmerken.x_coordinaat_muurvlak,
+    nap_peilmerken.y_coordinaat_muurvlak,
+    nap_peilmerken.rws_nummer,
+    nap_peilmerken.geometrie,
+    jsonb_build_object('code', nap_peilmerken.status_code, 'omschrijving', nap_peilmerken.status_omschrijving) AS status,
+    nap_peilmerken.vervaldatum,
+    nap_peilmerken.ligt_in_gebieden_bouwblok AS ligt_in_bouwblok,
+    nap_peilmerken.publiceerbaar,
+    nap_peilmerken._source,
+    nap_peilmerken._application,
+    nap_peilmerken._source_id,
+    nap_peilmerken._last_event,
+    nap_peilmerken._hash,
+    nap_peilmerken._version,
+    nap_peilmerken._date_created,
+    nap_peilmerken._date_confirmed,
+    nap_peilmerken._date_modified,
+    nap_peilmerken._date_deleted,
+    nap_peilmerken._expiration_date,
+    nap_peilmerken._gobid,
+    nap_peilmerken._id,
+    nap_peilmerken._tid
+   FROM public.nap_peilmerken;
+
+
+ALTER TABLE legacy.nap_peilmerken OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_collapsed_a; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_collapsed_a (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    reference jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_collapsed_a OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_collapsed_a; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_collapsed_a AS
+ SELECT test_catalogue_rel_collapsed_a.volgnummer,
+    test_catalogue_rel_collapsed_a.registratiedatum,
+    test_catalogue_rel_collapsed_a.id,
+    test_catalogue_rel_collapsed_a.identificatie,
+    test_catalogue_rel_collapsed_a.begin_geldigheid,
+    test_catalogue_rel_collapsed_a.eind_geldigheid,
+    test_catalogue_rel_collapsed_a.reference,
+    test_catalogue_rel_collapsed_a._source,
+    test_catalogue_rel_collapsed_a._application,
+    test_catalogue_rel_collapsed_a._source_id,
+    test_catalogue_rel_collapsed_a._last_event,
+    test_catalogue_rel_collapsed_a._hash,
+    test_catalogue_rel_collapsed_a._version,
+    test_catalogue_rel_collapsed_a._date_created,
+    test_catalogue_rel_collapsed_a._date_confirmed,
+    test_catalogue_rel_collapsed_a._date_modified,
+    test_catalogue_rel_collapsed_a._date_deleted,
+    test_catalogue_rel_collapsed_a._expiration_date,
+    test_catalogue_rel_collapsed_a._gobid,
+    test_catalogue_rel_collapsed_a._id,
+    test_catalogue_rel_collapsed_a._tid
+   FROM public.test_catalogue_rel_collapsed_a;
+
+
+ALTER TABLE legacy.test_catalogue_rel_collapsed_a OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_collapsed_b; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_collapsed_b (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_collapsed_b OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_collapsed_b; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_collapsed_b AS
+ SELECT test_catalogue_rel_collapsed_b.volgnummer,
+    test_catalogue_rel_collapsed_b.registratiedatum,
+    test_catalogue_rel_collapsed_b.id,
+    test_catalogue_rel_collapsed_b.identificatie,
+    test_catalogue_rel_collapsed_b.begin_geldigheid,
+    test_catalogue_rel_collapsed_b.eind_geldigheid,
+    test_catalogue_rel_collapsed_b._source,
+    test_catalogue_rel_collapsed_b._application,
+    test_catalogue_rel_collapsed_b._source_id,
+    test_catalogue_rel_collapsed_b._last_event,
+    test_catalogue_rel_collapsed_b._hash,
+    test_catalogue_rel_collapsed_b._version,
+    test_catalogue_rel_collapsed_b._date_created,
+    test_catalogue_rel_collapsed_b._date_confirmed,
+    test_catalogue_rel_collapsed_b._date_modified,
+    test_catalogue_rel_collapsed_b._date_deleted,
+    test_catalogue_rel_collapsed_b._expiration_date,
+    test_catalogue_rel_collapsed_b._gobid,
+    test_catalogue_rel_collapsed_b._id,
+    test_catalogue_rel_collapsed_b._tid
+   FROM public.test_catalogue_rel_collapsed_b;
+
+
+ALTER TABLE legacy.test_catalogue_rel_collapsed_b OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_dst; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_multiple_allowed_dst (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    referenced_attribute character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_multiple_allowed_dst OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_dst; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_multiple_allowed_dst AS
+ SELECT test_catalogue_rel_multiple_allowed_dst.volgnummer,
+    test_catalogue_rel_multiple_allowed_dst.registratiedatum,
+    test_catalogue_rel_multiple_allowed_dst.id,
+    test_catalogue_rel_multiple_allowed_dst.identificatie,
+    test_catalogue_rel_multiple_allowed_dst.begin_geldigheid,
+    test_catalogue_rel_multiple_allowed_dst.eind_geldigheid,
+    test_catalogue_rel_multiple_allowed_dst.referenced_attribute,
+    test_catalogue_rel_multiple_allowed_dst._source,
+    test_catalogue_rel_multiple_allowed_dst._application,
+    test_catalogue_rel_multiple_allowed_dst._source_id,
+    test_catalogue_rel_multiple_allowed_dst._last_event,
+    test_catalogue_rel_multiple_allowed_dst._hash,
+    test_catalogue_rel_multiple_allowed_dst._version,
+    test_catalogue_rel_multiple_allowed_dst._date_created,
+    test_catalogue_rel_multiple_allowed_dst._date_confirmed,
+    test_catalogue_rel_multiple_allowed_dst._date_modified,
+    test_catalogue_rel_multiple_allowed_dst._date_deleted,
+    test_catalogue_rel_multiple_allowed_dst._expiration_date,
+    test_catalogue_rel_multiple_allowed_dst._gobid,
+    test_catalogue_rel_multiple_allowed_dst._id,
+    test_catalogue_rel_multiple_allowed_dst._tid
+   FROM public.test_catalogue_rel_multiple_allowed_dst;
+
+
+ALTER TABLE legacy.test_catalogue_rel_multiple_allowed_dst OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_multisource_src; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_multiple_allowed_multisource_src (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    reference jsonb,
+    manyreference jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_multiple_allowed_multisource_src OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_multisource_src; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_multiple_allowed_multisource_src AS
+ SELECT test_catalogue_rel_multiple_allowed_multisource_src.volgnummer,
+    test_catalogue_rel_multiple_allowed_multisource_src.registratiedatum,
+    test_catalogue_rel_multiple_allowed_multisource_src.id,
+    test_catalogue_rel_multiple_allowed_multisource_src.identificatie,
+    test_catalogue_rel_multiple_allowed_multisource_src.begin_geldigheid,
+    test_catalogue_rel_multiple_allowed_multisource_src.eind_geldigheid,
+    test_catalogue_rel_multiple_allowed_multisource_src.reference,
+    test_catalogue_rel_multiple_allowed_multisource_src.manyreference,
+    test_catalogue_rel_multiple_allowed_multisource_src._source,
+    test_catalogue_rel_multiple_allowed_multisource_src._application,
+    test_catalogue_rel_multiple_allowed_multisource_src._source_id,
+    test_catalogue_rel_multiple_allowed_multisource_src._last_event,
+    test_catalogue_rel_multiple_allowed_multisource_src._hash,
+    test_catalogue_rel_multiple_allowed_multisource_src._version,
+    test_catalogue_rel_multiple_allowed_multisource_src._date_created,
+    test_catalogue_rel_multiple_allowed_multisource_src._date_confirmed,
+    test_catalogue_rel_multiple_allowed_multisource_src._date_modified,
+    test_catalogue_rel_multiple_allowed_multisource_src._date_deleted,
+    test_catalogue_rel_multiple_allowed_multisource_src._expiration_date,
+    test_catalogue_rel_multiple_allowed_multisource_src._gobid,
+    test_catalogue_rel_multiple_allowed_multisource_src._id,
+    test_catalogue_rel_multiple_allowed_multisource_src._tid
+   FROM public.test_catalogue_rel_multiple_allowed_multisource_src;
+
+
+ALTER TABLE legacy.test_catalogue_rel_multiple_allowed_multisource_src OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_src; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_multiple_allowed_src (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    reference jsonb,
+    manyreference jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_multiple_allowed_src OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_src; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_multiple_allowed_src AS
+ SELECT test_catalogue_rel_multiple_allowed_src.volgnummer,
+    test_catalogue_rel_multiple_allowed_src.registratiedatum,
+    test_catalogue_rel_multiple_allowed_src.id,
+    test_catalogue_rel_multiple_allowed_src.identificatie,
+    test_catalogue_rel_multiple_allowed_src.begin_geldigheid,
+    test_catalogue_rel_multiple_allowed_src.eind_geldigheid,
+    test_catalogue_rel_multiple_allowed_src.reference,
+    test_catalogue_rel_multiple_allowed_src.manyreference,
+    test_catalogue_rel_multiple_allowed_src._source,
+    test_catalogue_rel_multiple_allowed_src._application,
+    test_catalogue_rel_multiple_allowed_src._source_id,
+    test_catalogue_rel_multiple_allowed_src._last_event,
+    test_catalogue_rel_multiple_allowed_src._hash,
+    test_catalogue_rel_multiple_allowed_src._version,
+    test_catalogue_rel_multiple_allowed_src._date_created,
+    test_catalogue_rel_multiple_allowed_src._date_confirmed,
+    test_catalogue_rel_multiple_allowed_src._date_modified,
+    test_catalogue_rel_multiple_allowed_src._date_deleted,
+    test_catalogue_rel_multiple_allowed_src._expiration_date,
+    test_catalogue_rel_multiple_allowed_src._gobid,
+    test_catalogue_rel_multiple_allowed_src._id,
+    test_catalogue_rel_multiple_allowed_src._tid
+   FROM public.test_catalogue_rel_multiple_allowed_src;
+
+
+ALTER TABLE legacy.test_catalogue_rel_multiple_allowed_src OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_a; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_test_entity_a (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    ref_to_c jsonb,
+    manyref_to_c jsonb,
+    ref_to_d jsonb,
+    manyref_to_d jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_test_entity_a OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_a; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_test_entity_a AS
+ SELECT test_catalogue_rel_test_entity_a.volgnummer,
+    test_catalogue_rel_test_entity_a.registratiedatum,
+    test_catalogue_rel_test_entity_a.id,
+    test_catalogue_rel_test_entity_a.identificatie,
+    test_catalogue_rel_test_entity_a.begin_geldigheid,
+    test_catalogue_rel_test_entity_a.eind_geldigheid,
+    test_catalogue_rel_test_entity_a.ref_to_c,
+    test_catalogue_rel_test_entity_a.manyref_to_c,
+    test_catalogue_rel_test_entity_a.ref_to_d,
+    test_catalogue_rel_test_entity_a.manyref_to_d,
+    test_catalogue_rel_test_entity_a._source,
+    test_catalogue_rel_test_entity_a._application,
+    test_catalogue_rel_test_entity_a._source_id,
+    test_catalogue_rel_test_entity_a._last_event,
+    test_catalogue_rel_test_entity_a._hash,
+    test_catalogue_rel_test_entity_a._version,
+    test_catalogue_rel_test_entity_a._date_created,
+    test_catalogue_rel_test_entity_a._date_confirmed,
+    test_catalogue_rel_test_entity_a._date_modified,
+    test_catalogue_rel_test_entity_a._date_deleted,
+    test_catalogue_rel_test_entity_a._expiration_date,
+    test_catalogue_rel_test_entity_a._gobid,
+    test_catalogue_rel_test_entity_a._id,
+    test_catalogue_rel_test_entity_a._tid
+   FROM public.test_catalogue_rel_test_entity_a;
+
+
+ALTER TABLE legacy.test_catalogue_rel_test_entity_a OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_b; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_test_entity_b (
+    id integer,
+    identificatie character varying,
+    ref_to_c jsonb,
+    manyref_to_c jsonb,
+    ref_to_d jsonb,
+    manyref_to_d jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_test_entity_b OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_b; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_test_entity_b AS
+ SELECT test_catalogue_rel_test_entity_b.id,
+    test_catalogue_rel_test_entity_b.identificatie,
+    test_catalogue_rel_test_entity_b.ref_to_c,
+    test_catalogue_rel_test_entity_b.manyref_to_c,
+    test_catalogue_rel_test_entity_b.ref_to_d,
+    test_catalogue_rel_test_entity_b.manyref_to_d,
+    test_catalogue_rel_test_entity_b._source,
+    test_catalogue_rel_test_entity_b._application,
+    test_catalogue_rel_test_entity_b._source_id,
+    test_catalogue_rel_test_entity_b._last_event,
+    test_catalogue_rel_test_entity_b._hash,
+    test_catalogue_rel_test_entity_b._version,
+    test_catalogue_rel_test_entity_b._date_created,
+    test_catalogue_rel_test_entity_b._date_confirmed,
+    test_catalogue_rel_test_entity_b._date_modified,
+    test_catalogue_rel_test_entity_b._date_deleted,
+    test_catalogue_rel_test_entity_b._expiration_date,
+    test_catalogue_rel_test_entity_b._gobid,
+    test_catalogue_rel_test_entity_b._id,
+    test_catalogue_rel_test_entity_b._tid
+   FROM public.test_catalogue_rel_test_entity_b;
+
+
+ALTER TABLE legacy.test_catalogue_rel_test_entity_b OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_c; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_test_entity_c (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_test_entity_c OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_c; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_test_entity_c AS
+ SELECT test_catalogue_rel_test_entity_c.volgnummer,
+    test_catalogue_rel_test_entity_c.registratiedatum,
+    test_catalogue_rel_test_entity_c.id,
+    test_catalogue_rel_test_entity_c.identificatie,
+    test_catalogue_rel_test_entity_c.begin_geldigheid,
+    test_catalogue_rel_test_entity_c.eind_geldigheid,
+    test_catalogue_rel_test_entity_c._source,
+    test_catalogue_rel_test_entity_c._application,
+    test_catalogue_rel_test_entity_c._source_id,
+    test_catalogue_rel_test_entity_c._last_event,
+    test_catalogue_rel_test_entity_c._hash,
+    test_catalogue_rel_test_entity_c._version,
+    test_catalogue_rel_test_entity_c._date_created,
+    test_catalogue_rel_test_entity_c._date_confirmed,
+    test_catalogue_rel_test_entity_c._date_modified,
+    test_catalogue_rel_test_entity_c._date_deleted,
+    test_catalogue_rel_test_entity_c._expiration_date,
+    test_catalogue_rel_test_entity_c._gobid,
+    test_catalogue_rel_test_entity_c._id,
+    test_catalogue_rel_test_entity_c._tid
+   FROM public.test_catalogue_rel_test_entity_c;
+
+
+ALTER TABLE legacy.test_catalogue_rel_test_entity_c OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_d; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_test_entity_d (
+    id integer,
+    identificatie character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_test_entity_d OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_d; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_test_entity_d AS
+ SELECT test_catalogue_rel_test_entity_d.id,
+    test_catalogue_rel_test_entity_d.identificatie,
+    test_catalogue_rel_test_entity_d._source,
+    test_catalogue_rel_test_entity_d._application,
+    test_catalogue_rel_test_entity_d._source_id,
+    test_catalogue_rel_test_entity_d._last_event,
+    test_catalogue_rel_test_entity_d._hash,
+    test_catalogue_rel_test_entity_d._version,
+    test_catalogue_rel_test_entity_d._date_created,
+    test_catalogue_rel_test_entity_d._date_confirmed,
+    test_catalogue_rel_test_entity_d._date_modified,
+    test_catalogue_rel_test_entity_d._date_deleted,
+    test_catalogue_rel_test_entity_d._expiration_date,
+    test_catalogue_rel_test_entity_d._gobid,
+    test_catalogue_rel_test_entity_d._id,
+    test_catalogue_rel_test_entity_d._tid
+   FROM public.test_catalogue_rel_test_entity_d;
+
+
+ALTER TABLE legacy.test_catalogue_rel_test_entity_d OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_secure; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_secure (
+    id character varying,
+    secure_string character varying,
+    secure_number character varying,
+    secure_datetime character varying,
+    string character varying,
+    number numeric,
+    datetime timestamp without time zone,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    secure_reference jsonb,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_secure OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_secure; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_secure AS
+ SELECT test_catalogue_secure.id,
+    test_catalogue_secure.secure_string,
+    test_catalogue_secure.secure_number,
+    test_catalogue_secure.secure_datetime,
+    test_catalogue_secure.string,
+    test_catalogue_secure.number,
+    test_catalogue_secure.datetime,
+    test_catalogue_secure._source,
+    test_catalogue_secure._application,
+    test_catalogue_secure._source_id,
+    test_catalogue_secure._last_event,
+    test_catalogue_secure._hash,
+    test_catalogue_secure._version,
+    test_catalogue_secure._date_created,
+    test_catalogue_secure._date_confirmed,
+    test_catalogue_secure._date_modified,
+    test_catalogue_secure._date_deleted,
+    test_catalogue_secure._expiration_date,
+    test_catalogue_secure._gobid,
+    test_catalogue_secure._id,
+    test_catalogue_secure.secure_reference,
+    test_catalogue_secure._tid
+   FROM public.test_catalogue_secure;
+
+
+ALTER TABLE legacy.test_catalogue_secure OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_test_entity (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    string character varying,
+    "character" character(1),
+    "decimal" numeric,
+    "integer" integer,
+    point public.geometry(Point,28992),
+    date date,
+    "boolean" boolean,
+    _application character varying,
+    json jsonb,
+    datetime timestamp without time zone,
+    geometry public.geometry(Geometry,28992),
+    manyreference jsonb,
+    polygon public.geometry(Polygon,28992),
+    reference jsonb,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    incomplete_date jsonb,
+    biginteger bigint,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_test_entity OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_test_entity AS
+ SELECT test_catalogue_test_entity._gobid,
+    test_catalogue_test_entity._id,
+    test_catalogue_test_entity._source,
+    test_catalogue_test_entity._source_id,
+    test_catalogue_test_entity._last_event,
+    test_catalogue_test_entity._version,
+    test_catalogue_test_entity._date_created,
+    test_catalogue_test_entity._date_confirmed,
+    test_catalogue_test_entity._date_modified,
+    test_catalogue_test_entity._date_deleted,
+    test_catalogue_test_entity.string,
+    test_catalogue_test_entity."character",
+    test_catalogue_test_entity."decimal",
+    test_catalogue_test_entity."integer",
+    test_catalogue_test_entity.point,
+    test_catalogue_test_entity.date,
+    test_catalogue_test_entity."boolean",
+    test_catalogue_test_entity._application,
+    test_catalogue_test_entity.json,
+    test_catalogue_test_entity.datetime,
+    test_catalogue_test_entity.geometry,
+    test_catalogue_test_entity.manyreference,
+    test_catalogue_test_entity.polygon,
+    test_catalogue_test_entity.reference,
+    test_catalogue_test_entity._hash,
+    test_catalogue_test_entity._expiration_date,
+    test_catalogue_test_entity.incomplete_date,
+    test_catalogue_test_entity.biginteger,
+    test_catalogue_test_entity._tid
+   FROM public.test_catalogue_test_entity;
+
+
+ALTER TABLE legacy.test_catalogue_test_entity OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_autoid; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_test_entity_autoid (
+    identificatie character varying,
+    code character varying,
+    autoid character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_test_entity_autoid OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_autoid; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_test_entity_autoid AS
+ SELECT test_catalogue_test_entity_autoid.identificatie,
+    test_catalogue_test_entity_autoid.code,
+    test_catalogue_test_entity_autoid.autoid,
+    test_catalogue_test_entity_autoid._source,
+    test_catalogue_test_entity_autoid._application,
+    test_catalogue_test_entity_autoid._source_id,
+    test_catalogue_test_entity_autoid._last_event,
+    test_catalogue_test_entity_autoid._hash,
+    test_catalogue_test_entity_autoid._version,
+    test_catalogue_test_entity_autoid._date_created,
+    test_catalogue_test_entity_autoid._date_confirmed,
+    test_catalogue_test_entity_autoid._date_modified,
+    test_catalogue_test_entity_autoid._date_deleted,
+    test_catalogue_test_entity_autoid._expiration_date,
+    test_catalogue_test_entity_autoid._gobid,
+    test_catalogue_test_entity_autoid._id,
+    test_catalogue_test_entity_autoid._tid
+   FROM public.test_catalogue_test_entity_autoid;
+
+
+ALTER TABLE legacy.test_catalogue_test_entity_autoid OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_autoid_states; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_test_entity_autoid_states (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    code character varying,
+    autoid character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_test_entity_autoid_states OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_autoid_states; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_test_entity_autoid_states AS
+ SELECT test_catalogue_test_entity_autoid_states.volgnummer,
+    test_catalogue_test_entity_autoid_states.registratiedatum,
+    test_catalogue_test_entity_autoid_states.identificatie,
+    test_catalogue_test_entity_autoid_states.begin_geldigheid,
+    test_catalogue_test_entity_autoid_states.eind_geldigheid,
+    test_catalogue_test_entity_autoid_states.code,
+    test_catalogue_test_entity_autoid_states.autoid,
+    test_catalogue_test_entity_autoid_states._source,
+    test_catalogue_test_entity_autoid_states._application,
+    test_catalogue_test_entity_autoid_states._source_id,
+    test_catalogue_test_entity_autoid_states._last_event,
+    test_catalogue_test_entity_autoid_states._hash,
+    test_catalogue_test_entity_autoid_states._version,
+    test_catalogue_test_entity_autoid_states._date_created,
+    test_catalogue_test_entity_autoid_states._date_confirmed,
+    test_catalogue_test_entity_autoid_states._date_modified,
+    test_catalogue_test_entity_autoid_states._date_deleted,
+    test_catalogue_test_entity_autoid_states._expiration_date,
+    test_catalogue_test_entity_autoid_states._gobid,
+    test_catalogue_test_entity_autoid_states._id,
+    test_catalogue_test_entity_autoid_states._tid
+   FROM public.test_catalogue_test_entity_autoid_states;
+
+
+ALTER TABLE legacy.test_catalogue_test_entity_autoid_states OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_reference; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_test_entity_reference (
+    string character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_test_entity_reference OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_reference; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_test_entity_reference AS
+ SELECT test_catalogue_test_entity_reference.string,
+    test_catalogue_test_entity_reference._source,
+    test_catalogue_test_entity_reference._application,
+    test_catalogue_test_entity_reference._source_id,
+    test_catalogue_test_entity_reference._last_event,
+    test_catalogue_test_entity_reference._hash,
+    test_catalogue_test_entity_reference._version,
+    test_catalogue_test_entity_reference._date_created,
+    test_catalogue_test_entity_reference._date_confirmed,
+    test_catalogue_test_entity_reference._date_modified,
+    test_catalogue_test_entity_reference._date_deleted,
+    test_catalogue_test_entity_reference._expiration_date,
+    test_catalogue_test_entity_reference._gobid,
+    test_catalogue_test_entity_reference._id,
+    test_catalogue_test_entity_reference._tid
+   FROM public.test_catalogue_test_entity_reference;
+
+
+ALTER TABLE legacy.test_catalogue_test_entity_reference OWNER TO gobtest;
+
+--
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.alembic_version (
+    version_num character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.alembic_version OWNER TO gobtest;
+
+--
+-- Name: bag_brondocumenten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_brondocumenten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_brondocumenten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_brondocumenten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_brondocumenten__gobid_seq OWNED BY public.bag_brondocumenten._gobid;
+
+
+--
+-- Name: bag_dossiers__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_dossiers__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_dossiers__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_dossiers__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_dossiers__gobid_seq OWNED BY public.bag_dossiers._gobid;
+
+
+--
+-- Name: bag_ligplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_ligplaatsen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_ligplaatsen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_ligplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_ligplaatsen__gobid_seq OWNED BY public.bag_ligplaatsen._gobid;
+
+
+--
+-- Name: bag_nummeraanduidingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_nummeraanduidingen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_nummeraanduidingen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_nummeraanduidingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_nummeraanduidingen__gobid_seq OWNED BY public.bag_nummeraanduidingen._gobid;
+
+
+--
+-- Name: bag_onderzoeken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_onderzoeken__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_onderzoeken__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_onderzoeken__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_onderzoeken__gobid_seq OWNED BY public.bag_onderzoeken._gobid;
+
+
+--
+-- Name: bag_openbareruimtes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_openbareruimtes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_openbareruimtes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_openbareruimtes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_openbareruimtes__gobid_seq OWNED BY public.bag_openbareruimtes._gobid;
+
+
+--
+-- Name: bag_panden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_panden__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_panden__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_panden__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_panden__gobid_seq OWNED BY public.bag_panden._gobid;
+
+
+--
+-- Name: bag_standplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_standplaatsen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_standplaatsen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_standplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_standplaatsen__gobid_seq OWNED BY public.bag_standplaatsen._gobid;
+
+
+--
+-- Name: bag_verblijfsobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_verblijfsobjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_verblijfsobjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_verblijfsobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_verblijfsobjecten__gobid_seq OWNED BY public.bag_verblijfsobjecten._gobid;
+
+
+--
+-- Name: bag_woonplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_woonplaatsen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_woonplaatsen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_woonplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_woonplaatsen__gobid_seq OWNED BY public.bag_woonplaatsen._gobid;
+
+
+--
+-- Name: bgt_onderbouw__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bgt_onderbouw__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bgt_onderbouw__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bgt_onderbouw__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bgt_onderbouw__gobid_seq OWNED BY public.bgt_onderbouw._gobid;
+
+
+--
+-- Name: bgt_overbouw__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bgt_overbouw__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bgt_overbouw__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bgt_overbouw__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bgt_overbouw__gobid_seq OWNED BY public.bgt_overbouw._gobid;
+
+
+--
+-- Name: brk2_kadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_kadastraleobjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_kadastraleobjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_kadastraleobjecten__gobid_seq OWNED BY public.brk2_kadastraleobjecten._gobid;
+
+
+--
+-- Name: brk2_kadastralesubjecten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.brk2_kadastralesubjecten (
+    identificatie character varying,
+    type_subject character varying,
+    beschikkingsbevoegdheid jsonb,
+    indicatie_afscherming_gegevens character varying,
+    heeft_bsn_voor_brp_persoon character varying,
+    voornamen character varying,
+    voorvoegsels character varying,
+    geslachtsnaam character varying,
+    geslacht jsonb,
+    naam_gebruik jsonb,
+    titel_of_predicaat jsonb,
+    indicatie_diakriet_niet_toonbaar character varying,
+    geboortedatum date,
+    geboortedatum_onvolledig character varying,
+    geboorteplaats character varying,
+    geboorteland jsonb,
+    datum_overlijden date,
+    datum_overlijden_onvolledig character varying,
+    indicatie_overleden character varying,
+    voornamen_partner character varying,
+    voorvoegsels_partner character varying,
+    geslachtsnaam_partner character varying,
+    heeft_rsin_voor_hr_niet_natuurlijkepersoon character varying,
+    heeft_kvknummer_voor_hr_maatschappelijkeactiviteit character varying,
+    rechtsvorm jsonb,
+    statutaire_naam character varying,
+    statutaire_zetel character varying,
+    woonadres jsonb,
+    land_waarnaar_vertrokken jsonb,
+    postadres jsonb,
+    datum_actueel_tot timestamp without time zone,
+    toestandsdatum timestamp without time zone,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.brk2_kadastralesubjecten OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastralesubjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_kadastralesubjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_kadastralesubjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastralesubjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_kadastralesubjecten__gobid_seq OWNED BY public.brk2_kadastralesubjecten._gobid;
+
+
+--
+-- Name: brk2_meta; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.brk2_meta (
+    id integer,
+    kennisgevingsdatum timestamp without time zone,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.brk2_meta OWNER TO gobtest;
+
+--
+-- Name: brk2_meta__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_meta__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_meta__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_meta__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_meta__gobid_seq OWNED BY public.brk2_meta._gobid;
+
+
+--
+-- Name: brk_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_aantekeningenkadastraleobjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_aantekeningenkadastraleobjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_aantekeningenkadastraleobjecten__gobid_seq OWNED BY public.brk_aantekeningenkadastraleobjecten._gobid;
+
+
+--
+-- Name: brk_aantekeningenrechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_aantekeningenrechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_aantekeningenrechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_aantekeningenrechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_aantekeningenrechten__gobid_seq OWNED BY public.brk_aantekeningenrechten._gobid;
+
+
+--
+-- Name: brk_aardzakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_aardzakelijkerechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_aardzakelijkerechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_aardzakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_aardzakelijkerechten__gobid_seq OWNED BY public.brk_aardzakelijkerechten._gobid;
+
+
+--
+-- Name: brk_gemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_gemeentes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_gemeentes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_gemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_gemeentes__gobid_seq OWNED BY public.brk_gemeentes._gobid;
+
+
+--
+-- Name: brk_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastralegemeentecodes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastralegemeentecodes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastralegemeentecodes__gobid_seq OWNED BY public.brk_kadastralegemeentecodes._gobid;
+
+
+--
+-- Name: brk_kadastralegemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastralegemeentes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastralegemeentes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastralegemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastralegemeentes__gobid_seq OWNED BY public.brk_kadastralegemeentes._gobid;
+
+
+--
+-- Name: brk_kadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastraleobjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastraleobjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastraleobjecten__gobid_seq OWNED BY public.brk_kadastraleobjecten._gobid;
+
+
+--
+-- Name: brk_kadastralesecties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastralesecties__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastralesecties__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastralesecties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastralesecties__gobid_seq OWNED BY public.brk_kadastralesecties._gobid;
+
+
+--
+-- Name: brk_kadastralesubjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastralesubjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastralesubjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastralesubjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastralesubjecten__gobid_seq OWNED BY public.brk_kadastralesubjecten._gobid;
+
+
+--
+-- Name: brk_meta__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_meta__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_meta__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_meta__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_meta__gobid_seq OWNED BY public.brk_meta._gobid;
+
+
+--
+-- Name: brk_stukdelen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_stukdelen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_stukdelen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_stukdelen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_stukdelen__gobid_seq OWNED BY public.brk_stukdelen._gobid;
+
+
+--
+-- Name: brk_tenaamstellingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_tenaamstellingen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_tenaamstellingen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_tenaamstellingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_tenaamstellingen__gobid_seq OWNED BY public.brk_tenaamstellingen._gobid;
+
 
 --
 -- Name: brk_zakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -3625,40 +6664,6 @@ ALTER SEQUENCE public.brp_verblijfplaatsen__gobid_seq OWNED BY public.brp_verbli
 
 
 --
--- Name: gebieden_bouwblokken; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.gebieden_bouwblokken (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    code character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    ligt_in_gebieden_buurt jsonb,
-    geometrie public.geometry(Polygon,28992),
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    ligt_in_brk_gemeente jsonb,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.gebieden_bouwblokken OWNER TO gobtest;
-
---
 -- Name: gebieden_bouwblokken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -3679,46 +6684,6 @@ ALTER TABLE public.gebieden_bouwblokken__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.gebieden_bouwblokken__gobid_seq OWNED BY public.gebieden_bouwblokken._gobid;
 
-
---
--- Name: gebieden_buurten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.gebieden_buurten (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    naam character varying,
-    code character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    documentdatum date,
-    documentnummer character varying,
-    ligt_in_gebieden_wijk jsonb,
-    geometrie public.geometry(Polygon,28992),
-    _application character varying,
-    cbs_code character varying,
-    _hash character varying,
-    ligt_in_gebieden_ggpgebied jsonb,
-    ligt_in_gebieden_ggwgebied jsonb,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    ligt_in_brk_gemeente jsonb,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.gebieden_buurten OWNER TO gobtest;
 
 --
 -- Name: gebieden_buurten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -3743,44 +6708,6 @@ ALTER SEQUENCE public.gebieden_buurten__gobid_seq OWNED BY public.gebieden_buurt
 
 
 --
--- Name: gebieden_ggpgebieden; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.gebieden_ggpgebieden (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    naam character varying,
-    code character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    documentdatum date,
-    documentnummer character varying,
-    ligt_in_gebieden_stadsdeel jsonb,
-    bestaat_uit_gebieden_buurten jsonb,
-    geometrie public.geometry(Polygon,28992),
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    ligt_in_brk_gemeente jsonb,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.gebieden_ggpgebieden OWNER TO gobtest;
-
---
 -- Name: gebieden_ggpgebieden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -3801,44 +6728,6 @@ ALTER TABLE public.gebieden_ggpgebieden__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.gebieden_ggpgebieden__gobid_seq OWNED BY public.gebieden_ggpgebieden._gobid;
 
-
---
--- Name: gebieden_ggwgebieden; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.gebieden_ggwgebieden (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    naam character varying,
-    code character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    documentdatum date,
-    documentnummer character varying,
-    ligt_in_gebieden_stadsdeel jsonb,
-    bestaat_uit_gebieden_buurten jsonb,
-    geometrie public.geometry(Polygon,28992),
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    ligt_in_brk_gemeente jsonb,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.gebieden_ggwgebieden OWNER TO gobtest;
 
 --
 -- Name: gebieden_ggwgebieden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -3863,42 +6752,6 @@ ALTER SEQUENCE public.gebieden_ggwgebieden__gobid_seq OWNED BY public.gebieden_g
 
 
 --
--- Name: gebieden_stadsdelen; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.gebieden_stadsdelen (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    naam character varying,
-    code character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    documentdatum date,
-    documentnummer character varying,
-    ligt_in_brk_gemeente jsonb,
-    geometrie public.geometry(Polygon,28992),
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.gebieden_stadsdelen OWNER TO gobtest;
-
---
 -- Name: gebieden_stadsdelen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -3919,45 +6772,6 @@ ALTER TABLE public.gebieden_stadsdelen__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.gebieden_stadsdelen__gobid_seq OWNED BY public.gebieden_stadsdelen._gobid;
 
-
---
--- Name: gebieden_wijken; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.gebieden_wijken (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    naam character varying,
-    code character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    documentdatum date,
-    documentnummer character varying,
-    ligt_in_gebieden_stadsdeel jsonb,
-    geometrie public.geometry(Polygon,28992),
-    _application character varying,
-    cbs_code character varying,
-    _hash character varying,
-    ligt_in_gebieden_ggwgebied jsonb,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    ligt_in_brk_gemeente jsonb,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.gebieden_wijken OWNER TO gobtest;
 
 --
 -- Name: gebieden_wijken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -4254,45 +7068,6 @@ ALTER SEQUENCE public.hr_vestigingen__gobid_seq OWNED BY public.hr_vestigingen._
 
 
 --
--- Name: meetbouten_meetbouten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.meetbouten_meetbouten (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    locatie character varying,
-    status jsonb,
-    vervaldatum date,
-    merk jsonb,
-    x_coordinaat_muurvlak numeric,
-    y_coordinaat_muurvlak numeric,
-    windrichting character varying,
-    ligt_in_gebieden_bouwblok jsonb,
-    ligt_in_gebieden_buurt jsonb,
-    ligt_in_gebieden_stadsdeel jsonb,
-    geometrie public.geometry(Point,28992),
-    publiceerbaar boolean,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    datum_actueel_tot timestamp without time zone,
-    nabij_adres character varying
-);
-
-
-ALTER TABLE public.meetbouten_meetbouten OWNER TO gobtest;
-
---
 -- Name: meetbouten_meetbouten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -4313,45 +7088,6 @@ ALTER TABLE public.meetbouten_meetbouten__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.meetbouten_meetbouten__gobid_seq OWNED BY public.meetbouten_meetbouten._gobid;
 
-
---
--- Name: meetbouten_metingen; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.meetbouten_metingen (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    hoort_bij_meetbouten_meetbout jsonb,
-    datum date,
-    type_meting character(1),
-    wijze_van_inwinnen jsonb,
-    hoogte_tov_nap numeric,
-    zakking numeric,
-    refereert_aan_meetbouten_referentiepunten jsonb,
-    zakkingssnelheid numeric,
-    zakking_cumulatief numeric,
-    is_gemeten_door character varying,
-    hoeveelste_meting integer,
-    aantal_dagen integer,
-    publiceerbaar boolean,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.meetbouten_metingen OWNER TO gobtest;
 
 --
 -- Name: meetbouten_metingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -4376,48 +7112,6 @@ ALTER SEQUENCE public.meetbouten_metingen__gobid_seq OWNED BY public.meetbouten_
 
 
 --
--- Name: meetbouten_referentiepunten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.meetbouten_referentiepunten (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    locatie character varying,
-    hoogte_tov_nap numeric,
-    datum date,
-    status jsonb,
-    vervaldatum date,
-    merk jsonb,
-    x_coordinaat_muurvlak numeric,
-    y_coordinaat_muurvlak numeric,
-    windrichting character varying,
-    ligt_in_gebieden_bouwblok jsonb,
-    ligt_in_gebieden_buurt jsonb,
-    ligt_in_gebieden_stadsdeel jsonb,
-    geometrie public.geometry(Point,28992),
-    is_nap_peilmerk jsonb,
-    publiceerbaar boolean,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    datum_actueel_tot timestamp without time zone,
-    nabij_adres character varying
-);
-
-
-ALTER TABLE public.meetbouten_referentiepunten OWNER TO gobtest;
-
---
 -- Name: meetbouten_referentiepunten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -4438,33 +7132,6 @@ ALTER TABLE public.meetbouten_referentiepunten__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.meetbouten_referentiepunten__gobid_seq OWNED BY public.meetbouten_referentiepunten._gobid;
 
-
---
--- Name: meetbouten_rollagen; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.meetbouten_rollagen (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    is_gemeten_van_gebieden_bouwblok jsonb,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.meetbouten_rollagen OWNER TO gobtest;
 
 --
 -- Name: meetbouten_rollagen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -13299,47 +15966,6 @@ CREATE MATERIALIZED VIEW public.mv_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten A
 ALTER TABLE public.mv_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten OWNER TO gobtest;
 
 --
--- Name: nap_peilmerken; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.nap_peilmerken (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    hoogte_tov_nap numeric,
-    jaar integer,
-    omschrijving character varying,
-    windrichting character varying,
-    x_coordinaat_muurvlak numeric,
-    y_coordinaat_muurvlak numeric,
-    rws_nummer character varying,
-    geometrie public.geometry(Point,28992),
-    vervaldatum date,
-    ligt_in_gebieden_bouwblok jsonb,
-    publiceerbaar boolean,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    merk_code character varying,
-    merk_omschrijving character varying,
-    status_code integer,
-    status_omschrijving character varying,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.nap_peilmerken OWNER TO gobtest;
-
---
 -- Name: nap_peilmerken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -14100,6 +16726,120 @@ ALTER TABLE public.qa_brk2_kadastraleobjecten__gobid_seq OWNER TO gobtest;
 --
 
 ALTER SEQUENCE public.qa_brk2_kadastraleobjecten__gobid_seq OWNED BY public.qa_brk2_kadastraleobjecten._gobid;
+
+
+--
+-- Name: qa_brk2_kadastralesubjecten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_brk2_kadastralesubjecten (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_brk2_kadastralesubjecten OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_kadastralesubjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_brk2_kadastralesubjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_brk2_kadastralesubjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_kadastralesubjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_brk2_kadastralesubjecten__gobid_seq OWNED BY public.qa_brk2_kadastralesubjecten._gobid;
+
+
+--
+-- Name: qa_brk2_meta; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_brk2_meta (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_brk2_meta OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_meta__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_brk2_meta__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_brk2_meta__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_meta__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_brk2_meta__gobid_seq OWNED BY public.qa_brk2_meta._gobid;
 
 
 --
@@ -20569,37 +23309,6 @@ ALTER SEQUENCE public.rel_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten__gobid_seq
 
 
 --
--- Name: test_catalogue_rel_collapsed_a; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_collapsed_a (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    reference jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_collapsed_a OWNER TO gobtest;
-
---
 -- Name: test_catalogue_rel_collapsed_a__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -20620,36 +23329,6 @@ ALTER TABLE public.test_catalogue_rel_collapsed_a__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.test_catalogue_rel_collapsed_a__gobid_seq OWNED BY public.test_catalogue_rel_collapsed_a._gobid;
 
-
---
--- Name: test_catalogue_rel_collapsed_b; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_collapsed_b (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_collapsed_b OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_collapsed_b__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -20674,37 +23353,6 @@ ALTER SEQUENCE public.test_catalogue_rel_collapsed_b__gobid_seq OWNED BY public.
 
 
 --
--- Name: test_catalogue_rel_multiple_allowed_dst; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_multiple_allowed_dst (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    referenced_attribute character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_multiple_allowed_dst OWNER TO gobtest;
-
---
 -- Name: test_catalogue_rel_multiple_allowed_dst__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -20725,38 +23373,6 @@ ALTER TABLE public.test_catalogue_rel_multiple_allowed_dst__gobid_seq OWNER TO g
 
 ALTER SEQUENCE public.test_catalogue_rel_multiple_allowed_dst__gobid_seq OWNED BY public.test_catalogue_rel_multiple_allowed_dst._gobid;
 
-
---
--- Name: test_catalogue_rel_multiple_allowed_multisource_src; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_multiple_allowed_multisource_src (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    reference jsonb,
-    manyreference jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_multiple_allowed_multisource_src OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_multiple_allowed_multisource_src__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -20781,38 +23397,6 @@ ALTER SEQUENCE public.test_catalogue_rel_multiple_allowed_multisource_src__gobid
 
 
 --
--- Name: test_catalogue_rel_multiple_allowed_src; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_multiple_allowed_src (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    reference jsonb,
-    manyreference jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_multiple_allowed_src OWNER TO gobtest;
-
---
 -- Name: test_catalogue_rel_multiple_allowed_src__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -20833,40 +23417,6 @@ ALTER TABLE public.test_catalogue_rel_multiple_allowed_src__gobid_seq OWNER TO g
 
 ALTER SEQUENCE public.test_catalogue_rel_multiple_allowed_src__gobid_seq OWNED BY public.test_catalogue_rel_multiple_allowed_src._gobid;
 
-
---
--- Name: test_catalogue_rel_test_entity_a; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_test_entity_a (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    ref_to_c jsonb,
-    manyref_to_c jsonb,
-    ref_to_d jsonb,
-    manyref_to_d jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_test_entity_a OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_test_entity_a__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -20891,36 +23441,6 @@ ALTER SEQUENCE public.test_catalogue_rel_test_entity_a__gobid_seq OWNED BY publi
 
 
 --
--- Name: test_catalogue_rel_test_entity_b; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_test_entity_b (
-    id integer,
-    identificatie character varying,
-    ref_to_c jsonb,
-    manyref_to_c jsonb,
-    ref_to_d jsonb,
-    manyref_to_d jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_test_entity_b OWNER TO gobtest;
-
---
 -- Name: test_catalogue_rel_test_entity_b__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -20941,36 +23461,6 @@ ALTER TABLE public.test_catalogue_rel_test_entity_b__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.test_catalogue_rel_test_entity_b__gobid_seq OWNED BY public.test_catalogue_rel_test_entity_b._gobid;
 
-
---
--- Name: test_catalogue_rel_test_entity_c; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_test_entity_c (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_test_entity_c OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_test_entity_c__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -20995,32 +23485,6 @@ ALTER SEQUENCE public.test_catalogue_rel_test_entity_c__gobid_seq OWNED BY publi
 
 
 --
--- Name: test_catalogue_rel_test_entity_d; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_test_entity_d (
-    id integer,
-    identificatie character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_test_entity_d OWNER TO gobtest;
-
---
 -- Name: test_catalogue_rel_test_entity_d__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -21041,38 +23505,6 @@ ALTER TABLE public.test_catalogue_rel_test_entity_d__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.test_catalogue_rel_test_entity_d__gobid_seq OWNED BY public.test_catalogue_rel_test_entity_d._gobid;
 
-
---
--- Name: test_catalogue_secure; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_secure (
-    id character varying,
-    secure_string character varying,
-    secure_number character varying,
-    secure_datetime character varying,
-    string character varying,
-    number numeric,
-    datetime timestamp without time zone,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    secure_reference jsonb,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_secure OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_secure__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -21097,45 +23529,6 @@ ALTER SEQUENCE public.test_catalogue_secure__gobid_seq OWNED BY public.test_cata
 
 
 --
--- Name: test_catalogue_test_entity; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_test_entity (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    string character varying,
-    "character" character(1),
-    "decimal" numeric,
-    "integer" integer,
-    point public.geometry(Point,28992),
-    date date,
-    "boolean" boolean,
-    _application character varying,
-    json jsonb,
-    datetime timestamp without time zone,
-    geometry public.geometry(Geometry,28992),
-    manyreference jsonb,
-    polygon public.geometry(Polygon,28992),
-    reference jsonb,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    incomplete_date jsonb,
-    biginteger bigint,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_test_entity OWNER TO gobtest;
-
---
 -- Name: test_catalogue_test_entity__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -21156,33 +23549,6 @@ ALTER TABLE public.test_catalogue_test_entity__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.test_catalogue_test_entity__gobid_seq OWNED BY public.test_catalogue_test_entity._gobid;
 
-
---
--- Name: test_catalogue_test_entity_autoid; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_test_entity_autoid (
-    identificatie character varying,
-    code character varying,
-    autoid character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_test_entity_autoid OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_test_entity_autoid__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -21207,37 +23573,6 @@ ALTER SEQUENCE public.test_catalogue_test_entity_autoid__gobid_seq OWNED BY publ
 
 
 --
--- Name: test_catalogue_test_entity_autoid_states; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_test_entity_autoid_states (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    code character varying,
-    autoid character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_test_entity_autoid_states OWNER TO gobtest;
-
---
 -- Name: test_catalogue_test_entity_autoid_states__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -21258,31 +23593,6 @@ ALTER TABLE public.test_catalogue_test_entity_autoid_states__gobid_seq OWNER TO 
 
 ALTER SEQUENCE public.test_catalogue_test_entity_autoid_states__gobid_seq OWNED BY public.test_catalogue_test_entity_autoid_states._gobid;
 
-
---
--- Name: test_catalogue_test_entity_reference; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_test_entity_reference (
-    string character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_test_entity_reference OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_test_entity_reference__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -21669,6 +23979,20 @@ ALTER TABLE ONLY public.brk2_kadastraleobjecten ALTER COLUMN _gobid SET DEFAULT 
 
 
 --
+-- Name: brk2_kadastralesubjecten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_kadastralesubjecten ALTER COLUMN _gobid SET DEFAULT nextval('public.brk2_kadastralesubjecten__gobid_seq'::regclass);
+
+
+--
+-- Name: brk2_meta _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_meta ALTER COLUMN _gobid SET DEFAULT nextval('public.brk2_meta__gobid_seq'::regclass);
+
+
+--
 -- Name: brk_aantekeningenkadastraleobjecten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
@@ -22009,6 +24333,20 @@ ALTER TABLE ONLY public.qa_bgt_overbouw ALTER COLUMN _gobid SET DEFAULT nextval(
 --
 
 ALTER TABLE ONLY public.qa_brk2_kadastraleobjecten ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_brk2_kadastraleobjecten__gobid_seq'::regclass);
+
+
+--
+-- Name: qa_brk2_kadastralesubjecten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_kadastralesubjecten ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_brk2_kadastralesubjecten__gobid_seq'::regclass);
+
+
+--
+-- Name: qa_brk2_meta _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_meta ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_brk2_meta__gobid_seq'::regclass);
 
 
 --
@@ -24353,6 +26691,54 @@ ALTER TABLE ONLY public.brk2_kadastraleobjecten
 
 
 --
+-- Name: brk2_kadastralesubjecten brk2_kadastralesubjecten__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_kadastralesubjecten
+    ADD CONSTRAINT brk2_kadastralesubjecten__id_key UNIQUE (_id);
+
+
+--
+-- Name: brk2_kadastralesubjecten brk2_kadastralesubjecten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_kadastralesubjecten
+    ADD CONSTRAINT brk2_kadastralesubjecten__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: brk2_kadastralesubjecten brk2_kadastralesubjecten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_kadastralesubjecten
+    ADD CONSTRAINT brk2_kadastralesubjecten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: brk2_meta brk2_meta__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_meta
+    ADD CONSTRAINT brk2_meta__id_key UNIQUE (_id);
+
+
+--
+-- Name: brk2_meta brk2_meta__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_meta
+    ADD CONSTRAINT brk2_meta__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: brk2_meta brk2_meta_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_meta
+    ADD CONSTRAINT brk2_meta_pkey PRIMARY KEY (_gobid);
+
+
+--
 -- Name: brk_aantekeningenkadastraleobjecten brk_aantekeningenkadastraleobjecten__id_volgnummer_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
@@ -25502,6 +27888,54 @@ ALTER TABLE ONLY public.qa_brk2_kadastraleobjecten
 
 ALTER TABLE ONLY public.qa_brk2_kadastraleobjecten
     ADD CONSTRAINT qa_brk2_kadastraleobjecten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: qa_brk2_kadastralesubjecten qa_brk2_kadastralesubjecten__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_kadastralesubjecten
+    ADD CONSTRAINT qa_brk2_kadastralesubjecten__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_brk2_kadastralesubjecten qa_brk2_kadastralesubjecten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_kadastralesubjecten
+    ADD CONSTRAINT qa_brk2_kadastralesubjecten__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_brk2_kadastralesubjecten qa_brk2_kadastralesubjecten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_kadastralesubjecten
+    ADD CONSTRAINT qa_brk2_kadastralesubjecten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: qa_brk2_meta qa_brk2_meta__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_meta
+    ADD CONSTRAINT qa_brk2_meta__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_brk2_meta qa_brk2_meta__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_meta
+    ADD CONSTRAINT qa_brk2_meta__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_brk2_meta qa_brk2_meta_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_meta
+    ADD CONSTRAINT qa_brk2_meta_pkey PRIMARY KEY (_gobid);
 
 
 --
@@ -32997,6 +35431,146 @@ CREATE INDEX brk2_kot_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_kadastrale
 
 
 --
+-- Name: brk2_meta_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_0afd9202ba86aa11ce63ad7007e7990b ON public.brk2_meta USING btree (_source_id);
+
+
+--
+-- Name: brk2_meta_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_1a9d849ff5a68997176b6144236806ae ON public.brk2_meta USING btree (_expiration_date);
+
+
+--
+-- Name: brk2_meta_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_3676d55f84497cbeadfc614c1b1b62fc ON public.brk2_meta USING btree (_application);
+
+
+--
+-- Name: brk2_meta_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_37abd7da5cbd49b20a1090ba960d82e7 ON public.brk2_meta USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: brk2_meta_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_613273a0ec2090693894cea102aa8c06 ON public.brk2_meta USING btree (_last_event);
+
+
+--
+-- Name: brk2_meta_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_meta USING btree (_date_deleted);
+
+
+--
+-- Name: brk2_meta_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_97beaa21d4819a1131833b897504ce31 ON public.brk2_meta USING btree (_tid);
+
+
+--
+-- Name: brk2_meta_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_b80bb7740288fda1f201890375a60c8f ON public.brk2_meta USING btree (_id);
+
+
+--
+-- Name: brk2_meta_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_d05569f886377400312d8c2edd4c6f4c ON public.brk2_meta USING btree (_gobid);
+
+
+--
+-- Name: brk2_meta_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_meta USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: brk2_sjt_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_0afd9202ba86aa11ce63ad7007e7990b ON public.brk2_kadastralesubjecten USING btree (_source_id);
+
+
+--
+-- Name: brk2_sjt_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_1a9d849ff5a68997176b6144236806ae ON public.brk2_kadastralesubjecten USING btree (_expiration_date);
+
+
+--
+-- Name: brk2_sjt_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_3676d55f84497cbeadfc614c1b1b62fc ON public.brk2_kadastralesubjecten USING btree (_application);
+
+
+--
+-- Name: brk2_sjt_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_37abd7da5cbd49b20a1090ba960d82e7 ON public.brk2_kadastralesubjecten USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: brk2_sjt_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_613273a0ec2090693894cea102aa8c06 ON public.brk2_kadastralesubjecten USING btree (_last_event);
+
+
+--
+-- Name: brk2_sjt_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_kadastralesubjecten USING btree (_date_deleted);
+
+
+--
+-- Name: brk2_sjt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_97beaa21d4819a1131833b897504ce31 ON public.brk2_kadastralesubjecten USING btree (_tid);
+
+
+--
+-- Name: brk2_sjt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_b80bb7740288fda1f201890375a60c8f ON public.brk2_kadastralesubjecten USING btree (_id);
+
+
+--
+-- Name: brk2_sjt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_d05569f886377400312d8c2edd4c6f4c ON public.brk2_kadastralesubjecten USING btree (_gobid);
+
+
+--
+-- Name: brk2_sjt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_kadastralesubjecten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
 -- Name: brk_akt_092c471623d23f2c0aa0e6210db86166; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -39483,6 +42057,160 @@ CREATE INDEX qa_brk2_kot_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_kada
 --
 
 CREATE INDEX qa_brk2_kot_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_brk2_kadastraleobjecten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: qa_brk2_meta_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_meta USING btree (_source_id);
+
+
+--
+-- Name: qa_brk2_meta_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_meta USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_meta_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_meta USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_brk2_meta_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_brk2_meta USING btree (_application);
+
+
+--
+-- Name: qa_brk2_meta_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_brk2_meta USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_brk2_meta_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_613273a0ec2090693894cea102aa8c06 ON public.qa_brk2_meta USING btree (_last_event);
+
+
+--
+-- Name: qa_brk2_meta_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_meta USING btree (_date_deleted);
+
+
+--
+-- Name: qa_brk2_meta_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_meta USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_meta_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_meta USING btree (_id);
+
+
+--
+-- Name: qa_brk2_meta_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_meta USING btree (_gobid);
+
+
+--
+-- Name: qa_brk2_meta_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_brk2_meta USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: qa_brk2_sjt_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_kadastralesubjecten USING btree (_source_id);
+
+
+--
+-- Name: qa_brk2_sjt_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_kadastralesubjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_sjt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_kadastralesubjecten USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_brk2_sjt_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_brk2_kadastralesubjecten USING btree (_application);
+
+
+--
+-- Name: qa_brk2_sjt_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_brk2_kadastralesubjecten USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_brk2_sjt_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_613273a0ec2090693894cea102aa8c06 ON public.qa_brk2_kadastralesubjecten USING btree (_last_event);
+
+
+--
+-- Name: qa_brk2_sjt_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_kadastralesubjecten USING btree (_date_deleted);
+
+
+--
+-- Name: qa_brk2_sjt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_kadastralesubjecten USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_sjt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_kadastralesubjecten USING btree (_id);
+
+
+--
+-- Name: qa_brk2_sjt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_kadastralesubjecten USING btree (_gobid);
+
+
+--
+-- Name: qa_brk2_sjt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_brk2_kadastralesubjecten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
