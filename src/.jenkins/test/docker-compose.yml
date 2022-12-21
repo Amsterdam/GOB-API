@@ -27,4 +27,7 @@ services:
       DATABASE_NAME: gobtest
       DATABASE_USER: gobtest
       DATABASE_PASSWORD: insecure
+
+      # temporary branch for brk2
+      REPO_BASE: "https://raw.githubusercontent.com/Amsterdam/amsterdam-schema/brk2_active_dataset"
     command: './wait-for-postgres.sh api_test_database bash -c "./test.sh"'
