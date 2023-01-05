@@ -1,6 +1,6 @@
 import datetime
 
-import sqlalchemy
+import geoalchemy2
 
 from graphql.language import ast
 from gobapi.graphql import scalars, BigInt
@@ -105,13 +105,13 @@ def test_geojson(monkeypatch):
             self.value = value
 
     parsed_literal = GeoJSON.parse_literal(Literal('{"type": "Point", "coordinates": [100, 100]}'))
-    assert(type(parsed_literal) == sqlalchemy.sql.functions.Function)
+    assert type(parsed_literal) == geoalchemy2.functions.ST_GeomFromText
 
     parsed_literal = GeoJSON.parse_literal(Literal("null"))
-    assert(parsed_literal == "null")
+    assert parsed_literal == "null"
 
     parsed_literal = GeoJSON.parse_literal("non literal")
-    assert(parsed_literal == None)  # value is not parsed
+    assert parsed_literal == None  # value is not parsed
 
 
 def test_bigint():
