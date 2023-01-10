@@ -11,11 +11,12 @@ graphql-relay==2.0.1
 graphql-server-core==1.2.0
 itsdangerous==2.1.2
 Jinja2==3.0.3
-MarkupSafe==2.0.1
+MarkupSafe==2.1.1
 promise==2.3
-pydantic~=1.9.1
+pydantic~=1.10.4
+PyYAML==6.0
 Rx==1.6.1
 singledispatch==3.7.0
 Werkzeug==2.0.3
 -e git+https://github.com/Amsterdam/flask-audit-log.git@v0.1.0a-rc1#egg=datapunt-flask-audit-log
--e git+https://github.com/Amsterdam/GOB-Core.git@v2.0.0#egg=gobcore
+-e git+https://github.com/Amsterdam/GOB-Core.git@v2.1.1#egg=gobcore
