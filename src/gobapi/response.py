@@ -93,12 +93,12 @@ def get_page_ref(page, num_pages):
 
 @streaming_gob_response
 def stream_entities(entities, convert):
-    yield("[")
+    yield "["
     empty = True
     for entity in entities:
         yield ("" if empty else ",") + stream_response(convert(entity))
         empty = False
-    yield("]\n")
+    yield "]\n"
 
 
 @streaming_gob_response

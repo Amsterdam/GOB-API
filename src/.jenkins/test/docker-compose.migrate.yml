@@ -12,6 +12,9 @@ services:
       DATABASE_NAME: gobtest
       DATABASE_USER: gobtest
       DATABASE_PASSWORD: insecure
+
+      # Temporary branch for brk2.
+      REPO_BASE: "https://raw.githubusercontent.com/Amsterdam/amsterdam-schema/brk2_active_dataset"
     depends_on:
       - test_db
     command: bash -c "alembic upgrade head && python -m gobupload migrate"
