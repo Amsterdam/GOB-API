@@ -3,6 +3,7 @@
 The schema is generated from the GOB models and model classes as defined in GOB Core
 """
 
+
 import re
 import sys
 
@@ -34,7 +35,7 @@ connection_fields = {}  # FilterConnectionField() per collection
 inverse_connection_fields = {}  # FilterConnectionField() per collection without bronwaardes
 
 # Generation of GraphQL schema goes past the default recursion limit of 1000 (something in Graphene)
-sys.setrecursionlimit(1500)
+sys.setrecursionlimit(2000)
 
 
 def get_collection_references(collection):
