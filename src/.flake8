@@ -2,6 +2,15 @@
 exclude =
 	__pycache__
 	gobapi/graphql_streaming/graphql2sql/grammar
+# Because GOB-API is being phased out.
+ignore =
+	D,
+	E123,
+	E126,
+	E226,
+	E241,
+	W503,
+	W504
 max-complexity = 6
 max-line-length = 119
 show_source = True
