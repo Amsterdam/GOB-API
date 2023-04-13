@@ -3,14 +3,13 @@
 import json
 from pathlib import Path
 from unittest import TestCase
-from unittest.mock import patch, MagicMock
-
-from gobcore.typesystem.json import GobTypeJSONEncoder
-from gobcore.views import GOBViews
+from unittest.mock import MagicMock, patch
 
 from gobapi import gob_model
 from gobapi.api import get_app
 from gobapi.storage import connect, exec_statement
+from gobcore.typesystem.json import GobTypeJSONEncoder
+from gobcore.views import GOBViews
 
 
 class TestLegacySchema(TestCase):
@@ -109,8 +108,8 @@ query napPeilmerken {
                 },
                 'omschrijving': 'Kantoor "Werkspoor" aan de Oostenburgervoorstraat (x=rechter dag van het linker kelderraam y=granieten plint)',
                 'windrichting': 'NW',
-                'xCoordinaatMuurvlak': 82.0,
-                'yCoordinaatMuurvlak': 12.0,
+                'xCoordinaatMuurvlak': 82,
+                'yCoordinaatMuurvlak': 12,
                 'rwsNummer': None,
                 'geometrie': {
                     'type': 'Point',
@@ -141,8 +140,8 @@ query napPeilmerken {
                     },
                     'omschrijving': 'Oudeschans 2 (Noordwest gevel van de "Montelbaanstoren")',
                     'windrichting': 'N',
-                    'xCoordinaatMuurvlak': 275.0,
-                    'yCoordinaatMuurvlak': 96.0,
+                    'xCoordinaatMuurvlak': 275,
+                    'yCoordinaatMuurvlak': 96,
                     'rwsNummer': '25G0148',
                     'geometrie': {
                         'type': 'Point',
