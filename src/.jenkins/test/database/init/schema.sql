@@ -4184,83 +4184,6 @@ CREATE VIEW legacy.gebieden_wijken AS
 ALTER TABLE legacy.gebieden_wijken OWNER TO gobtest;
 
 --
--- Name: meetbouten_meetbouten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.meetbouten_meetbouten (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    locatie character varying,
-    status jsonb,
-    vervaldatum date,
-    merk jsonb,
-    x_coordinaat_muurvlak numeric,
-    y_coordinaat_muurvlak numeric,
-    windrichting character varying,
-    ligt_in_gebieden_bouwblok jsonb,
-    ligt_in_gebieden_buurt jsonb,
-    ligt_in_gebieden_stadsdeel jsonb,
-    geometrie public.geometry(Point,28992),
-    publiceerbaar boolean,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    datum_actueel_tot timestamp without time zone,
-    nabij_adres character varying
-);
-
-
-ALTER TABLE public.meetbouten_meetbouten OWNER TO gobtest;
-
---
--- Name: meetbouten_meetbouten; Type: VIEW; Schema: legacy; Owner: gobtest
---
-
-CREATE VIEW legacy.meetbouten_meetbouten AS
- SELECT meetbouten_meetbouten.identificatie,
-    json_build_object('bronwaarde', meetbouten_meetbouten.nabij_adres) AS nabij_nummeraanduiding,
-    meetbouten_meetbouten.locatie,
-    meetbouten_meetbouten.status,
-    meetbouten_meetbouten.vervaldatum,
-    meetbouten_meetbouten.merk,
-    meetbouten_meetbouten.x_coordinaat_muurvlak,
-    meetbouten_meetbouten.y_coordinaat_muurvlak,
-    meetbouten_meetbouten.windrichting,
-    meetbouten_meetbouten.ligt_in_gebieden_bouwblok AS ligt_in_bouwblok,
-    meetbouten_meetbouten.ligt_in_gebieden_buurt AS ligt_in_buurt,
-    meetbouten_meetbouten.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
-    meetbouten_meetbouten.geometrie,
-    meetbouten_meetbouten.publiceerbaar,
-    meetbouten_meetbouten._source,
-    meetbouten_meetbouten._application,
-    meetbouten_meetbouten._source_id,
-    meetbouten_meetbouten._last_event,
-    meetbouten_meetbouten._hash,
-    meetbouten_meetbouten._version,
-    meetbouten_meetbouten._date_created,
-    meetbouten_meetbouten._date_confirmed,
-    meetbouten_meetbouten._date_modified,
-    meetbouten_meetbouten._date_deleted,
-    meetbouten_meetbouten._expiration_date,
-    meetbouten_meetbouten._gobid,
-    meetbouten_meetbouten._id,
-    meetbouten_meetbouten._tid
-   FROM public.meetbouten_meetbouten;
-
-
-ALTER TABLE legacy.meetbouten_meetbouten OWNER TO gobtest;
-
---
 -- Name: meetbouten_metingen; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -4338,89 +4261,6 @@ CREATE VIEW legacy.meetbouten_metingen AS
 ALTER TABLE legacy.meetbouten_metingen OWNER TO gobtest;
 
 --
--- Name: meetbouten_referentiepunten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.meetbouten_referentiepunten (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    locatie character varying,
-    hoogte_tov_nap numeric,
-    datum date,
-    status jsonb,
-    vervaldatum date,
-    merk jsonb,
-    x_coordinaat_muurvlak numeric,
-    y_coordinaat_muurvlak numeric,
-    windrichting character varying,
-    ligt_in_gebieden_bouwblok jsonb,
-    ligt_in_gebieden_buurt jsonb,
-    ligt_in_gebieden_stadsdeel jsonb,
-    geometrie public.geometry(Point,28992),
-    is_nap_peilmerk jsonb,
-    publiceerbaar boolean,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    datum_actueel_tot timestamp without time zone,
-    nabij_adres character varying
-);
-
-
-ALTER TABLE public.meetbouten_referentiepunten OWNER TO gobtest;
-
---
--- Name: meetbouten_referentiepunten; Type: VIEW; Schema: legacy; Owner: gobtest
---
-
-CREATE VIEW legacy.meetbouten_referentiepunten AS
- SELECT meetbouten_referentiepunten.identificatie,
-    json_build_object('bronwaarde', meetbouten_referentiepunten.nabij_adres) AS nabij_nummeraanduiding,
-    meetbouten_referentiepunten.locatie,
-    meetbouten_referentiepunten.hoogte_tov_nap,
-    meetbouten_referentiepunten.datum,
-    meetbouten_referentiepunten.status,
-    meetbouten_referentiepunten.vervaldatum,
-    meetbouten_referentiepunten.merk,
-    meetbouten_referentiepunten.x_coordinaat_muurvlak,
-    meetbouten_referentiepunten.y_coordinaat_muurvlak,
-    meetbouten_referentiepunten.windrichting,
-    meetbouten_referentiepunten.ligt_in_gebieden_bouwblok AS ligt_in_bouwblok,
-    meetbouten_referentiepunten.ligt_in_gebieden_buurt AS ligt_in_buurt,
-    meetbouten_referentiepunten.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
-    meetbouten_referentiepunten.geometrie,
-    meetbouten_referentiepunten.is_nap_peilmerk,
-    meetbouten_referentiepunten.publiceerbaar,
-    meetbouten_referentiepunten._source,
-    meetbouten_referentiepunten._application,
-    meetbouten_referentiepunten._source_id,
-    meetbouten_referentiepunten._last_event,
-    meetbouten_referentiepunten._hash,
-    meetbouten_referentiepunten._version,
-    meetbouten_referentiepunten._date_created,
-    meetbouten_referentiepunten._date_confirmed,
-    meetbouten_referentiepunten._date_modified,
-    meetbouten_referentiepunten._date_deleted,
-    meetbouten_referentiepunten._expiration_date,
-    meetbouten_referentiepunten._gobid,
-    meetbouten_referentiepunten._id,
-    meetbouten_referentiepunten._tid
-   FROM public.meetbouten_referentiepunten;
-
-
-ALTER TABLE legacy.meetbouten_referentiepunten OWNER TO gobtest;
-
---
 -- Name: meetbouten_rollagen; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -4472,85 +4312,6 @@ CREATE VIEW legacy.meetbouten_rollagen AS
 
 
 ALTER TABLE legacy.meetbouten_rollagen OWNER TO gobtest;
-
---
--- Name: nap_peilmerken; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.nap_peilmerken (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    hoogte_tov_nap numeric,
-    jaar integer,
-    omschrijving character varying,
-    windrichting character varying,
-    x_coordinaat_muurvlak numeric,
-    y_coordinaat_muurvlak numeric,
-    rws_nummer character varying,
-    geometrie public.geometry(Point,28992),
-    vervaldatum date,
-    ligt_in_gebieden_bouwblok jsonb,
-    publiceerbaar boolean,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    merk_code character varying,
-    merk_omschrijving character varying,
-    status_code integer,
-    status_omschrijving character varying,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.nap_peilmerken OWNER TO gobtest;
-
---
--- Name: nap_peilmerken; Type: VIEW; Schema: legacy; Owner: gobtest
---
-
-CREATE VIEW legacy.nap_peilmerken AS
- SELECT nap_peilmerken.identificatie,
-    nap_peilmerken.hoogte_tov_nap,
-    nap_peilmerken.jaar,
-    jsonb_build_object('code', nap_peilmerken.merk_code, 'omschrijving', nap_peilmerken.merk_omschrijving) AS merk,
-    nap_peilmerken.omschrijving,
-    nap_peilmerken.windrichting,
-    nap_peilmerken.x_coordinaat_muurvlak,
-    nap_peilmerken.y_coordinaat_muurvlak,
-    nap_peilmerken.rws_nummer,
-    nap_peilmerken.geometrie,
-    jsonb_build_object('code', nap_peilmerken.status_code, 'omschrijving', nap_peilmerken.status_omschrijving) AS status,
-    nap_peilmerken.vervaldatum,
-    nap_peilmerken.ligt_in_gebieden_bouwblok AS ligt_in_bouwblok,
-    nap_peilmerken.publiceerbaar,
-    nap_peilmerken._source,
-    nap_peilmerken._application,
-    nap_peilmerken._source_id,
-    nap_peilmerken._last_event,
-    nap_peilmerken._hash,
-    nap_peilmerken._version,
-    nap_peilmerken._date_created,
-    nap_peilmerken._date_confirmed,
-    nap_peilmerken._date_modified,
-    nap_peilmerken._date_deleted,
-    nap_peilmerken._expiration_date,
-    nap_peilmerken._gobid,
-    nap_peilmerken._id,
-    nap_peilmerken._tid
-   FROM public.nap_peilmerken;
-
-
-ALTER TABLE legacy.nap_peilmerken OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_collapsed_a; Type: TABLE; Schema: public; Owner: gobtest
@@ -5807,6 +5568,59 @@ ALTER SEQUENCE public.brk2_aantekeningenrechten__gobid_seq OWNED BY public.brk2_
 
 
 --
+-- Name: brk2_gemeentes; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.brk2_gemeentes (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    identificatie character varying,
+    naam character varying,
+    geometrie public.geometry(Geometry,28992),
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.brk2_gemeentes OWNER TO gobtest;
+
+--
+-- Name: brk2_gemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_gemeentes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_gemeentes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_gemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_gemeentes__gobid_seq OWNED BY public.brk2_gemeentes._gobid;
+
+
+--
 -- Name: brk2_kadastralegemeentecodes; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -5861,7 +5675,7 @@ ALTER SEQUENCE public.brk2_kadastralegemeentecodes__gobid_seq OWNED BY public.br
 
 CREATE TABLE public.brk2_kadastralegemeentes (
     identificatie character varying,
-    ligt_in_brk_gemeente character varying,
+    ligt_in_brk_gemeente jsonb,
     geometrie public.geometry(Geometry,28992),
     _source character varying,
     _application character varying,
@@ -5959,7 +5773,7 @@ CREATE TABLE public.brk2_kadastraleobjecten (
     aangeduid_door_brk_gemeente jsonb,
     aangeduid_door_brk_kadastralegemeente jsonb,
     aangeduid_door_brk_kadastralegemeentecode jsonb,
-    aangeduid_door_brk_kadastralesectie character varying,
+    aangeduid_door_brk_kadastralesectie jsonb,
     indicatie_voorlopige_kadastrale_grens character varying,
     perceelnummer_verschuiving jsonb,
     is_ontstaan_uit_brk_g_perceel jsonb,
@@ -5990,6 +5804,56 @@ ALTER TABLE public.brk2_kadastraleobjecten__gobid_seq OWNER TO gobtest;
 --
 
 ALTER SEQUENCE public.brk2_kadastraleobjecten__gobid_seq OWNED BY public.brk2_kadastraleobjecten._gobid;
+
+
+--
+-- Name: brk2_kadastralesecties; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.brk2_kadastralesecties (
+    identificatie character varying,
+    code character varying,
+    is_onderdeel_van_brk_kadastrale_gemeentecode jsonb,
+    geometrie public.geometry(Geometry,28992),
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.brk2_kadastralesecties OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastralesecties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_kadastralesecties__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_kadastralesecties__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastralesecties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_kadastralesecties__gobid_seq OWNED BY public.brk2_kadastralesecties._gobid;
 
 
 --
@@ -7010,6 +6874,45 @@ ALTER SEQUENCE public.hr_vestigingen__gobid_seq OWNED BY public.hr_vestigingen._
 
 
 --
+-- Name: meetbouten_meetbouten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.meetbouten_meetbouten (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    locatie character varying,
+    status jsonb,
+    vervaldatum date,
+    merk jsonb,
+    x_coordinaat_muurvlak integer,
+    y_coordinaat_muurvlak integer,
+    windrichting character varying,
+    ligt_in_gebieden_bouwblok jsonb,
+    ligt_in_gebieden_buurt jsonb,
+    ligt_in_gebieden_stadsdeel jsonb,
+    geometrie public.geometry(Point,28992),
+    publiceerbaar boolean,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone,
+    nabij_adres character varying
+);
+
+
+ALTER TABLE public.meetbouten_meetbouten OWNER TO gobtest;
+
+--
 -- Name: meetbouten_meetbouten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -7052,6 +6955,48 @@ ALTER TABLE public.meetbouten_metingen__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.meetbouten_metingen__gobid_seq OWNED BY public.meetbouten_metingen._gobid;
 
+
+--
+-- Name: meetbouten_referentiepunten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.meetbouten_referentiepunten (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    locatie character varying,
+    hoogte_tov_nap numeric,
+    datum date,
+    status jsonb,
+    vervaldatum date,
+    merk jsonb,
+    x_coordinaat_muurvlak integer,
+    y_coordinaat_muurvlak integer,
+    windrichting character varying,
+    ligt_in_gebieden_bouwblok jsonb,
+    ligt_in_gebieden_buurt jsonb,
+    ligt_in_gebieden_stadsdeel jsonb,
+    geometrie public.geometry(Point,28992),
+    is_nap_peilmerk jsonb,
+    publiceerbaar boolean,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone,
+    nabij_adres character varying
+);
+
+
+ALTER TABLE public.meetbouten_referentiepunten OWNER TO gobtest;
 
 --
 -- Name: meetbouten_referentiepunten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -9588,6 +9533,62 @@ CREATE MATERIALIZED VIEW public.mv_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ AS
 ALTER TABLE public.mv_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ OWNER TO gobtest;
 
 --
+-- Name: rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente OWNER TO gobtest;
+
+--
+-- Name: mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente AS
+ SELECT rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente._gobid,
+    rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente.src_id,
+    rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente.dst_id,
+    rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente.dst_volgnummer,
+    rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente.begin_geldigheid,
+    rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente.eind_geldigheid,
+    rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente.bronwaarde
+   FROM public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente
+  WHERE (rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente OWNER TO gobtest;
+
+--
 -- Name: rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -9643,6 +9644,175 @@ CREATE MATERIALIZED VIEW public.mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsob
 
 
 ALTER TABLE public.mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente OWNER TO gobtest;
+
+--
+-- Name: mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente AS
+ SELECT rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente._gobid,
+    rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente.src_id,
+    rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente.src_volgnummer,
+    rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente.dst_id,
+    rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente.dst_volgnummer,
+    rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente.begin_geldigheid,
+    rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente.eind_geldigheid,
+    rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente.bronwaarde
+   FROM public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente
+  WHERE (rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ OWNER TO gobtest;
+
+--
+-- Name: mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ AS
+ SELECT rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_._gobid,
+    rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_.src_id,
+    rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_.src_volgnummer,
+    rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_.dst_id,
+    rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_.begin_geldigheid,
+    rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_.eind_geldigheid,
+    rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_.bronwaarde
+   FROM public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_
+  WHERE (rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ OWNER TO gobtest;
+
+--
+-- Name: mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ AS
+ SELECT rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_._gobid,
+    rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_.src_id,
+    rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_.src_volgnummer,
+    rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_.dst_id,
+    rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_.begin_geldigheid,
+    rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_.eind_geldigheid,
+    rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_.bronwaarde
+   FROM public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_
+  WHERE (rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ OWNER TO gobtest;
 
 --
 -- Name: rel_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_; Type: TABLE; Schema: public; Owner: gobtest
@@ -9757,6 +9927,117 @@ CREATE MATERIALIZED VIEW public.mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perce
 
 
 ALTER TABLE public.mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie OWNER TO gobtest;
+
+--
+-- Name: mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie AS
+ SELECT rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie._gobid,
+    rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie.src_id,
+    rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie.src_volgnummer,
+    rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie.dst_id,
+    rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie.begin_geldigheid,
+    rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie.eind_geldigheid,
+    rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie.bronwaarde
+   FROM public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie
+  WHERE (rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code OWNER TO gobtest;
+
+--
+-- Name: mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code AS
+ SELECT rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code._gobid,
+    rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code.src_id,
+    rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code.dst_id,
+    rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code.begin_geldigheid,
+    rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code.eind_geldigheid,
+    rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code.bronwaarde
+   FROM public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code
+  WHERE (rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code OWNER TO gobtest;
 
 --
 -- Name: rel_brk2_sdl_brk2_akt__is_bron_voor_brk_akt_; Type: TABLE; Schema: public; Owner: gobtest
@@ -16648,6 +16929,47 @@ CREATE MATERIALIZED VIEW public.mv_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten A
 ALTER TABLE public.mv_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten OWNER TO gobtest;
 
 --
+-- Name: nap_peilmerken; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.nap_peilmerken (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    hoogte_tov_nap numeric,
+    jaar integer,
+    omschrijving character varying,
+    windrichting character varying,
+    x_coordinaat_muurvlak integer,
+    y_coordinaat_muurvlak integer,
+    rws_nummer character varying,
+    geometrie public.geometry(Point,28992),
+    vervaldatum date,
+    ligt_in_gebieden_bouwblok jsonb,
+    publiceerbaar boolean,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    merk_code character varying,
+    merk_omschrijving character varying,
+    status_code integer,
+    status_omschrijving character varying,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.nap_peilmerken OWNER TO gobtest;
+
+--
 -- Name: nap_peilmerken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -17468,6 +17790,63 @@ ALTER SEQUENCE public.qa_brk2_aantekeningenrechten__gobid_seq OWNED BY public.qa
 
 
 --
+-- Name: qa_brk2_gemeentes; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_brk2_gemeentes (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_brk2_gemeentes OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_gemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_brk2_gemeentes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_brk2_gemeentes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_gemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_brk2_gemeentes__gobid_seq OWNED BY public.qa_brk2_gemeentes._gobid;
+
+
+--
 -- Name: qa_brk2_kadastralegemeentecodes; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -17636,6 +18015,63 @@ ALTER TABLE public.qa_brk2_kadastraleobjecten__gobid_seq OWNER TO gobtest;
 --
 
 ALTER SEQUENCE public.qa_brk2_kadastraleobjecten__gobid_seq OWNED BY public.qa_brk2_kadastraleobjecten._gobid;
+
+
+--
+-- Name: qa_brk2_kadastralesecties; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_brk2_kadastralesecties (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_brk2_kadastralesecties OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_kadastralesecties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_brk2_kadastralesecties__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_brk2_kadastralesecties__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_kadastralesecties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_brk2_kadastralesecties__gobid_seq OWNED BY public.qa_brk2_kadastralesecties._gobid;
 
 
 --
@@ -21571,6 +22007,28 @@ ALTER SEQUENCE public.rel_brk2_kce_brk2_kge_onderdeel_van_brk_kge___gobid_seq OW
 
 
 --
+-- Name: rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente__gobid_seq OWNED BY public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente._gobid;
+
+
+--
 -- Name: rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobjec__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -21590,6 +22048,72 @@ ALTER TABLE public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobjec__gobid_s
 --
 
 ALTER SEQUENCE public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobjec__gobid_seq OWNED BY public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject._gobid;
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente__gobid_seq OWNED BY public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente._gobid;
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce__angdd_dr__brk_kce___gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce___gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce___gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kot_brk2_kce__angdd_dr__brk_kce___gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce___gobid_seq OWNED BY public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_._gobid;
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge__angdd_dr__brk_kge___gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge___gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge___gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kot_brk2_kge__angdd_dr__brk_kge___gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge___gobid_seq OWNED BY public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_._gobid;
 
 
 --
@@ -21634,6 +22158,50 @@ ALTER TABLE public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel__gobid_se
 --
 
 ALTER SEQUENCE public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel__gobid_seq OWNED BY public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel._gobid;
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesecti__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesecti__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesecti__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesecti__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesecti__gobid_seq OWNED BY public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie._gobid;
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code__gobid_seq OWNED BY public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code._gobid;
 
 
 --
@@ -24954,6 +25522,13 @@ ALTER TABLE ONLY public.brk2_aantekeningenrechten ALTER COLUMN _gobid SET DEFAUL
 
 
 --
+-- Name: brk2_gemeentes _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_gemeentes ALTER COLUMN _gobid SET DEFAULT nextval('public.brk2_gemeentes__gobid_seq'::regclass);
+
+
+--
 -- Name: brk2_kadastralegemeentecodes _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
@@ -24972,6 +25547,13 @@ ALTER TABLE ONLY public.brk2_kadastralegemeentes ALTER COLUMN _gobid SET DEFAULT
 --
 
 ALTER TABLE ONLY public.brk2_kadastraleobjecten ALTER COLUMN _gobid SET DEFAULT nextval('public.brk2_kadastraleobjecten__gobid_seq'::regclass);
+
+
+--
+-- Name: brk2_kadastralesecties _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_kadastralesecties ALTER COLUMN _gobid SET DEFAULT nextval('public.brk2_kadastralesecties__gobid_seq'::regclass);
 
 
 --
@@ -25311,6 +25893,13 @@ ALTER TABLE ONLY public.qa_brk2_aantekeningenrechten ALTER COLUMN _gobid SET DEF
 
 
 --
+-- Name: qa_brk2_gemeentes _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_gemeentes ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_brk2_gemeentes__gobid_seq'::regclass);
+
+
+--
 -- Name: qa_brk2_kadastralegemeentecodes _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
@@ -25329,6 +25918,13 @@ ALTER TABLE ONLY public.qa_brk2_kadastralegemeentes ALTER COLUMN _gobid SET DEFA
 --
 
 ALTER TABLE ONLY public.qa_brk2_kadastraleobjecten ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_brk2_kadastraleobjecten__gobid_seq'::regclass);
+
+
+--
+-- Name: qa_brk2_kadastralesecties _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_kadastralesecties ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_brk2_kadastralesecties__gobid_seq'::regclass);
 
 
 --
@@ -26004,10 +26600,38 @@ ALTER TABLE ONLY public.rel_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ ALTER COLUM
 
 
 --
+-- Name: rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente__gobid_seq'::regclass);
+
+
+--
 -- Name: rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
 ALTER TABLE ONLY public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobjec__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce___gobid_seq'::regclass);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge___gobid_seq'::regclass);
 
 
 --
@@ -26022,6 +26646,20 @@ ALTER TABLE ONLY public.rel_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ ALTER CO
 --
 
 ALTER TABLE ONLY public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesecti__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code__gobid_seq'::regclass);
 
 
 --
@@ -27774,6 +28412,30 @@ ALTER TABLE ONLY public.brk2_aantekeningenrechten
 
 
 --
+-- Name: brk2_gemeentes brk2_gemeentes__id_volgnummer_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_gemeentes
+    ADD CONSTRAINT brk2_gemeentes__id_volgnummer_key UNIQUE (_id, volgnummer);
+
+
+--
+-- Name: brk2_gemeentes brk2_gemeentes__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_gemeentes
+    ADD CONSTRAINT brk2_gemeentes__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: brk2_gemeentes brk2_gemeentes_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_gemeentes
+    ADD CONSTRAINT brk2_gemeentes_pkey PRIMARY KEY (_gobid);
+
+
+--
 -- Name: brk2_kadastralegemeentecodes brk2_kadastralegemeentecodes__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
@@ -27843,6 +28505,30 @@ ALTER TABLE ONLY public.brk2_kadastraleobjecten
 
 ALTER TABLE ONLY public.brk2_kadastraleobjecten
     ADD CONSTRAINT brk2_kadastraleobjecten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: brk2_kadastralesecties brk2_kadastralesecties__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_kadastralesecties
+    ADD CONSTRAINT brk2_kadastralesecties__id_key UNIQUE (_id);
+
+
+--
+-- Name: brk2_kadastralesecties brk2_kadastralesecties__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_kadastralesecties
+    ADD CONSTRAINT brk2_kadastralesecties__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: brk2_kadastralesecties brk2_kadastralesecties_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_kadastralesecties
+    ADD CONSTRAINT brk2_kadastralesecties_pkey PRIMARY KEY (_gobid);
 
 
 --
@@ -28974,6 +29660,30 @@ ALTER TABLE ONLY public.qa_brk2_aantekeningenrechten
 
 
 --
+-- Name: qa_brk2_gemeentes qa_brk2_gemeentes__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_gemeentes
+    ADD CONSTRAINT qa_brk2_gemeentes__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_brk2_gemeentes qa_brk2_gemeentes__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_gemeentes
+    ADD CONSTRAINT qa_brk2_gemeentes__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_brk2_gemeentes qa_brk2_gemeentes_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_gemeentes
+    ADD CONSTRAINT qa_brk2_gemeentes_pkey PRIMARY KEY (_gobid);
+
+
+--
 -- Name: qa_brk2_kadastralegemeentecodes qa_brk2_kadastralegemeentecodes__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
@@ -29043,6 +29753,30 @@ ALTER TABLE ONLY public.qa_brk2_kadastraleobjecten
 
 ALTER TABLE ONLY public.qa_brk2_kadastraleobjecten
     ADD CONSTRAINT qa_brk2_kadastraleobjecten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: qa_brk2_kadastralesecties qa_brk2_kadastralesecties__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_kadastralesecties
+    ADD CONSTRAINT qa_brk2_kadastralesecties__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_brk2_kadastralesecties qa_brk2_kadastralesecties__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_kadastralesecties
+    ADD CONSTRAINT qa_brk2_kadastralesecties__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_brk2_kadastralesecties qa_brk2_kadastralesecties_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_kadastralesecties
+    ADD CONSTRAINT qa_brk2_kadastralesecties_pkey PRIMARY KEY (_gobid);
 
 
 --
@@ -31350,6 +32084,30 @@ ALTER TABLE ONLY public.rel_brk2_kce_brk2_kge_onderdeel_van_brk_kge_
 
 
 --
+-- Name: rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente_uniq UNIQUE (_source_id);
+
+
+--
 -- Name: rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
@@ -31371,6 +32129,78 @@ ALTER TABLE ONLY public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject
 
 ALTER TABLE ONLY public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject
     ADD CONSTRAINT rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente
+    ADD CONSTRAINT rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente
+    ADD CONSTRAINT rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente
+    ADD CONSTRAINT rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ rel_brk2_kot_brk2_kce__angdd_dr__brk_kce___tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kce__angdd_dr__brk_kce___tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ rel_brk2_kot_brk2_kce__angdd_dr__brk_kce__pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kce__angdd_dr__brk_kce__pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ rel_brk2_kot_brk2_kce__angdd_dr__brk_kce__uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kce__angdd_dr__brk_kce__uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ rel_brk2_kot_brk2_kge__angdd_dr__brk_kge___tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kge__angdd_dr__brk_kge___tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ rel_brk2_kot_brk2_kge__angdd_dr__brk_kge__pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kge__angdd_dr__brk_kge__pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ rel_brk2_kot_brk2_kge__angdd_dr__brk_kge__uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kge__angdd_dr__brk_kge__uniq UNIQUE (_source_id);
 
 
 --
@@ -31419,6 +32249,54 @@ ALTER TABLE ONLY public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel
 
 ALTER TABLE ONLY public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel
     ADD CONSTRAINT rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie
+    ADD CONSTRAINT rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie
+    ADD CONSTRAINT rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie
+    ADD CONSTRAINT rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code
+    ADD CONSTRAINT rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code
+    ADD CONSTRAINT rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code
+    ADD CONSTRAINT rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code_uniq UNIQUE (_source_id);
 
 
 --
@@ -36900,6 +37778,104 @@ CREATE INDEX brk2_art_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_aantekenin
 
 
 --
+-- Name: brk2_gme_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_0afd9202ba86aa11ce63ad7007e7990b ON public.brk2_gemeentes USING btree (_source_id);
+
+
+--
+-- Name: brk2_gme_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_1a9d849ff5a68997176b6144236806ae ON public.brk2_gemeentes USING btree (_expiration_date);
+
+
+--
+-- Name: brk2_gme_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk2_gemeentes USING btree (_id, volgnummer);
+
+
+--
+-- Name: brk2_gme_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_3676d55f84497cbeadfc614c1b1b62fc ON public.brk2_gemeentes USING btree (_application);
+
+
+--
+-- Name: brk2_gme_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_37abd7da5cbd49b20a1090ba960d82e7 ON public.brk2_gemeentes USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: brk2_gme_4a58a9501362534806f8727ee597d42c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_4a58a9501362534806f8727ee597d42c ON public.brk2_gemeentes USING btree (naam);
+
+
+--
+-- Name: brk2_gme_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_613273a0ec2090693894cea102aa8c06 ON public.brk2_gemeentes USING btree (_last_event);
+
+
+--
+-- Name: brk2_gme_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_gemeentes USING btree (_date_deleted);
+
+
+--
+-- Name: brk2_gme_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_97beaa21d4819a1131833b897504ce31 ON public.brk2_gemeentes USING btree (_tid);
+
+
+--
+-- Name: brk2_gme_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_b80bb7740288fda1f201890375a60c8f ON public.brk2_gemeentes USING btree (_id);
+
+
+--
+-- Name: brk2_gme_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_d05569f886377400312d8c2edd4c6f4c ON public.brk2_gemeentes USING btree (_gobid);
+
+
+--
+-- Name: brk2_gme_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_dc6c1fae5cee1f6a7f71cac88a73adda ON public.brk2_gemeentes USING gist (geometrie);
+
+
+--
+-- Name: brk2_gme_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_gemeentes USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: brk2_kce_092c471623d23f2c0aa0e6210db86166; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kce_092c471623d23f2c0aa0e6210db86166 ON public.brk2_kadastralegemeentecodes USING btree (identificatie);
+
+
+--
 -- Name: brk2_kce_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37019,6 +37995,13 @@ CREATE INDEX brk2_kge_613273a0ec2090693894cea102aa8c06 ON public.brk2_kadastrale
 
 
 --
+-- Name: brk2_kge_6e6694f3f629aa9470728263c7bf8335; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kge_6e6694f3f629aa9470728263c7bf8335 ON public.brk2_kadastralegemeentes USING gin (ligt_in_brk_gemeente);
+
+
+--
 -- Name: brk2_kge_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37089,6 +38072,13 @@ CREATE INDEX brk2_kot_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk2_kadastrale
 
 
 --
+-- Name: brk2_kot_2da2d4a7bd4e686e51083e41830a6e6f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kot_2da2d4a7bd4e686e51083e41830a6e6f ON public.brk2_kadastraleobjecten USING gin (aangeduid_door_brk_kadastralegemeente);
+
+
+--
 -- Name: brk2_kot_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37107,6 +38097,13 @@ CREATE INDEX brk2_kot_37abd7da5cbd49b20a1090ba960d82e7 ON public.brk2_kadastrale
 --
 
 CREATE INDEX brk2_kot_46c90b50dac1d93bb87dc3abd45bdca6 ON public.brk2_kadastraleobjecten USING gin (is_ontstaan_uit_brk_g_perceel);
+
+
+--
+-- Name: brk2_kot_53a3b2a7e079cbe979d0df90c9d6dcbb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kot_53a3b2a7e079cbe979d0df90c9d6dcbb ON public.brk2_kadastraleobjecten USING gin (aangeduid_door_brk_kadastralegemeentecode);
 
 
 --
@@ -37152,10 +38149,108 @@ CREATE INDEX brk2_kot_d05569f886377400312d8c2edd4c6f4c ON public.brk2_kadastrale
 
 
 --
+-- Name: brk2_kot_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kot_dc6c1fae5cee1f6a7f71cac88a73adda ON public.brk2_kadastraleobjecten USING gist (geometrie);
+
+
+--
 -- Name: brk2_kot_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX brk2_kot_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_kadastraleobjecten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: brk2_kot_f33609bab6385ce50e034e382ba948f9; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kot_f33609bab6385ce50e034e382ba948f9 ON public.brk2_kadastraleobjecten USING gin (aangeduid_door_brk_kadastralesectie);
+
+
+--
+-- Name: brk2_kse_092c471623d23f2c0aa0e6210db86166; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_092c471623d23f2c0aa0e6210db86166 ON public.brk2_kadastralesecties USING btree (identificatie);
+
+
+--
+-- Name: brk2_kse_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_0afd9202ba86aa11ce63ad7007e7990b ON public.brk2_kadastralesecties USING btree (_source_id);
+
+
+--
+-- Name: brk2_kse_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_1a9d849ff5a68997176b6144236806ae ON public.brk2_kadastralesecties USING btree (_expiration_date);
+
+
+--
+-- Name: brk2_kse_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_3676d55f84497cbeadfc614c1b1b62fc ON public.brk2_kadastralesecties USING btree (_application);
+
+
+--
+-- Name: brk2_kse_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_37abd7da5cbd49b20a1090ba960d82e7 ON public.brk2_kadastralesecties USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: brk2_kse_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_613273a0ec2090693894cea102aa8c06 ON public.brk2_kadastralesecties USING btree (_last_event);
+
+
+--
+-- Name: brk2_kse_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_kadastralesecties USING btree (_date_deleted);
+
+
+--
+-- Name: brk2_kse_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_97beaa21d4819a1131833b897504ce31 ON public.brk2_kadastralesecties USING btree (_tid);
+
+
+--
+-- Name: brk2_kse_a8ce6781b5cc70fbd9bb02adbb26bff3; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_a8ce6781b5cc70fbd9bb02adbb26bff3 ON public.brk2_kadastralesecties USING gin (is_onderdeel_van_brk_kadastrale_gemeentecode);
+
+
+--
+-- Name: brk2_kse_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_b80bb7740288fda1f201890375a60c8f ON public.brk2_kadastralesecties USING btree (_id);
+
+
+--
+-- Name: brk2_kse_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_d05569f886377400312d8c2edd4c6f4c ON public.brk2_kadastralesecties USING btree (_gobid);
+
+
+--
+-- Name: brk2_kse_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_kadastralesecties USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
@@ -39224,10 +40319,38 @@ CREATE INDEX dst_id_mv_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ ON public.mv_brk
 
 
 --
+-- Name: dst_id_mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente ON public.mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (dst_id);
+
+
+--
 -- Name: dst_id_mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX dst_id_mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject ON public.mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente ON public.mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ ON public.mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ ON public.mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (dst_id);
 
 
 --
@@ -39242,6 +40365,20 @@ CREATE INDEX dst_id_mv_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ ON public.mv_
 --
 
 CREATE INDEX dst_id_mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel ON public.mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie ON public.mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code ON public.mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (dst_id);
 
 
 --
@@ -41023,10 +42160,38 @@ CREATE INDEX gobid_mv_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ ON public.mv_brk2
 
 
 --
+-- Name: gobid_mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente ON public.mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_gobid);
+
+
+--
 -- Name: gobid_mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX gobid_mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject ON public.mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente ON public.mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ ON public.mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ ON public.mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_gobid);
 
 
 --
@@ -41041,6 +42206,20 @@ CREATE INDEX gobid_mv_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ ON public.mv_b
 --
 
 CREATE INDEX gobid_mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel ON public.mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie ON public.mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code ON public.mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_gobid);
 
 
 --
@@ -43893,6 +45072,83 @@ CREATE INDEX qa_brk2_art_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_brk2_aant
 
 
 --
+-- Name: qa_brk2_gme_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_gemeentes USING btree (_source_id);
+
+
+--
+-- Name: qa_brk2_gme_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_gemeentes USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_gme_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_gemeentes USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_brk2_gme_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_brk2_gemeentes USING btree (_application);
+
+
+--
+-- Name: qa_brk2_gme_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_brk2_gemeentes USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_brk2_gme_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_613273a0ec2090693894cea102aa8c06 ON public.qa_brk2_gemeentes USING btree (_last_event);
+
+
+--
+-- Name: qa_brk2_gme_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_gemeentes USING btree (_date_deleted);
+
+
+--
+-- Name: qa_brk2_gme_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_gemeentes USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_gme_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_gemeentes USING btree (_id);
+
+
+--
+-- Name: qa_brk2_gme_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_gemeentes USING btree (_gobid);
+
+
+--
+-- Name: qa_brk2_gme_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_brk2_gemeentes USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
 -- Name: qa_brk2_kce_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44121,6 +45377,83 @@ CREATE INDEX qa_brk2_kot_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_kada
 --
 
 CREATE INDEX qa_brk2_kot_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_brk2_kadastraleobjecten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: qa_brk2_kse_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_kadastralesecties USING btree (_source_id);
+
+
+--
+-- Name: qa_brk2_kse_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_kadastralesecties USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_kse_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_kadastralesecties USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_brk2_kse_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_brk2_kadastralesecties USING btree (_application);
+
+
+--
+-- Name: qa_brk2_kse_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_brk2_kadastralesecties USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_brk2_kse_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_613273a0ec2090693894cea102aa8c06 ON public.qa_brk2_kadastralesecties USING btree (_last_event);
+
+
+--
+-- Name: qa_brk2_kse_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_kadastralesecties USING btree (_date_deleted);
+
+
+--
+-- Name: qa_brk2_kse_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_kadastralesecties USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_kse_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_kadastralesecties USING btree (_id);
+
+
+--
+-- Name: qa_brk2_kse_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_kadastralesecties USING btree (_gobid);
+
+
+--
+-- Name: qa_brk2_kse_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_brk2_kadastralesecties USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
@@ -53287,6 +54620,125 @@ CREATE INDEX rel_brk2_kce_brk2_kge_8f720d7c_f49c273bd9b194a2b48ebed02cfba269 ON 
 
 
 --
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_source_id);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_1a9d849ff5a68997176b6144236806ae ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_expiration_date);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_application);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_source);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_47c61233d92dd28822986676f8650441 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_613273a0ec2090693894cea102aa8c06 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_last_event);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_date_deleted);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (bronwaarde);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_id);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_gobid);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_dc79a884dc55f09863437f9198baf021 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_last_src_event);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_e0c02692eaf2daf950e3f61108280a92 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
+
+
+--
 -- Name: rel_brk2_kot_bag_vot_60d5b958_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -53403,6 +54855,363 @@ CREATE INDEX rel_brk2_kot_bag_vot_60d5b958_ed3f22b3eec2fb035647f924a5b2136e ON p
 --
 
 CREATE INDEX rel_brk2_kot_bag_vot_60d5b958_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_source_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_1a9d849ff5a68997176b6144236806ae ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_expiration_date);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_application);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_source);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_47c61233d92dd28822986676f8650441 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_613273a0ec2090693894cea102aa8c06 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_last_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_date_deleted);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (bronwaarde);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_gobid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_dc79a884dc55f09863437f9198baf021 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_last_src_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_e0c02692eaf2daf950e3f61108280a92 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_source_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_1a9d849ff5a68997176b6144236806ae ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_expiration_date);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_application);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_source);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_47c61233d92dd28822986676f8650441 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_613273a0ec2090693894cea102aa8c06 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_last_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_date_deleted);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (bronwaarde);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_gobid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_dc79a884dc55f09863437f9198baf021 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_last_src_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_e0c02692eaf2daf950e3f61108280a92 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_source_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_1a9d849ff5a68997176b6144236806ae ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_expiration_date);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_application);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_source);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_47c61233d92dd28822986676f8650441 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_613273a0ec2090693894cea102aa8c06 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_last_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_date_deleted);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (bronwaarde);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_gobid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_dc79a884dc55f09863437f9198baf021 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_last_src_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_e0c02692eaf2daf950e3f61108280a92 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_last_dst_event);
 
 
 --
@@ -53641,6 +55450,244 @@ CREATE INDEX rel_brk2_kot_brk2_kot_46c90b50_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kot_46c90b50_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_source_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_1a9d849ff5a68997176b6144236806ae ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_expiration_date);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_application);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_source);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_47c61233d92dd28822986676f8650441 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_613273a0ec2090693894cea102aa8c06 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_last_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_date_deleted);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (bronwaarde);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_gobid);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_dc79a884dc55f09863437f9198baf021 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_last_src_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_e0c02692eaf2daf950e3f61108280a92 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_source_id);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_1a9d849ff5a68997176b6144236806ae ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_expiration_date);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_application);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_source);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_47c61233d92dd28822986676f8650441 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_613273a0ec2090693894cea102aa8c06 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_last_event);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_date_deleted);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (bronwaarde);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_id);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_gobid);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_dc79a884dc55f09863437f9198baf021 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_last_src_event);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_e0c02692eaf2daf950e3f61108280a92 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_last_dst_event);
 
 
 --
@@ -68288,10 +70335,38 @@ CREATE INDEX src_dst_wide_mv_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ ON public.
 
 
 --
+-- Name: src_dst_wide_mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente ON public.mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (src_id, dst_id, dst_volgnummer);
+
+
+--
 -- Name: src_dst_wide_mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobje; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX src_dst_wide_mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobje ON public.mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente ON public.mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ ON public.mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (src_id, src_volgnummer, dst_id);
+
+
+--
+-- Name: src_dst_wide_mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ ON public.mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (src_id, src_volgnummer, dst_id);
 
 
 --
@@ -68306,6 +70381,20 @@ CREATE INDEX src_dst_wide_mv_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ ON publ
 --
 
 CREATE INDEX src_dst_wide_mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel ON public.mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesect; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesect ON public.mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (src_id, src_volgnummer, dst_id);
+
+
+--
+-- Name: src_dst_wide_mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code ON public.mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (src_id, dst_id);
 
 
 --
@@ -69513,10 +71602,38 @@ CREATE INDEX src_id_mv_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ ON public.mv_brk
 
 
 --
+-- Name: src_id_mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente ON public.mv_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (src_id);
+
+
+--
 -- Name: src_id_mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX src_id_mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject ON public.mv_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente ON public.mv_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ ON public.mv_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ ON public.mv_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (src_id);
 
 
 --
@@ -69531,6 +71648,20 @@ CREATE INDEX src_id_mv_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ ON public.mv_
 --
 
 CREATE INDEX src_id_mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel ON public.mv_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie ON public.mv_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code ON public.mv_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (src_id);
 
 
 --
@@ -73816,6 +75947,22 @@ ALTER TABLE ONLY public.rel_brk2_kce_brk2_kge_onderdeel_van_brk_kge_
 
 
 --
+-- Name: rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk2_gemeentes(_id, volgnummer);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente
+    ADD CONSTRAINT rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente_sfk FOREIGN KEY (src_id) REFERENCES public.brk2_kadastralegemeentes(_id);
+
+
+--
 -- Name: rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
@@ -73829,6 +75976,54 @@ ALTER TABLE ONLY public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject
 
 ALTER TABLE ONLY public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject
     ADD CONSTRAINT rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.brk2_kadastraleobjecten(_id, volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente
+    ADD CONSTRAINT rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk2_gemeentes(_id, volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente
+    ADD CONSTRAINT rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.brk2_kadastraleobjecten(_id, volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ rel_brk2_kot_brk2_kce__angdd_dr__brk_kce__dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kce__angdd_dr__brk_kce__dfk FOREIGN KEY (dst_id) REFERENCES public.brk2_kadastralegemeentecodes(_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ rel_brk2_kot_brk2_kce__angdd_dr__brk_kce__sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kce__angdd_dr__brk_kce__sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.brk2_kadastraleobjecten(_id, volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ rel_brk2_kot_brk2_kge__angdd_dr__brk_kge__dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kge__angdd_dr__brk_kge__dfk FOREIGN KEY (dst_id) REFERENCES public.brk2_kadastralegemeentes(_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ rel_brk2_kot_brk2_kge__angdd_dr__brk_kge__sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_
+    ADD CONSTRAINT rel_brk2_kot_brk2_kge__angdd_dr__brk_kge__sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.brk2_kadastraleobjecten(_id, volgnummer);
 
 
 --
@@ -73861,6 +76056,38 @@ ALTER TABLE ONLY public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel
 
 ALTER TABLE ONLY public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel
     ADD CONSTRAINT rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.brk2_kadastraleobjecten(_id, volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie
+    ADD CONSTRAINT rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie_dfk FOREIGN KEY (dst_id) REFERENCES public.brk2_kadastralesecties(_id);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie
+    ADD CONSTRAINT rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.brk2_kadastraleobjecten(_id, volgnummer);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code
+    ADD CONSTRAINT rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code_dfk FOREIGN KEY (dst_id) REFERENCES public.brk2_kadastralegemeentecodes(_id);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code
+    ADD CONSTRAINT rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code_sfk FOREIGN KEY (src_id) REFERENCES public.brk2_kadastralesecties(_id);
 
 
 --
