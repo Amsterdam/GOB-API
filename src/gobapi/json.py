@@ -25,4 +25,9 @@ class APIGobTypeJSONEncoder(GobTypeJSONEncoder):
             dt = obj.to_value
             return None if dt is None else serialize.datetime_value(obj.to_value)
 
+        if isinstance(obj, GOB.Decimal):
+            dt = obj.to_value
+            # Use float because JSON doesn't know about decimals
+            return None if dt is None else float(dt)
+
         return super().default(obj)
