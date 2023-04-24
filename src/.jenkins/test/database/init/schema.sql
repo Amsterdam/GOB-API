@@ -36421,6 +36421,27 @@ CREATE INDEX bag_bdt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bag_brondocument
 
 
 --
+-- Name: bag_bdt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_bdt_97beaa21d4819a1131833b897504ce31 ON public.bag_brondocumenten USING btree (_tid);
+
+
+--
+-- Name: bag_bdt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_bdt_b80bb7740288fda1f201890375a60c8f ON public.bag_brondocumenten USING btree (_id);
+
+
+--
+-- Name: bag_bdt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_bdt_d05569f886377400312d8c2edd4c6f4c ON public.bag_brondocumenten USING btree (_gobid);
+
+
+--
 -- Name: bag_bdt_ddd983e36ed89c59a37af7ed7226596b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -36484,10 +36505,31 @@ CREATE INDEX bag_dsr_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bag_dossiers USI
 
 
 --
+-- Name: bag_dsr_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_dsr_97beaa21d4819a1131833b897504ce31 ON public.bag_dossiers USING btree (_tid);
+
+
+--
+-- Name: bag_dsr_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_dsr_b80bb7740288fda1f201890375a60c8f ON public.bag_dossiers USING btree (_id);
+
+
+--
 -- Name: bag_dsr_bbbc258f975e6acedd7d6857c581caa0; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX bag_dsr_bbbc258f975e6acedd7d6857c581caa0 ON public.bag_dossiers USING btree (dossier);
+
+
+--
+-- Name: bag_dsr_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_dsr_d05569f886377400312d8c2edd4c6f4c ON public.bag_dossiers USING btree (_gobid);
 
 
 --
@@ -36533,6 +36575,13 @@ CREATE INDEX bag_lps_1b8d37fdaf7a3b03b199a1c33ec53069 ON public.bag_ligplaatsen 
 
 
 --
+-- Name: bag_lps_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_lps_2a4dbedb477015cfe2b9f2c990906f44 ON public.bag_ligplaatsen USING btree (_id, volgnummer);
+
+
+--
 -- Name: bag_lps_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -36561,10 +36610,31 @@ CREATE INDEX bag_lps_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bag_ligplaatsen 
 
 
 --
+-- Name: bag_lps_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_lps_97beaa21d4819a1131833b897504ce31 ON public.bag_ligplaatsen USING btree (_tid);
+
+
+--
+-- Name: bag_lps_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_lps_b80bb7740288fda1f201890375a60c8f ON public.bag_ligplaatsen USING btree (_id);
+
+
+--
 -- Name: bag_lps_c0a7bf7ed1b7e1ee50607c75bc7f0f1e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX bag_lps_c0a7bf7ed1b7e1ee50607c75bc7f0f1e ON public.bag_ligplaatsen USING gin (ligt_in_gemeente);
+
+
+--
+-- Name: bag_lps_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_lps_d05569f886377400312d8c2edd4c6f4c ON public.bag_ligplaatsen USING btree (_gobid);
 
 
 --
@@ -36610,6 +36680,13 @@ CREATE INDEX bag_nag_1a9d849ff5a68997176b6144236806ae ON public.bag_nummeraandui
 
 
 --
+-- Name: bag_nag_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_nag_2a4dbedb477015cfe2b9f2c990906f44 ON public.bag_nummeraanduidingen USING btree (_id, volgnummer);
+
+
+--
 -- Name: bag_nag_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -36652,6 +36729,13 @@ CREATE INDEX bag_nag_8a2563abb94820b1df87de1aea0287d6 ON public.bag_nummeraandui
 
 
 --
+-- Name: bag_nag_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_nag_97beaa21d4819a1131833b897504ce31 ON public.bag_nummeraanduidingen USING btree (_tid);
+
+
+--
 -- Name: bag_nag_98ee8807698c952be5a9e29e9c4fd36e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -36666,10 +36750,24 @@ CREATE INDEX bag_nag_a4996e98b880e4cdd58fff70758c99c5 ON public.bag_nummeraandui
 
 
 --
+-- Name: bag_nag_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_nag_b80bb7740288fda1f201890375a60c8f ON public.bag_nummeraanduidingen USING btree (_id);
+
+
+--
 -- Name: bag_nag_cc26c3755b6907d824224af7b1bf3fae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX bag_nag_cc26c3755b6907d824224af7b1bf3fae ON public.bag_nummeraanduidingen USING gin (ligt_in_woonplaats);
+
+
+--
+-- Name: bag_nag_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_nag_d05569f886377400312d8c2edd4c6f4c ON public.bag_nummeraanduidingen USING btree (_gobid);
 
 
 --
@@ -36708,6 +36806,13 @@ CREATE INDEX bag_ore_1a9d849ff5a68997176b6144236806ae ON public.bag_openbareruim
 
 
 --
+-- Name: bag_ore_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_ore_2a4dbedb477015cfe2b9f2c990906f44 ON public.bag_openbareruimtes USING btree (_id, volgnummer);
+
+
+--
 -- Name: bag_ore_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -36736,10 +36841,31 @@ CREATE INDEX bag_ore_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bag_openbareruim
 
 
 --
+-- Name: bag_ore_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_ore_97beaa21d4819a1131833b897504ce31 ON public.bag_openbareruimtes USING btree (_tid);
+
+
+--
+-- Name: bag_ore_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_ore_b80bb7740288fda1f201890375a60c8f ON public.bag_openbareruimtes USING btree (_id);
+
+
+--
 -- Name: bag_ore_cc26c3755b6907d824224af7b1bf3fae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX bag_ore_cc26c3755b6907d824224af7b1bf3fae ON public.bag_openbareruimtes USING gin (ligt_in_woonplaats);
+
+
+--
+-- Name: bag_ore_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_ore_d05569f886377400312d8c2edd4c6f4c ON public.bag_openbareruimtes USING btree (_gobid);
 
 
 --
@@ -36768,6 +36894,13 @@ CREATE INDEX bag_ozk_0afd9202ba86aa11ce63ad7007e7990b ON public.bag_onderzoeken 
 --
 
 CREATE INDEX bag_ozk_1a9d849ff5a68997176b6144236806ae ON public.bag_onderzoeken USING btree (_expiration_date);
+
+
+--
+-- Name: bag_ozk_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_ozk_2a4dbedb477015cfe2b9f2c990906f44 ON public.bag_onderzoeken USING btree (_id, volgnummer);
 
 
 --
@@ -36806,6 +36939,27 @@ CREATE INDEX bag_ozk_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bag_onderzoeken 
 
 
 --
+-- Name: bag_ozk_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_ozk_97beaa21d4819a1131833b897504ce31 ON public.bag_onderzoeken USING btree (_tid);
+
+
+--
+-- Name: bag_ozk_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_ozk_b80bb7740288fda1f201890375a60c8f ON public.bag_onderzoeken USING btree (_id);
+
+
+--
+-- Name: bag_ozk_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_ozk_d05569f886377400312d8c2edd4c6f4c ON public.bag_onderzoeken USING btree (_gobid);
+
+
+--
 -- Name: bag_ozk_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -36834,6 +36988,13 @@ CREATE INDEX bag_pnd_1a9d849ff5a68997176b6144236806ae ON public.bag_panden USING
 
 
 --
+-- Name: bag_pnd_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_pnd_2a4dbedb477015cfe2b9f2c990906f44 ON public.bag_panden USING btree (_id, volgnummer);
+
+
+--
 -- Name: bag_pnd_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -36859,6 +37020,27 @@ CREATE INDEX bag_pnd_613273a0ec2090693894cea102aa8c06 ON public.bag_panden USING
 --
 
 CREATE INDEX bag_pnd_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bag_panden USING btree (_date_deleted);
+
+
+--
+-- Name: bag_pnd_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_pnd_97beaa21d4819a1131833b897504ce31 ON public.bag_panden USING btree (_tid);
+
+
+--
+-- Name: bag_pnd_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_pnd_b80bb7740288fda1f201890375a60c8f ON public.bag_panden USING btree (_id);
+
+
+--
+-- Name: bag_pnd_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_pnd_d05569f886377400312d8c2edd4c6f4c ON public.bag_panden USING btree (_gobid);
 
 
 --
@@ -36918,6 +37100,13 @@ CREATE INDEX bag_sps_1b8d37fdaf7a3b03b199a1c33ec53069 ON public.bag_standplaatse
 
 
 --
+-- Name: bag_sps_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_sps_2a4dbedb477015cfe2b9f2c990906f44 ON public.bag_standplaatsen USING btree (_id, volgnummer);
+
+
+--
 -- Name: bag_sps_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -36946,10 +37135,31 @@ CREATE INDEX bag_sps_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bag_standplaatse
 
 
 --
+-- Name: bag_sps_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_sps_97beaa21d4819a1131833b897504ce31 ON public.bag_standplaatsen USING btree (_tid);
+
+
+--
+-- Name: bag_sps_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_sps_b80bb7740288fda1f201890375a60c8f ON public.bag_standplaatsen USING btree (_id);
+
+
+--
 -- Name: bag_sps_c0a7bf7ed1b7e1ee50607c75bc7f0f1e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX bag_sps_c0a7bf7ed1b7e1ee50607c75bc7f0f1e ON public.bag_standplaatsen USING gin (ligt_in_gemeente);
+
+
+--
+-- Name: bag_sps_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_sps_d05569f886377400312d8c2edd4c6f4c ON public.bag_standplaatsen USING btree (_gobid);
 
 
 --
@@ -37016,6 +37226,13 @@ CREATE INDEX bag_vot_1b8d37fdaf7a3b03b199a1c33ec53069 ON public.bag_verblijfsobj
 
 
 --
+-- Name: bag_vot_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_vot_2a4dbedb477015cfe2b9f2c990906f44 ON public.bag_verblijfsobjecten USING btree (_id, volgnummer);
+
+
+--
 -- Name: bag_vot_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37044,10 +37261,31 @@ CREATE INDEX bag_vot_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bag_verblijfsobj
 
 
 --
+-- Name: bag_vot_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_vot_97beaa21d4819a1131833b897504ce31 ON public.bag_verblijfsobjecten USING btree (_tid);
+
+
+--
+-- Name: bag_vot_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_vot_b80bb7740288fda1f201890375a60c8f ON public.bag_verblijfsobjecten USING btree (_id);
+
+
+--
 -- Name: bag_vot_c0a7bf7ed1b7e1ee50607c75bc7f0f1e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX bag_vot_c0a7bf7ed1b7e1ee50607c75bc7f0f1e ON public.bag_verblijfsobjecten USING gin (ligt_in_gemeente);
+
+
+--
+-- Name: bag_vot_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_vot_d05569f886377400312d8c2edd4c6f4c ON public.bag_verblijfsobjecten USING btree (_gobid);
 
 
 --
@@ -37093,6 +37331,13 @@ CREATE INDEX bag_wps_1a9d849ff5a68997176b6144236806ae ON public.bag_woonplaatsen
 
 
 --
+-- Name: bag_wps_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_wps_2a4dbedb477015cfe2b9f2c990906f44 ON public.bag_woonplaatsen USING btree (_id, volgnummer);
+
+
+--
 -- Name: bag_wps_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37121,10 +37366,31 @@ CREATE INDEX bag_wps_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bag_woonplaatsen
 
 
 --
+-- Name: bag_wps_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_wps_97beaa21d4819a1131833b897504ce31 ON public.bag_woonplaatsen USING btree (_tid);
+
+
+--
+-- Name: bag_wps_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_wps_b80bb7740288fda1f201890375a60c8f ON public.bag_woonplaatsen USING btree (_id);
+
+
+--
 -- Name: bag_wps_c0a7bf7ed1b7e1ee50607c75bc7f0f1e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX bag_wps_c0a7bf7ed1b7e1ee50607c75bc7f0f1e ON public.bag_woonplaatsen USING gin (ligt_in_gemeente);
+
+
+--
+-- Name: bag_wps_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bag_wps_d05569f886377400312d8c2edd4c6f4c ON public.bag_woonplaatsen USING btree (_gobid);
 
 
 --
@@ -37156,6 +37422,13 @@ CREATE INDEX bgt_onw_1a9d849ff5a68997176b6144236806ae ON public.bgt_onderbouw US
 
 
 --
+-- Name: bgt_onw_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bgt_onw_2a4dbedb477015cfe2b9f2c990906f44 ON public.bgt_onderbouw USING btree (_id, volgnummer);
+
+
+--
 -- Name: bgt_onw_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37184,6 +37457,27 @@ CREATE INDEX bgt_onw_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bgt_onderbouw US
 
 
 --
+-- Name: bgt_onw_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bgt_onw_97beaa21d4819a1131833b897504ce31 ON public.bgt_onderbouw USING btree (_tid);
+
+
+--
+-- Name: bgt_onw_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bgt_onw_b80bb7740288fda1f201890375a60c8f ON public.bgt_onderbouw USING btree (_id);
+
+
+--
+-- Name: bgt_onw_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bgt_onw_d05569f886377400312d8c2edd4c6f4c ON public.bgt_onderbouw USING btree (_gobid);
+
+
+--
 -- Name: bgt_onw_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37202,6 +37496,13 @@ CREATE INDEX bgt_ovw_0afd9202ba86aa11ce63ad7007e7990b ON public.bgt_overbouw USI
 --
 
 CREATE INDEX bgt_ovw_1a9d849ff5a68997176b6144236806ae ON public.bgt_overbouw USING btree (_expiration_date);
+
+
+--
+-- Name: bgt_ovw_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bgt_ovw_2a4dbedb477015cfe2b9f2c990906f44 ON public.bgt_overbouw USING btree (_id, volgnummer);
 
 
 --
@@ -37233,6 +37534,27 @@ CREATE INDEX bgt_ovw_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.bgt_overbouw USI
 
 
 --
+-- Name: bgt_ovw_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bgt_ovw_97beaa21d4819a1131833b897504ce31 ON public.bgt_overbouw USING btree (_tid);
+
+
+--
+-- Name: bgt_ovw_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bgt_ovw_b80bb7740288fda1f201890375a60c8f ON public.bgt_overbouw USING btree (_id);
+
+
+--
+-- Name: bgt_ovw_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX bgt_ovw_d05569f886377400312d8c2edd4c6f4c ON public.bgt_overbouw USING btree (_gobid);
+
+
+--
 -- Name: bgt_ovw_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37258,6 +37580,13 @@ CREATE INDEX brk2_akt_0afd9202ba86aa11ce63ad7007e7990b ON public.brk2_aantekenin
 --
 
 CREATE INDEX brk2_akt_1a9d849ff5a68997176b6144236806ae ON public.brk2_aantekeningenkadastraleobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: brk2_akt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_akt_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk2_aantekeningenkadastraleobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -37307,6 +37636,27 @@ CREATE INDEX brk2_akt_86326c71ce0fb64558630aa279654b5c ON public.brk2_aantekenin
 --
 
 CREATE INDEX brk2_akt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_aantekeningenkadastraleobjecten USING btree (_date_deleted);
+
+
+--
+-- Name: brk2_akt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_akt_97beaa21d4819a1131833b897504ce31 ON public.brk2_aantekeningenkadastraleobjecten USING btree (_tid);
+
+
+--
+-- Name: brk2_akt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_akt_b80bb7740288fda1f201890375a60c8f ON public.brk2_aantekeningenkadastraleobjecten USING btree (_id);
+
+
+--
+-- Name: brk2_akt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_akt_d05569f886377400312d8c2edd4c6f4c ON public.brk2_aantekeningenkadastraleobjecten USING btree (_gobid);
 
 
 --
@@ -37380,6 +37730,27 @@ CREATE INDEX brk2_art_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_aantekenin
 
 
 --
+-- Name: brk2_art_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_art_97beaa21d4819a1131833b897504ce31 ON public.brk2_aantekeningenrechten USING btree (_tid);
+
+
+--
+-- Name: brk2_art_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_art_b80bb7740288fda1f201890375a60c8f ON public.brk2_aantekeningenrechten USING btree (_id);
+
+
+--
+-- Name: brk2_art_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_art_d05569f886377400312d8c2edd4c6f4c ON public.brk2_aantekeningenrechten USING btree (_gobid);
+
+
+--
 -- Name: brk2_art_dd80d821ffb7769bc440fa6dc3b11e84; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37415,6 +37786,13 @@ CREATE INDEX brk2_gme_1a9d849ff5a68997176b6144236806ae ON public.brk2_gemeentes 
 
 
 --
+-- Name: brk2_gme_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk2_gemeentes USING btree (_id, volgnummer);
+
+
+--
 -- Name: brk2_gme_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37447,6 +37825,27 @@ CREATE INDEX brk2_gme_613273a0ec2090693894cea102aa8c06 ON public.brk2_gemeentes 
 --
 
 CREATE INDEX brk2_gme_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_gemeentes USING btree (_date_deleted);
+
+
+--
+-- Name: brk2_gme_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_97beaa21d4819a1131833b897504ce31 ON public.brk2_gemeentes USING btree (_tid);
+
+
+--
+-- Name: brk2_gme_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_b80bb7740288fda1f201890375a60c8f ON public.brk2_gemeentes USING btree (_id);
+
+
+--
+-- Name: brk2_gme_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_d05569f886377400312d8c2edd4c6f4c ON public.brk2_gemeentes USING btree (_gobid);
 
 
 --
@@ -37520,6 +37919,27 @@ CREATE INDEX brk2_kce_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_kadastrale
 
 
 --
+-- Name: brk2_kce_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kce_97beaa21d4819a1131833b897504ce31 ON public.brk2_kadastralegemeentecodes USING btree (_tid);
+
+
+--
+-- Name: brk2_kce_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kce_b80bb7740288fda1f201890375a60c8f ON public.brk2_kadastralegemeentecodes USING btree (_id);
+
+
+--
+-- Name: brk2_kce_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kce_d05569f886377400312d8c2edd4c6f4c ON public.brk2_kadastralegemeentecodes USING btree (_gobid);
+
+
+--
 -- Name: brk2_kce_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37583,6 +38003,27 @@ CREATE INDEX brk2_kge_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_kadastrale
 
 
 --
+-- Name: brk2_kge_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kge_97beaa21d4819a1131833b897504ce31 ON public.brk2_kadastralegemeentes USING btree (_tid);
+
+
+--
+-- Name: brk2_kge_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kge_b80bb7740288fda1f201890375a60c8f ON public.brk2_kadastralegemeentes USING btree (_id);
+
+
+--
+-- Name: brk2_kge_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kge_d05569f886377400312d8c2edd4c6f4c ON public.brk2_kadastralegemeentes USING btree (_gobid);
+
+
+--
 -- Name: brk2_kge_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37615,6 +38056,13 @@ CREATE INDEX brk2_kot_1a9d849ff5a68997176b6144236806ae ON public.brk2_kadastrale
 --
 
 CREATE INDEX brk2_kot_1f7b25764da07d30ac066a30ce8e346c ON public.brk2_kadastraleobjecten USING gin (heeft_een_relatie_met_bag_verblijfsobject);
+
+
+--
+-- Name: brk2_kot_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kot_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk2_kadastraleobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -37667,10 +38115,31 @@ CREATE INDEX brk2_kot_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_kadastrale
 
 
 --
+-- Name: brk2_kot_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kot_97beaa21d4819a1131833b897504ce31 ON public.brk2_kadastraleobjecten USING btree (_tid);
+
+
+--
+-- Name: brk2_kot_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kot_b80bb7740288fda1f201890375a60c8f ON public.brk2_kadastraleobjecten USING btree (_id);
+
+
+--
 -- Name: brk2_kot_c2b338f171bb97f6cad14db7e7763704; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX brk2_kot_c2b338f171bb97f6cad14db7e7763704 ON public.brk2_kadastraleobjecten USING gin (is_ontstaan_uit_brk_kadastraalobject);
+
+
+--
+-- Name: brk2_kot_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kot_d05569f886377400312d8c2edd4c6f4c ON public.brk2_kadastraleobjecten USING btree (_gobid);
 
 
 --
@@ -37744,10 +38213,31 @@ CREATE INDEX brk2_kse_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_kadastrale
 
 
 --
+-- Name: brk2_kse_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_97beaa21d4819a1131833b897504ce31 ON public.brk2_kadastralesecties USING btree (_tid);
+
+
+--
 -- Name: brk2_kse_a8ce6781b5cc70fbd9bb02adbb26bff3; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX brk2_kse_a8ce6781b5cc70fbd9bb02adbb26bff3 ON public.brk2_kadastralesecties USING gin (is_onderdeel_van_brk_kadastrale_gemeentecode);
+
+
+--
+-- Name: brk2_kse_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_b80bb7740288fda1f201890375a60c8f ON public.brk2_kadastralesecties USING btree (_id);
+
+
+--
+-- Name: brk2_kse_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_kse_d05569f886377400312d8c2edd4c6f4c ON public.brk2_kadastralesecties USING btree (_gobid);
 
 
 --
@@ -37797,6 +38287,27 @@ CREATE INDEX brk2_meta_613273a0ec2090693894cea102aa8c06 ON public.brk2_meta USIN
 --
 
 CREATE INDEX brk2_meta_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_meta USING btree (_date_deleted);
+
+
+--
+-- Name: brk2_meta_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_97beaa21d4819a1131833b897504ce31 ON public.brk2_meta USING btree (_tid);
+
+
+--
+-- Name: brk2_meta_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_b80bb7740288fda1f201890375a60c8f ON public.brk2_meta USING btree (_id);
+
+
+--
+-- Name: brk2_meta_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_meta_d05569f886377400312d8c2edd4c6f4c ON public.brk2_meta USING btree (_gobid);
 
 
 --
@@ -37863,6 +38374,13 @@ CREATE INDEX brk2_sdl_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_stukdelen 
 
 
 --
+-- Name: brk2_sdl_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sdl_97beaa21d4819a1131833b897504ce31 ON public.brk2_stukdelen USING btree (_tid);
+
+
+--
 -- Name: brk2_sdl_b430337adbe3308e69a8a4a5ea21e30a; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37870,10 +38388,24 @@ CREATE INDEX brk2_sdl_b430337adbe3308e69a8a4a5ea21e30a ON public.brk2_stukdelen 
 
 
 --
+-- Name: brk2_sdl_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sdl_b80bb7740288fda1f201890375a60c8f ON public.brk2_stukdelen USING btree (_id);
+
+
+--
 -- Name: brk2_sdl_c0c490edfd874978f89cfda46c1192b4; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX brk2_sdl_c0c490edfd874978f89cfda46c1192b4 ON public.brk2_stukdelen USING gin (is_bron_voor_brk_aantekening_recht);
+
+
+--
+-- Name: brk2_sdl_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sdl_d05569f886377400312d8c2edd4c6f4c ON public.brk2_stukdelen USING btree (_gobid);
 
 
 --
@@ -37940,6 +38472,27 @@ CREATE INDEX brk2_sjt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_kadastrale
 
 
 --
+-- Name: brk2_sjt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_97beaa21d4819a1131833b897504ce31 ON public.brk2_kadastralesubjecten USING btree (_tid);
+
+
+--
+-- Name: brk2_sjt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_b80bb7740288fda1f201890375a60c8f ON public.brk2_kadastralesubjecten USING btree (_id);
+
+
+--
+-- Name: brk2_sjt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_sjt_d05569f886377400312d8c2edd4c6f4c ON public.brk2_kadastralesubjecten USING btree (_gobid);
+
+
+--
 -- Name: brk2_sjt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37965,6 +38518,13 @@ CREATE INDEX brk2_tng_0afd9202ba86aa11ce63ad7007e7990b ON public.brk2_tenaamstel
 --
 
 CREATE INDEX brk2_tng_1a9d849ff5a68997176b6144236806ae ON public.brk2_tenaamstellingen USING btree (_expiration_date);
+
+
+--
+-- Name: brk2_tng_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_tng_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk2_tenaamstellingen USING btree (_id, volgnummer);
 
 
 --
@@ -38017,6 +38577,13 @@ CREATE INDEX brk2_tng_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_tenaamstel
 
 
 --
+-- Name: brk2_tng_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_tng_97beaa21d4819a1131833b897504ce31 ON public.brk2_tenaamstellingen USING btree (_tid);
+
+
+--
 -- Name: brk2_tng_a1723ebbfc8fffbbe9d34c6076f2f95b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38035,6 +38602,20 @@ CREATE INDEX brk2_tng_a9f6597556abafc191b9e5b7d99fef0f ON public.brk2_tenaamstel
 --
 
 CREATE INDEX brk2_tng_b26806b7129a8744d11dffda999a49ae ON public.brk2_tenaamstellingen USING gin (betrokken_samenwerkingsverband_brk_subject);
+
+
+--
+-- Name: brk2_tng_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_tng_b80bb7740288fda1f201890375a60c8f ON public.brk2_tenaamstellingen USING btree (_id);
+
+
+--
+-- Name: brk2_tng_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_tng_d05569f886377400312d8c2edd4c6f4c ON public.brk2_tenaamstellingen USING btree (_gobid);
 
 
 --
@@ -38070,6 +38651,13 @@ CREATE INDEX brk2_zrt_1a9d849ff5a68997176b6144236806ae ON public.brk2_zakelijker
 --
 
 CREATE INDEX brk2_zrt_22b01c05154496c9920001353a6adcf9 ON public.brk2_zakelijkerechten USING gin (belast_brk_zakelijke_rechten);
+
+
+--
+-- Name: brk2_zrt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_zrt_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk2_zakelijkerechten USING btree (_id, volgnummer);
 
 
 --
@@ -38122,6 +38710,13 @@ CREATE INDEX brk2_zrt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_zakelijker
 
 
 --
+-- Name: brk2_zrt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_zrt_97beaa21d4819a1131833b897504ce31 ON public.brk2_zakelijkerechten USING btree (_tid);
+
+
+--
 -- Name: brk2_zrt_a67bddf6151e33925d219a616a396cfd; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38129,10 +38724,24 @@ CREATE INDEX brk2_zrt_a67bddf6151e33925d219a616a396cfd ON public.brk2_zakelijker
 
 
 --
+-- Name: brk2_zrt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_zrt_b80bb7740288fda1f201890375a60c8f ON public.brk2_zakelijkerechten USING btree (_id);
+
+
+--
 -- Name: brk2_zrt_c821f37f33dd7102fabed20c0413f44d; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX brk2_zrt_c821f37f33dd7102fabed20c0413f44d ON public.brk2_zakelijkerechten USING gin (rust_op_brk_kadastraal_object);
+
+
+--
+-- Name: brk2_zrt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_zrt_d05569f886377400312d8c2edd4c6f4c ON public.brk2_zakelijkerechten USING btree (_gobid);
 
 
 --
@@ -38185,6 +38794,13 @@ CREATE INDEX brk_akt_281ad22d604f2aa1dc11077360b10fe8 ON public.brk_aantekeninge
 
 
 --
+-- Name: brk_akt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_akt_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk_aantekeningenkadastraleobjecten USING btree (_id, volgnummer);
+
+
+--
 -- Name: brk_akt_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38210,6 +38826,27 @@ CREATE INDEX brk_akt_613273a0ec2090693894cea102aa8c06 ON public.brk_aantekeninge
 --
 
 CREATE INDEX brk_akt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_aantekeningenkadastraleobjecten USING btree (_date_deleted);
+
+
+--
+-- Name: brk_akt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_akt_97beaa21d4819a1131833b897504ce31 ON public.brk_aantekeningenkadastraleobjecten USING btree (_tid);
+
+
+--
+-- Name: brk_akt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_akt_b80bb7740288fda1f201890375a60c8f ON public.brk_aantekeningenkadastraleobjecten USING btree (_id);
+
+
+--
+-- Name: brk_akt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_akt_d05569f886377400312d8c2edd4c6f4c ON public.brk_aantekeningenkadastraleobjecten USING btree (_gobid);
 
 
 --
@@ -38297,6 +38934,27 @@ CREATE INDEX brk_art_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_aantekeninge
 
 
 --
+-- Name: brk_art_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_art_97beaa21d4819a1131833b897504ce31 ON public.brk_aantekeningenrechten USING btree (_tid);
+
+
+--
+-- Name: brk_art_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_art_b80bb7740288fda1f201890375a60c8f ON public.brk_aantekeningenrechten USING btree (_id);
+
+
+--
+-- Name: brk_art_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_art_d05569f886377400312d8c2edd4c6f4c ON public.brk_aantekeningenrechten USING btree (_gobid);
+
+
+--
 -- Name: brk_art_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38353,6 +39011,27 @@ CREATE INDEX brk_azt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_aardzakelijk
 
 
 --
+-- Name: brk_azt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_azt_97beaa21d4819a1131833b897504ce31 ON public.brk_aardzakelijkerechten USING btree (_tid);
+
+
+--
+-- Name: brk_azt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_azt_b80bb7740288fda1f201890375a60c8f ON public.brk_aardzakelijkerechten USING btree (_id);
+
+
+--
+-- Name: brk_azt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_azt_d05569f886377400312d8c2edd4c6f4c ON public.brk_aardzakelijkerechten USING btree (_gobid);
+
+
+--
 -- Name: brk_azt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38378,6 +39057,13 @@ CREATE INDEX brk_gme_0afd9202ba86aa11ce63ad7007e7990b ON public.brk_gemeentes US
 --
 
 CREATE INDEX brk_gme_1a9d849ff5a68997176b6144236806ae ON public.brk_gemeentes USING btree (_expiration_date);
+
+
+--
+-- Name: brk_gme_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_gme_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk_gemeentes USING btree (_id, volgnummer);
 
 
 --
@@ -38413,6 +39099,27 @@ CREATE INDEX brk_gme_613273a0ec2090693894cea102aa8c06 ON public.brk_gemeentes US
 --
 
 CREATE INDEX brk_gme_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_gemeentes USING btree (_date_deleted);
+
+
+--
+-- Name: brk_gme_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_gme_97beaa21d4819a1131833b897504ce31 ON public.brk_gemeentes USING btree (_tid);
+
+
+--
+-- Name: brk_gme_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_gme_b80bb7740288fda1f201890375a60c8f ON public.brk_gemeentes USING btree (_id);
+
+
+--
+-- Name: brk_gme_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_gme_d05569f886377400312d8c2edd4c6f4c ON public.brk_gemeentes USING btree (_gobid);
 
 
 --
@@ -38486,6 +39193,27 @@ CREATE INDEX brk_kce_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_kadastralege
 
 
 --
+-- Name: brk_kce_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kce_97beaa21d4819a1131833b897504ce31 ON public.brk_kadastralegemeentecodes USING btree (_tid);
+
+
+--
+-- Name: brk_kce_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kce_b80bb7740288fda1f201890375a60c8f ON public.brk_kadastralegemeentecodes USING btree (_id);
+
+
+--
+-- Name: brk_kce_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kce_d05569f886377400312d8c2edd4c6f4c ON public.brk_kadastralegemeentecodes USING btree (_gobid);
+
+
+--
 -- Name: brk_kce_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38542,10 +39270,31 @@ CREATE INDEX brk_kge_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_kadastralege
 
 
 --
+-- Name: brk_kge_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kge_97beaa21d4819a1131833b897504ce31 ON public.brk_kadastralegemeentes USING btree (_tid);
+
+
+--
+-- Name: brk_kge_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kge_b80bb7740288fda1f201890375a60c8f ON public.brk_kadastralegemeentes USING btree (_id);
+
+
+--
 -- Name: brk_kge_c0a7bf7ed1b7e1ee50607c75bc7f0f1e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX brk_kge_c0a7bf7ed1b7e1ee50607c75bc7f0f1e ON public.brk_kadastralegemeentes USING gin (ligt_in_gemeente);
+
+
+--
+-- Name: brk_kge_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kge_d05569f886377400312d8c2edd4c6f4c ON public.brk_kadastralegemeentes USING btree (_gobid);
 
 
 --
@@ -38574,6 +39323,13 @@ CREATE INDEX brk_kot_0afd9202ba86aa11ce63ad7007e7990b ON public.brk_kadastraleob
 --
 
 CREATE INDEX brk_kot_1a9d849ff5a68997176b6144236806ae ON public.brk_kadastraleobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: brk_kot_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kot_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk_kadastraleobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -38626,6 +39382,13 @@ CREATE INDEX brk_kot_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_kadastraleob
 
 
 --
+-- Name: brk_kot_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kot_97beaa21d4819a1131833b897504ce31 ON public.brk_kadastraleobjecten USING btree (_tid);
+
+
+--
 -- Name: brk_kot_9e4439723f0d3a7762700255b1acd6bb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38633,10 +39396,24 @@ CREATE INDEX brk_kot_9e4439723f0d3a7762700255b1acd6bb ON public.brk_kadastraleob
 
 
 --
+-- Name: brk_kot_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kot_b80bb7740288fda1f201890375a60c8f ON public.brk_kadastraleobjecten USING btree (_id);
+
+
+--
 -- Name: brk_kot_c9ceda0af4fa6bb20eaaeeecef33b94a; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX brk_kot_c9ceda0af4fa6bb20eaaeeecef33b94a ON public.brk_kadastraleobjecten USING gin (heeft_een_relatie_met_verblijfsobject);
+
+
+--
+-- Name: brk_kot_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kot_d05569f886377400312d8c2edd4c6f4c ON public.brk_kadastraleobjecten USING btree (_gobid);
 
 
 --
@@ -38710,6 +39487,27 @@ CREATE INDEX brk_kse_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_kadastralese
 
 
 --
+-- Name: brk_kse_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kse_97beaa21d4819a1131833b897504ce31 ON public.brk_kadastralesecties USING btree (_tid);
+
+
+--
+-- Name: brk_kse_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kse_b80bb7740288fda1f201890375a60c8f ON public.brk_kadastralesecties USING btree (_id);
+
+
+--
+-- Name: brk_kse_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_kse_d05569f886377400312d8c2edd4c6f4c ON public.brk_kadastralesecties USING btree (_gobid);
+
+
+--
 -- Name: brk_kse_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38763,6 +39561,27 @@ CREATE INDEX brk_meta_613273a0ec2090693894cea102aa8c06 ON public.brk_meta USING 
 --
 
 CREATE INDEX brk_meta_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_meta USING btree (_date_deleted);
+
+
+--
+-- Name: brk_meta_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_meta_97beaa21d4819a1131833b897504ce31 ON public.brk_meta USING btree (_tid);
+
+
+--
+-- Name: brk_meta_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_meta_b80bb7740288fda1f201890375a60c8f ON public.brk_meta USING btree (_id);
+
+
+--
+-- Name: brk_meta_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_meta_d05569f886377400312d8c2edd4c6f4c ON public.brk_meta USING btree (_gobid);
 
 
 --
@@ -38829,6 +39648,13 @@ CREATE INDEX brk_sdl_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_stukdelen US
 
 
 --
+-- Name: brk_sdl_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_sdl_97beaa21d4819a1131833b897504ce31 ON public.brk_stukdelen USING btree (_tid);
+
+
+--
 -- Name: brk_sdl_9a638eea8f5bb87d1103d9e1027c8edd; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38847,6 +39673,13 @@ CREATE INDEX brk_sdl_b7c9d90a0d6223f8ec6bb0d9a002ae45 ON public.brk_stukdelen US
 --
 
 CREATE INDEX brk_sdl_b80bb7740288fda1f201890375a60c8f ON public.brk_stukdelen USING btree (_id);
+
+
+--
+-- Name: brk_sdl_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_sdl_d05569f886377400312d8c2edd4c6f4c ON public.brk_stukdelen USING btree (_gobid);
 
 
 --
@@ -38913,6 +39746,27 @@ CREATE INDEX brk_sjt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_kadastralesu
 
 
 --
+-- Name: brk_sjt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_sjt_97beaa21d4819a1131833b897504ce31 ON public.brk_kadastralesubjecten USING btree (_tid);
+
+
+--
+-- Name: brk_sjt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_sjt_b80bb7740288fda1f201890375a60c8f ON public.brk_kadastralesubjecten USING btree (_id);
+
+
+--
+-- Name: brk_sjt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_sjt_d05569f886377400312d8c2edd4c6f4c ON public.brk_kadastralesubjecten USING btree (_gobid);
+
+
+--
 -- Name: brk_sjt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -38931,6 +39785,13 @@ CREATE INDEX brk_tng_0afd9202ba86aa11ce63ad7007e7990b ON public.brk_tenaamstelli
 --
 
 CREATE INDEX brk_tng_1a9d849ff5a68997176b6144236806ae ON public.brk_tenaamstellingen USING btree (_expiration_date);
+
+
+--
+-- Name: brk_tng_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_tng_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk_tenaamstellingen USING btree (_id, volgnummer);
 
 
 --
@@ -38976,10 +39837,24 @@ CREATE INDEX brk_tng_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_tenaamstelli
 
 
 --
+-- Name: brk_tng_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_tng_97beaa21d4819a1131833b897504ce31 ON public.brk_tenaamstellingen USING btree (_tid);
+
+
+--
 -- Name: brk_tng_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX brk_tng_b80bb7740288fda1f201890375a60c8f ON public.brk_tenaamstellingen USING btree (id);
+
+
+--
+-- Name: brk_tng_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_tng_d05569f886377400312d8c2edd4c6f4c ON public.brk_tenaamstellingen USING btree (_gobid);
 
 
 --
@@ -39029,6 +39904,13 @@ CREATE INDEX brk_zrt_1a61222659008a18d86b25fdbcea0028 ON public.brk_zakelijkerec
 --
 
 CREATE INDEX brk_zrt_1a9d849ff5a68997176b6144236806ae ON public.brk_zakelijkerechten USING btree (_expiration_date);
+
+
+--
+-- Name: brk_zrt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_zrt_2a4dbedb477015cfe2b9f2c990906f44 ON public.brk_zakelijkerechten USING btree (_id, volgnummer);
 
 
 --
@@ -39088,10 +39970,31 @@ CREATE INDEX brk_zrt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk_zakelijkerec
 
 
 --
+-- Name: brk_zrt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_zrt_97beaa21d4819a1131833b897504ce31 ON public.brk_zakelijkerechten USING btree (_tid);
+
+
+--
 -- Name: brk_zrt_acc94c76a9cf87025b1cccad31224ee4; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX brk_zrt_acc94c76a9cf87025b1cccad31224ee4 ON public.brk_zakelijkerechten USING gin (ontstaan_uit_zakelijkerechten);
+
+
+--
+-- Name: brk_zrt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_zrt_b80bb7740288fda1f201890375a60c8f ON public.brk_zakelijkerechten USING btree (_id);
+
+
+--
+-- Name: brk_zrt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk_zrt_d05569f886377400312d8c2edd4c6f4c ON public.brk_zakelijkerechten USING btree (_gobid);
 
 
 --
@@ -40383,6 +41286,13 @@ CREATE INDEX gbd_bbk_1a9d849ff5a68997176b6144236806ae ON public.gebieden_bouwblo
 
 
 --
+-- Name: gbd_bbk_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_bbk_2a4dbedb477015cfe2b9f2c990906f44 ON public.gebieden_bouwblokken USING btree (_id, volgnummer);
+
+
+--
 -- Name: gbd_bbk_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -40411,10 +41321,31 @@ CREATE INDEX gbd_bbk_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.gebieden_bouwblo
 
 
 --
+-- Name: gbd_bbk_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_bbk_97beaa21d4819a1131833b897504ce31 ON public.gebieden_bouwblokken USING btree (_tid);
+
+
+--
+-- Name: gbd_bbk_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_bbk_b80bb7740288fda1f201890375a60c8f ON public.gebieden_bouwblokken USING btree (_id);
+
+
+--
 -- Name: gbd_bbk_c13367945d5d4c91047b3b50234aa7ab; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX gbd_bbk_c13367945d5d4c91047b3b50234aa7ab ON public.gebieden_bouwblokken USING btree (code);
+
+
+--
+-- Name: gbd_bbk_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_bbk_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_bouwblokken USING btree (_gobid);
 
 
 --
@@ -40453,6 +41384,13 @@ CREATE INDEX gbd_brt_1a9d849ff5a68997176b6144236806ae ON public.gebieden_buurten
 
 
 --
+-- Name: gbd_brt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_brt_2a4dbedb477015cfe2b9f2c990906f44 ON public.gebieden_buurten USING btree (_id, volgnummer);
+
+
+--
 -- Name: gbd_brt_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -40481,10 +41419,31 @@ CREATE INDEX gbd_brt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.gebieden_buurten
 
 
 --
+-- Name: gbd_brt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_brt_97beaa21d4819a1131833b897504ce31 ON public.gebieden_buurten USING btree (_tid);
+
+
+--
+-- Name: gbd_brt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_brt_b80bb7740288fda1f201890375a60c8f ON public.gebieden_buurten USING btree (_id);
+
+
+--
 -- Name: gbd_brt_c13367945d5d4c91047b3b50234aa7ab; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX gbd_brt_c13367945d5d4c91047b3b50234aa7ab ON public.gebieden_buurten USING btree (code);
+
+
+--
+-- Name: gbd_brt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_brt_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_buurten USING btree (_gobid);
 
 
 --
@@ -40516,6 +41475,13 @@ CREATE INDEX gbd_ggp_1a9d849ff5a68997176b6144236806ae ON public.gebieden_ggpgebi
 
 
 --
+-- Name: gbd_ggp_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_ggp_2a4dbedb477015cfe2b9f2c990906f44 ON public.gebieden_ggpgebieden USING btree (_id, volgnummer);
+
+
+--
 -- Name: gbd_ggp_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -40544,6 +41510,27 @@ CREATE INDEX gbd_ggp_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.gebieden_ggpgebi
 
 
 --
+-- Name: gbd_ggp_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_ggp_97beaa21d4819a1131833b897504ce31 ON public.gebieden_ggpgebieden USING btree (_tid);
+
+
+--
+-- Name: gbd_ggp_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_ggp_b80bb7740288fda1f201890375a60c8f ON public.gebieden_ggpgebieden USING btree (_id);
+
+
+--
+-- Name: gbd_ggp_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_ggp_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_ggpgebieden USING btree (_gobid);
+
+
+--
 -- Name: gbd_ggp_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -40569,6 +41556,13 @@ CREATE INDEX gbd_ggw_0afd9202ba86aa11ce63ad7007e7990b ON public.gebieden_ggwgebi
 --
 
 CREATE INDEX gbd_ggw_1a9d849ff5a68997176b6144236806ae ON public.gebieden_ggwgebieden USING btree (_expiration_date);
+
+
+--
+-- Name: gbd_ggw_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_ggw_2a4dbedb477015cfe2b9f2c990906f44 ON public.gebieden_ggwgebieden USING btree (_id, volgnummer);
 
 
 --
@@ -40607,10 +41601,31 @@ CREATE INDEX gbd_ggw_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.gebieden_ggwgebi
 
 
 --
+-- Name: gbd_ggw_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_ggw_97beaa21d4819a1131833b897504ce31 ON public.gebieden_ggwgebieden USING btree (_tid);
+
+
+--
 -- Name: gbd_ggw_9fbe7908e8f71edc78f85d6a709f3e07; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX gbd_ggw_9fbe7908e8f71edc78f85d6a709f3e07 ON public.gebieden_ggwgebieden USING gin (ligt_in_gebieden_stadsdeel);
+
+
+--
+-- Name: gbd_ggw_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_ggw_b80bb7740288fda1f201890375a60c8f ON public.gebieden_ggwgebieden USING btree (_id);
+
+
+--
+-- Name: gbd_ggw_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_ggw_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_ggwgebieden USING btree (_gobid);
 
 
 --
@@ -40649,6 +41664,13 @@ CREATE INDEX gbd_sdl_1a9d849ff5a68997176b6144236806ae ON public.gebieden_stadsde
 
 
 --
+-- Name: gbd_sdl_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_sdl_2a4dbedb477015cfe2b9f2c990906f44 ON public.gebieden_stadsdelen USING btree (_id, volgnummer);
+
+
+--
 -- Name: gbd_sdl_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -40677,10 +41699,31 @@ CREATE INDEX gbd_sdl_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.gebieden_stadsde
 
 
 --
+-- Name: gbd_sdl_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_sdl_97beaa21d4819a1131833b897504ce31 ON public.gebieden_stadsdelen USING btree (_tid);
+
+
+--
+-- Name: gbd_sdl_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_sdl_b80bb7740288fda1f201890375a60c8f ON public.gebieden_stadsdelen USING btree (_id);
+
+
+--
 -- Name: gbd_sdl_c13367945d5d4c91047b3b50234aa7ab; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX gbd_sdl_c13367945d5d4c91047b3b50234aa7ab ON public.gebieden_stadsdelen USING btree (code);
+
+
+--
+-- Name: gbd_sdl_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_sdl_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_stadsdelen USING btree (_gobid);
 
 
 --
@@ -40719,6 +41762,13 @@ CREATE INDEX gbd_wijk_1a9d849ff5a68997176b6144236806ae ON public.gebieden_wijken
 
 
 --
+-- Name: gbd_wijk_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_wijk_2a4dbedb477015cfe2b9f2c990906f44 ON public.gebieden_wijken USING btree (_id, volgnummer);
+
+
+--
 -- Name: gbd_wijk_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -40747,6 +41797,13 @@ CREATE INDEX gbd_wijk_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.gebieden_wijken
 
 
 --
+-- Name: gbd_wijk_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_wijk_97beaa21d4819a1131833b897504ce31 ON public.gebieden_wijken USING btree (_tid);
+
+
+--
 -- Name: gbd_wijk_9fbe7908e8f71edc78f85d6a709f3e07; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -40754,10 +41811,24 @@ CREATE INDEX gbd_wijk_9fbe7908e8f71edc78f85d6a709f3e07 ON public.gebieden_wijken
 
 
 --
+-- Name: gbd_wijk_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_wijk_b80bb7740288fda1f201890375a60c8f ON public.gebieden_wijken USING btree (_id);
+
+
+--
 -- Name: gbd_wijk_c13367945d5d4c91047b3b50234aa7ab; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX gbd_wijk_c13367945d5d4c91047b3b50234aa7ab ON public.gebieden_wijken USING btree (code);
+
+
+--
+-- Name: gbd_wijk_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gbd_wijk_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_wijken USING btree (_gobid);
 
 
 --
@@ -42063,6 +43134,13 @@ CREATE INDEX hr_loc_1a9d849ff5a68997176b6144236806ae ON public.hr_locaties USING
 
 
 --
+-- Name: hr_loc_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_loc_2a4dbedb477015cfe2b9f2c990906f44 ON public.hr_locaties USING btree (_id, volgnummer);
+
+
+--
 -- Name: hr_loc_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -42105,10 +43183,31 @@ CREATE INDEX hr_loc_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_locaties USING
 
 
 --
+-- Name: hr_loc_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_loc_97beaa21d4819a1131833b897504ce31 ON public.hr_locaties USING btree (_tid);
+
+
+--
 -- Name: hr_loc_9d4208db7fbff37eecd081fa062528fa; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX hr_loc_9d4208db7fbff37eecd081fa062528fa ON public.hr_locaties USING gin (heeft_ligplaats);
+
+
+--
+-- Name: hr_loc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_loc_b80bb7740288fda1f201890375a60c8f ON public.hr_locaties USING btree (_id);
+
+
+--
+-- Name: hr_loc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_loc_d05569f886377400312d8c2edd4c6f4c ON public.hr_locaties USING btree (_gobid);
 
 
 --
@@ -42203,6 +43302,20 @@ CREATE INDEX hr_mac_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_maatschappelij
 
 
 --
+-- Name: hr_mac_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_mac_97beaa21d4819a1131833b897504ce31 ON public.hr_maatschappelijkeactiviteiten USING btree (_tid);
+
+
+--
+-- Name: hr_mac_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_mac_b80bb7740288fda1f201890375a60c8f ON public.hr_maatschappelijkeactiviteiten USING btree (_id);
+
+
+--
 -- Name: hr_mac_c6c68b137fac8ff2e76431c850b5e8bb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -42214,6 +43327,13 @@ CREATE INDEX hr_mac_c6c68b137fac8ff2e76431c850b5e8bb ON public.hr_maatschappelij
 --
 
 CREATE INDEX hr_mac_cd9b69578364bf0925e46be04e913302 ON public.hr_maatschappelijkeactiviteiten USING gin (heeft_hoofdvestiging);
+
+
+--
+-- Name: hr_mac_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_mac_d05569f886377400312d8c2edd4c6f4c ON public.hr_maatschappelijkeactiviteiten USING btree (_gobid);
 
 
 --
@@ -42291,6 +43411,27 @@ CREATE INDEX hr_sac_613273a0ec2090693894cea102aa8c06 ON public.hr_sbiactiviteite
 --
 
 CREATE INDEX hr_sac_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_sbiactiviteiten USING btree (_date_deleted);
+
+
+--
+-- Name: hr_sac_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_sac_97beaa21d4819a1131833b897504ce31 ON public.hr_sbiactiviteiten USING btree (_tid);
+
+
+--
+-- Name: hr_sac_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_sac_b80bb7740288fda1f201890375a60c8f ON public.hr_sbiactiviteiten USING btree (_id);
+
+
+--
+-- Name: hr_sac_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_sac_d05569f886377400312d8c2edd4c6f4c ON public.hr_sbiactiviteiten USING btree (_gobid);
 
 
 --
@@ -42378,10 +43519,31 @@ CREATE INDEX hr_ves_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_vestigingen US
 
 
 --
+-- Name: hr_ves_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_ves_97beaa21d4819a1131833b897504ce31 ON public.hr_vestigingen USING btree (_tid);
+
+
+--
 -- Name: hr_ves_ac17a0507a229bb2bf97272f9a5754fe; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX hr_ves_ac17a0507a229bb2bf97272f9a5754fe ON public.hr_vestigingen USING gin (heeft_als_bezoekadres);
+
+
+--
+-- Name: hr_ves_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_ves_b80bb7740288fda1f201890375a60c8f ON public.hr_vestigingen USING btree (_id);
+
+
+--
+-- Name: hr_ves_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_ves_d05569f886377400312d8c2edd4c6f4c ON public.hr_vestigingen USING btree (_gobid);
 
 
 --
@@ -42441,10 +43603,31 @@ CREATE INDEX mbn_mbt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.meetbouten_meetb
 
 
 --
+-- Name: mbn_mbt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_mbt_97beaa21d4819a1131833b897504ce31 ON public.meetbouten_meetbouten USING btree (_tid);
+
+
+--
+-- Name: mbn_mbt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_mbt_b80bb7740288fda1f201890375a60c8f ON public.meetbouten_meetbouten USING btree (_id);
+
+
+--
 -- Name: mbn_mbt_cadf657ee6f481987a2334dfd3de08a3; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX mbn_mbt_cadf657ee6f481987a2334dfd3de08a3 ON public.meetbouten_meetbouten USING gin (ligt_in_gebieden_bouwblok);
+
+
+--
+-- Name: mbn_mbt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_mbt_d05569f886377400312d8c2edd4c6f4c ON public.meetbouten_meetbouten USING btree (_gobid);
 
 
 --
@@ -42518,6 +43701,27 @@ CREATE INDEX mbn_mtg_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.meetbouten_metin
 
 
 --
+-- Name: mbn_mtg_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_mtg_97beaa21d4819a1131833b897504ce31 ON public.meetbouten_metingen USING btree (_tid);
+
+
+--
+-- Name: mbn_mtg_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_mtg_b80bb7740288fda1f201890375a60c8f ON public.meetbouten_metingen USING btree (_id);
+
+
+--
+-- Name: mbn_mtg_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_mtg_d05569f886377400312d8c2edd4c6f4c ON public.meetbouten_metingen USING btree (_gobid);
+
+
+--
 -- Name: mbn_mtg_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -42571,6 +43775,27 @@ CREATE INDEX mbn_rlg_613273a0ec2090693894cea102aa8c06 ON public.meetbouten_rolla
 --
 
 CREATE INDEX mbn_rlg_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.meetbouten_rollagen USING btree (_date_deleted);
+
+
+--
+-- Name: mbn_rlg_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_rlg_97beaa21d4819a1131833b897504ce31 ON public.meetbouten_rollagen USING btree (_tid);
+
+
+--
+-- Name: mbn_rlg_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_rlg_b80bb7740288fda1f201890375a60c8f ON public.meetbouten_rollagen USING btree (_id);
+
+
+--
+-- Name: mbn_rlg_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_rlg_d05569f886377400312d8c2edd4c6f4c ON public.meetbouten_rollagen USING btree (_gobid);
 
 
 --
@@ -42637,10 +43862,31 @@ CREATE INDEX mbn_rpt_96ccbc9a919757defd1d1c1a4bf16aed ON public.meetbouten_refer
 
 
 --
+-- Name: mbn_rpt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_rpt_97beaa21d4819a1131833b897504ce31 ON public.meetbouten_referentiepunten USING btree (_tid);
+
+
+--
+-- Name: mbn_rpt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_rpt_b80bb7740288fda1f201890375a60c8f ON public.meetbouten_referentiepunten USING btree (_id);
+
+
+--
 -- Name: mbn_rpt_cadf657ee6f481987a2334dfd3de08a3; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX mbn_rpt_cadf657ee6f481987a2334dfd3de08a3 ON public.meetbouten_referentiepunten USING gin (ligt_in_gebieden_bouwblok);
+
+
+--
+-- Name: mbn_rpt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mbn_rpt_d05569f886377400312d8c2edd4c6f4c ON public.meetbouten_referentiepunten USING btree (_gobid);
 
 
 --
@@ -42707,10 +43953,31 @@ CREATE INDEX nap_pmk_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.nap_peilmerken U
 
 
 --
+-- Name: nap_pmk_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX nap_pmk_97beaa21d4819a1131833b897504ce31 ON public.nap_peilmerken USING btree (_tid);
+
+
+--
+-- Name: nap_pmk_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX nap_pmk_b80bb7740288fda1f201890375a60c8f ON public.nap_peilmerken USING btree (_id);
+
+
+--
 -- Name: nap_pmk_cadf657ee6f481987a2334dfd3de08a3; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX nap_pmk_cadf657ee6f481987a2334dfd3de08a3 ON public.nap_peilmerken USING gin (ligt_in_gebieden_bouwblok);
+
+
+--
+-- Name: nap_pmk_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX nap_pmk_d05569f886377400312d8c2edd4c6f4c ON public.nap_peilmerken USING btree (_gobid);
 
 
 --
@@ -42732,6 +43999,13 @@ CREATE INDEX qa_bag_bdt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_brondo
 --
 
 CREATE INDEX qa_bag_bdt_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_brondocumenten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_bdt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_bdt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_brondocumenten USING btree (_id, volgnummer);
 
 
 --
@@ -42763,6 +44037,27 @@ CREATE INDEX qa_bag_bdt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_brondo
 
 
 --
+-- Name: qa_bag_bdt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_bdt_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_brondocumenten USING btree (_tid);
+
+
+--
+-- Name: qa_bag_bdt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_bdt_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_brondocumenten USING btree (_id);
+
+
+--
+-- Name: qa_bag_bdt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_bdt_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_brondocumenten USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_bdt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -42781,6 +44076,13 @@ CREATE INDEX qa_bag_dsr_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_dossie
 --
 
 CREATE INDEX qa_bag_dsr_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_dossiers USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_dsr_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_dsr_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_dossiers USING btree (_id, volgnummer);
 
 
 --
@@ -42812,6 +44114,27 @@ CREATE INDEX qa_bag_dsr_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_dossie
 
 
 --
+-- Name: qa_bag_dsr_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_dsr_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_dossiers USING btree (_tid);
+
+
+--
+-- Name: qa_bag_dsr_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_dsr_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_dossiers USING btree (_id);
+
+
+--
+-- Name: qa_bag_dsr_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_dsr_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_dossiers USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_dsr_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -42830,6 +44153,13 @@ CREATE INDEX qa_bag_lps_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_ligpla
 --
 
 CREATE INDEX qa_bag_lps_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_ligplaatsen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_lps_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_lps_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_ligplaatsen USING btree (_id, volgnummer);
 
 
 --
@@ -42861,6 +44191,27 @@ CREATE INDEX qa_bag_lps_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_ligpla
 
 
 --
+-- Name: qa_bag_lps_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_lps_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_ligplaatsen USING btree (_tid);
+
+
+--
+-- Name: qa_bag_lps_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_lps_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_ligplaatsen USING btree (_id);
+
+
+--
+-- Name: qa_bag_lps_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_lps_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_ligplaatsen USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_lps_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -42879,6 +44230,13 @@ CREATE INDEX qa_bag_nag_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_nummer
 --
 
 CREATE INDEX qa_bag_nag_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_nummeraanduidingen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_nag_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_nag_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_nummeraanduidingen USING btree (_id, volgnummer);
 
 
 --
@@ -42910,6 +44268,27 @@ CREATE INDEX qa_bag_nag_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_nummer
 
 
 --
+-- Name: qa_bag_nag_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_nag_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_nummeraanduidingen USING btree (_tid);
+
+
+--
+-- Name: qa_bag_nag_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_nag_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_nummeraanduidingen USING btree (_id);
+
+
+--
+-- Name: qa_bag_nag_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_nag_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_nummeraanduidingen USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_nag_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -42928,6 +44307,13 @@ CREATE INDEX qa_bag_ore_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_openba
 --
 
 CREATE INDEX qa_bag_ore_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_openbareruimtes USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_ore_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_ore_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_openbareruimtes USING btree (_id, volgnummer);
 
 
 --
@@ -42959,6 +44345,27 @@ CREATE INDEX qa_bag_ore_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_openba
 
 
 --
+-- Name: qa_bag_ore_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_ore_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_openbareruimtes USING btree (_tid);
+
+
+--
+-- Name: qa_bag_ore_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_ore_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_openbareruimtes USING btree (_id);
+
+
+--
+-- Name: qa_bag_ore_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_ore_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_openbareruimtes USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_ore_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -42977,6 +44384,13 @@ CREATE INDEX qa_bag_ozk_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_onderz
 --
 
 CREATE INDEX qa_bag_ozk_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_onderzoeken USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_ozk_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_ozk_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_onderzoeken USING btree (_id, volgnummer);
 
 
 --
@@ -43008,6 +44422,27 @@ CREATE INDEX qa_bag_ozk_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_onderz
 
 
 --
+-- Name: qa_bag_ozk_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_ozk_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_onderzoeken USING btree (_tid);
+
+
+--
+-- Name: qa_bag_ozk_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_ozk_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_onderzoeken USING btree (_id);
+
+
+--
+-- Name: qa_bag_ozk_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_ozk_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_onderzoeken USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_ozk_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43026,6 +44461,13 @@ CREATE INDEX qa_bag_pnd_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_panden
 --
 
 CREATE INDEX qa_bag_pnd_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_panden USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_pnd_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_pnd_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_panden USING btree (_id, volgnummer);
 
 
 --
@@ -43057,6 +44499,27 @@ CREATE INDEX qa_bag_pnd_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_panden
 
 
 --
+-- Name: qa_bag_pnd_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_pnd_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_panden USING btree (_tid);
+
+
+--
+-- Name: qa_bag_pnd_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_pnd_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_panden USING btree (_id);
+
+
+--
+-- Name: qa_bag_pnd_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_pnd_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_panden USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_pnd_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43075,6 +44538,13 @@ CREATE INDEX qa_bag_sps_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_standp
 --
 
 CREATE INDEX qa_bag_sps_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_standplaatsen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_sps_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_sps_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_standplaatsen USING btree (_id, volgnummer);
 
 
 --
@@ -43106,6 +44576,27 @@ CREATE INDEX qa_bag_sps_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_standp
 
 
 --
+-- Name: qa_bag_sps_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_sps_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_standplaatsen USING btree (_tid);
+
+
+--
+-- Name: qa_bag_sps_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_sps_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_standplaatsen USING btree (_id);
+
+
+--
+-- Name: qa_bag_sps_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_sps_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_standplaatsen USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_sps_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43124,6 +44615,13 @@ CREATE INDEX qa_bag_vot_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_verbli
 --
 
 CREATE INDEX qa_bag_vot_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_verblijfsobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_vot_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_vot_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_verblijfsobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -43155,6 +44653,27 @@ CREATE INDEX qa_bag_vot_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_verbli
 
 
 --
+-- Name: qa_bag_vot_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_vot_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_verblijfsobjecten USING btree (_tid);
+
+
+--
+-- Name: qa_bag_vot_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_vot_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_verblijfsobjecten USING btree (_id);
+
+
+--
+-- Name: qa_bag_vot_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_vot_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_verblijfsobjecten USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_vot_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43173,6 +44692,13 @@ CREATE INDEX qa_bag_wps_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bag_woonpl
 --
 
 CREATE INDEX qa_bag_wps_1a9d849ff5a68997176b6144236806ae ON public.qa_bag_woonplaatsen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bag_wps_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_wps_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bag_woonplaatsen USING btree (_id, volgnummer);
 
 
 --
@@ -43204,6 +44730,27 @@ CREATE INDEX qa_bag_wps_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bag_woonpl
 
 
 --
+-- Name: qa_bag_wps_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_wps_97beaa21d4819a1131833b897504ce31 ON public.qa_bag_woonplaatsen USING btree (_tid);
+
+
+--
+-- Name: qa_bag_wps_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_wps_b80bb7740288fda1f201890375a60c8f ON public.qa_bag_woonplaatsen USING btree (_id);
+
+
+--
+-- Name: qa_bag_wps_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bag_wps_d05569f886377400312d8c2edd4c6f4c ON public.qa_bag_woonplaatsen USING btree (_gobid);
+
+
+--
 -- Name: qa_bag_wps_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43222,6 +44769,13 @@ CREATE INDEX qa_bgt_onw_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bgt_onderb
 --
 
 CREATE INDEX qa_bgt_onw_1a9d849ff5a68997176b6144236806ae ON public.qa_bgt_onderbouw USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bgt_onw_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bgt_onw_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bgt_onderbouw USING btree (_id, volgnummer);
 
 
 --
@@ -43253,6 +44807,27 @@ CREATE INDEX qa_bgt_onw_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bgt_onderb
 
 
 --
+-- Name: qa_bgt_onw_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bgt_onw_97beaa21d4819a1131833b897504ce31 ON public.qa_bgt_onderbouw USING btree (_tid);
+
+
+--
+-- Name: qa_bgt_onw_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bgt_onw_b80bb7740288fda1f201890375a60c8f ON public.qa_bgt_onderbouw USING btree (_id);
+
+
+--
+-- Name: qa_bgt_onw_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bgt_onw_d05569f886377400312d8c2edd4c6f4c ON public.qa_bgt_onderbouw USING btree (_gobid);
+
+
+--
 -- Name: qa_bgt_onw_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43271,6 +44846,13 @@ CREATE INDEX qa_bgt_ovw_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_bgt_overbo
 --
 
 CREATE INDEX qa_bgt_ovw_1a9d849ff5a68997176b6144236806ae ON public.qa_bgt_overbouw USING btree (_expiration_date);
+
+
+--
+-- Name: qa_bgt_ovw_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bgt_ovw_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_bgt_overbouw USING btree (_id, volgnummer);
 
 
 --
@@ -43302,6 +44884,27 @@ CREATE INDEX qa_bgt_ovw_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_bgt_overbo
 
 
 --
+-- Name: qa_bgt_ovw_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bgt_ovw_97beaa21d4819a1131833b897504ce31 ON public.qa_bgt_overbouw USING btree (_tid);
+
+
+--
+-- Name: qa_bgt_ovw_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bgt_ovw_b80bb7740288fda1f201890375a60c8f ON public.qa_bgt_overbouw USING btree (_id);
+
+
+--
+-- Name: qa_bgt_ovw_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_bgt_ovw_d05569f886377400312d8c2edd4c6f4c ON public.qa_bgt_overbouw USING btree (_gobid);
+
+
+--
 -- Name: qa_bgt_ovw_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43320,6 +44923,13 @@ CREATE INDEX qa_brk2_akt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_aant
 --
 
 CREATE INDEX qa_brk2_akt_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_aantekeningenkadastraleobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_akt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_akt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_aantekeningenkadastraleobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -43351,6 +44961,27 @@ CREATE INDEX qa_brk2_akt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_aant
 
 
 --
+-- Name: qa_brk2_akt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_akt_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_aantekeningenkadastraleobjecten USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_akt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_akt_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_aantekeningenkadastraleobjecten USING btree (_id);
+
+
+--
+-- Name: qa_brk2_akt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_akt_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_aantekeningenkadastraleobjecten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_akt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43369,6 +45000,13 @@ CREATE INDEX qa_brk2_art_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_aant
 --
 
 CREATE INDEX qa_brk2_art_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_aantekeningenrechten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_art_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_art_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_aantekeningenrechten USING btree (_id, volgnummer);
 
 
 --
@@ -43400,6 +45038,27 @@ CREATE INDEX qa_brk2_art_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_aant
 
 
 --
+-- Name: qa_brk2_art_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_art_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_aantekeningenrechten USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_art_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_art_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_aantekeningenrechten USING btree (_id);
+
+
+--
+-- Name: qa_brk2_art_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_art_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_aantekeningenrechten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_art_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43418,6 +45077,13 @@ CREATE INDEX qa_brk2_gme_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_geme
 --
 
 CREATE INDEX qa_brk2_gme_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_gemeentes USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_gme_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_gemeentes USING btree (_id, volgnummer);
 
 
 --
@@ -43449,6 +45115,27 @@ CREATE INDEX qa_brk2_gme_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_geme
 
 
 --
+-- Name: qa_brk2_gme_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_gemeentes USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_gme_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_gemeentes USING btree (_id);
+
+
+--
+-- Name: qa_brk2_gme_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_gme_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_gemeentes USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_gme_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43467,6 +45154,13 @@ CREATE INDEX qa_brk2_kce_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_kada
 --
 
 CREATE INDEX qa_brk2_kce_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_kadastralegemeentecodes USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_kce_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kce_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_kadastralegemeentecodes USING btree (_id, volgnummer);
 
 
 --
@@ -43498,6 +45192,27 @@ CREATE INDEX qa_brk2_kce_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_kada
 
 
 --
+-- Name: qa_brk2_kce_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kce_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_kadastralegemeentecodes USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_kce_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kce_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_kadastralegemeentecodes USING btree (_id);
+
+
+--
+-- Name: qa_brk2_kce_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kce_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_kadastralegemeentecodes USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_kce_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43516,6 +45231,13 @@ CREATE INDEX qa_brk2_kge_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_kada
 --
 
 CREATE INDEX qa_brk2_kge_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_kadastralegemeentes USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_kge_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kge_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_kadastralegemeentes USING btree (_id, volgnummer);
 
 
 --
@@ -43547,6 +45269,27 @@ CREATE INDEX qa_brk2_kge_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_kada
 
 
 --
+-- Name: qa_brk2_kge_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kge_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_kadastralegemeentes USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_kge_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kge_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_kadastralegemeentes USING btree (_id);
+
+
+--
+-- Name: qa_brk2_kge_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kge_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_kadastralegemeentes USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_kge_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43565,6 +45308,13 @@ CREATE INDEX qa_brk2_kot_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_kada
 --
 
 CREATE INDEX qa_brk2_kot_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_kadastraleobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_kot_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kot_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_kadastraleobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -43596,6 +45346,27 @@ CREATE INDEX qa_brk2_kot_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_kada
 
 
 --
+-- Name: qa_brk2_kot_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kot_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_kadastraleobjecten USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_kot_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kot_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_kadastraleobjecten USING btree (_id);
+
+
+--
+-- Name: qa_brk2_kot_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kot_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_kadastraleobjecten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_kot_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43614,6 +45385,13 @@ CREATE INDEX qa_brk2_kse_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_kada
 --
 
 CREATE INDEX qa_brk2_kse_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_kadastralesecties USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_kse_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_kadastralesecties USING btree (_id, volgnummer);
 
 
 --
@@ -43645,6 +45423,27 @@ CREATE INDEX qa_brk2_kse_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_kada
 
 
 --
+-- Name: qa_brk2_kse_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_kadastralesecties USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_kse_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_kadastralesecties USING btree (_id);
+
+
+--
+-- Name: qa_brk2_kse_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_kse_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_kadastralesecties USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_kse_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43663,6 +45462,13 @@ CREATE INDEX qa_brk2_meta_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_met
 --
 
 CREATE INDEX qa_brk2_meta_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_meta USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_meta_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_meta USING btree (_id, volgnummer);
 
 
 --
@@ -43694,6 +45500,27 @@ CREATE INDEX qa_brk2_meta_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_met
 
 
 --
+-- Name: qa_brk2_meta_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_meta USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_meta_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_meta USING btree (_id);
+
+
+--
+-- Name: qa_brk2_meta_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_meta_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_meta USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_meta_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43712,6 +45539,13 @@ CREATE INDEX qa_brk2_sdl_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_stuk
 --
 
 CREATE INDEX qa_brk2_sdl_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_stukdelen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_sdl_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sdl_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_stukdelen USING btree (_id, volgnummer);
 
 
 --
@@ -43743,6 +45577,27 @@ CREATE INDEX qa_brk2_sdl_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_stuk
 
 
 --
+-- Name: qa_brk2_sdl_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sdl_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_stukdelen USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_sdl_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sdl_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_stukdelen USING btree (_id);
+
+
+--
+-- Name: qa_brk2_sdl_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sdl_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_stukdelen USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_sdl_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43761,6 +45616,13 @@ CREATE INDEX qa_brk2_sjt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_kada
 --
 
 CREATE INDEX qa_brk2_sjt_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_kadastralesubjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_sjt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_kadastralesubjecten USING btree (_id, volgnummer);
 
 
 --
@@ -43792,6 +45654,27 @@ CREATE INDEX qa_brk2_sjt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_kada
 
 
 --
+-- Name: qa_brk2_sjt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_kadastralesubjecten USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_sjt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_kadastralesubjecten USING btree (_id);
+
+
+--
+-- Name: qa_brk2_sjt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_sjt_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_kadastralesubjecten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_sjt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43810,6 +45693,13 @@ CREATE INDEX qa_brk2_tng_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_tena
 --
 
 CREATE INDEX qa_brk2_tng_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_tenaamstellingen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_tng_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_tng_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_tenaamstellingen USING btree (_id, volgnummer);
 
 
 --
@@ -43841,6 +45731,27 @@ CREATE INDEX qa_brk2_tng_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_tena
 
 
 --
+-- Name: qa_brk2_tng_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_tng_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_tenaamstellingen USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_tng_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_tng_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_tenaamstellingen USING btree (_id);
+
+
+--
+-- Name: qa_brk2_tng_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_tng_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_tenaamstellingen USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_tng_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43859,6 +45770,13 @@ CREATE INDEX qa_brk2_zrt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_zake
 --
 
 CREATE INDEX qa_brk2_zrt_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_zakelijkerechten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_zrt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_zrt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_zakelijkerechten USING btree (_id, volgnummer);
 
 
 --
@@ -43890,6 +45808,27 @@ CREATE INDEX qa_brk2_zrt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_zake
 
 
 --
+-- Name: qa_brk2_zrt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_zrt_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_zakelijkerechten USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_zrt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_zrt_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_zakelijkerechten USING btree (_id);
+
+
+--
+-- Name: qa_brk2_zrt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_zrt_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_zakelijkerechten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk2_zrt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43908,6 +45847,13 @@ CREATE INDEX qa_brk_akt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_aantek
 --
 
 CREATE INDEX qa_brk_akt_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_aantekeningenkadastraleobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_akt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_akt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_aantekeningenkadastraleobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -43939,6 +45885,27 @@ CREATE INDEX qa_brk_akt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_aantek
 
 
 --
+-- Name: qa_brk_akt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_akt_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_aantekeningenkadastraleobjecten USING btree (_tid);
+
+
+--
+-- Name: qa_brk_akt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_akt_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_aantekeningenkadastraleobjecten USING btree (_id);
+
+
+--
+-- Name: qa_brk_akt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_akt_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_aantekeningenkadastraleobjecten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_akt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -43957,6 +45924,13 @@ CREATE INDEX qa_brk_art_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_aantek
 --
 
 CREATE INDEX qa_brk_art_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_aantekeningenrechten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_art_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_art_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_aantekeningenrechten USING btree (_id, volgnummer);
 
 
 --
@@ -43988,6 +45962,27 @@ CREATE INDEX qa_brk_art_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_aantek
 
 
 --
+-- Name: qa_brk_art_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_art_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_aantekeningenrechten USING btree (_tid);
+
+
+--
+-- Name: qa_brk_art_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_art_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_aantekeningenrechten USING btree (_id);
+
+
+--
+-- Name: qa_brk_art_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_art_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_aantekeningenrechten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_art_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44006,6 +46001,13 @@ CREATE INDEX qa_brk_azt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_aardza
 --
 
 CREATE INDEX qa_brk_azt_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_aardzakelijkerechten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_azt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_azt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_aardzakelijkerechten USING btree (_id, volgnummer);
 
 
 --
@@ -44037,6 +46039,27 @@ CREATE INDEX qa_brk_azt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_aardza
 
 
 --
+-- Name: qa_brk_azt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_azt_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_aardzakelijkerechten USING btree (_tid);
+
+
+--
+-- Name: qa_brk_azt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_azt_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_aardzakelijkerechten USING btree (_id);
+
+
+--
+-- Name: qa_brk_azt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_azt_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_aardzakelijkerechten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_azt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44055,6 +46078,13 @@ CREATE INDEX qa_brk_gme_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_gemeen
 --
 
 CREATE INDEX qa_brk_gme_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_gemeentes USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_gme_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_gme_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_gemeentes USING btree (_id, volgnummer);
 
 
 --
@@ -44086,6 +46116,27 @@ CREATE INDEX qa_brk_gme_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_gemeen
 
 
 --
+-- Name: qa_brk_gme_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_gme_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_gemeentes USING btree (_tid);
+
+
+--
+-- Name: qa_brk_gme_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_gme_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_gemeentes USING btree (_id);
+
+
+--
+-- Name: qa_brk_gme_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_gme_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_gemeentes USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_gme_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44104,6 +46155,13 @@ CREATE INDEX qa_brk_kce_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_kadast
 --
 
 CREATE INDEX qa_brk_kce_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_kadastralegemeentecodes USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_kce_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kce_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_kadastralegemeentecodes USING btree (_id, volgnummer);
 
 
 --
@@ -44135,6 +46193,27 @@ CREATE INDEX qa_brk_kce_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_kadast
 
 
 --
+-- Name: qa_brk_kce_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kce_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_kadastralegemeentecodes USING btree (_tid);
+
+
+--
+-- Name: qa_brk_kce_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kce_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_kadastralegemeentecodes USING btree (_id);
+
+
+--
+-- Name: qa_brk_kce_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kce_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_kadastralegemeentecodes USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_kce_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44153,6 +46232,13 @@ CREATE INDEX qa_brk_kge_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_kadast
 --
 
 CREATE INDEX qa_brk_kge_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_kadastralegemeentes USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_kge_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kge_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_kadastralegemeentes USING btree (_id, volgnummer);
 
 
 --
@@ -44184,6 +46270,27 @@ CREATE INDEX qa_brk_kge_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_kadast
 
 
 --
+-- Name: qa_brk_kge_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kge_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_kadastralegemeentes USING btree (_tid);
+
+
+--
+-- Name: qa_brk_kge_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kge_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_kadastralegemeentes USING btree (_id);
+
+
+--
+-- Name: qa_brk_kge_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kge_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_kadastralegemeentes USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_kge_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44202,6 +46309,13 @@ CREATE INDEX qa_brk_kot_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_kadast
 --
 
 CREATE INDEX qa_brk_kot_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_kadastraleobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_kot_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kot_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_kadastraleobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -44233,6 +46347,27 @@ CREATE INDEX qa_brk_kot_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_kadast
 
 
 --
+-- Name: qa_brk_kot_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kot_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_kadastraleobjecten USING btree (_tid);
+
+
+--
+-- Name: qa_brk_kot_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kot_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_kadastraleobjecten USING btree (_id);
+
+
+--
+-- Name: qa_brk_kot_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kot_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_kadastraleobjecten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_kot_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44251,6 +46386,13 @@ CREATE INDEX qa_brk_kse_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_kadast
 --
 
 CREATE INDEX qa_brk_kse_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_kadastralesecties USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_kse_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kse_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_kadastralesecties USING btree (_id, volgnummer);
 
 
 --
@@ -44282,6 +46424,27 @@ CREATE INDEX qa_brk_kse_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_kadast
 
 
 --
+-- Name: qa_brk_kse_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kse_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_kadastralesecties USING btree (_tid);
+
+
+--
+-- Name: qa_brk_kse_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kse_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_kadastralesecties USING btree (_id);
+
+
+--
+-- Name: qa_brk_kse_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_kse_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_kadastralesecties USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_kse_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44300,6 +46463,13 @@ CREATE INDEX qa_brk_meta_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_meta 
 --
 
 CREATE INDEX qa_brk_meta_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_meta USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_meta_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_meta_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_meta USING btree (_id, volgnummer);
 
 
 --
@@ -44331,6 +46501,27 @@ CREATE INDEX qa_brk_meta_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_meta 
 
 
 --
+-- Name: qa_brk_meta_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_meta_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_meta USING btree (_tid);
+
+
+--
+-- Name: qa_brk_meta_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_meta_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_meta USING btree (_id);
+
+
+--
+-- Name: qa_brk_meta_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_meta_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_meta USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_meta_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44349,6 +46540,13 @@ CREATE INDEX qa_brk_sdl_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_stukde
 --
 
 CREATE INDEX qa_brk_sdl_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_stukdelen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_sdl_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_sdl_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_stukdelen USING btree (_id, volgnummer);
 
 
 --
@@ -44380,6 +46578,27 @@ CREATE INDEX qa_brk_sdl_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_stukde
 
 
 --
+-- Name: qa_brk_sdl_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_sdl_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_stukdelen USING btree (_tid);
+
+
+--
+-- Name: qa_brk_sdl_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_sdl_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_stukdelen USING btree (_id);
+
+
+--
+-- Name: qa_brk_sdl_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_sdl_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_stukdelen USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_sdl_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44398,6 +46617,13 @@ CREATE INDEX qa_brk_sjt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_kadast
 --
 
 CREATE INDEX qa_brk_sjt_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_kadastralesubjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_sjt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_sjt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_kadastralesubjecten USING btree (_id, volgnummer);
 
 
 --
@@ -44429,6 +46655,27 @@ CREATE INDEX qa_brk_sjt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_kadast
 
 
 --
+-- Name: qa_brk_sjt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_sjt_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_kadastralesubjecten USING btree (_tid);
+
+
+--
+-- Name: qa_brk_sjt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_sjt_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_kadastralesubjecten USING btree (_id);
+
+
+--
+-- Name: qa_brk_sjt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_sjt_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_kadastralesubjecten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_sjt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44447,6 +46694,13 @@ CREATE INDEX qa_brk_tng_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_tenaam
 --
 
 CREATE INDEX qa_brk_tng_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_tenaamstellingen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_tng_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_tng_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_tenaamstellingen USING btree (_id, volgnummer);
 
 
 --
@@ -44478,6 +46732,27 @@ CREATE INDEX qa_brk_tng_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_tenaam
 
 
 --
+-- Name: qa_brk_tng_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_tng_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_tenaamstellingen USING btree (_tid);
+
+
+--
+-- Name: qa_brk_tng_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_tng_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_tenaamstellingen USING btree (_id);
+
+
+--
+-- Name: qa_brk_tng_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_tng_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_tenaamstellingen USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_tng_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44496,6 +46771,13 @@ CREATE INDEX qa_brk_zrt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk_zakeli
 --
 
 CREATE INDEX qa_brk_zrt_1a9d849ff5a68997176b6144236806ae ON public.qa_brk_zakelijkerechten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk_zrt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_zrt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk_zakelijkerechten USING btree (_id, volgnummer);
 
 
 --
@@ -44527,6 +46809,27 @@ CREATE INDEX qa_brk_zrt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk_zakeli
 
 
 --
+-- Name: qa_brk_zrt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_zrt_97beaa21d4819a1131833b897504ce31 ON public.qa_brk_zakelijkerechten USING btree (_tid);
+
+
+--
+-- Name: qa_brk_zrt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_zrt_b80bb7740288fda1f201890375a60c8f ON public.qa_brk_zakelijkerechten USING btree (_id);
+
+
+--
+-- Name: qa_brk_zrt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk_zrt_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk_zakelijkerechten USING btree (_gobid);
+
+
+--
 -- Name: qa_brk_zrt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44545,6 +46848,13 @@ CREATE INDEX qa_gbd_bbk_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_gebieden_b
 --
 
 CREATE INDEX qa_gbd_bbk_1a9d849ff5a68997176b6144236806ae ON public.qa_gebieden_bouwblokken USING btree (_expiration_date);
+
+
+--
+-- Name: qa_gbd_bbk_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_bbk_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_gebieden_bouwblokken USING btree (_id, volgnummer);
 
 
 --
@@ -44576,6 +46886,27 @@ CREATE INDEX qa_gbd_bbk_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_gebieden_b
 
 
 --
+-- Name: qa_gbd_bbk_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_bbk_97beaa21d4819a1131833b897504ce31 ON public.qa_gebieden_bouwblokken USING btree (_tid);
+
+
+--
+-- Name: qa_gbd_bbk_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_bbk_b80bb7740288fda1f201890375a60c8f ON public.qa_gebieden_bouwblokken USING btree (_id);
+
+
+--
+-- Name: qa_gbd_bbk_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_bbk_d05569f886377400312d8c2edd4c6f4c ON public.qa_gebieden_bouwblokken USING btree (_gobid);
+
+
+--
 -- Name: qa_gbd_bbk_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44594,6 +46925,13 @@ CREATE INDEX qa_gbd_brt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_gebieden_b
 --
 
 CREATE INDEX qa_gbd_brt_1a9d849ff5a68997176b6144236806ae ON public.qa_gebieden_buurten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_gbd_brt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_brt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_gebieden_buurten USING btree (_id, volgnummer);
 
 
 --
@@ -44625,6 +46963,27 @@ CREATE INDEX qa_gbd_brt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_gebieden_b
 
 
 --
+-- Name: qa_gbd_brt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_brt_97beaa21d4819a1131833b897504ce31 ON public.qa_gebieden_buurten USING btree (_tid);
+
+
+--
+-- Name: qa_gbd_brt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_brt_b80bb7740288fda1f201890375a60c8f ON public.qa_gebieden_buurten USING btree (_id);
+
+
+--
+-- Name: qa_gbd_brt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_brt_d05569f886377400312d8c2edd4c6f4c ON public.qa_gebieden_buurten USING btree (_gobid);
+
+
+--
 -- Name: qa_gbd_brt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44643,6 +47002,13 @@ CREATE INDEX qa_gbd_ggp_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_gebieden_g
 --
 
 CREATE INDEX qa_gbd_ggp_1a9d849ff5a68997176b6144236806ae ON public.qa_gebieden_ggpgebieden USING btree (_expiration_date);
+
+
+--
+-- Name: qa_gbd_ggp_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_ggp_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_gebieden_ggpgebieden USING btree (_id, volgnummer);
 
 
 --
@@ -44674,6 +47040,27 @@ CREATE INDEX qa_gbd_ggp_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_gebieden_g
 
 
 --
+-- Name: qa_gbd_ggp_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_ggp_97beaa21d4819a1131833b897504ce31 ON public.qa_gebieden_ggpgebieden USING btree (_tid);
+
+
+--
+-- Name: qa_gbd_ggp_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_ggp_b80bb7740288fda1f201890375a60c8f ON public.qa_gebieden_ggpgebieden USING btree (_id);
+
+
+--
+-- Name: qa_gbd_ggp_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_ggp_d05569f886377400312d8c2edd4c6f4c ON public.qa_gebieden_ggpgebieden USING btree (_gobid);
+
+
+--
 -- Name: qa_gbd_ggp_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44692,6 +47079,13 @@ CREATE INDEX qa_gbd_ggw_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_gebieden_g
 --
 
 CREATE INDEX qa_gbd_ggw_1a9d849ff5a68997176b6144236806ae ON public.qa_gebieden_ggwgebieden USING btree (_expiration_date);
+
+
+--
+-- Name: qa_gbd_ggw_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_ggw_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_gebieden_ggwgebieden USING btree (_id, volgnummer);
 
 
 --
@@ -44723,6 +47117,27 @@ CREATE INDEX qa_gbd_ggw_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_gebieden_g
 
 
 --
+-- Name: qa_gbd_ggw_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_ggw_97beaa21d4819a1131833b897504ce31 ON public.qa_gebieden_ggwgebieden USING btree (_tid);
+
+
+--
+-- Name: qa_gbd_ggw_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_ggw_b80bb7740288fda1f201890375a60c8f ON public.qa_gebieden_ggwgebieden USING btree (_id);
+
+
+--
+-- Name: qa_gbd_ggw_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_ggw_d05569f886377400312d8c2edd4c6f4c ON public.qa_gebieden_ggwgebieden USING btree (_gobid);
+
+
+--
 -- Name: qa_gbd_ggw_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44741,6 +47156,13 @@ CREATE INDEX qa_gbd_sdl_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_gebieden_s
 --
 
 CREATE INDEX qa_gbd_sdl_1a9d849ff5a68997176b6144236806ae ON public.qa_gebieden_stadsdelen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_gbd_sdl_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_sdl_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_gebieden_stadsdelen USING btree (_id, volgnummer);
 
 
 --
@@ -44772,6 +47194,27 @@ CREATE INDEX qa_gbd_sdl_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_gebieden_s
 
 
 --
+-- Name: qa_gbd_sdl_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_sdl_97beaa21d4819a1131833b897504ce31 ON public.qa_gebieden_stadsdelen USING btree (_tid);
+
+
+--
+-- Name: qa_gbd_sdl_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_sdl_b80bb7740288fda1f201890375a60c8f ON public.qa_gebieden_stadsdelen USING btree (_id);
+
+
+--
+-- Name: qa_gbd_sdl_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_sdl_d05569f886377400312d8c2edd4c6f4c ON public.qa_gebieden_stadsdelen USING btree (_gobid);
+
+
+--
 -- Name: qa_gbd_sdl_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44790,6 +47233,13 @@ CREATE INDEX qa_gbd_wijk_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_gebieden_
 --
 
 CREATE INDEX qa_gbd_wijk_1a9d849ff5a68997176b6144236806ae ON public.qa_gebieden_wijken USING btree (_expiration_date);
+
+
+--
+-- Name: qa_gbd_wijk_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_wijk_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_gebieden_wijken USING btree (_id, volgnummer);
 
 
 --
@@ -44821,6 +47271,27 @@ CREATE INDEX qa_gbd_wijk_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_gebieden_
 
 
 --
+-- Name: qa_gbd_wijk_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_wijk_97beaa21d4819a1131833b897504ce31 ON public.qa_gebieden_wijken USING btree (_tid);
+
+
+--
+-- Name: qa_gbd_wijk_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_wijk_b80bb7740288fda1f201890375a60c8f ON public.qa_gebieden_wijken USING btree (_id);
+
+
+--
+-- Name: qa_gbd_wijk_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_gbd_wijk_d05569f886377400312d8c2edd4c6f4c ON public.qa_gebieden_wijken USING btree (_gobid);
+
+
+--
 -- Name: qa_gbd_wijk_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44839,6 +47310,13 @@ CREATE INDEX qa_hr_loc_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_hr_locaties
 --
 
 CREATE INDEX qa_hr_loc_1a9d849ff5a68997176b6144236806ae ON public.qa_hr_locaties USING btree (_expiration_date);
+
+
+--
+-- Name: qa_hr_loc_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_loc_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_hr_locaties USING btree (_id, volgnummer);
 
 
 --
@@ -44870,6 +47348,27 @@ CREATE INDEX qa_hr_loc_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_hr_locaties
 
 
 --
+-- Name: qa_hr_loc_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_loc_97beaa21d4819a1131833b897504ce31 ON public.qa_hr_locaties USING btree (_tid);
+
+
+--
+-- Name: qa_hr_loc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_loc_b80bb7740288fda1f201890375a60c8f ON public.qa_hr_locaties USING btree (_id);
+
+
+--
+-- Name: qa_hr_loc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_loc_d05569f886377400312d8c2edd4c6f4c ON public.qa_hr_locaties USING btree (_gobid);
+
+
+--
 -- Name: qa_hr_loc_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44888,6 +47387,13 @@ CREATE INDEX qa_hr_mac_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_hr_maatscha
 --
 
 CREATE INDEX qa_hr_mac_1a9d849ff5a68997176b6144236806ae ON public.qa_hr_maatschappelijkeactiviteiten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_hr_mac_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_mac_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_hr_maatschappelijkeactiviteiten USING btree (_id, volgnummer);
 
 
 --
@@ -44919,6 +47425,27 @@ CREATE INDEX qa_hr_mac_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_hr_maatscha
 
 
 --
+-- Name: qa_hr_mac_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_mac_97beaa21d4819a1131833b897504ce31 ON public.qa_hr_maatschappelijkeactiviteiten USING btree (_tid);
+
+
+--
+-- Name: qa_hr_mac_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_mac_b80bb7740288fda1f201890375a60c8f ON public.qa_hr_maatschappelijkeactiviteiten USING btree (_id);
+
+
+--
+-- Name: qa_hr_mac_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_mac_d05569f886377400312d8c2edd4c6f4c ON public.qa_hr_maatschappelijkeactiviteiten USING btree (_gobid);
+
+
+--
 -- Name: qa_hr_mac_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44937,6 +47464,13 @@ CREATE INDEX qa_hr_sac_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_hr_sbiactiv
 --
 
 CREATE INDEX qa_hr_sac_1a9d849ff5a68997176b6144236806ae ON public.qa_hr_sbiactiviteiten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_hr_sac_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_sac_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_hr_sbiactiviteiten USING btree (_id, volgnummer);
 
 
 --
@@ -44968,6 +47502,27 @@ CREATE INDEX qa_hr_sac_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_hr_sbiactiv
 
 
 --
+-- Name: qa_hr_sac_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_sac_97beaa21d4819a1131833b897504ce31 ON public.qa_hr_sbiactiviteiten USING btree (_tid);
+
+
+--
+-- Name: qa_hr_sac_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_sac_b80bb7740288fda1f201890375a60c8f ON public.qa_hr_sbiactiviteiten USING btree (_id);
+
+
+--
+-- Name: qa_hr_sac_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_sac_d05569f886377400312d8c2edd4c6f4c ON public.qa_hr_sbiactiviteiten USING btree (_gobid);
+
+
+--
 -- Name: qa_hr_sac_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -44986,6 +47541,13 @@ CREATE INDEX qa_hr_ves_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_hr_vestigin
 --
 
 CREATE INDEX qa_hr_ves_1a9d849ff5a68997176b6144236806ae ON public.qa_hr_vestigingen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_hr_ves_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_ves_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_hr_vestigingen USING btree (_id, volgnummer);
 
 
 --
@@ -45017,6 +47579,27 @@ CREATE INDEX qa_hr_ves_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_hr_vestigin
 
 
 --
+-- Name: qa_hr_ves_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_ves_97beaa21d4819a1131833b897504ce31 ON public.qa_hr_vestigingen USING btree (_tid);
+
+
+--
+-- Name: qa_hr_ves_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_ves_b80bb7740288fda1f201890375a60c8f ON public.qa_hr_vestigingen USING btree (_id);
+
+
+--
+-- Name: qa_hr_ves_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_ves_d05569f886377400312d8c2edd4c6f4c ON public.qa_hr_vestigingen USING btree (_gobid);
+
+
+--
 -- Name: qa_hr_ves_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45035,6 +47618,13 @@ CREATE INDEX qa_mbn_mbt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_meetbouten
 --
 
 CREATE INDEX qa_mbn_mbt_1a9d849ff5a68997176b6144236806ae ON public.qa_meetbouten_meetbouten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_mbn_mbt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_mbt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_meetbouten_meetbouten USING btree (_id, volgnummer);
 
 
 --
@@ -45066,6 +47656,27 @@ CREATE INDEX qa_mbn_mbt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_meetbouten
 
 
 --
+-- Name: qa_mbn_mbt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_mbt_97beaa21d4819a1131833b897504ce31 ON public.qa_meetbouten_meetbouten USING btree (_tid);
+
+
+--
+-- Name: qa_mbn_mbt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_mbt_b80bb7740288fda1f201890375a60c8f ON public.qa_meetbouten_meetbouten USING btree (_id);
+
+
+--
+-- Name: qa_mbn_mbt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_mbt_d05569f886377400312d8c2edd4c6f4c ON public.qa_meetbouten_meetbouten USING btree (_gobid);
+
+
+--
 -- Name: qa_mbn_mbt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45084,6 +47695,13 @@ CREATE INDEX qa_mbn_mtg_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_meetbouten
 --
 
 CREATE INDEX qa_mbn_mtg_1a9d849ff5a68997176b6144236806ae ON public.qa_meetbouten_metingen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_mbn_mtg_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_mtg_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_meetbouten_metingen USING btree (_id, volgnummer);
 
 
 --
@@ -45115,6 +47733,27 @@ CREATE INDEX qa_mbn_mtg_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_meetbouten
 
 
 --
+-- Name: qa_mbn_mtg_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_mtg_97beaa21d4819a1131833b897504ce31 ON public.qa_meetbouten_metingen USING btree (_tid);
+
+
+--
+-- Name: qa_mbn_mtg_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_mtg_b80bb7740288fda1f201890375a60c8f ON public.qa_meetbouten_metingen USING btree (_id);
+
+
+--
+-- Name: qa_mbn_mtg_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_mtg_d05569f886377400312d8c2edd4c6f4c ON public.qa_meetbouten_metingen USING btree (_gobid);
+
+
+--
 -- Name: qa_mbn_mtg_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45133,6 +47772,13 @@ CREATE INDEX qa_mbn_rlg_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_meetbouten
 --
 
 CREATE INDEX qa_mbn_rlg_1a9d849ff5a68997176b6144236806ae ON public.qa_meetbouten_rollagen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_mbn_rlg_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_rlg_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_meetbouten_rollagen USING btree (_id, volgnummer);
 
 
 --
@@ -45164,6 +47810,27 @@ CREATE INDEX qa_mbn_rlg_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_meetbouten
 
 
 --
+-- Name: qa_mbn_rlg_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_rlg_97beaa21d4819a1131833b897504ce31 ON public.qa_meetbouten_rollagen USING btree (_tid);
+
+
+--
+-- Name: qa_mbn_rlg_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_rlg_b80bb7740288fda1f201890375a60c8f ON public.qa_meetbouten_rollagen USING btree (_id);
+
+
+--
+-- Name: qa_mbn_rlg_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_rlg_d05569f886377400312d8c2edd4c6f4c ON public.qa_meetbouten_rollagen USING btree (_gobid);
+
+
+--
 -- Name: qa_mbn_rlg_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45182,6 +47849,13 @@ CREATE INDEX qa_mbn_rpt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_meetbouten
 --
 
 CREATE INDEX qa_mbn_rpt_1a9d849ff5a68997176b6144236806ae ON public.qa_meetbouten_referentiepunten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_mbn_rpt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_rpt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_meetbouten_referentiepunten USING btree (_id, volgnummer);
 
 
 --
@@ -45213,6 +47887,27 @@ CREATE INDEX qa_mbn_rpt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_meetbouten
 
 
 --
+-- Name: qa_mbn_rpt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_rpt_97beaa21d4819a1131833b897504ce31 ON public.qa_meetbouten_referentiepunten USING btree (_tid);
+
+
+--
+-- Name: qa_mbn_rpt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_rpt_b80bb7740288fda1f201890375a60c8f ON public.qa_meetbouten_referentiepunten USING btree (_id);
+
+
+--
+-- Name: qa_mbn_rpt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mbn_rpt_d05569f886377400312d8c2edd4c6f4c ON public.qa_meetbouten_referentiepunten USING btree (_gobid);
+
+
+--
 -- Name: qa_mbn_rpt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45231,6 +47926,13 @@ CREATE INDEX qa_nap_pmk_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_nap_peilme
 --
 
 CREATE INDEX qa_nap_pmk_1a9d849ff5a68997176b6144236806ae ON public.qa_nap_peilmerken USING btree (_expiration_date);
+
+
+--
+-- Name: qa_nap_pmk_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_nap_pmk_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_nap_peilmerken USING btree (_id, volgnummer);
 
 
 --
@@ -45262,6 +47964,27 @@ CREATE INDEX qa_nap_pmk_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_nap_peilme
 
 
 --
+-- Name: qa_nap_pmk_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_nap_pmk_97beaa21d4819a1131833b897504ce31 ON public.qa_nap_peilmerken USING btree (_tid);
+
+
+--
+-- Name: qa_nap_pmk_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_nap_pmk_b80bb7740288fda1f201890375a60c8f ON public.qa_nap_peilmerken USING btree (_id);
+
+
+--
+-- Name: qa_nap_pmk_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_nap_pmk_d05569f886377400312d8c2edd4c6f4c ON public.qa_nap_peilmerken USING btree (_gobid);
+
+
+--
 -- Name: qa_nap_pmk_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45280,6 +48003,13 @@ CREATE INDEX qa_tst_cola_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_cata
 --
 
 CREATE INDEX qa_tst_cola_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_rel_collapsed_a USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_cola_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_cola_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_rel_collapsed_a USING btree (_id, volgnummer);
 
 
 --
@@ -45311,6 +48041,27 @@ CREATE INDEX qa_tst_cola_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_cata
 
 
 --
+-- Name: qa_tst_cola_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_cola_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_rel_collapsed_a USING btree (_tid);
+
+
+--
+-- Name: qa_tst_cola_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_cola_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_rel_collapsed_a USING btree (_id);
+
+
+--
+-- Name: qa_tst_cola_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_cola_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_rel_collapsed_a USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_cola_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45329,6 +48080,13 @@ CREATE INDEX qa_tst_colb_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_cata
 --
 
 CREATE INDEX qa_tst_colb_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_rel_collapsed_b USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_colb_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_colb_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_rel_collapsed_b USING btree (_id, volgnummer);
 
 
 --
@@ -45360,6 +48118,27 @@ CREATE INDEX qa_tst_colb_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_cata
 
 
 --
+-- Name: qa_tst_colb_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_colb_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_rel_collapsed_b USING btree (_tid);
+
+
+--
+-- Name: qa_tst_colb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_colb_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_rel_collapsed_b USING btree (_id);
+
+
+--
+-- Name: qa_tst_colb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_colb_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_rel_collapsed_b USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_colb_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45378,6 +48157,13 @@ CREATE INDEX qa_tst_ma1_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_ma1_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_rel_multiple_allowed_src USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_ma1_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma1_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_rel_multiple_allowed_src USING btree (_id, volgnummer);
 
 
 --
@@ -45409,6 +48195,27 @@ CREATE INDEX qa_tst_ma1_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_ma1_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma1_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_rel_multiple_allowed_src USING btree (_tid);
+
+
+--
+-- Name: qa_tst_ma1_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma1_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_rel_multiple_allowed_src USING btree (_id);
+
+
+--
+-- Name: qa_tst_ma1_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma1_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_rel_multiple_allowed_src USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_ma1_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45427,6 +48234,13 @@ CREATE INDEX qa_tst_ma2_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_ma2_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_rel_multiple_allowed_multisource_src USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_ma2_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma2_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_rel_multiple_allowed_multisource_src USING btree (_id, volgnummer);
 
 
 --
@@ -45458,6 +48272,27 @@ CREATE INDEX qa_tst_ma2_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_ma2_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma2_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_rel_multiple_allowed_multisource_src USING btree (_tid);
+
+
+--
+-- Name: qa_tst_ma2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma2_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_rel_multiple_allowed_multisource_src USING btree (_id);
+
+
+--
+-- Name: qa_tst_ma2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma2_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_rel_multiple_allowed_multisource_src USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_ma2_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45476,6 +48311,13 @@ CREATE INDEX qa_tst_ma3_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_ma3_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_rel_multiple_allowed_dst USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_ma3_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma3_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_rel_multiple_allowed_dst USING btree (_id, volgnummer);
 
 
 --
@@ -45507,6 +48349,27 @@ CREATE INDEX qa_tst_ma3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_ma3_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma3_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_rel_multiple_allowed_dst USING btree (_tid);
+
+
+--
+-- Name: qa_tst_ma3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma3_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_rel_multiple_allowed_dst USING btree (_id);
+
+
+--
+-- Name: qa_tst_ma3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ma3_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_rel_multiple_allowed_dst USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_ma3_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45525,6 +48388,13 @@ CREATE INDEX qa_tst_rta_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_rta_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_rel_test_entity_a USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_rta_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rta_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_rel_test_entity_a USING btree (_id, volgnummer);
 
 
 --
@@ -45556,6 +48426,27 @@ CREATE INDEX qa_tst_rta_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_rta_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rta_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_rel_test_entity_a USING btree (_tid);
+
+
+--
+-- Name: qa_tst_rta_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rta_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_rel_test_entity_a USING btree (_id);
+
+
+--
+-- Name: qa_tst_rta_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rta_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_rel_test_entity_a USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_rta_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45574,6 +48465,13 @@ CREATE INDEX qa_tst_rtb_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_rtb_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_rel_test_entity_b USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_rtb_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtb_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_rel_test_entity_b USING btree (_id, volgnummer);
 
 
 --
@@ -45605,6 +48503,27 @@ CREATE INDEX qa_tst_rtb_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_rtb_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtb_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_rel_test_entity_b USING btree (_tid);
+
+
+--
+-- Name: qa_tst_rtb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtb_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_rel_test_entity_b USING btree (_id);
+
+
+--
+-- Name: qa_tst_rtb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtb_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_rel_test_entity_b USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_rtb_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45623,6 +48542,13 @@ CREATE INDEX qa_tst_rtc_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_rtc_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_rel_test_entity_c USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_rtc_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtc_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_rel_test_entity_c USING btree (_id, volgnummer);
 
 
 --
@@ -45654,6 +48580,27 @@ CREATE INDEX qa_tst_rtc_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_rtc_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtc_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_rel_test_entity_c USING btree (_tid);
+
+
+--
+-- Name: qa_tst_rtc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtc_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_rel_test_entity_c USING btree (_id);
+
+
+--
+-- Name: qa_tst_rtc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtc_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_rel_test_entity_c USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_rtc_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45672,6 +48619,13 @@ CREATE INDEX qa_tst_rtd_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_rtd_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_rel_test_entity_d USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_rtd_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtd_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_rel_test_entity_d USING btree (_id, volgnummer);
 
 
 --
@@ -45703,6 +48657,27 @@ CREATE INDEX qa_tst_rtd_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_rtd_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtd_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_rel_test_entity_d USING btree (_tid);
+
+
+--
+-- Name: qa_tst_rtd_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtd_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_rel_test_entity_d USING btree (_id);
+
+
+--
+-- Name: qa_tst_rtd_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_rtd_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_rel_test_entity_d USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_rtd_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45721,6 +48696,13 @@ CREATE INDEX qa_tst_sec_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_sec_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_secure USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_sec_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_sec_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_secure USING btree (_id, volgnummer);
 
 
 --
@@ -45752,6 +48734,27 @@ CREATE INDEX qa_tst_sec_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_sec_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_sec_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_secure USING btree (_tid);
+
+
+--
+-- Name: qa_tst_sec_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_sec_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_secure USING btree (_id);
+
+
+--
+-- Name: qa_tst_sec_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_sec_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_secure USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_sec_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45770,6 +48773,13 @@ CREATE INDEX qa_tst_tea_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_tea_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_test_entity_autoid_states USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_tea_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_tea_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_test_entity_autoid_states USING btree (_id, volgnummer);
 
 
 --
@@ -45801,6 +48811,27 @@ CREATE INDEX qa_tst_tea_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_tea_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_tea_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_test_entity_autoid_states USING btree (_tid);
+
+
+--
+-- Name: qa_tst_tea_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_tea_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_test_entity_autoid_states USING btree (_id);
+
+
+--
+-- Name: qa_tst_tea_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_tea_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_test_entity_autoid_states USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_tea_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45819,6 +48850,13 @@ CREATE INDEX qa_tst_ter_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_ter_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_test_entity_reference USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_ter_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ter_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_test_entity_reference USING btree (_id, volgnummer);
 
 
 --
@@ -45850,6 +48888,27 @@ CREATE INDEX qa_tst_ter_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_ter_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ter_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_test_entity_reference USING btree (_tid);
+
+
+--
+-- Name: qa_tst_ter_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ter_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_test_entity_reference USING btree (_id);
+
+
+--
+-- Name: qa_tst_ter_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_ter_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_test_entity_reference USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_ter_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45868,6 +48927,13 @@ CREATE INDEX qa_tst_tse_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_test_catal
 --
 
 CREATE INDEX qa_tst_tse_1a9d849ff5a68997176b6144236806ae ON public.qa_test_catalogue_test_entity USING btree (_expiration_date);
+
+
+--
+-- Name: qa_tst_tse_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_tse_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_test_catalogue_test_entity USING btree (_id, volgnummer);
 
 
 --
@@ -45899,6 +48965,27 @@ CREATE INDEX qa_tst_tse_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_test_catal
 
 
 --
+-- Name: qa_tst_tse_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_tse_97beaa21d4819a1131833b897504ce31 ON public.qa_test_catalogue_test_entity USING btree (_tid);
+
+
+--
+-- Name: qa_tst_tse_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_tse_b80bb7740288fda1f201890375a60c8f ON public.qa_test_catalogue_test_entity USING btree (_id);
+
+
+--
+-- Name: qa_tst_tse_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_tst_tse_d05569f886377400312d8c2edd4c6f4c ON public.qa_test_catalogue_test_entity USING btree (_gobid);
+
+
+--
 -- Name: qa_tst_tse_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45917,6 +49004,13 @@ CREATE INDEX qa_wkpb_bdt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_wkpb_bron
 --
 
 CREATE INDEX qa_wkpb_bdt_1a9d849ff5a68997176b6144236806ae ON public.qa_wkpb_brondocumenten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_wkpb_bdt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_bdt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_wkpb_brondocumenten USING btree (_id, volgnummer);
 
 
 --
@@ -45948,6 +49042,27 @@ CREATE INDEX qa_wkpb_bdt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_wkpb_bron
 
 
 --
+-- Name: qa_wkpb_bdt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_bdt_97beaa21d4819a1131833b897504ce31 ON public.qa_wkpb_brondocumenten USING btree (_tid);
+
+
+--
+-- Name: qa_wkpb_bdt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_bdt_b80bb7740288fda1f201890375a60c8f ON public.qa_wkpb_brondocumenten USING btree (_id);
+
+
+--
+-- Name: qa_wkpb_bdt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_bdt_d05569f886377400312d8c2edd4c6f4c ON public.qa_wkpb_brondocumenten USING btree (_gobid);
+
+
+--
 -- Name: qa_wkpb_bdt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45966,6 +49081,13 @@ CREATE INDEX qa_wkpb_bpg_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_wkpb_bepe
 --
 
 CREATE INDEX qa_wkpb_bpg_1a9d849ff5a68997176b6144236806ae ON public.qa_wkpb_beperkingen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_wkpb_bpg_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_bpg_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_wkpb_beperkingen USING btree (_id, volgnummer);
 
 
 --
@@ -45997,6 +49119,27 @@ CREATE INDEX qa_wkpb_bpg_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_wkpb_bepe
 
 
 --
+-- Name: qa_wkpb_bpg_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_bpg_97beaa21d4819a1131833b897504ce31 ON public.qa_wkpb_beperkingen USING btree (_tid);
+
+
+--
+-- Name: qa_wkpb_bpg_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_bpg_b80bb7740288fda1f201890375a60c8f ON public.qa_wkpb_beperkingen USING btree (_id);
+
+
+--
+-- Name: qa_wkpb_bpg_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_bpg_d05569f886377400312d8c2edd4c6f4c ON public.qa_wkpb_beperkingen USING btree (_gobid);
+
+
+--
 -- Name: qa_wkpb_bpg_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -46015,6 +49158,13 @@ CREATE INDEX qa_wkpb_dsr_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_wkpb_doss
 --
 
 CREATE INDEX qa_wkpb_dsr_1a9d849ff5a68997176b6144236806ae ON public.qa_wkpb_dossiers USING btree (_expiration_date);
+
+
+--
+-- Name: qa_wkpb_dsr_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_dsr_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_wkpb_dossiers USING btree (_id, volgnummer);
 
 
 --
@@ -46046,6 +49196,27 @@ CREATE INDEX qa_wkpb_dsr_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_wkpb_doss
 
 
 --
+-- Name: qa_wkpb_dsr_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_dsr_97beaa21d4819a1131833b897504ce31 ON public.qa_wkpb_dossiers USING btree (_tid);
+
+
+--
+-- Name: qa_wkpb_dsr_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_dsr_b80bb7740288fda1f201890375a60c8f ON public.qa_wkpb_dossiers USING btree (_id);
+
+
+--
+-- Name: qa_wkpb_dsr_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_wkpb_dsr_d05569f886377400312d8c2edd4c6f4c ON public.qa_wkpb_dossiers USING btree (_gobid);
+
+
+--
 -- Name: qa_wkpb_dsr_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -46064,6 +49235,13 @@ CREATE INDEX qa_woz_wdt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_woz_wozdee
 --
 
 CREATE INDEX qa_woz_wdt_1a9d849ff5a68997176b6144236806ae ON public.qa_woz_wozdeelobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_woz_wdt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_woz_wdt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_woz_wozdeelobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -46095,6 +49273,27 @@ CREATE INDEX qa_woz_wdt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_woz_wozdee
 
 
 --
+-- Name: qa_woz_wdt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_woz_wdt_97beaa21d4819a1131833b897504ce31 ON public.qa_woz_wozdeelobjecten USING btree (_tid);
+
+
+--
+-- Name: qa_woz_wdt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_woz_wdt_b80bb7740288fda1f201890375a60c8f ON public.qa_woz_wozdeelobjecten USING btree (_id);
+
+
+--
+-- Name: qa_woz_wdt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_woz_wdt_d05569f886377400312d8c2edd4c6f4c ON public.qa_woz_wozdeelobjecten USING btree (_gobid);
+
+
+--
 -- Name: qa_woz_wdt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -46113,6 +49312,13 @@ CREATE INDEX qa_woz_wot_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_woz_wozobj
 --
 
 CREATE INDEX qa_woz_wot_1a9d849ff5a68997176b6144236806ae ON public.qa_woz_wozobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_woz_wot_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_woz_wot_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_woz_wozobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -46144,10 +49350,38 @@ CREATE INDEX qa_woz_wot_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_woz_wozobj
 
 
 --
+-- Name: qa_woz_wot_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_woz_wot_97beaa21d4819a1131833b897504ce31 ON public.qa_woz_wozobjecten USING btree (_tid);
+
+
+--
+-- Name: qa_woz_wot_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_woz_wot_b80bb7740288fda1f201890375a60c8f ON public.qa_woz_wozobjecten USING btree (_id);
+
+
+--
+-- Name: qa_woz_wot_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_woz_wot_d05569f886377400312d8c2edd4c6f4c ON public.qa_woz_wozobjecten USING btree (_gobid);
+
+
+--
 -- Name: qa_woz_wot_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX qa_woz_wot_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_woz_wozobjecten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_bag_dsr_bag_bdt_71a0e858_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_dsr_bag_bdt_71a0e858_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_dsr_bag_bdt_heeft_brondocumenten USING btree (_source_id);
 
 
 --
@@ -46214,10 +49448,24 @@ CREATE INDEX rel_bag_dsr_bag_bdt_71a0e858_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_dsr_bag_bdt_71a0e858_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_dsr_bag_bdt_71a0e858_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_dsr_bag_bdt_heeft_brondocumenten USING btree (_id);
+
+
+--
 -- Name: rel_bag_dsr_bag_bdt_71a0e858_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_dsr_bag_bdt_71a0e858_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_dsr_bag_bdt_heeft_brondocumenten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_dsr_bag_bdt_71a0e858_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_dsr_bag_bdt_71a0e858_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_dsr_bag_bdt_heeft_brondocumenten USING btree (_gobid);
 
 
 --
@@ -46246,6 +49494,13 @@ CREATE INDEX rel_bag_dsr_bag_bdt_71a0e858_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_dsr_bag_bdt_71a0e858_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_dsr_bag_bdt_heeft_brondocumenten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_lps_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_lps_bag_dsr_heeft_dossier USING btree (_source_id);
 
 
 --
@@ -46312,10 +49567,24 @@ CREATE INDEX rel_bag_lps_bag_dsr_dec11bbe_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_lps_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_lps_bag_dsr_heeft_dossier USING btree (_id);
+
+
+--
 -- Name: rel_bag_lps_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_lps_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_lps_bag_dsr_heeft_dossier USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_lps_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_lps_bag_dsr_heeft_dossier USING btree (_gobid);
 
 
 --
@@ -46344,6 +49613,13 @@ CREATE INDEX rel_bag_lps_bag_dsr_dec11bbe_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_lps_bag_dsr_dec11bbe_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_lps_bag_dsr_heeft_dossier USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_lps_bag_nag_1abaa7da_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_nag_1abaa7da_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_lps_bag_nag_heeft_nevenadres USING btree (_source_id);
 
 
 --
@@ -46410,10 +49686,24 @@ CREATE INDEX rel_bag_lps_bag_nag_1abaa7da_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_lps_bag_nag_1abaa7da_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_nag_1abaa7da_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_lps_bag_nag_heeft_nevenadres USING btree (_id);
+
+
+--
 -- Name: rel_bag_lps_bag_nag_1abaa7da_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_lps_bag_nag_1abaa7da_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_lps_bag_nag_heeft_nevenadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_lps_bag_nag_1abaa7da_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_nag_1abaa7da_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_lps_bag_nag_heeft_nevenadres USING btree (_gobid);
 
 
 --
@@ -46442,6 +49732,13 @@ CREATE INDEX rel_bag_lps_bag_nag_1abaa7da_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_lps_bag_nag_1abaa7da_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_lps_bag_nag_heeft_nevenadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_lps_bag_nag_1b8d37fd_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_nag_1b8d37fd_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_lps_bag_nag_heeft_hoofdadres USING btree (_source_id);
 
 
 --
@@ -46508,10 +49805,24 @@ CREATE INDEX rel_bag_lps_bag_nag_1b8d37fd_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_lps_bag_nag_1b8d37fd_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_nag_1b8d37fd_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_lps_bag_nag_heeft_hoofdadres USING btree (_id);
+
+
+--
 -- Name: rel_bag_lps_bag_nag_1b8d37fd_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_lps_bag_nag_1b8d37fd_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_lps_bag_nag_heeft_hoofdadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_lps_bag_nag_1b8d37fd_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_nag_1b8d37fd_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_lps_bag_nag_heeft_hoofdadres USING btree (_gobid);
 
 
 --
@@ -46540,6 +49851,13 @@ CREATE INDEX rel_bag_lps_bag_nag_1b8d37fd_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_lps_bag_nag_1b8d37fd_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_lps_bag_nag_heeft_hoofdadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_lps_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_lps_bag_ozk_heeft_onderzoeken USING btree (_source_id);
 
 
 --
@@ -46606,10 +49924,24 @@ CREATE INDEX rel_bag_lps_bag_ozk_fb10656a_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_lps_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_lps_bag_ozk_heeft_onderzoeken USING btree (_id);
+
+
+--
 -- Name: rel_bag_lps_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_lps_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_lps_bag_ozk_heeft_onderzoeken USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_lps_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_lps_bag_ozk_heeft_onderzoeken USING btree (_gobid);
 
 
 --
@@ -46638,6 +49970,13 @@ CREATE INDEX rel_bag_lps_bag_ozk_fb10656a_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_lps_bag_ozk_fb10656a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_lps_bag_ozk_heeft_onderzoeken USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_lps_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_lps_brk_gme_ligt_in_gemeente USING btree (_source_id);
 
 
 --
@@ -46704,10 +50043,24 @@ CREATE INDEX rel_bag_lps_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_lps_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_lps_brk_gme_ligt_in_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_bag_lps_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_lps_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_lps_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_lps_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_lps_brk_gme_ligt_in_gemeente USING btree (_gobid);
 
 
 --
@@ -46736,6 +50089,13 @@ CREATE INDEX rel_bag_lps_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_lps_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_lps_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_lps_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_lps_gbd_brt_ligt_in_buurt USING btree (_source_id);
 
 
 --
@@ -46802,10 +50162,24 @@ CREATE INDEX rel_bag_lps_gbd_brt_c567336b_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_lps_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_lps_gbd_brt_ligt_in_buurt USING btree (_id);
+
+
+--
 -- Name: rel_bag_lps_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_lps_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_lps_gbd_brt_ligt_in_buurt USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_lps_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_lps_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_lps_gbd_brt_ligt_in_buurt USING btree (_gobid);
 
 
 --
@@ -46834,6 +50208,13 @@ CREATE INDEX rel_bag_lps_gbd_brt_c567336b_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_lps_gbd_brt_c567336b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_lps_gbd_brt_ligt_in_buurt USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_nag_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_nag_bag_dsr_heeft_dossier USING btree (_source_id);
 
 
 --
@@ -46900,10 +50281,24 @@ CREATE INDEX rel_bag_nag_bag_dsr_dec11bbe_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_nag_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_nag_bag_dsr_heeft_dossier USING btree (_id);
+
+
+--
 -- Name: rel_bag_nag_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_nag_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_nag_bag_dsr_heeft_dossier USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_nag_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_nag_bag_dsr_heeft_dossier USING btree (_gobid);
 
 
 --
@@ -46932,6 +50327,13 @@ CREATE INDEX rel_bag_nag_bag_dsr_dec11bbe_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_nag_bag_dsr_dec11bbe_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_nag_bag_dsr_heeft_dossier USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_nag_bag_lps_98ee8807_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_lps_98ee8807_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_nag_bag_lps_adresseert_ligplaats USING btree (_source_id);
 
 
 --
@@ -46998,10 +50400,24 @@ CREATE INDEX rel_bag_nag_bag_lps_98ee8807_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_nag_bag_lps_98ee8807_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_lps_98ee8807_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_nag_bag_lps_adresseert_ligplaats USING btree (_id);
+
+
+--
 -- Name: rel_bag_nag_bag_lps_98ee8807_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_nag_bag_lps_98ee8807_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_nag_bag_lps_adresseert_ligplaats USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_nag_bag_lps_98ee8807_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_lps_98ee8807_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_nag_bag_lps_adresseert_ligplaats USING btree (_gobid);
 
 
 --
@@ -47030,6 +50446,13 @@ CREATE INDEX rel_bag_nag_bag_lps_98ee8807_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_nag_bag_lps_98ee8807_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_nag_bag_lps_adresseert_ligplaats USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_nag_bag_ore_8a2563ab_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_ore_8a2563ab_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_nag_bag_ore_ligt_aan_openbareruimte USING btree (_source_id);
 
 
 --
@@ -47096,10 +50519,24 @@ CREATE INDEX rel_bag_nag_bag_ore_8a2563ab_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_nag_bag_ore_8a2563ab_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_ore_8a2563ab_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_nag_bag_ore_ligt_aan_openbareruimte USING btree (_id);
+
+
+--
 -- Name: rel_bag_nag_bag_ore_8a2563ab_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_nag_bag_ore_8a2563ab_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_nag_bag_ore_ligt_aan_openbareruimte USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_nag_bag_ore_8a2563ab_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_ore_8a2563ab_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_nag_bag_ore_ligt_aan_openbareruimte USING btree (_gobid);
 
 
 --
@@ -47128,6 +50565,13 @@ CREATE INDEX rel_bag_nag_bag_ore_8a2563ab_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_nag_bag_ore_8a2563ab_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_nag_bag_ore_ligt_aan_openbareruimte USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_nag_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_nag_bag_ozk_heeft_onderzoeken USING btree (_source_id);
 
 
 --
@@ -47194,10 +50638,24 @@ CREATE INDEX rel_bag_nag_bag_ozk_fb10656a_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_nag_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_nag_bag_ozk_heeft_onderzoeken USING btree (_id);
+
+
+--
 -- Name: rel_bag_nag_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_nag_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_nag_bag_ozk_heeft_onderzoeken USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_nag_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_nag_bag_ozk_heeft_onderzoeken USING btree (_gobid);
 
 
 --
@@ -47226,6 +50684,13 @@ CREATE INDEX rel_bag_nag_bag_ozk_fb10656a_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_nag_bag_ozk_fb10656a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_nag_bag_ozk_heeft_onderzoeken USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_nag_bag_sps_a4996e98_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_sps_a4996e98_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_nag_bag_sps_adresseert_standplaats USING btree (_source_id);
 
 
 --
@@ -47292,10 +50757,24 @@ CREATE INDEX rel_bag_nag_bag_sps_a4996e98_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_nag_bag_sps_a4996e98_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_sps_a4996e98_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_nag_bag_sps_adresseert_standplaats USING btree (_id);
+
+
+--
 -- Name: rel_bag_nag_bag_sps_a4996e98_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_nag_bag_sps_a4996e98_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_nag_bag_sps_adresseert_standplaats USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_nag_bag_sps_a4996e98_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_sps_a4996e98_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_nag_bag_sps_adresseert_standplaats USING btree (_gobid);
 
 
 --
@@ -47324,6 +50803,13 @@ CREATE INDEX rel_bag_nag_bag_sps_a4996e98_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_nag_bag_sps_a4996e98_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_nag_bag_sps_adresseert_standplaats USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_nag_bag_vot_3f945e98_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_vot_3f945e98_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_nag_bag_vot_adresseert_verblijfsobject USING btree (_source_id);
 
 
 --
@@ -47390,10 +50876,24 @@ CREATE INDEX rel_bag_nag_bag_vot_3f945e98_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_nag_bag_vot_3f945e98_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_vot_3f945e98_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_nag_bag_vot_adresseert_verblijfsobject USING btree (_id);
+
+
+--
 -- Name: rel_bag_nag_bag_vot_3f945e98_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_nag_bag_vot_3f945e98_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_nag_bag_vot_adresseert_verblijfsobject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_nag_bag_vot_3f945e98_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_vot_3f945e98_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_nag_bag_vot_adresseert_verblijfsobject USING btree (_gobid);
 
 
 --
@@ -47422,6 +50922,13 @@ CREATE INDEX rel_bag_nag_bag_vot_3f945e98_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_nag_bag_vot_3f945e98_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_nag_bag_vot_adresseert_verblijfsobject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_nag_bag_wps_cc26c375_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_wps_cc26c375_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_nag_bag_wps_ligt_in_woonplaats USING btree (_source_id);
 
 
 --
@@ -47488,10 +50995,24 @@ CREATE INDEX rel_bag_nag_bag_wps_cc26c375_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_nag_bag_wps_cc26c375_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_wps_cc26c375_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_nag_bag_wps_ligt_in_woonplaats USING btree (_id);
+
+
+--
 -- Name: rel_bag_nag_bag_wps_cc26c375_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_nag_bag_wps_cc26c375_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_nag_bag_wps_ligt_in_woonplaats USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_nag_bag_wps_cc26c375_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_nag_bag_wps_cc26c375_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_nag_bag_wps_ligt_in_woonplaats USING btree (_gobid);
 
 
 --
@@ -47520,6 +51041,13 @@ CREATE INDEX rel_bag_nag_bag_wps_cc26c375_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_nag_bag_wps_cc26c375_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_nag_bag_wps_ligt_in_woonplaats USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_ore_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_ore_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_ore_bag_dsr_heeft_dossier USING btree (_source_id);
 
 
 --
@@ -47586,10 +51114,24 @@ CREATE INDEX rel_bag_ore_bag_dsr_dec11bbe_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_ore_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_ore_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_ore_bag_dsr_heeft_dossier USING btree (_id);
+
+
+--
 -- Name: rel_bag_ore_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_ore_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_ore_bag_dsr_heeft_dossier USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_ore_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_ore_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_ore_bag_dsr_heeft_dossier USING btree (_gobid);
 
 
 --
@@ -47618,6 +51160,13 @@ CREATE INDEX rel_bag_ore_bag_dsr_dec11bbe_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_ore_bag_dsr_dec11bbe_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_ore_bag_dsr_heeft_dossier USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_ore_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_ore_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_ore_bag_ozk_heeft_onderzoeken USING btree (_source_id);
 
 
 --
@@ -47684,10 +51233,24 @@ CREATE INDEX rel_bag_ore_bag_ozk_fb10656a_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_ore_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_ore_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_ore_bag_ozk_heeft_onderzoeken USING btree (_id);
+
+
+--
 -- Name: rel_bag_ore_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_ore_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_ore_bag_ozk_heeft_onderzoeken USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_ore_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_ore_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_ore_bag_ozk_heeft_onderzoeken USING btree (_gobid);
 
 
 --
@@ -47716,6 +51279,13 @@ CREATE INDEX rel_bag_ore_bag_ozk_fb10656a_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_ore_bag_ozk_fb10656a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_ore_bag_ozk_heeft_onderzoeken USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_ore_bag_wps_cc26c375_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_ore_bag_wps_cc26c375_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_ore_bag_wps_ligt_in_woonplaats USING btree (_source_id);
 
 
 --
@@ -47782,10 +51352,24 @@ CREATE INDEX rel_bag_ore_bag_wps_cc26c375_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_ore_bag_wps_cc26c375_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_ore_bag_wps_cc26c375_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_ore_bag_wps_ligt_in_woonplaats USING btree (_id);
+
+
+--
 -- Name: rel_bag_ore_bag_wps_cc26c375_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_ore_bag_wps_cc26c375_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_ore_bag_wps_ligt_in_woonplaats USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_ore_bag_wps_cc26c375_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_ore_bag_wps_cc26c375_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_ore_bag_wps_ligt_in_woonplaats USING btree (_gobid);
 
 
 --
@@ -47814,6 +51398,13 @@ CREATE INDEX rel_bag_ore_bag_wps_cc26c375_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_ore_bag_wps_cc26c375_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_ore_bag_wps_ligt_in_woonplaats USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_pnd_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_pnd_bag_dsr_heeft_dossier USING btree (_source_id);
 
 
 --
@@ -47880,10 +51471,24 @@ CREATE INDEX rel_bag_pnd_bag_dsr_dec11bbe_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_pnd_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_pnd_bag_dsr_heeft_dossier USING btree (_id);
+
+
+--
 -- Name: rel_bag_pnd_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_pnd_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_pnd_bag_dsr_heeft_dossier USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_pnd_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_pnd_bag_dsr_heeft_dossier USING btree (_gobid);
 
 
 --
@@ -47912,6 +51517,13 @@ CREATE INDEX rel_bag_pnd_bag_dsr_dec11bbe_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_pnd_bag_dsr_dec11bbe_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_pnd_bag_dsr_heeft_dossier USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_pnd_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_pnd_bag_ozk_heeft_onderzoeken USING btree (_source_id);
 
 
 --
@@ -47978,10 +51590,24 @@ CREATE INDEX rel_bag_pnd_bag_ozk_fb10656a_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_pnd_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_pnd_bag_ozk_heeft_onderzoeken USING btree (_id);
+
+
+--
 -- Name: rel_bag_pnd_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_pnd_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_pnd_bag_ozk_heeft_onderzoeken USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_pnd_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_pnd_bag_ozk_heeft_onderzoeken USING btree (_gobid);
 
 
 --
@@ -48010,6 +51636,13 @@ CREATE INDEX rel_bag_pnd_bag_ozk_fb10656a_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_pnd_bag_ozk_fb10656a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_pnd_bag_ozk_heeft_onderzoeken USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_pnd_gbd_bbk_82041c84_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_gbd_bbk_82041c84_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_pnd_gbd_bbk_ligt_in_bouwblok USING btree (_source_id);
 
 
 --
@@ -48076,10 +51709,24 @@ CREATE INDEX rel_bag_pnd_gbd_bbk_82041c84_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_pnd_gbd_bbk_82041c84_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_gbd_bbk_82041c84_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_pnd_gbd_bbk_ligt_in_bouwblok USING btree (_id);
+
+
+--
 -- Name: rel_bag_pnd_gbd_bbk_82041c84_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_pnd_gbd_bbk_82041c84_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_pnd_gbd_bbk_ligt_in_bouwblok USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_pnd_gbd_bbk_82041c84_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_gbd_bbk_82041c84_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_pnd_gbd_bbk_ligt_in_bouwblok USING btree (_gobid);
 
 
 --
@@ -48108,6 +51755,13 @@ CREATE INDEX rel_bag_pnd_gbd_bbk_82041c84_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_pnd_gbd_bbk_82041c84_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_pnd_gbd_bbk_ligt_in_bouwblok USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_pnd_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_pnd_gbd_brt_ligt_in_buurt USING btree (_source_id);
 
 
 --
@@ -48174,10 +51828,24 @@ CREATE INDEX rel_bag_pnd_gbd_brt_c567336b_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_pnd_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_pnd_gbd_brt_ligt_in_buurt USING btree (_id);
+
+
+--
 -- Name: rel_bag_pnd_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_pnd_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_pnd_gbd_brt_ligt_in_buurt USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_pnd_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_pnd_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_pnd_gbd_brt_ligt_in_buurt USING btree (_gobid);
 
 
 --
@@ -48206,6 +51874,13 @@ CREATE INDEX rel_bag_pnd_gbd_brt_c567336b_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_pnd_gbd_brt_c567336b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_pnd_gbd_brt_ligt_in_buurt USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_sps_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_sps_bag_dsr_heeft_dossier USING btree (_source_id);
 
 
 --
@@ -48272,10 +51947,24 @@ CREATE INDEX rel_bag_sps_bag_dsr_dec11bbe_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_sps_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_sps_bag_dsr_heeft_dossier USING btree (_id);
+
+
+--
 -- Name: rel_bag_sps_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_sps_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_sps_bag_dsr_heeft_dossier USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_sps_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_sps_bag_dsr_heeft_dossier USING btree (_gobid);
 
 
 --
@@ -48304,6 +51993,13 @@ CREATE INDEX rel_bag_sps_bag_dsr_dec11bbe_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_sps_bag_dsr_dec11bbe_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_sps_bag_dsr_heeft_dossier USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_sps_bag_nag_1abaa7da_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_nag_1abaa7da_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_sps_bag_nag_heeft_nevenadres USING btree (_source_id);
 
 
 --
@@ -48370,10 +52066,24 @@ CREATE INDEX rel_bag_sps_bag_nag_1abaa7da_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_sps_bag_nag_1abaa7da_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_nag_1abaa7da_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_sps_bag_nag_heeft_nevenadres USING btree (_id);
+
+
+--
 -- Name: rel_bag_sps_bag_nag_1abaa7da_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_sps_bag_nag_1abaa7da_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_sps_bag_nag_heeft_nevenadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_sps_bag_nag_1abaa7da_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_nag_1abaa7da_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_sps_bag_nag_heeft_nevenadres USING btree (_gobid);
 
 
 --
@@ -48402,6 +52112,13 @@ CREATE INDEX rel_bag_sps_bag_nag_1abaa7da_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_sps_bag_nag_1abaa7da_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_sps_bag_nag_heeft_nevenadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_sps_bag_nag_1b8d37fd_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_nag_1b8d37fd_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_sps_bag_nag_heeft_hoofdadres USING btree (_source_id);
 
 
 --
@@ -48468,10 +52185,24 @@ CREATE INDEX rel_bag_sps_bag_nag_1b8d37fd_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_sps_bag_nag_1b8d37fd_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_nag_1b8d37fd_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_sps_bag_nag_heeft_hoofdadres USING btree (_id);
+
+
+--
 -- Name: rel_bag_sps_bag_nag_1b8d37fd_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_sps_bag_nag_1b8d37fd_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_sps_bag_nag_heeft_hoofdadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_sps_bag_nag_1b8d37fd_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_nag_1b8d37fd_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_sps_bag_nag_heeft_hoofdadres USING btree (_gobid);
 
 
 --
@@ -48500,6 +52231,13 @@ CREATE INDEX rel_bag_sps_bag_nag_1b8d37fd_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_sps_bag_nag_1b8d37fd_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_sps_bag_nag_heeft_hoofdadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_sps_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_sps_bag_ozk_heeft_onderzoeken USING btree (_source_id);
 
 
 --
@@ -48566,10 +52304,24 @@ CREATE INDEX rel_bag_sps_bag_ozk_fb10656a_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_sps_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_sps_bag_ozk_heeft_onderzoeken USING btree (_id);
+
+
+--
 -- Name: rel_bag_sps_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_sps_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_sps_bag_ozk_heeft_onderzoeken USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_sps_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_sps_bag_ozk_heeft_onderzoeken USING btree (_gobid);
 
 
 --
@@ -48598,6 +52350,13 @@ CREATE INDEX rel_bag_sps_bag_ozk_fb10656a_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_sps_bag_ozk_fb10656a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_sps_bag_ozk_heeft_onderzoeken USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_sps_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_sps_brk_gme_ligt_in_gemeente USING btree (_source_id);
 
 
 --
@@ -48664,10 +52423,24 @@ CREATE INDEX rel_bag_sps_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_sps_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_sps_brk_gme_ligt_in_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_bag_sps_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_sps_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_sps_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_sps_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_sps_brk_gme_ligt_in_gemeente USING btree (_gobid);
 
 
 --
@@ -48696,6 +52469,13 @@ CREATE INDEX rel_bag_sps_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_sps_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_sps_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_sps_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_sps_gbd_brt_ligt_in_buurt USING btree (_source_id);
 
 
 --
@@ -48762,10 +52542,24 @@ CREATE INDEX rel_bag_sps_gbd_brt_c567336b_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_sps_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_sps_gbd_brt_ligt_in_buurt USING btree (_id);
+
+
+--
 -- Name: rel_bag_sps_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_sps_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_sps_gbd_brt_ligt_in_buurt USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_sps_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_sps_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_sps_gbd_brt_ligt_in_buurt USING btree (_gobid);
 
 
 --
@@ -48794,6 +52588,13 @@ CREATE INDEX rel_bag_sps_gbd_brt_c567336b_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_sps_gbd_brt_c567336b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_sps_gbd_brt_ligt_in_buurt USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_vot_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_vot_bag_dsr_heeft_dossier USING btree (_source_id);
 
 
 --
@@ -48860,10 +52661,24 @@ CREATE INDEX rel_bag_vot_bag_dsr_dec11bbe_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_vot_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_vot_bag_dsr_heeft_dossier USING btree (_id);
+
+
+--
 -- Name: rel_bag_vot_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_vot_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_vot_bag_dsr_heeft_dossier USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_vot_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_vot_bag_dsr_heeft_dossier USING btree (_gobid);
 
 
 --
@@ -48892,6 +52707,13 @@ CREATE INDEX rel_bag_vot_bag_dsr_dec11bbe_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_vot_bag_dsr_dec11bbe_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_vot_bag_dsr_heeft_dossier USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_vot_bag_nag_1abaa7da_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_nag_1abaa7da_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_vot_bag_nag_heeft_nevenadres USING btree (_source_id);
 
 
 --
@@ -48958,10 +52780,24 @@ CREATE INDEX rel_bag_vot_bag_nag_1abaa7da_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_vot_bag_nag_1abaa7da_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_nag_1abaa7da_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_vot_bag_nag_heeft_nevenadres USING btree (_id);
+
+
+--
 -- Name: rel_bag_vot_bag_nag_1abaa7da_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_vot_bag_nag_1abaa7da_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_vot_bag_nag_heeft_nevenadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_vot_bag_nag_1abaa7da_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_nag_1abaa7da_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_vot_bag_nag_heeft_nevenadres USING btree (_gobid);
 
 
 --
@@ -48990,6 +52826,13 @@ CREATE INDEX rel_bag_vot_bag_nag_1abaa7da_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_vot_bag_nag_1abaa7da_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_vot_bag_nag_heeft_nevenadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_vot_bag_nag_1b8d37fd_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_nag_1b8d37fd_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_vot_bag_nag_heeft_hoofdadres USING btree (_source_id);
 
 
 --
@@ -49056,10 +52899,24 @@ CREATE INDEX rel_bag_vot_bag_nag_1b8d37fd_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_vot_bag_nag_1b8d37fd_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_nag_1b8d37fd_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_vot_bag_nag_heeft_hoofdadres USING btree (_id);
+
+
+--
 -- Name: rel_bag_vot_bag_nag_1b8d37fd_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_vot_bag_nag_1b8d37fd_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_vot_bag_nag_heeft_hoofdadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_vot_bag_nag_1b8d37fd_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_nag_1b8d37fd_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_vot_bag_nag_heeft_hoofdadres USING btree (_gobid);
 
 
 --
@@ -49088,6 +52945,13 @@ CREATE INDEX rel_bag_vot_bag_nag_1b8d37fd_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_vot_bag_nag_1b8d37fd_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_vot_bag_nag_heeft_hoofdadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_vot_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_vot_bag_ozk_heeft_onderzoeken USING btree (_source_id);
 
 
 --
@@ -49154,10 +53018,24 @@ CREATE INDEX rel_bag_vot_bag_ozk_fb10656a_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_vot_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_vot_bag_ozk_heeft_onderzoeken USING btree (_id);
+
+
+--
 -- Name: rel_bag_vot_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_vot_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_vot_bag_ozk_heeft_onderzoeken USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_vot_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_vot_bag_ozk_heeft_onderzoeken USING btree (_gobid);
 
 
 --
@@ -49186,6 +53064,13 @@ CREATE INDEX rel_bag_vot_bag_ozk_fb10656a_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_vot_bag_ozk_fb10656a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_vot_bag_ozk_heeft_onderzoeken USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_vot_bag_pnd_0a95a10e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_pnd_0a95a10e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_vot_bag_pnd_ligt_in_panden USING btree (_source_id);
 
 
 --
@@ -49252,10 +53137,24 @@ CREATE INDEX rel_bag_vot_bag_pnd_0a95a10e_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_vot_bag_pnd_0a95a10e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_pnd_0a95a10e_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_vot_bag_pnd_ligt_in_panden USING btree (_id);
+
+
+--
 -- Name: rel_bag_vot_bag_pnd_0a95a10e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_vot_bag_pnd_0a95a10e_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_vot_bag_pnd_ligt_in_panden USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_vot_bag_pnd_0a95a10e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_bag_pnd_0a95a10e_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_vot_bag_pnd_ligt_in_panden USING btree (_gobid);
 
 
 --
@@ -49284,6 +53183,13 @@ CREATE INDEX rel_bag_vot_bag_pnd_0a95a10e_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_vot_bag_pnd_0a95a10e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_vot_bag_pnd_ligt_in_panden USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_vot_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_vot_brk_gme_ligt_in_gemeente USING btree (_source_id);
 
 
 --
@@ -49350,10 +53256,24 @@ CREATE INDEX rel_bag_vot_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_vot_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_vot_brk_gme_ligt_in_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_bag_vot_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_vot_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_vot_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_vot_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_vot_brk_gme_ligt_in_gemeente USING btree (_gobid);
 
 
 --
@@ -49382,6 +53302,13 @@ CREATE INDEX rel_bag_vot_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_vot_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_vot_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_vot_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_gbd_brt_c567336b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_vot_gbd_brt_ligt_in_buurt USING btree (_source_id);
 
 
 --
@@ -49448,10 +53375,24 @@ CREATE INDEX rel_bag_vot_gbd_brt_c567336b_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_vot_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_gbd_brt_c567336b_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_vot_gbd_brt_ligt_in_buurt USING btree (_id);
+
+
+--
 -- Name: rel_bag_vot_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_vot_gbd_brt_c567336b_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_vot_gbd_brt_ligt_in_buurt USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_vot_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_vot_gbd_brt_c567336b_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_vot_gbd_brt_ligt_in_buurt USING btree (_gobid);
 
 
 --
@@ -49480,6 +53421,13 @@ CREATE INDEX rel_bag_vot_gbd_brt_c567336b_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_vot_gbd_brt_c567336b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_vot_gbd_brt_ligt_in_buurt USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_wps_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_bag_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_wps_bag_dsr_heeft_dossier USING btree (_source_id);
 
 
 --
@@ -49546,10 +53494,24 @@ CREATE INDEX rel_bag_wps_bag_dsr_dec11bbe_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_wps_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_bag_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_wps_bag_dsr_heeft_dossier USING btree (_id);
+
+
+--
 -- Name: rel_bag_wps_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_wps_bag_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_wps_bag_dsr_heeft_dossier USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_wps_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_bag_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_wps_bag_dsr_heeft_dossier USING btree (_gobid);
 
 
 --
@@ -49578,6 +53540,13 @@ CREATE INDEX rel_bag_wps_bag_dsr_dec11bbe_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_wps_bag_dsr_dec11bbe_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_wps_bag_dsr_heeft_dossier USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_wps_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_bag_ozk_fb10656a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_wps_bag_ozk_heeft_onderzoeken USING btree (_source_id);
 
 
 --
@@ -49644,10 +53613,24 @@ CREATE INDEX rel_bag_wps_bag_ozk_fb10656a_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_bag_wps_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_bag_ozk_fb10656a_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_wps_bag_ozk_heeft_onderzoeken USING btree (_id);
+
+
+--
 -- Name: rel_bag_wps_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_wps_bag_ozk_fb10656a_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_wps_bag_ozk_heeft_onderzoeken USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_wps_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_bag_ozk_fb10656a_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_wps_bag_ozk_heeft_onderzoeken USING btree (_gobid);
 
 
 --
@@ -49676,6 +53659,13 @@ CREATE INDEX rel_bag_wps_bag_ozk_fb10656a_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_bag_wps_bag_ozk_fb10656a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_wps_bag_ozk_heeft_onderzoeken USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_source_id);
 
 
 --
@@ -49742,10 +53732,24 @@ CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON p
 
 
 --
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_bag_wps_brk2_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_gobid);
 
 
 --
@@ -49774,6 +53778,13 @@ CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON p
 --
 
 CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_akt_brk2_kot_f1e14351_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_akt_brk2_kot_f1e14351_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_akt_brk2_kot__hft_btrk_op_brk_kot_ USING btree (_source_id);
 
 
 --
@@ -49840,10 +53851,24 @@ CREATE INDEX rel_brk2_akt_brk2_kot_f1e14351_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_akt_brk2_kot_f1e14351_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_akt_brk2_kot_f1e14351_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_akt_brk2_kot__hft_btrk_op_brk_kot_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_akt_brk2_kot_f1e14351_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_akt_brk2_kot_f1e14351_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_akt_brk2_kot__hft_btrk_op_brk_kot_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_akt_brk2_kot_f1e14351_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_akt_brk2_kot_f1e14351_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_akt_brk2_kot__hft_btrk_op_brk_kot_ USING btree (_gobid);
 
 
 --
@@ -49872,6 +53897,13 @@ CREATE INDEX rel_brk2_akt_brk2_kot_f1e14351_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_akt_brk2_kot_f1e14351_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_akt_brk2_kot__hft_btrk_op_brk_kot_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_akt_brk2_sdl_753a730d_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_akt_brk2_sdl_753a730d_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_akt_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (_source_id);
 
 
 --
@@ -49938,10 +53970,24 @@ CREATE INDEX rel_brk2_akt_brk2_sdl_753a730d_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_akt_brk2_sdl_753a730d_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_akt_brk2_sdl_753a730d_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_akt_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (_id);
+
+
+--
 -- Name: rel_brk2_akt_brk2_sdl_753a730d_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_akt_brk2_sdl_753a730d_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_akt_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_akt_brk2_sdl_753a730d_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_akt_brk2_sdl_753a730d_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_akt_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (_gobid);
 
 
 --
@@ -49970,6 +54016,13 @@ CREATE INDEX rel_brk2_akt_brk2_sdl_753a730d_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_akt_brk2_sdl_753a730d_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_akt_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_akt_brk2_sjt_86326c71_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_akt_brk2_sjt_86326c71_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_akt_brk2_sjt_heeft_brk_betrokken_persoon USING btree (_source_id);
 
 
 --
@@ -50036,10 +54089,24 @@ CREATE INDEX rel_brk2_akt_brk2_sjt_86326c71_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_akt_brk2_sjt_86326c71_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_akt_brk2_sjt_86326c71_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_akt_brk2_sjt_heeft_brk_betrokken_persoon USING btree (_id);
+
+
+--
 -- Name: rel_brk2_akt_brk2_sjt_86326c71_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_akt_brk2_sjt_86326c71_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_akt_brk2_sjt_heeft_brk_betrokken_persoon USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_akt_brk2_sjt_86326c71_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_akt_brk2_sjt_86326c71_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_akt_brk2_sjt_heeft_brk_betrokken_persoon USING btree (_gobid);
 
 
 --
@@ -50068,6 +54135,13 @@ CREATE INDEX rel_brk2_akt_brk2_sjt_86326c71_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_akt_brk2_sjt_86326c71_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_akt_brk2_sjt_heeft_brk_betrokken_persoon USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_art_brk2_sdl_753a730d_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_art_brk2_sdl_753a730d_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_art_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (_source_id);
 
 
 --
@@ -50134,10 +54208,24 @@ CREATE INDEX rel_brk2_art_brk2_sdl_753a730d_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_art_brk2_sdl_753a730d_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_art_brk2_sdl_753a730d_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_art_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (_id);
+
+
+--
 -- Name: rel_brk2_art_brk2_sdl_753a730d_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_art_brk2_sdl_753a730d_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_art_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_art_brk2_sdl_753a730d_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_art_brk2_sdl_753a730d_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_art_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (_gobid);
 
 
 --
@@ -50166,6 +54254,13 @@ CREATE INDEX rel_brk2_art_brk2_sdl_753a730d_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_art_brk2_sdl_753a730d_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_art_brk2_sdl_is_gebaseerd_op_brk_stukdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_art_brk2_sjt_86326c71_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_art_brk2_sjt_86326c71_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_art_brk2_sjt_heeft_brk_betrokken_persoon USING btree (_source_id);
 
 
 --
@@ -50232,10 +54327,24 @@ CREATE INDEX rel_brk2_art_brk2_sjt_86326c71_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_art_brk2_sjt_86326c71_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_art_brk2_sjt_86326c71_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_art_brk2_sjt_heeft_brk_betrokken_persoon USING btree (_id);
+
+
+--
 -- Name: rel_brk2_art_brk2_sjt_86326c71_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_art_brk2_sjt_86326c71_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_art_brk2_sjt_heeft_brk_betrokken_persoon USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_art_brk2_sjt_86326c71_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_art_brk2_sjt_86326c71_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_art_brk2_sjt_heeft_brk_betrokken_persoon USING btree (_gobid);
 
 
 --
@@ -50264,6 +54373,13 @@ CREATE INDEX rel_brk2_art_brk2_sjt_86326c71_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_art_brk2_sjt_86326c71_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_art_brk2_sjt_heeft_brk_betrokken_persoon USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_art_brk2_tng_dd80d821_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_art_brk2_tng_dd80d821_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_art_brk2_tng_betrokken_brk_tenaamstelling USING btree (_source_id);
 
 
 --
@@ -50330,10 +54446,24 @@ CREATE INDEX rel_brk2_art_brk2_tng_dd80d821_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_art_brk2_tng_dd80d821_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_art_brk2_tng_dd80d821_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_art_brk2_tng_betrokken_brk_tenaamstelling USING btree (_id);
+
+
+--
 -- Name: rel_brk2_art_brk2_tng_dd80d821_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_art_brk2_tng_dd80d821_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_art_brk2_tng_betrokken_brk_tenaamstelling USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_art_brk2_tng_dd80d821_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_art_brk2_tng_dd80d821_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_art_brk2_tng_betrokken_brk_tenaamstelling USING btree (_gobid);
 
 
 --
@@ -50362,6 +54492,13 @@ CREATE INDEX rel_brk2_art_brk2_tng_dd80d821_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_art_brk2_tng_dd80d821_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_art_brk2_tng_betrokken_brk_tenaamstelling USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kce_brk2_kge_8f720d7c_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kce_brk2_kge_8f720d7c_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ USING btree (_source_id);
 
 
 --
@@ -50428,10 +54565,24 @@ CREATE INDEX rel_brk2_kce_brk2_kge_8f720d7c_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_kce_brk2_kge_8f720d7c_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kce_brk2_kge_8f720d7c_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kce_brk2_kge_8f720d7c_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kce_brk2_kge_8f720d7c_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kce_brk2_kge_8f720d7c_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kce_brk2_kge_8f720d7c_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ USING btree (_gobid);
 
 
 --
@@ -50460,6 +54611,13 @@ CREATE INDEX rel_brk2_kce_brk2_kge_8f720d7c_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kce_brk2_kge_8f720d7c_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kce_brk2_kge_onderdeel_van_brk_kge_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
@@ -50526,10 +54684,24 @@ CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kge_brk2_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kge_brk2_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
@@ -50558,6 +54730,13 @@ CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kge_brk2_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kge_brk2_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_bag_vot_60d5b958_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_bag_vot_60d5b958_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (_source_id);
 
 
 --
@@ -50624,10 +54803,24 @@ CREATE INDEX rel_brk2_kot_bag_vot_60d5b958_ab35fb2f74ba637ec5dff03e521947fc ON p
 
 
 --
+-- Name: rel_brk2_kot_bag_vot_60d5b958_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_bag_vot_60d5b958_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kot_bag_vot_60d5b958_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kot_bag_vot_60d5b958_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_bag_vot_60d5b958_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_bag_vot_60d5b958_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (_gobid);
 
 
 --
@@ -50656,6 +54849,13 @@ CREATE INDEX rel_brk2_kot_bag_vot_60d5b958_ed3f22b3eec2fb035647f924a5b2136e ON p
 --
 
 CREATE INDEX rel_brk2_kot_bag_vot_60d5b958_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_bag_vot__hft_rel_mt__bag_verblijfsobject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_source_id);
 
 
 --
@@ -50722,10 +54922,24 @@ CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kot_brk2_gme_397d5f88_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_gme_397d5f88_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_gobid);
 
 
 --
@@ -50754,6 +54968,13 @@ CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kot_brk2_gme_397d5f88_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_gme__angdd_dr__brk_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_source_id);
 
 
 --
@@ -50820,10 +55041,24 @@ CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kot_brk2_kce_50c586cc_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kce_50c586cc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_gobid);
 
 
 --
@@ -50852,6 +55087,13 @@ CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kce_50c586cc_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_kce__angdd_dr__brk_kce_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_source_id);
 
 
 --
@@ -50918,10 +55160,24 @@ CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kot_brk2_kge_2105ac3d_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kge_2105ac3d_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_gobid);
 
 
 --
@@ -50950,6 +55206,13 @@ CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kge_2105ac3d_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_kge__angdd_dr__brk_kge_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kot_12844d38_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kot_12844d38_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ USING btree (_source_id);
 
 
 --
@@ -51016,10 +55279,24 @@ CREATE INDEX rel_brk2_kot_brk2_kot_12844d38_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_kot_brk2_kot_12844d38_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kot_12844d38_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kot_brk2_kot_12844d38_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kot_12844d38_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kot_12844d38_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kot_12844d38_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ USING btree (_gobid);
 
 
 --
@@ -51048,6 +55325,13 @@ CREATE INDEX rel_brk2_kot_brk2_kot_12844d38_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kot_12844d38_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_kot__is_ontstaan_uit_brk_kot_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kot_46c90b50_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kot_46c90b50_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (_source_id);
 
 
 --
@@ -51114,10 +55398,24 @@ CREATE INDEX rel_brk2_kot_brk2_kot_46c90b50_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_kot_brk2_kot_46c90b50_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kot_46c90b50_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kot_brk2_kot_46c90b50_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kot_46c90b50_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kot_46c90b50_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kot_46c90b50_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (_gobid);
 
 
 --
@@ -51146,6 +55444,13 @@ CREATE INDEX rel_brk2_kot_brk2_kot_46c90b50_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kot_46c90b50_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_kot_is_ontstaan_uit_brk_g_perceel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_source_id);
 
 
 --
@@ -51212,10 +55517,24 @@ CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kot_brk2_kse_e58428e6_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kot_brk2_kse_e58428e6_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_gobid);
 
 
 --
@@ -51244,6 +55563,13 @@ CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kot_brk2_kse_e58428e6_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kot_brk2_kse__angdd_dr__brk_kadastralesectie USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_source_id);
 
 
 --
@@ -51310,10 +55636,24 @@ CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_id);
+
+
+--
 -- Name: rel_brk2_kse_brk2_kce_e60b94cc_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_kse_brk2_kce_e60b94cc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_gobid);
 
 
 --
@@ -51342,6 +55682,13 @@ CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_kse_brk2_kce_e60b94cc_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_kse_brk2_kce_onderdeel_van_brk_kge_code USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_sdl_brk2_akt_b1c4d3d2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_akt_b1c4d3d2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_sdl_brk2_akt__is_bron_voor_brk_akt_ USING btree (_source_id);
 
 
 --
@@ -51408,10 +55755,24 @@ CREATE INDEX rel_brk2_sdl_brk2_akt_b1c4d3d2_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_sdl_brk2_akt_b1c4d3d2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_akt_b1c4d3d2_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_sdl_brk2_akt__is_bron_voor_brk_akt_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_sdl_brk2_akt_b1c4d3d2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_sdl_brk2_akt_b1c4d3d2_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_sdl_brk2_akt__is_bron_voor_brk_akt_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_sdl_brk2_akt_b1c4d3d2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_akt_b1c4d3d2_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_sdl_brk2_akt__is_bron_voor_brk_akt_ USING btree (_gobid);
 
 
 --
@@ -51440,6 +55801,13 @@ CREATE INDEX rel_brk2_sdl_brk2_akt_b1c4d3d2_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_sdl_brk2_akt_b1c4d3d2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_sdl_brk2_akt__is_bron_voor_brk_akt_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_sdl_brk2_art_281e1771_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_art_281e1771_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_sdl_brk2_art__is_bron_voor_brk_art_ USING btree (_source_id);
 
 
 --
@@ -51506,10 +55874,24 @@ CREATE INDEX rel_brk2_sdl_brk2_art_281e1771_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_sdl_brk2_art_281e1771_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_art_281e1771_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_sdl_brk2_art__is_bron_voor_brk_art_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_sdl_brk2_art_281e1771_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_sdl_brk2_art_281e1771_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_sdl_brk2_art__is_bron_voor_brk_art_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_sdl_brk2_art_281e1771_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_art_281e1771_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_sdl_brk2_art__is_bron_voor_brk_art_ USING btree (_gobid);
 
 
 --
@@ -51538,6 +55920,13 @@ CREATE INDEX rel_brk2_sdl_brk2_art_281e1771_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_sdl_brk2_art_281e1771_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_sdl_brk2_art__is_bron_voor_brk_art_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_sdl_brk2_tng_da8157c2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_tng_da8157c2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_sdl_brk2_tng_is_bron_voor_brk_tenaamstelling USING btree (_source_id);
 
 
 --
@@ -51604,10 +55993,24 @@ CREATE INDEX rel_brk2_sdl_brk2_tng_da8157c2_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_sdl_brk2_tng_da8157c2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_tng_da8157c2_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_sdl_brk2_tng_is_bron_voor_brk_tenaamstelling USING btree (_id);
+
+
+--
 -- Name: rel_brk2_sdl_brk2_tng_da8157c2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_sdl_brk2_tng_da8157c2_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_sdl_brk2_tng_is_bron_voor_brk_tenaamstelling USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_sdl_brk2_tng_da8157c2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_tng_da8157c2_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_sdl_brk2_tng_is_bron_voor_brk_tenaamstelling USING btree (_gobid);
 
 
 --
@@ -51636,6 +56039,13 @@ CREATE INDEX rel_brk2_sdl_brk2_tng_da8157c2_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_sdl_brk2_tng_da8157c2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_sdl_brk2_tng_is_bron_voor_brk_tenaamstelling USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_sdl_brk2_zrt_5450e25d_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_zrt_5450e25d_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_sdl_brk2_zrt_is_bron_voor_brk_zakelijk_recht USING btree (_source_id);
 
 
 --
@@ -51702,10 +56112,24 @@ CREATE INDEX rel_brk2_sdl_brk2_zrt_5450e25d_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_sdl_brk2_zrt_5450e25d_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_zrt_5450e25d_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_sdl_brk2_zrt_is_bron_voor_brk_zakelijk_recht USING btree (_id);
+
+
+--
 -- Name: rel_brk2_sdl_brk2_zrt_5450e25d_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_sdl_brk2_zrt_5450e25d_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_sdl_brk2_zrt_is_bron_voor_brk_zakelijk_recht USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_sdl_brk2_zrt_5450e25d_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_sdl_brk2_zrt_5450e25d_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_sdl_brk2_zrt_is_bron_voor_brk_zakelijk_recht USING btree (_gobid);
 
 
 --
@@ -51734,6 +56158,13 @@ CREATE INDEX rel_brk2_sdl_brk2_zrt_5450e25d_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_sdl_brk2_zrt_5450e25d_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_sdl_brk2_zrt_is_bron_voor_brk_zakelijk_recht USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sdl_6507ec16_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sdl_6507ec16_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_tng_brk2_sdl_is_gebaseerd_op_brk_stukdelen USING btree (_source_id);
 
 
 --
@@ -51800,10 +56231,24 @@ CREATE INDEX rel_brk2_tng_brk2_sdl_6507ec16_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_tng_brk2_sdl_6507ec16_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sdl_6507ec16_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_tng_brk2_sdl_is_gebaseerd_op_brk_stukdelen USING btree (_id);
+
+
+--
 -- Name: rel_brk2_tng_brk2_sdl_6507ec16_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sdl_6507ec16_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_tng_brk2_sdl_is_gebaseerd_op_brk_stukdelen USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sdl_6507ec16_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sdl_6507ec16_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_tng_brk2_sdl_is_gebaseerd_op_brk_stukdelen USING btree (_gobid);
 
 
 --
@@ -51832,6 +56277,13 @@ CREATE INDEX rel_brk2_tng_brk2_sdl_6507ec16_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sdl_6507ec16_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_tng_brk2_sdl_is_gebaseerd_op_brk_stukdelen USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sjt_3b33d71a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_3b33d71a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_tng_brk2_sjt__betr_samenwerkverband_brk_sjt_ USING btree (_source_id);
 
 
 --
@@ -51898,10 +56350,24 @@ CREATE INDEX rel_brk2_tng_brk2_sjt_3b33d71a_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_tng_brk2_sjt_3b33d71a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_3b33d71a_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_tng_brk2_sjt__betr_samenwerkverband_brk_sjt_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_tng_brk2_sjt_3b33d71a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sjt_3b33d71a_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_tng_brk2_sjt__betr_samenwerkverband_brk_sjt_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sjt_3b33d71a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_3b33d71a_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_tng_brk2_sjt__betr_samenwerkverband_brk_sjt_ USING btree (_gobid);
 
 
 --
@@ -51930,6 +56396,13 @@ CREATE INDEX rel_brk2_tng_brk2_sjt_3b33d71a_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sjt_3b33d71a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_tng_brk2_sjt__betr_samenwerkverband_brk_sjt_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sjt_a1723ebb_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_a1723ebb_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_tng_brk2_sjt_van_brk_kadastraalsubject USING btree (_source_id);
 
 
 --
@@ -51996,10 +56469,24 @@ CREATE INDEX rel_brk2_tng_brk2_sjt_a1723ebb_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_tng_brk2_sjt_a1723ebb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_a1723ebb_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_tng_brk2_sjt_van_brk_kadastraalsubject USING btree (_id);
+
+
+--
 -- Name: rel_brk2_tng_brk2_sjt_a1723ebb_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sjt_a1723ebb_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_tng_brk2_sjt_van_brk_kadastraalsubject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sjt_a1723ebb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_a1723ebb_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_tng_brk2_sjt_van_brk_kadastraalsubject USING btree (_gobid);
 
 
 --
@@ -52028,6 +56515,13 @@ CREATE INDEX rel_brk2_tng_brk2_sjt_a1723ebb_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sjt_a1723ebb_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_tng_brk2_sjt_van_brk_kadastraalsubject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sjt_a87dd605_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_a87dd605_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_tng_brk2_sjt__betr_gorzen_aanwassen_brk_sjt_ USING btree (_source_id);
 
 
 --
@@ -52094,10 +56588,24 @@ CREATE INDEX rel_brk2_tng_brk2_sjt_a87dd605_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_tng_brk2_sjt_a87dd605_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_a87dd605_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_tng_brk2_sjt__betr_gorzen_aanwassen_brk_sjt_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_tng_brk2_sjt_a87dd605_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sjt_a87dd605_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_tng_brk2_sjt__betr_gorzen_aanwassen_brk_sjt_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sjt_a87dd605_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_a87dd605_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_tng_brk2_sjt__betr_gorzen_aanwassen_brk_sjt_ USING btree (_gobid);
 
 
 --
@@ -52126,6 +56634,13 @@ CREATE INDEX rel_brk2_tng_brk2_sjt_a87dd605_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sjt_a87dd605_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_tng_brk2_sjt__betr_gorzen_aanwassen_brk_sjt_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sjt_a9f65975_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_a9f65975_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_tng_brk2_sjt_betrokken_partner_brk_subject USING btree (_source_id);
 
 
 --
@@ -52192,10 +56707,24 @@ CREATE INDEX rel_brk2_tng_brk2_sjt_a9f65975_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_tng_brk2_sjt_a9f65975_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_a9f65975_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_tng_brk2_sjt_betrokken_partner_brk_subject USING btree (_id);
+
+
+--
 -- Name: rel_brk2_tng_brk2_sjt_a9f65975_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sjt_a9f65975_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_tng_brk2_sjt_betrokken_partner_brk_subject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_tng_brk2_sjt_a9f65975_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_sjt_a9f65975_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_tng_brk2_sjt_betrokken_partner_brk_subject USING btree (_gobid);
 
 
 --
@@ -52224,6 +56753,13 @@ CREATE INDEX rel_brk2_tng_brk2_sjt_a9f65975_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_tng_brk2_sjt_a9f65975_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_tng_brk2_sjt_betrokken_partner_brk_subject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_tng_brk2_zrt_57621c40_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_zrt_57621c40_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_tng_brk2_zrt_van_brk_zakelijk_recht USING btree (_source_id);
 
 
 --
@@ -52290,10 +56826,24 @@ CREATE INDEX rel_brk2_tng_brk2_zrt_57621c40_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_tng_brk2_zrt_57621c40_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_zrt_57621c40_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_tng_brk2_zrt_van_brk_zakelijk_recht USING btree (_id);
+
+
+--
 -- Name: rel_brk2_tng_brk2_zrt_57621c40_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_tng_brk2_zrt_57621c40_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_tng_brk2_zrt_van_brk_zakelijk_recht USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_tng_brk2_zrt_57621c40_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_tng_brk2_zrt_57621c40_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_tng_brk2_zrt_van_brk_zakelijk_recht USING btree (_gobid);
 
 
 --
@@ -52322,6 +56872,13 @@ CREATE INDEX rel_brk2_tng_brk2_zrt_57621c40_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_tng_brk2_zrt_57621c40_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_tng_brk2_zrt_van_brk_zakelijk_recht USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_kot_c821f37f_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_kot_c821f37f_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_zrt_brk2_kot_rust_op_brk_kadastraal_object USING btree (_source_id);
 
 
 --
@@ -52388,10 +56945,24 @@ CREATE INDEX rel_brk2_zrt_brk2_kot_c821f37f_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_zrt_brk2_kot_c821f37f_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_kot_c821f37f_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_zrt_brk2_kot_rust_op_brk_kadastraal_object USING btree (_id);
+
+
+--
 -- Name: rel_brk2_zrt_brk2_kot_c821f37f_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_kot_c821f37f_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_zrt_brk2_kot_rust_op_brk_kadastraal_object USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_kot_c821f37f_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_kot_c821f37f_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_zrt_brk2_kot_rust_op_brk_kadastraal_object USING btree (_gobid);
 
 
 --
@@ -52420,6 +56991,13 @@ CREATE INDEX rel_brk2_zrt_brk2_kot_c821f37f_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_kot_c821f37f_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_zrt_brk2_kot_rust_op_brk_kadastraal_object USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_sjt_4271a4fa_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_sjt_4271a4fa_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_betrokken_bij USING btree (_source_id);
 
 
 --
@@ -52486,10 +57064,24 @@ CREATE INDEX rel_brk2_zrt_brk2_sjt_4271a4fa_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_zrt_brk2_sjt_4271a4fa_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_sjt_4271a4fa_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_betrokken_bij USING btree (_id);
+
+
+--
 -- Name: rel_brk2_zrt_brk2_sjt_4271a4fa_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_sjt_4271a4fa_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_betrokken_bij USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_sjt_4271a4fa_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_sjt_4271a4fa_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_betrokken_bij USING btree (_gobid);
 
 
 --
@@ -52518,6 +57110,13 @@ CREATE INDEX rel_brk2_zrt_brk2_sjt_4271a4fa_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_sjt_4271a4fa_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_betrokken_bij USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_sjt_a67bddf6_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_sjt_a67bddf6_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_ontstaan_uit USING btree (_source_id);
 
 
 --
@@ -52584,10 +57183,24 @@ CREATE INDEX rel_brk2_zrt_brk2_sjt_a67bddf6_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_zrt_brk2_sjt_a67bddf6_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_sjt_a67bddf6_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_ontstaan_uit USING btree (_id);
+
+
+--
 -- Name: rel_brk2_zrt_brk2_sjt_a67bddf6_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_sjt_a67bddf6_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_ontstaan_uit USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_sjt_a67bddf6_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_sjt_a67bddf6_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_ontstaan_uit USING btree (_gobid);
 
 
 --
@@ -52616,6 +57229,13 @@ CREATE INDEX rel_brk2_zrt_brk2_sjt_a67bddf6_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_sjt_a67bddf6_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_zrt_brk2_sjt_vve_identificatie_ontstaan_uit USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_tng_da07ef0c_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_tng_da07ef0c_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_zrt_brk2_tng__is_beperkt_tot_brk_tng_ USING btree (_source_id);
 
 
 --
@@ -52682,10 +57302,24 @@ CREATE INDEX rel_brk2_zrt_brk2_tng_da07ef0c_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_zrt_brk2_tng_da07ef0c_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_tng_da07ef0c_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_zrt_brk2_tng__is_beperkt_tot_brk_tng_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_zrt_brk2_tng_da07ef0c_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_tng_da07ef0c_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_zrt_brk2_tng__is_beperkt_tot_brk_tng_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_tng_da07ef0c_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_tng_da07ef0c_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_zrt_brk2_tng__is_beperkt_tot_brk_tng_ USING btree (_gobid);
 
 
 --
@@ -52714,6 +57348,13 @@ CREATE INDEX rel_brk2_zrt_brk2_tng_da07ef0c_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_tng_da07ef0c_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_zrt_brk2_tng__is_beperkt_tot_brk_tng_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_zrt_22b01c05_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_22b01c05_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_zrt_brk2_zrt_belast_brk_zakelijke_rechten USING btree (_source_id);
 
 
 --
@@ -52780,10 +57421,24 @@ CREATE INDEX rel_brk2_zrt_brk2_zrt_22b01c05_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_zrt_brk2_zrt_22b01c05_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_22b01c05_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_zrt_brk2_zrt_belast_brk_zakelijke_rechten USING btree (_id);
+
+
+--
 -- Name: rel_brk2_zrt_brk2_zrt_22b01c05_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_zrt_22b01c05_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_zrt_brk2_zrt_belast_brk_zakelijke_rechten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_zrt_22b01c05_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_22b01c05_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_zrt_brk2_zrt_belast_brk_zakelijke_rechten USING btree (_gobid);
 
 
 --
@@ -52812,6 +57467,13 @@ CREATE INDEX rel_brk2_zrt_brk2_zrt_22b01c05_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_zrt_22b01c05_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_zrt_brk2_zrt_belast_brk_zakelijke_rechten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_zrt_44b73f80_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_44b73f80_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_zrt_brk2_zrt__betrokken_bij_brk_zrt_ USING btree (_source_id);
 
 
 --
@@ -52878,10 +57540,24 @@ CREATE INDEX rel_brk2_zrt_brk2_zrt_44b73f80_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_zrt_brk2_zrt_44b73f80_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_44b73f80_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_zrt_brk2_zrt__betrokken_bij_brk_zrt_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_zrt_brk2_zrt_44b73f80_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_zrt_44b73f80_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_zrt_brk2_zrt__betrokken_bij_brk_zrt_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_zrt_44b73f80_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_44b73f80_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_zrt_brk2_zrt__betrokken_bij_brk_zrt_ USING btree (_gobid);
 
 
 --
@@ -52910,6 +57586,13 @@ CREATE INDEX rel_brk2_zrt_brk2_zrt_44b73f80_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_zrt_44b73f80_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_zrt_brk2_zrt__betrokken_bij_brk_zrt_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_zrt_7684866b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_7684866b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_zrt_brk2_zrt_belast_met_brk_zakelijke_rechten USING btree (_source_id);
 
 
 --
@@ -52976,10 +57659,24 @@ CREATE INDEX rel_brk2_zrt_brk2_zrt_7684866b_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_zrt_brk2_zrt_7684866b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_7684866b_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_zrt_brk2_zrt_belast_met_brk_zakelijke_rechten USING btree (_id);
+
+
+--
 -- Name: rel_brk2_zrt_brk2_zrt_7684866b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_zrt_7684866b_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_zrt_brk2_zrt_belast_met_brk_zakelijke_rechten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_zrt_7684866b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_7684866b_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_zrt_brk2_zrt_belast_met_brk_zakelijke_rechten USING btree (_gobid);
 
 
 --
@@ -53008,6 +57705,13 @@ CREATE INDEX rel_brk2_zrt_brk2_zrt_7684866b_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_zrt_7684866b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_zrt_brk2_zrt_belast_met_brk_zakelijke_rechten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_zrt_ec041a41_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_ec041a41_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk2_zrt_brk2_zrt__ontstaan_uit_brk_zrt_ USING btree (_source_id);
 
 
 --
@@ -53074,10 +57778,24 @@ CREATE INDEX rel_brk2_zrt_brk2_zrt_ec041a41_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_brk2_zrt_brk2_zrt_ec041a41_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_ec041a41_b80bb7740288fda1f201890375a60c8f ON public.rel_brk2_zrt_brk2_zrt__ontstaan_uit_brk_zrt_ USING btree (_id);
+
+
+--
 -- Name: rel_brk2_zrt_brk2_zrt_ec041a41_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_zrt_ec041a41_c5625cb292cd152f07c13709330d1712 ON public.rel_brk2_zrt_brk2_zrt__ontstaan_uit_brk_zrt_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk2_zrt_brk2_zrt_ec041a41_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk2_zrt_brk2_zrt_ec041a41_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk2_zrt_brk2_zrt__ontstaan_uit_brk_zrt_ USING btree (_gobid);
 
 
 --
@@ -53106,6 +57824,13 @@ CREATE INDEX rel_brk2_zrt_brk2_zrt_ec041a41_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_brk2_zrt_brk2_zrt_ec041a41_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk2_zrt_brk2_zrt__ontstaan_uit_brk_zrt_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_akt_brk_kot_ff63e28f_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_akt_brk_kot_ff63e28f_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_akt_brk_kot__hft_btrk_p__kadastraal_object USING btree (_source_id);
 
 
 --
@@ -53172,10 +57897,24 @@ CREATE INDEX rel_brk_akt_brk_kot_ff63e28f_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_akt_brk_kot_ff63e28f_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_akt_brk_kot_ff63e28f_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_akt_brk_kot__hft_btrk_p__kadastraal_object USING btree (_id);
+
+
+--
 -- Name: rel_brk_akt_brk_kot_ff63e28f_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_akt_brk_kot_ff63e28f_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_akt_brk_kot__hft_btrk_p__kadastraal_object USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_akt_brk_kot_ff63e28f_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_akt_brk_kot_ff63e28f_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_akt_brk_kot__hft_btrk_p__kadastraal_object USING btree (_gobid);
 
 
 --
@@ -53204,6 +57943,13 @@ CREATE INDEX rel_brk_akt_brk_kot_ff63e28f_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_akt_brk_kot_ff63e28f_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_akt_brk_kot__hft_btrk_p__kadastraal_object USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_akt_brk_sdl_f7c4de29_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_akt_brk_sdl_f7c4de29_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_akt_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_source_id);
 
 
 --
@@ -53270,10 +58016,24 @@ CREATE INDEX rel_brk_akt_brk_sdl_f7c4de29_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_akt_brk_sdl_f7c4de29_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_akt_brk_sdl_f7c4de29_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_akt_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_id);
+
+
+--
 -- Name: rel_brk_akt_brk_sdl_f7c4de29_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_akt_brk_sdl_f7c4de29_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_akt_brk_sdl_is_gebaseerd_op_stukdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_akt_brk_sdl_f7c4de29_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_akt_brk_sdl_f7c4de29_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_akt_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_gobid);
 
 
 --
@@ -53302,6 +58062,13 @@ CREATE INDEX rel_brk_akt_brk_sdl_f7c4de29_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_akt_brk_sdl_f7c4de29_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_akt_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_akt_brk_sjt_281ad22d_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_akt_brk_sjt_281ad22d_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_akt_brk_sjt_heeft_betrokken_persoon USING btree (_source_id);
 
 
 --
@@ -53368,10 +58135,24 @@ CREATE INDEX rel_brk_akt_brk_sjt_281ad22d_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_akt_brk_sjt_281ad22d_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_akt_brk_sjt_281ad22d_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_akt_brk_sjt_heeft_betrokken_persoon USING btree (_id);
+
+
+--
 -- Name: rel_brk_akt_brk_sjt_281ad22d_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_akt_brk_sjt_281ad22d_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_akt_brk_sjt_heeft_betrokken_persoon USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_akt_brk_sjt_281ad22d_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_akt_brk_sjt_281ad22d_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_akt_brk_sjt_heeft_betrokken_persoon USING btree (_gobid);
 
 
 --
@@ -53400,6 +58181,13 @@ CREATE INDEX rel_brk_akt_brk_sjt_281ad22d_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_akt_brk_sjt_281ad22d_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_akt_brk_sjt_heeft_betrokken_persoon USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_art_brk_sdl_f7c4de29_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_art_brk_sdl_f7c4de29_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_art_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_source_id);
 
 
 --
@@ -53466,10 +58254,24 @@ CREATE INDEX rel_brk_art_brk_sdl_f7c4de29_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_art_brk_sdl_f7c4de29_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_art_brk_sdl_f7c4de29_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_art_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_id);
+
+
+--
 -- Name: rel_brk_art_brk_sdl_f7c4de29_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_art_brk_sdl_f7c4de29_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_art_brk_sdl_is_gebaseerd_op_stukdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_art_brk_sdl_f7c4de29_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_art_brk_sdl_f7c4de29_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_art_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_gobid);
 
 
 --
@@ -53498,6 +58300,13 @@ CREATE INDEX rel_brk_art_brk_sdl_f7c4de29_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_art_brk_sdl_f7c4de29_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_art_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_art_brk_sjt_281ad22d_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_art_brk_sjt_281ad22d_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_art_brk_sjt_heeft_betrokken_persoon USING btree (_source_id);
 
 
 --
@@ -53564,10 +58373,24 @@ CREATE INDEX rel_brk_art_brk_sjt_281ad22d_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_art_brk_sjt_281ad22d_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_art_brk_sjt_281ad22d_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_art_brk_sjt_heeft_betrokken_persoon USING btree (_id);
+
+
+--
 -- Name: rel_brk_art_brk_sjt_281ad22d_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_art_brk_sjt_281ad22d_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_art_brk_sjt_heeft_betrokken_persoon USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_art_brk_sjt_281ad22d_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_art_brk_sjt_281ad22d_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_art_brk_sjt_heeft_betrokken_persoon USING btree (_gobid);
 
 
 --
@@ -53596,6 +58419,13 @@ CREATE INDEX rel_brk_art_brk_sjt_281ad22d_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_art_brk_sjt_281ad22d_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_art_brk_sjt_heeft_betrokken_persoon USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_art_brk_tng_8210e220_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_art_brk_tng_8210e220_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_art_brk_tng_betrokken_tenaamstelling USING btree (_source_id);
 
 
 --
@@ -53662,10 +58492,24 @@ CREATE INDEX rel_brk_art_brk_tng_8210e220_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_art_brk_tng_8210e220_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_art_brk_tng_8210e220_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_art_brk_tng_betrokken_tenaamstelling USING btree (_id);
+
+
+--
 -- Name: rel_brk_art_brk_tng_8210e220_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_art_brk_tng_8210e220_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_art_brk_tng_betrokken_tenaamstelling USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_art_brk_tng_8210e220_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_art_brk_tng_8210e220_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_art_brk_tng_betrokken_tenaamstelling USING btree (_gobid);
 
 
 --
@@ -53694,6 +58538,13 @@ CREATE INDEX rel_brk_art_brk_tng_8210e220_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_art_brk_tng_8210e220_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_art_brk_tng_betrokken_tenaamstelling USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kce_brk_kge_9b8f28d0_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kce_brk_kge_9b8f28d0_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kce_brk_kge__ondrdl_vn__kadastralegemeente USING btree (_source_id);
 
 
 --
@@ -53760,10 +58611,24 @@ CREATE INDEX rel_brk_kce_brk_kge_9b8f28d0_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kce_brk_kge_9b8f28d0_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kce_brk_kge_9b8f28d0_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kce_brk_kge__ondrdl_vn__kadastralegemeente USING btree (_id);
+
+
+--
 -- Name: rel_brk_kce_brk_kge_9b8f28d0_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kce_brk_kge_9b8f28d0_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kce_brk_kge__ondrdl_vn__kadastralegemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kce_brk_kge_9b8f28d0_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kce_brk_kge_9b8f28d0_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kce_brk_kge__ondrdl_vn__kadastralegemeente USING btree (_gobid);
 
 
 --
@@ -53792,6 +58657,13 @@ CREATE INDEX rel_brk_kce_brk_kge_9b8f28d0_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kce_brk_kge_9b8f28d0_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kce_brk_kge__ondrdl_vn__kadastralegemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kge_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kge_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kge_brk_gme_ligt_in_gemeente USING btree (_source_id);
 
 
 --
@@ -53858,10 +58730,24 @@ CREATE INDEX rel_brk_kge_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kge_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kge_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kge_brk_gme_ligt_in_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_brk_kge_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kge_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kge_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kge_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kge_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kge_brk_gme_ligt_in_gemeente USING btree (_gobid);
 
 
 --
@@ -53890,6 +58776,13 @@ CREATE INDEX rel_brk_kge_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kge_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kge_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kot_bag_vot_aa601157_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_bag_vot_aa601157_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kot_bag_vot__hft_rel_mt__verblijfsobject USING btree (_source_id);
 
 
 --
@@ -53956,10 +58849,24 @@ CREATE INDEX rel_brk_kot_bag_vot_aa601157_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kot_bag_vot_aa601157_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_bag_vot_aa601157_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kot_bag_vot__hft_rel_mt__verblijfsobject USING btree (_id);
+
+
+--
 -- Name: rel_brk_kot_bag_vot_aa601157_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kot_bag_vot_aa601157_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kot_bag_vot__hft_rel_mt__verblijfsobject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kot_bag_vot_aa601157_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_bag_vot_aa601157_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kot_bag_vot__hft_rel_mt__verblijfsobject USING btree (_gobid);
 
 
 --
@@ -53988,6 +58895,13 @@ CREATE INDEX rel_brk_kot_bag_vot_aa601157_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kot_bag_vot_aa601157_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kot_bag_vot__hft_rel_mt__verblijfsobject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kot_brk_gme_598a1577_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_gme_598a1577_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kot_brk_gme__angdd_dr__gemeente USING btree (_source_id);
 
 
 --
@@ -54054,10 +58968,24 @@ CREATE INDEX rel_brk_kot_brk_gme_598a1577_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kot_brk_gme_598a1577_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_gme_598a1577_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kot_brk_gme__angdd_dr__gemeente USING btree (_id);
+
+
+--
 -- Name: rel_brk_kot_brk_gme_598a1577_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kot_brk_gme_598a1577_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kot_brk_gme__angdd_dr__gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kot_brk_gme_598a1577_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_gme_598a1577_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kot_brk_gme__angdd_dr__gemeente USING btree (_gobid);
 
 
 --
@@ -54086,6 +59014,13 @@ CREATE INDEX rel_brk_kot_brk_gme_598a1577_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kot_brk_gme_598a1577_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kot_brk_gme__angdd_dr__gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kot_brk_kce_a19bb254_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kce_a19bb254_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kot_brk_kce__angdd_dr__kadastralegemeentecode USING btree (_source_id);
 
 
 --
@@ -54152,10 +59087,24 @@ CREATE INDEX rel_brk_kot_brk_kce_a19bb254_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kot_brk_kce_a19bb254_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kce_a19bb254_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kot_brk_kce__angdd_dr__kadastralegemeentecode USING btree (_id);
+
+
+--
 -- Name: rel_brk_kot_brk_kce_a19bb254_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kot_brk_kce_a19bb254_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kot_brk_kce__angdd_dr__kadastralegemeentecode USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kot_brk_kce_a19bb254_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kce_a19bb254_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kot_brk_kce__angdd_dr__kadastralegemeentecode USING btree (_gobid);
 
 
 --
@@ -54184,6 +59133,13 @@ CREATE INDEX rel_brk_kot_brk_kce_a19bb254_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kot_brk_kce_a19bb254_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kot_brk_kce__angdd_dr__kadastralegemeentecode USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kot_brk_kge_c71cd1d1_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kge_c71cd1d1_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kot_brk_kge__angdd_dr__kadastralegemeente USING btree (_source_id);
 
 
 --
@@ -54250,10 +59206,24 @@ CREATE INDEX rel_brk_kot_brk_kge_c71cd1d1_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kot_brk_kge_c71cd1d1_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kge_c71cd1d1_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kot_brk_kge__angdd_dr__kadastralegemeente USING btree (_id);
+
+
+--
 -- Name: rel_brk_kot_brk_kge_c71cd1d1_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kot_brk_kge_c71cd1d1_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kot_brk_kge__angdd_dr__kadastralegemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kot_brk_kge_c71cd1d1_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kge_c71cd1d1_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kot_brk_kge__angdd_dr__kadastralegemeente USING btree (_gobid);
 
 
 --
@@ -54282,6 +59252,13 @@ CREATE INDEX rel_brk_kot_brk_kge_c71cd1d1_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kot_brk_kge_c71cd1d1_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kot_brk_kge__angdd_dr__kadastralegemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kot_brk_kot_3121f6b9_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kot_3121f6b9_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_kadastraalobject USING btree (_source_id);
 
 
 --
@@ -54348,10 +59325,24 @@ CREATE INDEX rel_brk_kot_brk_kot_3121f6b9_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kot_brk_kot_3121f6b9_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kot_3121f6b9_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_kadastraalobject USING btree (_id);
+
+
+--
 -- Name: rel_brk_kot_brk_kot_3121f6b9_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kot_brk_kot_3121f6b9_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_kadastraalobject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kot_brk_kot_3121f6b9_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kot_3121f6b9_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_kadastraalobject USING btree (_gobid);
 
 
 --
@@ -54380,6 +59371,13 @@ CREATE INDEX rel_brk_kot_brk_kot_3121f6b9_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kot_brk_kot_3121f6b9_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_kadastraalobject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kot_brk_kot_9e443972_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kot_9e443972_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_g_perceel USING btree (_source_id);
 
 
 --
@@ -54446,10 +59444,24 @@ CREATE INDEX rel_brk_kot_brk_kot_9e443972_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kot_brk_kot_9e443972_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kot_9e443972_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_g_perceel USING btree (_id);
+
+
+--
 -- Name: rel_brk_kot_brk_kot_9e443972_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kot_brk_kot_9e443972_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_g_perceel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kot_brk_kot_9e443972_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kot_9e443972_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_g_perceel USING btree (_gobid);
 
 
 --
@@ -54478,6 +59490,13 @@ CREATE INDEX rel_brk_kot_brk_kot_9e443972_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kot_brk_kot_9e443972_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kot_brk_kot_is_ontstaan_uit_g_perceel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kot_brk_kse_04837baa_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kse_04837baa_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kot_brk_kse__angdd_dr__kadastralesectie USING btree (_source_id);
 
 
 --
@@ -54544,10 +59563,24 @@ CREATE INDEX rel_brk_kot_brk_kse_04837baa_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kot_brk_kse_04837baa_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kse_04837baa_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kot_brk_kse__angdd_dr__kadastralesectie USING btree (_id);
+
+
+--
 -- Name: rel_brk_kot_brk_kse_04837baa_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kot_brk_kse_04837baa_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kot_brk_kse__angdd_dr__kadastralesectie USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kot_brk_kse_04837baa_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kot_brk_kse_04837baa_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kot_brk_kse__angdd_dr__kadastralesectie USING btree (_gobid);
 
 
 --
@@ -54576,6 +59609,13 @@ CREATE INDEX rel_brk_kot_brk_kse_04837baa_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kot_brk_kse_04837baa_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kot_brk_kse__angdd_dr__kadastralesectie USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_kse_brk_kce_70d4d8c9_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kse_brk_kce_70d4d8c9_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_kse_brk_kce__ondrdl_vn__kadastralegemeentecode USING btree (_source_id);
 
 
 --
@@ -54642,10 +59682,24 @@ CREATE INDEX rel_brk_kse_brk_kce_70d4d8c9_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_kse_brk_kce_70d4d8c9_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kse_brk_kce_70d4d8c9_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_kse_brk_kce__ondrdl_vn__kadastralegemeentecode USING btree (_id);
+
+
+--
 -- Name: rel_brk_kse_brk_kce_70d4d8c9_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_kse_brk_kce_70d4d8c9_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_kse_brk_kce__ondrdl_vn__kadastralegemeentecode USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_kse_brk_kce_70d4d8c9_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_kse_brk_kce_70d4d8c9_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_kse_brk_kce__ondrdl_vn__kadastralegemeentecode USING btree (_gobid);
 
 
 --
@@ -54674,6 +59728,13 @@ CREATE INDEX rel_brk_kse_brk_kce_70d4d8c9_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_kse_brk_kce_70d4d8c9_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_kse_brk_kce__ondrdl_vn__kadastralegemeentecode USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_sdl_brk_akt_301b15c1_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_akt_301b15c1_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_sdl_brk_akt__bron_kad_obj_ USING btree (_source_id);
 
 
 --
@@ -54740,10 +59801,24 @@ CREATE INDEX rel_brk_sdl_brk_akt_301b15c1_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_sdl_brk_akt_301b15c1_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_akt_301b15c1_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_sdl_brk_akt__bron_kad_obj_ USING btree (_id);
+
+
+--
 -- Name: rel_brk_sdl_brk_akt_301b15c1_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_sdl_brk_akt_301b15c1_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_sdl_brk_akt__bron_kad_obj_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_sdl_brk_akt_301b15c1_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_akt_301b15c1_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_sdl_brk_akt__bron_kad_obj_ USING btree (_gobid);
 
 
 --
@@ -54772,6 +59847,13 @@ CREATE INDEX rel_brk_sdl_brk_akt_301b15c1_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_sdl_brk_akt_301b15c1_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_sdl_brk_akt__bron_kad_obj_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_sdl_brk_art_9a638eea_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_art_9a638eea_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_sdl_brk_art_is_bron_voor_aantekening_recht USING btree (_source_id);
 
 
 --
@@ -54838,10 +59920,24 @@ CREATE INDEX rel_brk_sdl_brk_art_9a638eea_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_sdl_brk_art_9a638eea_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_art_9a638eea_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_sdl_brk_art_is_bron_voor_aantekening_recht USING btree (_id);
+
+
+--
 -- Name: rel_brk_sdl_brk_art_9a638eea_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_sdl_brk_art_9a638eea_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_sdl_brk_art_is_bron_voor_aantekening_recht USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_sdl_brk_art_9a638eea_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_art_9a638eea_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_sdl_brk_art_is_bron_voor_aantekening_recht USING btree (_gobid);
 
 
 --
@@ -54870,6 +59966,13 @@ CREATE INDEX rel_brk_sdl_brk_art_9a638eea_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_sdl_brk_art_9a638eea_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_sdl_brk_art_is_bron_voor_aantekening_recht USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_sdl_brk_tng_3ecedfe1_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_tng_3ecedfe1_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_sdl_brk_tng_is_bron_voor_tenaamstelling USING btree (_source_id);
 
 
 --
@@ -54936,10 +60039,24 @@ CREATE INDEX rel_brk_sdl_brk_tng_3ecedfe1_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_sdl_brk_tng_3ecedfe1_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_tng_3ecedfe1_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_sdl_brk_tng_is_bron_voor_tenaamstelling USING btree (_id);
+
+
+--
 -- Name: rel_brk_sdl_brk_tng_3ecedfe1_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_sdl_brk_tng_3ecedfe1_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_sdl_brk_tng_is_bron_voor_tenaamstelling USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_sdl_brk_tng_3ecedfe1_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_tng_3ecedfe1_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_sdl_brk_tng_is_bron_voor_tenaamstelling USING btree (_gobid);
 
 
 --
@@ -54968,6 +60085,13 @@ CREATE INDEX rel_brk_sdl_brk_tng_3ecedfe1_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_sdl_brk_tng_3ecedfe1_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_sdl_brk_tng_is_bron_voor_tenaamstelling USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_sdl_brk_zrt_f2ad48e0_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_zrt_f2ad48e0_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_sdl_brk_zrt_is_bron_voor_zakelijk_recht USING btree (_source_id);
 
 
 --
@@ -55034,10 +60158,24 @@ CREATE INDEX rel_brk_sdl_brk_zrt_f2ad48e0_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_sdl_brk_zrt_f2ad48e0_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_zrt_f2ad48e0_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_sdl_brk_zrt_is_bron_voor_zakelijk_recht USING btree (_id);
+
+
+--
 -- Name: rel_brk_sdl_brk_zrt_f2ad48e0_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_sdl_brk_zrt_f2ad48e0_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_sdl_brk_zrt_is_bron_voor_zakelijk_recht USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_sdl_brk_zrt_f2ad48e0_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sdl_brk_zrt_f2ad48e0_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_sdl_brk_zrt_is_bron_voor_zakelijk_recht USING btree (_gobid);
 
 
 --
@@ -55066,6 +60204,13 @@ CREATE INDEX rel_brk_sdl_brk_zrt_f2ad48e0_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_sdl_brk_zrt_f2ad48e0_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_sdl_brk_zrt_is_bron_voor_zakelijk_recht USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_sjt_hr_mac_a25fe739_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sjt_hr_mac_a25fe739_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_sjt_hr_mac_heeft_kvknummer_voor USING btree (_source_id);
 
 
 --
@@ -55132,10 +60277,24 @@ CREATE INDEX rel_brk_sjt_hr_mac_a25fe739_ab35fb2f74ba637ec5dff03e521947fc ON pub
 
 
 --
+-- Name: rel_brk_sjt_hr_mac_a25fe739_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sjt_hr_mac_a25fe739_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_sjt_hr_mac_heeft_kvknummer_voor USING btree (_id);
+
+
+--
 -- Name: rel_brk_sjt_hr_mac_a25fe739_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_sjt_hr_mac_a25fe739_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_sjt_hr_mac_heeft_kvknummer_voor USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_sjt_hr_mac_a25fe739_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_sjt_hr_mac_a25fe739_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_sjt_hr_mac_heeft_kvknummer_voor USING btree (_gobid);
 
 
 --
@@ -55164,6 +60323,13 @@ CREATE INDEX rel_brk_sjt_hr_mac_a25fe739_ed3f22b3eec2fb035647f924a5b2136e ON pub
 --
 
 CREATE INDEX rel_brk_sjt_hr_mac_a25fe739_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_sjt_hr_mac_heeft_kvknummer_voor USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_tng_brk_sdl_f7c4de29_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_tng_brk_sdl_f7c4de29_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_tng_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_source_id);
 
 
 --
@@ -55230,10 +60396,24 @@ CREATE INDEX rel_brk_tng_brk_sdl_f7c4de29_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_tng_brk_sdl_f7c4de29_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_tng_brk_sdl_f7c4de29_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_tng_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_id);
+
+
+--
 -- Name: rel_brk_tng_brk_sdl_f7c4de29_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_tng_brk_sdl_f7c4de29_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_tng_brk_sdl_is_gebaseerd_op_stukdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_tng_brk_sdl_f7c4de29_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_tng_brk_sdl_f7c4de29_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_tng_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_gobid);
 
 
 --
@@ -55262,6 +60442,13 @@ CREATE INDEX rel_brk_tng_brk_sdl_f7c4de29_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_tng_brk_sdl_f7c4de29_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_tng_brk_sdl_is_gebaseerd_op_stukdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_tng_brk_sjt_7299fc78_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_tng_brk_sjt_7299fc78_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_tng_brk_sjt_van_kadastraalsubject USING btree (_source_id);
 
 
 --
@@ -55328,10 +60515,24 @@ CREATE INDEX rel_brk_tng_brk_sjt_7299fc78_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_tng_brk_sjt_7299fc78_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_tng_brk_sjt_7299fc78_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_tng_brk_sjt_van_kadastraalsubject USING btree (_id);
+
+
+--
 -- Name: rel_brk_tng_brk_sjt_7299fc78_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_tng_brk_sjt_7299fc78_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_tng_brk_sjt_van_kadastraalsubject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_tng_brk_sjt_7299fc78_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_tng_brk_sjt_7299fc78_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_tng_brk_sjt_van_kadastraalsubject USING btree (_gobid);
 
 
 --
@@ -55360,6 +60561,13 @@ CREATE INDEX rel_brk_tng_brk_sjt_7299fc78_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_tng_brk_sjt_7299fc78_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_tng_brk_sjt_van_kadastraalsubject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_tng_brk_zrt_832a5532_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_tng_brk_zrt_832a5532_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_tng_brk_zrt_van_zakelijkrecht USING btree (_source_id);
 
 
 --
@@ -55426,10 +60634,24 @@ CREATE INDEX rel_brk_tng_brk_zrt_832a5532_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_tng_brk_zrt_832a5532_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_tng_brk_zrt_832a5532_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_tng_brk_zrt_van_zakelijkrecht USING btree (_id);
+
+
+--
 -- Name: rel_brk_tng_brk_zrt_832a5532_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_tng_brk_zrt_832a5532_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_tng_brk_zrt_van_zakelijkrecht USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_tng_brk_zrt_832a5532_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_tng_brk_zrt_832a5532_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_tng_brk_zrt_van_zakelijkrecht USING btree (_gobid);
 
 
 --
@@ -55458,6 +60680,13 @@ CREATE INDEX rel_brk_tng_brk_zrt_832a5532_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_tng_brk_zrt_832a5532_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_tng_brk_zrt_van_zakelijkrecht USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_zrt_brk_kot_1a612226_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_kot_1a612226_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_zrt_brk_kot_rust_op_kadastraalobject USING btree (_source_id);
 
 
 --
@@ -55524,10 +60753,24 @@ CREATE INDEX rel_brk_zrt_brk_kot_1a612226_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_zrt_brk_kot_1a612226_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_kot_1a612226_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_zrt_brk_kot_rust_op_kadastraalobject USING btree (_id);
+
+
+--
 -- Name: rel_brk_zrt_brk_kot_1a612226_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_zrt_brk_kot_1a612226_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_zrt_brk_kot_rust_op_kadastraalobject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_zrt_brk_kot_1a612226_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_kot_1a612226_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_zrt_brk_kot_rust_op_kadastraalobject USING btree (_gobid);
 
 
 --
@@ -55556,6 +60799,13 @@ CREATE INDEX rel_brk_zrt_brk_kot_1a612226_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_zrt_brk_kot_1a612226_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_zrt_brk_kot_rust_op_kadastraalobject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_zrt_brk_sjt_1f2d4cf2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_sjt_1f2d4cf2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_zrt_brk_sjt__betr_apprechtsplit_vve_ USING btree (_source_id);
 
 
 --
@@ -55622,10 +60872,24 @@ CREATE INDEX rel_brk_zrt_brk_sjt_1f2d4cf2_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_zrt_brk_sjt_1f2d4cf2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_sjt_1f2d4cf2_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_zrt_brk_sjt__betr_apprechtsplit_vve_ USING btree (_id);
+
+
+--
 -- Name: rel_brk_zrt_brk_sjt_1f2d4cf2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_zrt_brk_sjt_1f2d4cf2_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_zrt_brk_sjt__betr_apprechtsplit_vve_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_zrt_brk_sjt_1f2d4cf2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_sjt_1f2d4cf2_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_zrt_brk_sjt__betr_apprechtsplit_vve_ USING btree (_gobid);
 
 
 --
@@ -55654,6 +60918,13 @@ CREATE INDEX rel_brk_zrt_brk_sjt_1f2d4cf2_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_zrt_brk_sjt_1f2d4cf2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_zrt_brk_sjt__betr_apprechtsplit_vve_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_zrt_brk_sjt_2c752181_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_sjt_2c752181_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_zrt_brk_sjt__ontst_apprechtsplit_vve_ USING btree (_source_id);
 
 
 --
@@ -55720,10 +60991,24 @@ CREATE INDEX rel_brk_zrt_brk_sjt_2c752181_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_zrt_brk_sjt_2c752181_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_sjt_2c752181_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_zrt_brk_sjt__ontst_apprechtsplit_vve_ USING btree (_id);
+
+
+--
 -- Name: rel_brk_zrt_brk_sjt_2c752181_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_zrt_brk_sjt_2c752181_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_zrt_brk_sjt__ontst_apprechtsplit_vve_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_zrt_brk_sjt_2c752181_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_sjt_2c752181_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_zrt_brk_sjt__ontst_apprechtsplit_vve_ USING btree (_gobid);
 
 
 --
@@ -55752,6 +61037,13 @@ CREATE INDEX rel_brk_zrt_brk_sjt_2c752181_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_zrt_brk_sjt_2c752181_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_zrt_brk_sjt__ontst_apprechtsplit_vve_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_zrt_brk_zrt_64393245_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_64393245_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_zrt_brk_zrt_belast_met_zakelijkerechten USING btree (_source_id);
 
 
 --
@@ -55818,10 +61110,24 @@ CREATE INDEX rel_brk_zrt_brk_zrt_64393245_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_zrt_brk_zrt_64393245_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_64393245_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_zrt_brk_zrt_belast_met_zakelijkerechten USING btree (_id);
+
+
+--
 -- Name: rel_brk_zrt_brk_zrt_64393245_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_zrt_brk_zrt_64393245_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_zrt_brk_zrt_belast_met_zakelijkerechten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_zrt_brk_zrt_64393245_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_64393245_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_zrt_brk_zrt_belast_met_zakelijkerechten USING btree (_gobid);
 
 
 --
@@ -55850,6 +61156,13 @@ CREATE INDEX rel_brk_zrt_brk_zrt_64393245_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_zrt_brk_zrt_64393245_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_zrt_brk_zrt_belast_met_zakelijkerechten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_zrt_brk_zrt_6d75102f_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_6d75102f_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_zrt_brk_zrt_betrokken_bij_zakelijkerechten USING btree (_source_id);
 
 
 --
@@ -55916,10 +61229,24 @@ CREATE INDEX rel_brk_zrt_brk_zrt_6d75102f_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_zrt_brk_zrt_6d75102f_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_6d75102f_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_zrt_brk_zrt_betrokken_bij_zakelijkerechten USING btree (_id);
+
+
+--
 -- Name: rel_brk_zrt_brk_zrt_6d75102f_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_zrt_brk_zrt_6d75102f_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_zrt_brk_zrt_betrokken_bij_zakelijkerechten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_zrt_brk_zrt_6d75102f_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_6d75102f_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_zrt_brk_zrt_betrokken_bij_zakelijkerechten USING btree (_gobid);
 
 
 --
@@ -55948,6 +61275,13 @@ CREATE INDEX rel_brk_zrt_brk_zrt_6d75102f_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_zrt_brk_zrt_6d75102f_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_zrt_brk_zrt_betrokken_bij_zakelijkerechten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_zrt_brk_zrt_82d50097_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_82d50097_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_zrt_brk_zrt_belast_zakelijkerechten USING btree (_source_id);
 
 
 --
@@ -56014,10 +61348,24 @@ CREATE INDEX rel_brk_zrt_brk_zrt_82d50097_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_zrt_brk_zrt_82d50097_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_82d50097_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_zrt_brk_zrt_belast_zakelijkerechten USING btree (_id);
+
+
+--
 -- Name: rel_brk_zrt_brk_zrt_82d50097_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_zrt_brk_zrt_82d50097_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_zrt_brk_zrt_belast_zakelijkerechten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_zrt_brk_zrt_82d50097_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_82d50097_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_zrt_brk_zrt_belast_zakelijkerechten USING btree (_gobid);
 
 
 --
@@ -56046,6 +61394,13 @@ CREATE INDEX rel_brk_zrt_brk_zrt_82d50097_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_zrt_brk_zrt_82d50097_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_zrt_brk_zrt_belast_zakelijkerechten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_brk_zrt_brk_zrt_acc94c76_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_acc94c76_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_brk_zrt_brk_zrt_ontstaan_uit_zakelijkerechten USING btree (_source_id);
 
 
 --
@@ -56112,10 +61467,24 @@ CREATE INDEX rel_brk_zrt_brk_zrt_acc94c76_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_brk_zrt_brk_zrt_acc94c76_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_acc94c76_b80bb7740288fda1f201890375a60c8f ON public.rel_brk_zrt_brk_zrt_ontstaan_uit_zakelijkerechten USING btree (_id);
+
+
+--
 -- Name: rel_brk_zrt_brk_zrt_acc94c76_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_brk_zrt_brk_zrt_acc94c76_c5625cb292cd152f07c13709330d1712 ON public.rel_brk_zrt_brk_zrt_ontstaan_uit_zakelijkerechten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_brk_zrt_brk_zrt_acc94c76_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_brk_zrt_brk_zrt_acc94c76_d05569f886377400312d8c2edd4c6f4c ON public.rel_brk_zrt_brk_zrt_ontstaan_uit_zakelijkerechten USING btree (_gobid);
 
 
 --
@@ -56144,6 +61513,13 @@ CREATE INDEX rel_brk_zrt_brk_zrt_acc94c76_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_brk_zrt_brk_zrt_acc94c76_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_brk_zrt_brk_zrt_ontstaan_uit_zakelijkerechten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
@@ -56210,10 +61586,24 @@ CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_gbd_bbk_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_bbk_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
@@ -56242,6 +61632,13 @@ CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_bbk_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_bbk_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_source_id);
 
 
 --
@@ -56308,10 +61705,24 @@ CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_id);
+
+
+--
 -- Name: rel_gbd_bbk_gbd_brt_acf01c64_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_bbk_gbd_brt_acf01c64_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_gobid);
 
 
 --
@@ -56340,6 +61751,13 @@ CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_bbk_gbd_brt_acf01c64_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_bbk_gbd_brt_ligt_in_gebieden_buurt USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
@@ -56406,10 +61824,24 @@ CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_gbd_brt_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_brt_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
@@ -56438,6 +61870,13 @@ CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_brt_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_source_id);
 
 
 --
@@ -56504,10 +61943,24 @@ CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_id);
+
+
+--
 -- Name: rel_gbd_brt_gbd_ggp_51c91db2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggp_51c91db2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_gobid);
 
 
 --
@@ -56536,6 +61989,13 @@ CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_brt_gbd_ggp_51c91db2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_gbd_ggp_ligt_in_gebieden_ggpgebied USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_source_id);
 
 
 --
@@ -56602,10 +62062,24 @@ CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_id);
+
+
+--
 -- Name: rel_gbd_brt_gbd_ggw_47b314f2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_brt_gbd_ggw_47b314f2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_gobid);
 
 
 --
@@ -56634,6 +62108,13 @@ CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_brt_gbd_ggw_47b314f2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_source_id);
 
 
 --
@@ -56700,10 +62181,24 @@ CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_ab35fb2f74ba637ec5dff03e521947fc ON p
 
 
 --
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_id);
+
+
+--
 -- Name: rel_gbd_brt_gbd_wijk_031111c7_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_brt_gbd_wijk_031111c7_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_gobid);
 
 
 --
@@ -56732,6 +62227,13 @@ CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_ed3f22b3eec2fb035647f924a5b2136e ON p
 --
 
 CREATE INDEX rel_gbd_brt_gbd_wijk_031111c7_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_brt_gbd_wijk_ligt_in_gebieden_wijk USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
@@ -56798,10 +62300,24 @@ CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_gbd_ggp_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_ggp_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
@@ -56830,6 +62346,13 @@ CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_ggp_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggp_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_source_id);
 
 
 --
@@ -56896,10 +62419,24 @@ CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_id);
+
+
+--
 -- Name: rel_gbd_ggp_gbd_brt_49f6aa78_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_brt_49f6aa78_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_gobid);
 
 
 --
@@ -56928,6 +62465,13 @@ CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_ggp_gbd_brt_49f6aa78_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggp_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source_id);
 
 
 --
@@ -56994,10 +62538,24 @@ CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_id);
+
+
+--
 -- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_ggp_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
 
 
 --
@@ -57026,6 +62584,13 @@ CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_ggp_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggp_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
@@ -57092,10 +62657,24 @@ CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_gbd_ggw_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_ggw_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
@@ -57124,6 +62703,13 @@ CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_ggw_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggw_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_source_id);
 
 
 --
@@ -57190,10 +62776,24 @@ CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_id);
+
+
+--
 -- Name: rel_gbd_ggw_gbd_brt_49f6aa78_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_brt_49f6aa78_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_gobid);
 
 
 --
@@ -57222,6 +62822,13 @@ CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_ggw_gbd_brt_49f6aa78_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggw_gbd_brt_bestaat_uit_gebieden_buurten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source_id);
 
 
 --
@@ -57288,10 +62895,24 @@ CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_id);
+
+
+--
 -- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_ggw_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
 
 
 --
@@ -57320,6 +62941,13 @@ CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_ggw_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_ggw_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
@@ -57386,10 +63014,24 @@ CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_gbd_sdl_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_sdl_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
@@ -57418,6 +63060,13 @@ CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_gbd_sdl_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_sdl_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_source_id);
 
 
 --
@@ -57484,10 +63133,24 @@ CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_ab35fb2f74ba637ec5dff03e521947fc ON p
 
 
 --
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_id);
+
+
+--
 -- Name: rel_gbd_wijk_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_wijk_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_gobid);
 
 
 --
@@ -57516,6 +63179,13 @@ CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_ed3f22b3eec2fb035647f924a5b2136e ON p
 --
 
 CREATE INDEX rel_gbd_wijk_brk_gme_6e6694f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_wijk_brk_gme_ligt_in_brk_gemeente USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_source_id);
 
 
 --
@@ -57582,10 +63252,24 @@ CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_ab35fb2f74ba637ec5dff03e521947fc ON p
 
 
 --
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_id);
+
+
+--
 -- Name: rel_gbd_wijk_gbd_ggw_47b314f2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_ggw_47b314f2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_gobid);
 
 
 --
@@ -57614,6 +63298,13 @@ CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_ed3f22b3eec2fb035647f924a5b2136e ON p
 --
 
 CREATE INDEX rel_gbd_wijk_gbd_ggw_47b314f2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_wijk_gbd_ggw_ligt_in_gebieden_ggwgebied USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source_id);
 
 
 --
@@ -57680,10 +63371,24 @@ CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc ON p
 
 
 --
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_id);
+
+
+--
 -- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_gbd_wijk_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
 
 
 --
@@ -57712,6 +63417,13 @@ CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e ON p
 --
 
 CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_loc_bag_lps_9d4208db_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_lps_9d4208db_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_source_id);
 
 
 --
@@ -57778,10 +63490,24 @@ CREATE INDEX rel_hr_loc_bag_lps_9d4208db_ab35fb2f74ba637ec5dff03e521947fc ON pub
 
 
 --
+-- Name: rel_hr_loc_bag_lps_9d4208db_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_lps_9d4208db_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_id);
+
+
+--
 -- Name: rel_hr_loc_bag_lps_9d4208db_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_loc_bag_lps_9d4208db_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_loc_bag_lps_9d4208db_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_lps_9d4208db_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_gobid);
 
 
 --
@@ -57810,6 +63536,13 @@ CREATE INDEX rel_hr_loc_bag_lps_9d4208db_ed3f22b3eec2fb035647f924a5b2136e ON pub
 --
 
 CREATE INDEX rel_hr_loc_bag_lps_9d4208db_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_loc_bag_nag_76b00095_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_nag_76b00095_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_source_id);
 
 
 --
@@ -57876,10 +63609,24 @@ CREATE INDEX rel_hr_loc_bag_nag_76b00095_ab35fb2f74ba637ec5dff03e521947fc ON pub
 
 
 --
+-- Name: rel_hr_loc_bag_nag_76b00095_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_nag_76b00095_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_id);
+
+
+--
 -- Name: rel_hr_loc_bag_nag_76b00095_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_loc_bag_nag_76b00095_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_loc_bag_nag_76b00095_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_nag_76b00095_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_gobid);
 
 
 --
@@ -57908,6 +63655,13 @@ CREATE INDEX rel_hr_loc_bag_nag_76b00095_ed3f22b3eec2fb035647f924a5b2136e ON pub
 --
 
 CREATE INDEX rel_hr_loc_bag_nag_76b00095_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_loc_bag_sps_489b8bb4_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_source_id);
 
 
 --
@@ -57974,10 +63728,24 @@ CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_ab35fb2f74ba637ec5dff03e521947fc ON pub
 
 
 --
+-- Name: rel_hr_loc_bag_sps_489b8bb4_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_id);
+
+
+--
 -- Name: rel_hr_loc_bag_sps_489b8bb4_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_loc_bag_sps_489b8bb4_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_gobid);
 
 
 --
@@ -58006,6 +63774,13 @@ CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_ed3f22b3eec2fb035647f924a5b2136e ON pub
 --
 
 CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_loc_bag_vot_da35004e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_vot_da35004e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_source_id);
 
 
 --
@@ -58072,10 +63847,24 @@ CREATE INDEX rel_hr_loc_bag_vot_da35004e_ab35fb2f74ba637ec5dff03e521947fc ON pub
 
 
 --
+-- Name: rel_hr_loc_bag_vot_da35004e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_vot_da35004e_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_id);
+
+
+--
 -- Name: rel_hr_loc_bag_vot_da35004e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_loc_bag_vot_da35004e_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_loc_bag_vot_da35004e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_loc_bag_vot_da35004e_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_gobid);
 
 
 --
@@ -58104,6 +63893,13 @@ CREATE INDEX rel_hr_loc_bag_vot_da35004e_ed3f22b3eec2fb035647f924a5b2136e ON pub
 --
 
 CREATE INDEX rel_hr_loc_bag_vot_da35004e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_mac_hr_loc_c6c68b13_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_source_id);
 
 
 --
@@ -58170,10 +63966,24 @@ CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_mac_hr_loc_c6c68b13_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_id);
+
+
+--
 -- Name: rel_hr_mac_hr_loc_c6c68b13_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_mac_hr_loc_c6c68b13_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_gobid);
 
 
 --
@@ -58202,6 +64012,13 @@ CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_mac_hr_loc_d87cb5eb_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_source_id);
 
 
 --
@@ -58268,10 +64085,24 @@ CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_mac_hr_loc_d87cb5eb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_id);
+
+
+--
 -- Name: rel_hr_mac_hr_loc_d87cb5eb_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_mac_hr_loc_d87cb5eb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_gobid);
 
 
 --
@@ -58300,6 +64131,13 @@ CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_mac_hr_sac_09ac243e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_sac_09ac243e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_source_id);
 
 
 --
@@ -58366,10 +64204,24 @@ CREATE INDEX rel_hr_mac_hr_sac_09ac243e_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_mac_hr_sac_09ac243e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_sac_09ac243e_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_id);
+
+
+--
 -- Name: rel_hr_mac_hr_sac_09ac243e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_mac_hr_sac_09ac243e_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_mac_hr_sac_09ac243e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_sac_09ac243e_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_gobid);
 
 
 --
@@ -58398,6 +64250,13 @@ CREATE INDEX rel_hr_mac_hr_sac_09ac243e_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_mac_hr_sac_09ac243e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_mac_hr_sac_0b55b7fa_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_source_id);
 
 
 --
@@ -58464,10 +64323,24 @@ CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_mac_hr_sac_0b55b7fa_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_id);
+
+
+--
 -- Name: rel_hr_mac_hr_sac_0b55b7fa_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_mac_hr_sac_0b55b7fa_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_gobid);
 
 
 --
@@ -58496,6 +64369,13 @@ CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_mac_hr_ves_3e472be9_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_ves_3e472be9_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_source_id);
 
 
 --
@@ -58562,10 +64442,24 @@ CREATE INDEX rel_hr_mac_hr_ves_3e472be9_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_mac_hr_ves_3e472be9_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_ves_3e472be9_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_id);
+
+
+--
 -- Name: rel_hr_mac_hr_ves_3e472be9_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_mac_hr_ves_3e472be9_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_mac_hr_ves_3e472be9_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_ves_3e472be9_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_gobid);
 
 
 --
@@ -58594,6 +64488,13 @@ CREATE INDEX rel_hr_mac_hr_ves_3e472be9_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_mac_hr_ves_3e472be9_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_mac_hr_ves_cd9b6957_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_source_id);
 
 
 --
@@ -58660,10 +64561,24 @@ CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_mac_hr_ves_cd9b6957_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_id);
+
+
+--
 -- Name: rel_hr_mac_hr_ves_cd9b6957_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_mac_hr_ves_cd9b6957_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_gobid);
 
 
 --
@@ -58692,6 +64607,13 @@ CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_mac_hr_ves_e4150046_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_ves_e4150046_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_source_id);
 
 
 --
@@ -58758,10 +64680,24 @@ CREATE INDEX rel_hr_mac_hr_ves_e4150046_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_mac_hr_ves_e4150046_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_ves_e4150046_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_id);
+
+
+--
 -- Name: rel_hr_mac_hr_ves_e4150046_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_mac_hr_ves_e4150046_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_mac_hr_ves_e4150046_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_mac_hr_ves_e4150046_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_gobid);
 
 
 --
@@ -58790,6 +64726,13 @@ CREATE INDEX rel_hr_mac_hr_ves_e4150046_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_mac_hr_ves_e4150046_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_sac_hr_mac_52d555e7_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_sac_hr_mac_52d555e7_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_source_id);
 
 
 --
@@ -58856,10 +64799,24 @@ CREATE INDEX rel_hr_sac_hr_mac_52d555e7_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_sac_hr_mac_52d555e7_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_sac_hr_mac_52d555e7_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_id);
+
+
+--
 -- Name: rel_hr_sac_hr_mac_52d555e7_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_sac_hr_mac_52d555e7_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_sac_hr_mac_52d555e7_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_sac_hr_mac_52d555e7_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_gobid);
 
 
 --
@@ -58888,6 +64845,13 @@ CREATE INDEX rel_hr_sac_hr_mac_52d555e7_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_sac_hr_mac_52d555e7_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_sac_hr_ves_6005c289_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_sac_hr_ves_6005c289_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_source_id);
 
 
 --
@@ -58954,10 +64918,24 @@ CREATE INDEX rel_hr_sac_hr_ves_6005c289_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_sac_hr_ves_6005c289_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_sac_hr_ves_6005c289_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_id);
+
+
+--
 -- Name: rel_hr_sac_hr_ves_6005c289_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_sac_hr_ves_6005c289_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_sac_hr_ves_6005c289_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_sac_hr_ves_6005c289_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_gobid);
 
 
 --
@@ -58986,6 +64964,13 @@ CREATE INDEX rel_hr_sac_hr_ves_6005c289_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_sac_hr_ves_6005c289_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_ves_hr_loc_144fb33a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_loc_144fb33a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_source_id);
 
 
 --
@@ -59052,10 +65037,24 @@ CREATE INDEX rel_hr_ves_hr_loc_144fb33a_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_ves_hr_loc_144fb33a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_loc_144fb33a_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_id);
+
+
+--
 -- Name: rel_hr_ves_hr_loc_144fb33a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_ves_hr_loc_144fb33a_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_ves_hr_loc_144fb33a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_loc_144fb33a_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_gobid);
 
 
 --
@@ -59084,6 +65083,13 @@ CREATE INDEX rel_hr_ves_hr_loc_144fb33a_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_ves_hr_loc_144fb33a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_ves_hr_loc_ac17a050_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_loc_ac17a050_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_source_id);
 
 
 --
@@ -59150,10 +65156,24 @@ CREATE INDEX rel_hr_ves_hr_loc_ac17a050_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_ves_hr_loc_ac17a050_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_loc_ac17a050_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_id);
+
+
+--
 -- Name: rel_hr_ves_hr_loc_ac17a050_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_ves_hr_loc_ac17a050_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_ves_hr_loc_ac17a050_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_loc_ac17a050_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_gobid);
 
 
 --
@@ -59182,6 +65202,13 @@ CREATE INDEX rel_hr_ves_hr_loc_ac17a050_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_ves_hr_loc_ac17a050_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_ves_hr_mac_00fa89c3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_source_id);
 
 
 --
@@ -59248,10 +65275,24 @@ CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_ves_hr_mac_00fa89c3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_id);
+
+
+--
 -- Name: rel_hr_ves_hr_mac_00fa89c3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_ves_hr_mac_00fa89c3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_gobid);
 
 
 --
@@ -59280,6 +65321,13 @@ CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_ves_hr_sac_8e0a940c_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_source_id);
 
 
 --
@@ -59346,10 +65394,24 @@ CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_ves_hr_sac_8e0a940c_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_id);
+
+
+--
 -- Name: rel_hr_ves_hr_sac_8e0a940c_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_ves_hr_sac_8e0a940c_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_gobid);
 
 
 --
@@ -59378,6 +65440,13 @@ CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_ed3f22b3eec2fb035647f924a5b2136e ON publ
 --
 
 CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_hr_ves_hr_ves_49e9b8a6_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_source_id);
 
 
 --
@@ -59444,10 +65513,24 @@ CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_ab35fb2f74ba637ec5dff03e521947fc ON publ
 
 
 --
+-- Name: rel_hr_ves_hr_ves_49e9b8a6_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_id);
+
+
+--
 -- Name: rel_hr_ves_hr_ves_49e9b8a6_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_hr_ves_hr_ves_49e9b8a6_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_gobid);
 
 
 --
@@ -59483,6 +65566,13 @@ CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_f49c273bd9b194a2b48ebed02cfba269 ON publ
 --
 
 CREATE INDEX rel_mbn_mbt_gbd_bbk_82041c84_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mbn_mbt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mbn_mbt_gbd_bbk_cadf657e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mbt_gbd_bbk_cadf657e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_mbt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_source_id);
 
 
 --
@@ -59549,10 +65639,24 @@ CREATE INDEX rel_mbn_mbt_gbd_bbk_cadf657e_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_mbt_gbd_bbk_cadf657e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mbt_gbd_bbk_cadf657e_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_mbt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_id);
+
+
+--
 -- Name: rel_mbn_mbt_gbd_bbk_cadf657e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_mbt_gbd_bbk_cadf657e_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_mbt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_mbt_gbd_bbk_cadf657e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mbt_gbd_bbk_cadf657e_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_mbt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_gobid);
 
 
 --
@@ -59581,6 +65685,13 @@ CREATE INDEX rel_mbn_mbt_gbd_bbk_cadf657e_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_mbn_mbt_gbd_bbk_cadf657e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mbn_mbt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mbn_mbt_gbd_brt_acf01c64_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mbt_gbd_brt_acf01c64_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_mbt_gbd_brt_ligt_in_gebieden_buurt USING btree (_source_id);
 
 
 --
@@ -59647,10 +65758,24 @@ CREATE INDEX rel_mbn_mbt_gbd_brt_acf01c64_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_mbt_gbd_brt_acf01c64_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mbt_gbd_brt_acf01c64_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_mbt_gbd_brt_ligt_in_gebieden_buurt USING btree (_id);
+
+
+--
 -- Name: rel_mbn_mbt_gbd_brt_acf01c64_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_mbt_gbd_brt_acf01c64_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_mbt_gbd_brt_ligt_in_gebieden_buurt USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_mbt_gbd_brt_acf01c64_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mbt_gbd_brt_acf01c64_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_mbt_gbd_brt_ligt_in_gebieden_buurt USING btree (_gobid);
 
 
 --
@@ -59693,6 +65818,13 @@ CREATE INDEX rel_mbn_mbt_gbd_brt_c567336b_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_mbn_mbt_gbd_sdl_45b8091a_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mbn_mbt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mbn_mbt_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mbt_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_mbt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source_id);
 
 
 --
@@ -59759,10 +65891,24 @@ CREATE INDEX rel_mbn_mbt_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_mbt_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mbt_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_mbt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_id);
+
+
+--
 -- Name: rel_mbn_mbt_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_mbt_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_mbt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_mbt_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mbt_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_mbt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
 
 
 --
@@ -59791,6 +65937,13 @@ CREATE INDEX rel_mbn_mbt_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_mbn_mbt_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mbn_mbt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mbn_mtg_mbn_mbt_3de002cf_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mtg_mbn_mbt_3de002cf_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_mtg_mbn_mbt_hoort_bij_meetbouten_meetbout USING btree (_source_id);
 
 
 --
@@ -59857,10 +66010,24 @@ CREATE INDEX rel_mbn_mtg_mbn_mbt_3de002cf_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_mtg_mbn_mbt_3de002cf_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mtg_mbn_mbt_3de002cf_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_mtg_mbn_mbt_hoort_bij_meetbouten_meetbout USING btree (_id);
+
+
+--
 -- Name: rel_mbn_mtg_mbn_mbt_3de002cf_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_mtg_mbn_mbt_3de002cf_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_mtg_mbn_mbt_hoort_bij_meetbouten_meetbout USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_mtg_mbn_mbt_3de002cf_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mtg_mbn_mbt_3de002cf_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_mtg_mbn_mbt_hoort_bij_meetbouten_meetbout USING btree (_gobid);
 
 
 --
@@ -59896,6 +66063,13 @@ CREATE INDEX rel_mbn_mtg_mbn_mbt_3de002cf_f49c273bd9b194a2b48ebed02cfba269 ON pu
 --
 
 CREATE INDEX rel_mbn_mtg_mbn_mbt_846bf88b_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mbn_mtg_mbn_mbt_hoort_bij_meetbouten_meetbout USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mbn_mtg_mbn_rpt_1569d5cc_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mtg_mbn_rpt_1569d5cc_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_mtg_mbn_rpt__meetbouten_refpnt_rft_aan_ USING btree (_source_id);
 
 
 --
@@ -59962,10 +66136,24 @@ CREATE INDEX rel_mbn_mtg_mbn_rpt_1569d5cc_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_mtg_mbn_rpt_1569d5cc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mtg_mbn_rpt_1569d5cc_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_mtg_mbn_rpt__meetbouten_refpnt_rft_aan_ USING btree (_id);
+
+
+--
 -- Name: rel_mbn_mtg_mbn_rpt_1569d5cc_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_mtg_mbn_rpt_1569d5cc_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_mtg_mbn_rpt__meetbouten_refpnt_rft_aan_ USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_mtg_mbn_rpt_1569d5cc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_mtg_mbn_rpt_1569d5cc_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_mtg_mbn_rpt__meetbouten_refpnt_rft_aan_ USING btree (_gobid);
 
 
 --
@@ -59994,6 +66182,13 @@ CREATE INDEX rel_mbn_mtg_mbn_rpt_1569d5cc_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_mbn_mtg_mbn_rpt_1569d5cc_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mbn_mtg_mbn_rpt__meetbouten_refpnt_rft_aan_ USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mbn_rlg_gbd_bbk_33aa02b1_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rlg_gbd_bbk_33aa02b1_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_rlg_gbd_bbk_is_gemeten_van_gebieden_bouwblok USING btree (_source_id);
 
 
 --
@@ -60060,10 +66255,24 @@ CREATE INDEX rel_mbn_rlg_gbd_bbk_33aa02b1_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_rlg_gbd_bbk_33aa02b1_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rlg_gbd_bbk_33aa02b1_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_rlg_gbd_bbk_is_gemeten_van_gebieden_bouwblok USING btree (_id);
+
+
+--
 -- Name: rel_mbn_rlg_gbd_bbk_33aa02b1_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_rlg_gbd_bbk_33aa02b1_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_rlg_gbd_bbk_is_gemeten_van_gebieden_bouwblok USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_rlg_gbd_bbk_33aa02b1_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rlg_gbd_bbk_33aa02b1_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_rlg_gbd_bbk_is_gemeten_van_gebieden_bouwblok USING btree (_gobid);
 
 
 --
@@ -60106,6 +66315,13 @@ CREATE INDEX rel_mbn_rlg_gbd_bbk_9dfd718d_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_mbn_rpt_gbd_bbk_82041c84_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mbn_rpt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mbn_rpt_gbd_bbk_cadf657e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_gbd_bbk_cadf657e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_rpt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_source_id);
 
 
 --
@@ -60172,10 +66388,24 @@ CREATE INDEX rel_mbn_rpt_gbd_bbk_cadf657e_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_rpt_gbd_bbk_cadf657e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_gbd_bbk_cadf657e_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_rpt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_id);
+
+
+--
 -- Name: rel_mbn_rpt_gbd_bbk_cadf657e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_rpt_gbd_bbk_cadf657e_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_rpt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_rpt_gbd_bbk_cadf657e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_gbd_bbk_cadf657e_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_rpt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_gobid);
 
 
 --
@@ -60204,6 +66434,13 @@ CREATE INDEX rel_mbn_rpt_gbd_bbk_cadf657e_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_mbn_rpt_gbd_bbk_cadf657e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mbn_rpt_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mbn_rpt_gbd_brt_acf01c64_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_gbd_brt_acf01c64_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_rpt_gbd_brt_ligt_in_gebieden_buurt USING btree (_source_id);
 
 
 --
@@ -60270,10 +66507,24 @@ CREATE INDEX rel_mbn_rpt_gbd_brt_acf01c64_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_rpt_gbd_brt_acf01c64_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_gbd_brt_acf01c64_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_rpt_gbd_brt_ligt_in_gebieden_buurt USING btree (_id);
+
+
+--
 -- Name: rel_mbn_rpt_gbd_brt_acf01c64_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_rpt_gbd_brt_acf01c64_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_rpt_gbd_brt_ligt_in_gebieden_buurt USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_rpt_gbd_brt_acf01c64_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_gbd_brt_acf01c64_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_rpt_gbd_brt_ligt_in_gebieden_buurt USING btree (_gobid);
 
 
 --
@@ -60316,6 +66567,13 @@ CREATE INDEX rel_mbn_rpt_gbd_brt_c567336b_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_mbn_rpt_gbd_sdl_45b8091a_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mbn_rpt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mbn_rpt_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_gbd_sdl_9fbe7908_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_rpt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_source_id);
 
 
 --
@@ -60382,10 +66640,24 @@ CREATE INDEX rel_mbn_rpt_gbd_sdl_9fbe7908_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_rpt_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_gbd_sdl_9fbe7908_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_rpt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_id);
+
+
+--
 -- Name: rel_mbn_rpt_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_rpt_gbd_sdl_9fbe7908_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_rpt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_rpt_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_gbd_sdl_9fbe7908_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_rpt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_gobid);
 
 
 --
@@ -60414,6 +66686,13 @@ CREATE INDEX rel_mbn_rpt_gbd_sdl_9fbe7908_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_mbn_rpt_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mbn_rpt_gbd_sdl_ligt_in_gebieden_stadsdeel USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mbn_rpt_nap_pmk_96ccbc9a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_nap_pmk_96ccbc9a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk USING btree (_source_id);
 
 
 --
@@ -60480,10 +66759,24 @@ CREATE INDEX rel_mbn_rpt_nap_pmk_96ccbc9a_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_mbn_rpt_nap_pmk_96ccbc9a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_nap_pmk_96ccbc9a_b80bb7740288fda1f201890375a60c8f ON public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk USING btree (_id);
+
+
+--
 -- Name: rel_mbn_rpt_nap_pmk_96ccbc9a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_mbn_rpt_nap_pmk_96ccbc9a_c5625cb292cd152f07c13709330d1712 ON public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mbn_rpt_nap_pmk_96ccbc9a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mbn_rpt_nap_pmk_96ccbc9a_d05569f886377400312d8c2edd4c6f4c ON public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk USING btree (_gobid);
 
 
 --
@@ -60512,6 +66805,13 @@ CREATE INDEX rel_mbn_rpt_nap_pmk_96ccbc9a_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_mbn_rpt_nap_pmk_96ccbc9a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_cadf657e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_nap_pmk_gbd_bbk_cadf657e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_source_id);
 
 
 --
@@ -60578,10 +66878,24 @@ CREATE INDEX rel_nap_pmk_gbd_bbk_cadf657e_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_nap_pmk_gbd_bbk_cadf657e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_nap_pmk_gbd_bbk_cadf657e_b80bb7740288fda1f201890375a60c8f ON public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_id);
+
+
+--
 -- Name: rel_nap_pmk_gbd_bbk_cadf657e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_nap_pmk_gbd_bbk_cadf657e_c5625cb292cd152f07c13709330d1712 ON public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_nap_pmk_gbd_bbk_cadf657e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_nap_pmk_gbd_bbk_cadf657e_d05569f886377400312d8c2edd4c6f4c ON public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_gobid);
 
 
 --
@@ -60610,6 +66924,13 @@ CREATE INDEX rel_nap_pmk_gbd_bbk_cadf657e_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_nap_pmk_gbd_bbk_cadf657e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_cola_tst_colb_b8af13ea_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_cola_tst_colb_b8af13ea_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_cola_tst_colb_reference USING btree (_source_id);
 
 
 --
@@ -60676,10 +66997,24 @@ CREATE INDEX rel_tst_cola_tst_colb_b8af13ea_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_tst_cola_tst_colb_b8af13ea_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_cola_tst_colb_b8af13ea_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_cola_tst_colb_reference USING btree (_id);
+
+
+--
 -- Name: rel_tst_cola_tst_colb_b8af13ea_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_cola_tst_colb_b8af13ea_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_cola_tst_colb_reference USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_cola_tst_colb_b8af13ea_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_cola_tst_colb_b8af13ea_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_cola_tst_colb_reference USING btree (_gobid);
 
 
 --
@@ -60708,6 +67043,13 @@ CREATE INDEX rel_tst_cola_tst_colb_b8af13ea_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_tst_cola_tst_colb_b8af13ea_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_cola_tst_colb_reference USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_ma1_tst_ma3_5a18d764_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma1_tst_ma3_5a18d764_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_ma1_tst_ma3_manyreference USING btree (_source_id);
 
 
 --
@@ -60774,10 +67116,24 @@ CREATE INDEX rel_tst_ma1_tst_ma3_5a18d764_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_ma1_tst_ma3_5a18d764_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma1_tst_ma3_5a18d764_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_ma1_tst_ma3_manyreference USING btree (_id);
+
+
+--
 -- Name: rel_tst_ma1_tst_ma3_5a18d764_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_ma1_tst_ma3_5a18d764_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_ma1_tst_ma3_manyreference USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_ma1_tst_ma3_5a18d764_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma1_tst_ma3_5a18d764_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_ma1_tst_ma3_manyreference USING btree (_gobid);
 
 
 --
@@ -60806,6 +67162,13 @@ CREATE INDEX rel_tst_ma1_tst_ma3_5a18d764_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_ma1_tst_ma3_5a18d764_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_ma1_tst_ma3_manyreference USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_ma1_tst_ma3_b8af13ea_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma1_tst_ma3_b8af13ea_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_ma1_tst_ma3_reference USING btree (_source_id);
 
 
 --
@@ -60872,10 +67235,24 @@ CREATE INDEX rel_tst_ma1_tst_ma3_b8af13ea_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_ma1_tst_ma3_b8af13ea_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma1_tst_ma3_b8af13ea_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_ma1_tst_ma3_reference USING btree (_id);
+
+
+--
 -- Name: rel_tst_ma1_tst_ma3_b8af13ea_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_ma1_tst_ma3_b8af13ea_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_ma1_tst_ma3_reference USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_ma1_tst_ma3_b8af13ea_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma1_tst_ma3_b8af13ea_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_ma1_tst_ma3_reference USING btree (_gobid);
 
 
 --
@@ -60904,6 +67281,13 @@ CREATE INDEX rel_tst_ma1_tst_ma3_b8af13ea_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_ma1_tst_ma3_b8af13ea_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_ma1_tst_ma3_reference USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_ma2_tst_ma3_5a18d764_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma2_tst_ma3_5a18d764_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_ma2_tst_ma3_manyreference USING btree (_source_id);
 
 
 --
@@ -60970,10 +67354,24 @@ CREATE INDEX rel_tst_ma2_tst_ma3_5a18d764_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_ma2_tst_ma3_5a18d764_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma2_tst_ma3_5a18d764_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_ma2_tst_ma3_manyreference USING btree (_id);
+
+
+--
 -- Name: rel_tst_ma2_tst_ma3_5a18d764_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_ma2_tst_ma3_5a18d764_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_ma2_tst_ma3_manyreference USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_ma2_tst_ma3_5a18d764_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma2_tst_ma3_5a18d764_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_ma2_tst_ma3_manyreference USING btree (_gobid);
 
 
 --
@@ -61002,6 +67400,13 @@ CREATE INDEX rel_tst_ma2_tst_ma3_5a18d764_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_ma2_tst_ma3_5a18d764_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_ma2_tst_ma3_manyreference USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_ma2_tst_ma3_b8af13ea_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma2_tst_ma3_b8af13ea_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_ma2_tst_ma3_reference USING btree (_source_id);
 
 
 --
@@ -61068,10 +67473,24 @@ CREATE INDEX rel_tst_ma2_tst_ma3_b8af13ea_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_ma2_tst_ma3_b8af13ea_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma2_tst_ma3_b8af13ea_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_ma2_tst_ma3_reference USING btree (_id);
+
+
+--
 -- Name: rel_tst_ma2_tst_ma3_b8af13ea_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_ma2_tst_ma3_b8af13ea_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_ma2_tst_ma3_reference USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_ma2_tst_ma3_b8af13ea_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_ma2_tst_ma3_b8af13ea_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_ma2_tst_ma3_reference USING btree (_gobid);
 
 
 --
@@ -61100,6 +67519,13 @@ CREATE INDEX rel_tst_ma2_tst_ma3_b8af13ea_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_ma2_tst_ma3_b8af13ea_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_ma2_tst_ma3_reference USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_rta_tst_rtc_de73fc77_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtc_de73fc77_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_rta_tst_rtc_manyref_to_c USING btree (_source_id);
 
 
 --
@@ -61166,10 +67592,24 @@ CREATE INDEX rel_tst_rta_tst_rtc_de73fc77_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_rta_tst_rtc_de73fc77_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtc_de73fc77_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_rta_tst_rtc_manyref_to_c USING btree (_id);
+
+
+--
 -- Name: rel_tst_rta_tst_rtc_de73fc77_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_rta_tst_rtc_de73fc77_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_rta_tst_rtc_manyref_to_c USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_rta_tst_rtc_de73fc77_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtc_de73fc77_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_rta_tst_rtc_manyref_to_c USING btree (_gobid);
 
 
 --
@@ -61198,6 +67638,13 @@ CREATE INDEX rel_tst_rta_tst_rtc_de73fc77_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_rta_tst_rtc_de73fc77_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_rta_tst_rtc_manyref_to_c USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_rta_tst_rtc_e3d439fb_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtc_e3d439fb_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_rta_tst_rtc_ref_to_c USING btree (_source_id);
 
 
 --
@@ -61264,10 +67711,24 @@ CREATE INDEX rel_tst_rta_tst_rtc_e3d439fb_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_rta_tst_rtc_e3d439fb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtc_e3d439fb_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_rta_tst_rtc_ref_to_c USING btree (_id);
+
+
+--
 -- Name: rel_tst_rta_tst_rtc_e3d439fb_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_rta_tst_rtc_e3d439fb_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_rta_tst_rtc_ref_to_c USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_rta_tst_rtc_e3d439fb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtc_e3d439fb_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_rta_tst_rtc_ref_to_c USING btree (_gobid);
 
 
 --
@@ -61296,6 +67757,13 @@ CREATE INDEX rel_tst_rta_tst_rtc_e3d439fb_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_rta_tst_rtc_e3d439fb_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_rta_tst_rtc_ref_to_c USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_rta_tst_rtd_55adda3b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtd_55adda3b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_rta_tst_rtd_ref_to_d USING btree (_source_id);
 
 
 --
@@ -61362,10 +67830,24 @@ CREATE INDEX rel_tst_rta_tst_rtd_55adda3b_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_rta_tst_rtd_55adda3b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtd_55adda3b_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_rta_tst_rtd_ref_to_d USING btree (_id);
+
+
+--
 -- Name: rel_tst_rta_tst_rtd_55adda3b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_rta_tst_rtd_55adda3b_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_rta_tst_rtd_ref_to_d USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_rta_tst_rtd_55adda3b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtd_55adda3b_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_rta_tst_rtd_ref_to_d USING btree (_gobid);
 
 
 --
@@ -61394,6 +67876,13 @@ CREATE INDEX rel_tst_rta_tst_rtd_55adda3b_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_rta_tst_rtd_55adda3b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_rta_tst_rtd_ref_to_d USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_rta_tst_rtd_eba7f6c3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtd_eba7f6c3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_rta_tst_rtd_manyref_to_d USING btree (_source_id);
 
 
 --
@@ -61460,10 +67949,24 @@ CREATE INDEX rel_tst_rta_tst_rtd_eba7f6c3_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_rta_tst_rtd_eba7f6c3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtd_eba7f6c3_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_rta_tst_rtd_manyref_to_d USING btree (_id);
+
+
+--
 -- Name: rel_tst_rta_tst_rtd_eba7f6c3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_rta_tst_rtd_eba7f6c3_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_rta_tst_rtd_manyref_to_d USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_rta_tst_rtd_eba7f6c3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rta_tst_rtd_eba7f6c3_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_rta_tst_rtd_manyref_to_d USING btree (_gobid);
 
 
 --
@@ -61492,6 +67995,13 @@ CREATE INDEX rel_tst_rta_tst_rtd_eba7f6c3_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_rta_tst_rtd_eba7f6c3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_rta_tst_rtd_manyref_to_d USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_rtb_tst_rtc_de73fc77_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtc_de73fc77_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_rtb_tst_rtc_manyref_to_c USING btree (_source_id);
 
 
 --
@@ -61558,10 +68068,24 @@ CREATE INDEX rel_tst_rtb_tst_rtc_de73fc77_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_rtb_tst_rtc_de73fc77_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtc_de73fc77_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_rtb_tst_rtc_manyref_to_c USING btree (_id);
+
+
+--
 -- Name: rel_tst_rtb_tst_rtc_de73fc77_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_rtb_tst_rtc_de73fc77_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_rtb_tst_rtc_manyref_to_c USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_rtb_tst_rtc_de73fc77_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtc_de73fc77_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_rtb_tst_rtc_manyref_to_c USING btree (_gobid);
 
 
 --
@@ -61590,6 +68114,13 @@ CREATE INDEX rel_tst_rtb_tst_rtc_de73fc77_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_rtb_tst_rtc_de73fc77_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_rtb_tst_rtc_manyref_to_c USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_rtb_tst_rtc_e3d439fb_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtc_e3d439fb_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_rtb_tst_rtc_ref_to_c USING btree (_source_id);
 
 
 --
@@ -61656,10 +68187,24 @@ CREATE INDEX rel_tst_rtb_tst_rtc_e3d439fb_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_rtb_tst_rtc_e3d439fb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtc_e3d439fb_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_rtb_tst_rtc_ref_to_c USING btree (_id);
+
+
+--
 -- Name: rel_tst_rtb_tst_rtc_e3d439fb_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_rtb_tst_rtc_e3d439fb_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_rtb_tst_rtc_ref_to_c USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_rtb_tst_rtc_e3d439fb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtc_e3d439fb_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_rtb_tst_rtc_ref_to_c USING btree (_gobid);
 
 
 --
@@ -61688,6 +68233,13 @@ CREATE INDEX rel_tst_rtb_tst_rtc_e3d439fb_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_rtb_tst_rtc_e3d439fb_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_rtb_tst_rtc_ref_to_c USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_rtb_tst_rtd_55adda3b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtd_55adda3b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_rtb_tst_rtd_ref_to_d USING btree (_source_id);
 
 
 --
@@ -61754,10 +68306,24 @@ CREATE INDEX rel_tst_rtb_tst_rtd_55adda3b_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_rtb_tst_rtd_55adda3b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtd_55adda3b_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_rtb_tst_rtd_ref_to_d USING btree (_id);
+
+
+--
 -- Name: rel_tst_rtb_tst_rtd_55adda3b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_rtb_tst_rtd_55adda3b_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_rtb_tst_rtd_ref_to_d USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_rtb_tst_rtd_55adda3b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtd_55adda3b_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_rtb_tst_rtd_ref_to_d USING btree (_gobid);
 
 
 --
@@ -61786,6 +68352,13 @@ CREATE INDEX rel_tst_rtb_tst_rtd_55adda3b_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_rtb_tst_rtd_55adda3b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_rtb_tst_rtd_ref_to_d USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_rtb_tst_rtd_eba7f6c3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtd_eba7f6c3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_rtb_tst_rtd_manyref_to_d USING btree (_source_id);
 
 
 --
@@ -61852,10 +68425,24 @@ CREATE INDEX rel_tst_rtb_tst_rtd_eba7f6c3_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_rtb_tst_rtd_eba7f6c3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtd_eba7f6c3_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_rtb_tst_rtd_manyref_to_d USING btree (_id);
+
+
+--
 -- Name: rel_tst_rtb_tst_rtd_eba7f6c3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_rtb_tst_rtd_eba7f6c3_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_rtb_tst_rtd_manyref_to_d USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_rtb_tst_rtd_eba7f6c3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_rtb_tst_rtd_eba7f6c3_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_rtb_tst_rtd_manyref_to_d USING btree (_gobid);
 
 
 --
@@ -61884,6 +68471,13 @@ CREATE INDEX rel_tst_rtb_tst_rtd_eba7f6c3_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_rtb_tst_rtd_eba7f6c3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_rtb_tst_rtd_manyref_to_d USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_sec_tst_tse_04c651f3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_sec_tst_tse_04c651f3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_sec_tst_tse_secure_reference USING btree (_source_id);
 
 
 --
@@ -61950,10 +68544,24 @@ CREATE INDEX rel_tst_sec_tst_tse_04c651f3_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_sec_tst_tse_04c651f3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_sec_tst_tse_04c651f3_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_sec_tst_tse_secure_reference USING btree (_id);
+
+
+--
 -- Name: rel_tst_sec_tst_tse_04c651f3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_sec_tst_tse_04c651f3_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_sec_tst_tse_secure_reference USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_sec_tst_tse_04c651f3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_sec_tst_tse_04c651f3_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_sec_tst_tse_secure_reference USING btree (_gobid);
 
 
 --
@@ -61982,6 +68590,13 @@ CREATE INDEX rel_tst_sec_tst_tse_04c651f3_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_sec_tst_tse_04c651f3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_sec_tst_tse_secure_reference USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_tse_tst_ter_5a18d764_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_tse_tst_ter_5a18d764_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_tse_tst_ter_manyreference USING btree (_source_id);
 
 
 --
@@ -62048,10 +68663,24 @@ CREATE INDEX rel_tst_tse_tst_ter_5a18d764_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_tse_tst_ter_5a18d764_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_tse_tst_ter_5a18d764_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_tse_tst_ter_manyreference USING btree (_id);
+
+
+--
 -- Name: rel_tst_tse_tst_ter_5a18d764_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_tse_tst_ter_5a18d764_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_tse_tst_ter_manyreference USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_tse_tst_ter_5a18d764_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_tse_tst_ter_5a18d764_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_tse_tst_ter_manyreference USING btree (_gobid);
 
 
 --
@@ -62080,6 +68709,13 @@ CREATE INDEX rel_tst_tse_tst_ter_5a18d764_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_tse_tst_ter_5a18d764_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_tse_tst_ter_manyreference USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_tst_tse_tst_ter_b8af13ea_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_tse_tst_ter_b8af13ea_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_tst_tse_tst_ter_reference USING btree (_source_id);
 
 
 --
@@ -62146,10 +68782,24 @@ CREATE INDEX rel_tst_tse_tst_ter_b8af13ea_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_tst_tse_tst_ter_b8af13ea_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_tse_tst_ter_b8af13ea_b80bb7740288fda1f201890375a60c8f ON public.rel_tst_tse_tst_ter_reference USING btree (_id);
+
+
+--
 -- Name: rel_tst_tse_tst_ter_b8af13ea_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_tst_tse_tst_ter_b8af13ea_c5625cb292cd152f07c13709330d1712 ON public.rel_tst_tse_tst_ter_reference USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_tst_tse_tst_ter_b8af13ea_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_tst_tse_tst_ter_b8af13ea_d05569f886377400312d8c2edd4c6f4c ON public.rel_tst_tse_tst_ter_reference USING btree (_gobid);
 
 
 --
@@ -62178,6 +68828,13 @@ CREATE INDEX rel_tst_tse_tst_ter_b8af13ea_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_tst_tse_tst_ter_b8af13ea_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_tst_tse_tst_ter_reference USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_wkpb_bpg_brk_kot_b8a38692_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_bpg_brk_kot_b8a38692_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_wkpb_bpg_brk_kot_belast_kadastrale_objecten USING btree (_source_id);
 
 
 --
@@ -62244,10 +68901,24 @@ CREATE INDEX rel_wkpb_bpg_brk_kot_b8a38692_ab35fb2f74ba637ec5dff03e521947fc ON p
 
 
 --
+-- Name: rel_wkpb_bpg_brk_kot_b8a38692_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_bpg_brk_kot_b8a38692_b80bb7740288fda1f201890375a60c8f ON public.rel_wkpb_bpg_brk_kot_belast_kadastrale_objecten USING btree (_id);
+
+
+--
 -- Name: rel_wkpb_bpg_brk_kot_b8a38692_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_wkpb_bpg_brk_kot_b8a38692_c5625cb292cd152f07c13709330d1712 ON public.rel_wkpb_bpg_brk_kot_belast_kadastrale_objecten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_wkpb_bpg_brk_kot_b8a38692_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_bpg_brk_kot_b8a38692_d05569f886377400312d8c2edd4c6f4c ON public.rel_wkpb_bpg_brk_kot_belast_kadastrale_objecten USING btree (_gobid);
 
 
 --
@@ -62276,6 +68947,13 @@ CREATE INDEX rel_wkpb_bpg_brk_kot_b8a38692_ed3f22b3eec2fb035647f924a5b2136e ON p
 --
 
 CREATE INDEX rel_wkpb_bpg_brk_kot_b8a38692_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_wkpb_bpg_brk_kot_belast_kadastrale_objecten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_wkpb_bpg_wkpb_bpg_0a64862c_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_bpg_wkpb_bpg_0a64862c_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_wkpb_bpg_wkpb_bpg_heeft_voorgaande_beperking USING btree (_source_id);
 
 
 --
@@ -62342,10 +69020,24 @@ CREATE INDEX rel_wkpb_bpg_wkpb_bpg_0a64862c_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_wkpb_bpg_wkpb_bpg_0a64862c_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_bpg_wkpb_bpg_0a64862c_b80bb7740288fda1f201890375a60c8f ON public.rel_wkpb_bpg_wkpb_bpg_heeft_voorgaande_beperking USING btree (_id);
+
+
+--
 -- Name: rel_wkpb_bpg_wkpb_bpg_0a64862c_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_wkpb_bpg_wkpb_bpg_0a64862c_c5625cb292cd152f07c13709330d1712 ON public.rel_wkpb_bpg_wkpb_bpg_heeft_voorgaande_beperking USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_wkpb_bpg_wkpb_bpg_0a64862c_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_bpg_wkpb_bpg_0a64862c_d05569f886377400312d8c2edd4c6f4c ON public.rel_wkpb_bpg_wkpb_bpg_heeft_voorgaande_beperking USING btree (_gobid);
 
 
 --
@@ -62374,6 +69066,13 @@ CREATE INDEX rel_wkpb_bpg_wkpb_bpg_0a64862c_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_wkpb_bpg_wkpb_bpg_0a64862c_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_wkpb_bpg_wkpb_bpg_heeft_voorgaande_beperking USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_wkpb_bpg_wkpb_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_bpg_wkpb_dsr_dec11bbe_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_wkpb_bpg_wkpb_dsr_heeft_dossier USING btree (_source_id);
 
 
 --
@@ -62440,10 +69139,24 @@ CREATE INDEX rel_wkpb_bpg_wkpb_dsr_dec11bbe_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_wkpb_bpg_wkpb_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_bpg_wkpb_dsr_dec11bbe_b80bb7740288fda1f201890375a60c8f ON public.rel_wkpb_bpg_wkpb_dsr_heeft_dossier USING btree (_id);
+
+
+--
 -- Name: rel_wkpb_bpg_wkpb_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_wkpb_bpg_wkpb_dsr_dec11bbe_c5625cb292cd152f07c13709330d1712 ON public.rel_wkpb_bpg_wkpb_dsr_heeft_dossier USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_wkpb_bpg_wkpb_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_bpg_wkpb_dsr_dec11bbe_d05569f886377400312d8c2edd4c6f4c ON public.rel_wkpb_bpg_wkpb_dsr_heeft_dossier USING btree (_gobid);
 
 
 --
@@ -62472,6 +69185,13 @@ CREATE INDEX rel_wkpb_bpg_wkpb_dsr_dec11bbe_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_wkpb_bpg_wkpb_dsr_dec11bbe_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_wkpb_bpg_wkpb_dsr_heeft_dossier USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_wkpb_dsr_wkpb_bdt_71a0e858_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_dsr_wkpb_bdt_71a0e858_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_wkpb_dsr_wkpb_bdt_heeft_brondocumenten USING btree (_source_id);
 
 
 --
@@ -62538,10 +69258,24 @@ CREATE INDEX rel_wkpb_dsr_wkpb_bdt_71a0e858_ab35fb2f74ba637ec5dff03e521947fc ON 
 
 
 --
+-- Name: rel_wkpb_dsr_wkpb_bdt_71a0e858_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_dsr_wkpb_bdt_71a0e858_b80bb7740288fda1f201890375a60c8f ON public.rel_wkpb_dsr_wkpb_bdt_heeft_brondocumenten USING btree (_id);
+
+
+--
 -- Name: rel_wkpb_dsr_wkpb_bdt_71a0e858_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_wkpb_dsr_wkpb_bdt_71a0e858_c5625cb292cd152f07c13709330d1712 ON public.rel_wkpb_dsr_wkpb_bdt_heeft_brondocumenten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_wkpb_dsr_wkpb_bdt_71a0e858_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_wkpb_dsr_wkpb_bdt_71a0e858_d05569f886377400312d8c2edd4c6f4c ON public.rel_wkpb_dsr_wkpb_bdt_heeft_brondocumenten USING btree (_gobid);
 
 
 --
@@ -62570,6 +69304,13 @@ CREATE INDEX rel_wkpb_dsr_wkpb_bdt_71a0e858_ed3f22b3eec2fb035647f924a5b2136e ON 
 --
 
 CREATE INDEX rel_wkpb_dsr_wkpb_bdt_71a0e858_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_wkpb_dsr_wkpb_bdt_heeft_brondocumenten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_woz_wdt_bag_lps_4559dce0_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_lps_4559dce0_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_woz_wdt_bag_lps_is_verbonden_met_ligplaats USING btree (_source_id);
 
 
 --
@@ -62636,10 +69377,24 @@ CREATE INDEX rel_woz_wdt_bag_lps_4559dce0_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_woz_wdt_bag_lps_4559dce0_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_lps_4559dce0_b80bb7740288fda1f201890375a60c8f ON public.rel_woz_wdt_bag_lps_is_verbonden_met_ligplaats USING btree (_id);
+
+
+--
 -- Name: rel_woz_wdt_bag_lps_4559dce0_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_woz_wdt_bag_lps_4559dce0_c5625cb292cd152f07c13709330d1712 ON public.rel_woz_wdt_bag_lps_is_verbonden_met_ligplaats USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_woz_wdt_bag_lps_4559dce0_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_lps_4559dce0_d05569f886377400312d8c2edd4c6f4c ON public.rel_woz_wdt_bag_lps_is_verbonden_met_ligplaats USING btree (_gobid);
 
 
 --
@@ -62668,6 +69423,13 @@ CREATE INDEX rel_woz_wdt_bag_lps_4559dce0_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_woz_wdt_bag_lps_4559dce0_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_woz_wdt_bag_lps_is_verbonden_met_ligplaats USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_woz_wdt_bag_pnd_7a9706fd_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_pnd_7a9706fd_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_woz_wdt_bag_pnd_heeft_pand USING btree (_source_id);
 
 
 --
@@ -62734,10 +69496,24 @@ CREATE INDEX rel_woz_wdt_bag_pnd_7a9706fd_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_woz_wdt_bag_pnd_7a9706fd_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_pnd_7a9706fd_b80bb7740288fda1f201890375a60c8f ON public.rel_woz_wdt_bag_pnd_heeft_pand USING btree (_id);
+
+
+--
 -- Name: rel_woz_wdt_bag_pnd_7a9706fd_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_woz_wdt_bag_pnd_7a9706fd_c5625cb292cd152f07c13709330d1712 ON public.rel_woz_wdt_bag_pnd_heeft_pand USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_woz_wdt_bag_pnd_7a9706fd_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_pnd_7a9706fd_d05569f886377400312d8c2edd4c6f4c ON public.rel_woz_wdt_bag_pnd_heeft_pand USING btree (_gobid);
 
 
 --
@@ -62766,6 +69542,13 @@ CREATE INDEX rel_woz_wdt_bag_pnd_7a9706fd_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_woz_wdt_bag_pnd_7a9706fd_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_woz_wdt_bag_pnd_heeft_pand USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_woz_wdt_bag_sps_4569334f_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_sps_4569334f_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_woz_wdt_bag_sps_is_verbonden_met_standplaats USING btree (_source_id);
 
 
 --
@@ -62832,10 +69615,24 @@ CREATE INDEX rel_woz_wdt_bag_sps_4569334f_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_woz_wdt_bag_sps_4569334f_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_sps_4569334f_b80bb7740288fda1f201890375a60c8f ON public.rel_woz_wdt_bag_sps_is_verbonden_met_standplaats USING btree (_id);
+
+
+--
 -- Name: rel_woz_wdt_bag_sps_4569334f_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_woz_wdt_bag_sps_4569334f_c5625cb292cd152f07c13709330d1712 ON public.rel_woz_wdt_bag_sps_is_verbonden_met_standplaats USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_woz_wdt_bag_sps_4569334f_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_sps_4569334f_d05569f886377400312d8c2edd4c6f4c ON public.rel_woz_wdt_bag_sps_is_verbonden_met_standplaats USING btree (_gobid);
 
 
 --
@@ -62864,6 +69661,13 @@ CREATE INDEX rel_woz_wdt_bag_sps_4569334f_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_woz_wdt_bag_sps_4569334f_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_woz_wdt_bag_sps_is_verbonden_met_standplaats USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_woz_wdt_bag_vot_672a5c7b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_vot_672a5c7b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_woz_wdt_bag_vot_is_verbonden_met_verblijfsobject USING btree (_source_id);
 
 
 --
@@ -62930,10 +69734,24 @@ CREATE INDEX rel_woz_wdt_bag_vot_672a5c7b_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_woz_wdt_bag_vot_672a5c7b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_vot_672a5c7b_b80bb7740288fda1f201890375a60c8f ON public.rel_woz_wdt_bag_vot_is_verbonden_met_verblijfsobject USING btree (_id);
+
+
+--
 -- Name: rel_woz_wdt_bag_vot_672a5c7b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_woz_wdt_bag_vot_672a5c7b_c5625cb292cd152f07c13709330d1712 ON public.rel_woz_wdt_bag_vot_is_verbonden_met_verblijfsobject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_woz_wdt_bag_vot_672a5c7b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wdt_bag_vot_672a5c7b_d05569f886377400312d8c2edd4c6f4c ON public.rel_woz_wdt_bag_vot_is_verbonden_met_verblijfsobject USING btree (_gobid);
 
 
 --
@@ -62962,6 +69780,13 @@ CREATE INDEX rel_woz_wdt_bag_vot_672a5c7b_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_woz_wdt_bag_vot_672a5c7b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_woz_wdt_bag_vot_is_verbonden_met_verblijfsobject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_woz_wot_brk_kot_eb2ad2f2_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wot_brk_kot_eb2ad2f2_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_woz_wot_brk_kot_bevat_kadastraalobject USING btree (_source_id);
 
 
 --
@@ -63028,10 +69853,24 @@ CREATE INDEX rel_woz_wot_brk_kot_eb2ad2f2_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_woz_wot_brk_kot_eb2ad2f2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wot_brk_kot_eb2ad2f2_b80bb7740288fda1f201890375a60c8f ON public.rel_woz_wot_brk_kot_bevat_kadastraalobject USING btree (_id);
+
+
+--
 -- Name: rel_woz_wot_brk_kot_eb2ad2f2_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_woz_wot_brk_kot_eb2ad2f2_c5625cb292cd152f07c13709330d1712 ON public.rel_woz_wot_brk_kot_bevat_kadastraalobject USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_woz_wot_brk_kot_eb2ad2f2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wot_brk_kot_eb2ad2f2_d05569f886377400312d8c2edd4c6f4c ON public.rel_woz_wot_brk_kot_bevat_kadastraalobject USING btree (_gobid);
 
 
 --
@@ -63060,6 +69899,13 @@ CREATE INDEX rel_woz_wot_brk_kot_eb2ad2f2_ed3f22b3eec2fb035647f924a5b2136e ON pu
 --
 
 CREATE INDEX rel_woz_wot_brk_kot_eb2ad2f2_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_woz_wot_brk_kot_bevat_kadastraalobject USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_woz_wot_woz_wdt_a11dee97_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wot_woz_wdt_a11dee97_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten USING btree (_source_id);
 
 
 --
@@ -63126,10 +69972,24 @@ CREATE INDEX rel_woz_wot_woz_wdt_a11dee97_ab35fb2f74ba637ec5dff03e521947fc ON pu
 
 
 --
+-- Name: rel_woz_wot_woz_wdt_a11dee97_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wot_woz_wdt_a11dee97_b80bb7740288fda1f201890375a60c8f ON public.rel_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten USING btree (_id);
+
+
+--
 -- Name: rel_woz_wot_woz_wdt_a11dee97_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX rel_woz_wot_woz_wdt_a11dee97_c5625cb292cd152f07c13709330d1712 ON public.rel_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_woz_wot_woz_wdt_a11dee97_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_woz_wot_woz_wdt_a11dee97_d05569f886377400312d8c2edd4c6f4c ON public.rel_woz_wot_woz_wdt_bestaat_uit_wozdeelobjecten USING btree (_gobid);
 
 
 --
@@ -65709,6 +72569,13 @@ CREATE INDEX tst_cola_1a9d849ff5a68997176b6144236806ae ON public.test_catalogue_
 
 
 --
+-- Name: tst_cola_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_cola_2a4dbedb477015cfe2b9f2c990906f44 ON public.test_catalogue_rel_collapsed_a USING btree (_id, volgnummer);
+
+
+--
 -- Name: tst_cola_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -65737,10 +72604,31 @@ CREATE INDEX tst_cola_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_
 
 
 --
+-- Name: tst_cola_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_cola_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_rel_collapsed_a USING btree (_tid);
+
+
+--
+-- Name: tst_cola_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_cola_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_rel_collapsed_a USING btree (_id);
+
+
+--
 -- Name: tst_cola_b8af13ea9c8fe890c9979a1fa8dbde22; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX tst_cola_b8af13ea9c8fe890c9979a1fa8dbde22 ON public.test_catalogue_rel_collapsed_a USING gin (reference);
+
+
+--
+-- Name: tst_cola_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_cola_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_rel_collapsed_a USING btree (_gobid);
 
 
 --
@@ -65772,6 +72660,13 @@ CREATE INDEX tst_colb_1a9d849ff5a68997176b6144236806ae ON public.test_catalogue_
 
 
 --
+-- Name: tst_colb_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_colb_2a4dbedb477015cfe2b9f2c990906f44 ON public.test_catalogue_rel_collapsed_b USING btree (_id, volgnummer);
+
+
+--
 -- Name: tst_colb_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -65800,6 +72695,27 @@ CREATE INDEX tst_colb_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_
 
 
 --
+-- Name: tst_colb_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_colb_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_rel_collapsed_b USING btree (_tid);
+
+
+--
+-- Name: tst_colb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_colb_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_rel_collapsed_b USING btree (_id);
+
+
+--
+-- Name: tst_colb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_colb_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_rel_collapsed_b USING btree (_gobid);
+
+
+--
 -- Name: tst_colb_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -65818,6 +72734,13 @@ CREATE INDEX tst_ma1_0afd9202ba86aa11ce63ad7007e7990b ON public.test_catalogue_r
 --
 
 CREATE INDEX tst_ma1_1a9d849ff5a68997176b6144236806ae ON public.test_catalogue_rel_multiple_allowed_src USING btree (_expiration_date);
+
+
+--
+-- Name: tst_ma1_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma1_2a4dbedb477015cfe2b9f2c990906f44 ON public.test_catalogue_rel_multiple_allowed_src USING btree (_id, volgnummer);
 
 
 --
@@ -65856,10 +72779,31 @@ CREATE INDEX tst_ma1_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_r
 
 
 --
+-- Name: tst_ma1_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma1_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_rel_multiple_allowed_src USING btree (_tid);
+
+
+--
+-- Name: tst_ma1_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma1_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_rel_multiple_allowed_src USING btree (_id);
+
+
+--
 -- Name: tst_ma1_b8af13ea9c8fe890c9979a1fa8dbde22; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX tst_ma1_b8af13ea9c8fe890c9979a1fa8dbde22 ON public.test_catalogue_rel_multiple_allowed_src USING gin (reference);
+
+
+--
+-- Name: tst_ma1_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma1_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_rel_multiple_allowed_src USING btree (_gobid);
 
 
 --
@@ -65881,6 +72825,13 @@ CREATE INDEX tst_ma2_0afd9202ba86aa11ce63ad7007e7990b ON public.test_catalogue_r
 --
 
 CREATE INDEX tst_ma2_1a9d849ff5a68997176b6144236806ae ON public.test_catalogue_rel_multiple_allowed_multisource_src USING btree (_expiration_date);
+
+
+--
+-- Name: tst_ma2_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma2_2a4dbedb477015cfe2b9f2c990906f44 ON public.test_catalogue_rel_multiple_allowed_multisource_src USING btree (_id, volgnummer);
 
 
 --
@@ -65919,10 +72870,31 @@ CREATE INDEX tst_ma2_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_r
 
 
 --
+-- Name: tst_ma2_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma2_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_rel_multiple_allowed_multisource_src USING btree (_tid);
+
+
+--
+-- Name: tst_ma2_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma2_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_rel_multiple_allowed_multisource_src USING btree (_id);
+
+
+--
 -- Name: tst_ma2_b8af13ea9c8fe890c9979a1fa8dbde22; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX tst_ma2_b8af13ea9c8fe890c9979a1fa8dbde22 ON public.test_catalogue_rel_multiple_allowed_multisource_src USING gin (reference);
+
+
+--
+-- Name: tst_ma2_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma2_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_rel_multiple_allowed_multisource_src USING btree (_gobid);
 
 
 --
@@ -65944,6 +72916,13 @@ CREATE INDEX tst_ma3_0afd9202ba86aa11ce63ad7007e7990b ON public.test_catalogue_r
 --
 
 CREATE INDEX tst_ma3_1a9d849ff5a68997176b6144236806ae ON public.test_catalogue_rel_multiple_allowed_dst USING btree (_expiration_date);
+
+
+--
+-- Name: tst_ma3_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma3_2a4dbedb477015cfe2b9f2c990906f44 ON public.test_catalogue_rel_multiple_allowed_dst USING btree (_id, volgnummer);
 
 
 --
@@ -65975,6 +72954,27 @@ CREATE INDEX tst_ma3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_r
 
 
 --
+-- Name: tst_ma3_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma3_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_rel_multiple_allowed_dst USING btree (_tid);
+
+
+--
+-- Name: tst_ma3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma3_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_rel_multiple_allowed_dst USING btree (_id);
+
+
+--
+-- Name: tst_ma3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ma3_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_rel_multiple_allowed_dst USING btree (_gobid);
+
+
+--
 -- Name: tst_ma3_de78048debc5ea8046d615823f516a5d; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -66000,6 +73000,13 @@ CREATE INDEX tst_rta_0afd9202ba86aa11ce63ad7007e7990b ON public.test_catalogue_r
 --
 
 CREATE INDEX tst_rta_1a9d849ff5a68997176b6144236806ae ON public.test_catalogue_rel_test_entity_a USING btree (_expiration_date);
+
+
+--
+-- Name: tst_rta_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rta_2a4dbedb477015cfe2b9f2c990906f44 ON public.test_catalogue_rel_test_entity_a USING btree (_id, volgnummer);
 
 
 --
@@ -66035,6 +73042,27 @@ CREATE INDEX tst_rta_613273a0ec2090693894cea102aa8c06 ON public.test_catalogue_r
 --
 
 CREATE INDEX tst_rta_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_rel_test_entity_a USING btree (_date_deleted);
+
+
+--
+-- Name: tst_rta_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rta_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_rel_test_entity_a USING btree (_tid);
+
+
+--
+-- Name: tst_rta_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rta_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_rel_test_entity_a USING btree (_id);
+
+
+--
+-- Name: tst_rta_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rta_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_rel_test_entity_a USING btree (_gobid);
 
 
 --
@@ -66115,6 +73143,27 @@ CREATE INDEX tst_rtb_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_r
 
 
 --
+-- Name: tst_rtb_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtb_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_rel_test_entity_b USING btree (_tid);
+
+
+--
+-- Name: tst_rtb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtb_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_rel_test_entity_b USING btree (_id);
+
+
+--
+-- Name: tst_rtb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtb_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_rel_test_entity_b USING btree (_gobid);
+
+
+--
 -- Name: tst_rtb_de73fc77b638b59ba6663aade9c890f0; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -66164,6 +73213,13 @@ CREATE INDEX tst_rtc_1a9d849ff5a68997176b6144236806ae ON public.test_catalogue_r
 
 
 --
+-- Name: tst_rtc_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtc_2a4dbedb477015cfe2b9f2c990906f44 ON public.test_catalogue_rel_test_entity_c USING btree (_id, volgnummer);
+
+
+--
 -- Name: tst_rtc_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -66189,6 +73245,27 @@ CREATE INDEX tst_rtc_613273a0ec2090693894cea102aa8c06 ON public.test_catalogue_r
 --
 
 CREATE INDEX tst_rtc_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_rel_test_entity_c USING btree (_date_deleted);
+
+
+--
+-- Name: tst_rtc_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtc_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_rel_test_entity_c USING btree (_tid);
+
+
+--
+-- Name: tst_rtc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtc_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_rel_test_entity_c USING btree (_id);
+
+
+--
+-- Name: tst_rtc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtc_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_rel_test_entity_c USING btree (_gobid);
 
 
 --
@@ -66248,6 +73325,27 @@ CREATE INDEX tst_rtd_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_r
 
 
 --
+-- Name: tst_rtd_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtd_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_rel_test_entity_d USING btree (_tid);
+
+
+--
+-- Name: tst_rtd_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtd_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_rel_test_entity_d USING btree (_id);
+
+
+--
+-- Name: tst_rtd_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_rtd_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_rel_test_entity_d USING btree (_gobid);
+
+
+--
 -- Name: tst_rtd_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -66297,6 +73395,27 @@ CREATE INDEX tst_sec_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_s
 
 
 --
+-- Name: tst_sec_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_sec_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_secure USING btree (_tid);
+
+
+--
+-- Name: tst_sec_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_sec_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_secure USING btree (_id);
+
+
+--
+-- Name: tst_sec_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_sec_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_secure USING btree (_gobid);
+
+
+--
 -- Name: tst_sec_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -66315,6 +73434,13 @@ CREATE INDEX tst_tea_0afd9202ba86aa11ce63ad7007e7990b ON public.test_catalogue_t
 --
 
 CREATE INDEX tst_tea_1a9d849ff5a68997176b6144236806ae ON public.test_catalogue_test_entity_autoid_states USING btree (_expiration_date);
+
+
+--
+-- Name: tst_tea_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_tea_2a4dbedb477015cfe2b9f2c990906f44 ON public.test_catalogue_test_entity_autoid_states USING btree (_id, volgnummer);
 
 
 --
@@ -66343,6 +73469,27 @@ CREATE INDEX tst_tea_613273a0ec2090693894cea102aa8c06 ON public.test_catalogue_t
 --
 
 CREATE INDEX tst_tea_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_test_entity_autoid_states USING btree (_date_deleted);
+
+
+--
+-- Name: tst_tea_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_tea_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_test_entity_autoid_states USING btree (_tid);
+
+
+--
+-- Name: tst_tea_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_tea_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_test_entity_autoid_states USING btree (_id);
+
+
+--
+-- Name: tst_tea_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_tea_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_test_entity_autoid_states USING btree (_gobid);
 
 
 --
@@ -66395,10 +73542,31 @@ CREATE INDEX tst_ter_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_t
 
 
 --
+-- Name: tst_ter_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ter_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_test_entity_reference USING btree (_tid);
+
+
+--
 -- Name: tst_ter_b45cffe084dd3d20d928bee85e7b0f21; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX tst_ter_b45cffe084dd3d20d928bee85e7b0f21 ON public.test_catalogue_test_entity_reference USING btree (string);
+
+
+--
+-- Name: tst_ter_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ter_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_test_entity_reference USING btree (_id);
+
+
+--
+-- Name: tst_ter_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_ter_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_test_entity_reference USING btree (_gobid);
 
 
 --
@@ -66451,10 +73619,31 @@ CREATE INDEX tst_tse_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.test_catalogue_t
 
 
 --
+-- Name: tst_tse_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_tse_97beaa21d4819a1131833b897504ce31 ON public.test_catalogue_test_entity USING btree (_tid);
+
+
+--
+-- Name: tst_tse_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_tse_b80bb7740288fda1f201890375a60c8f ON public.test_catalogue_test_entity USING btree (_id);
+
+
+--
 -- Name: tst_tse_b8af13ea9c8fe890c9979a1fa8dbde22; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX tst_tse_b8af13ea9c8fe890c9979a1fa8dbde22 ON public.test_catalogue_test_entity USING gin (reference);
+
+
+--
+-- Name: tst_tse_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX tst_tse_d05569f886377400312d8c2edd4c6f4c ON public.test_catalogue_test_entity USING btree (_gobid);
 
 
 --
@@ -66507,6 +73696,27 @@ CREATE INDEX wkpb_bdt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.wkpb_brondocume
 
 
 --
+-- Name: wkpb_bdt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_bdt_97beaa21d4819a1131833b897504ce31 ON public.wkpb_brondocumenten USING btree (_tid);
+
+
+--
+-- Name: wkpb_bdt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_bdt_b80bb7740288fda1f201890375a60c8f ON public.wkpb_brondocumenten USING btree (_id);
+
+
+--
+-- Name: wkpb_bdt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_bdt_d05569f886377400312d8c2edd4c6f4c ON public.wkpb_brondocumenten USING btree (_gobid);
+
+
+--
 -- Name: wkpb_bdt_ddd983e36ed89c59a37af7ed7226596b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -66549,6 +73759,13 @@ CREATE INDEX wkpb_bpg_1a9d849ff5a68997176b6144236806ae ON public.wkpb_beperkinge
 
 
 --
+-- Name: wkpb_bpg_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_bpg_2a4dbedb477015cfe2b9f2c990906f44 ON public.wkpb_beperkingen USING btree (_id, volgnummer);
+
+
+--
 -- Name: wkpb_bpg_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -66574,6 +73791,27 @@ CREATE INDEX wkpb_bpg_613273a0ec2090693894cea102aa8c06 ON public.wkpb_beperkinge
 --
 
 CREATE INDEX wkpb_bpg_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.wkpb_beperkingen USING btree (_date_deleted);
+
+
+--
+-- Name: wkpb_bpg_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_bpg_97beaa21d4819a1131833b897504ce31 ON public.wkpb_beperkingen USING btree (_tid);
+
+
+--
+-- Name: wkpb_bpg_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_bpg_b80bb7740288fda1f201890375a60c8f ON public.wkpb_beperkingen USING btree (_id);
+
+
+--
+-- Name: wkpb_bpg_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_bpg_d05569f886377400312d8c2edd4c6f4c ON public.wkpb_beperkingen USING btree (_gobid);
 
 
 --
@@ -66640,10 +73878,31 @@ CREATE INDEX wkpb_dsr_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.wkpb_dossiers U
 
 
 --
+-- Name: wkpb_dsr_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_dsr_97beaa21d4819a1131833b897504ce31 ON public.wkpb_dossiers USING btree (_tid);
+
+
+--
+-- Name: wkpb_dsr_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_dsr_b80bb7740288fda1f201890375a60c8f ON public.wkpb_dossiers USING btree (_id);
+
+
+--
 -- Name: wkpb_dsr_bbbc258f975e6acedd7d6857c581caa0; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX wkpb_dsr_bbbc258f975e6acedd7d6857c581caa0 ON public.wkpb_dossiers USING btree (dossier);
+
+
+--
+-- Name: wkpb_dsr_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX wkpb_dsr_d05569f886377400312d8c2edd4c6f4c ON public.wkpb_dossiers USING btree (_gobid);
 
 
 --
@@ -66665,6 +73924,13 @@ CREATE INDEX woz_wdt_0afd9202ba86aa11ce63ad7007e7990b ON public.woz_wozdeelobjec
 --
 
 CREATE INDEX woz_wdt_1a9d849ff5a68997176b6144236806ae ON public.woz_wozdeelobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: woz_wdt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wdt_2a4dbedb477015cfe2b9f2c990906f44 ON public.woz_wozdeelobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -66731,6 +73997,27 @@ CREATE INDEX woz_wdt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.woz_wozdeelobjec
 
 
 --
+-- Name: woz_wdt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wdt_97beaa21d4819a1131833b897504ce31 ON public.woz_wozdeelobjecten USING btree (_tid);
+
+
+--
+-- Name: woz_wdt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wdt_b80bb7740288fda1f201890375a60c8f ON public.woz_wozdeelobjecten USING btree (_id);
+
+
+--
+-- Name: woz_wdt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wdt_d05569f886377400312d8c2edd4c6f4c ON public.woz_wozdeelobjecten USING btree (_gobid);
+
+
+--
 -- Name: woz_wdt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -66749,6 +74036,13 @@ CREATE INDEX woz_wot_0afd9202ba86aa11ce63ad7007e7990b ON public.woz_wozobjecten 
 --
 
 CREATE INDEX woz_wot_1a9d849ff5a68997176b6144236806ae ON public.woz_wozobjecten USING btree (_expiration_date);
+
+
+--
+-- Name: woz_wot_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wot_2a4dbedb477015cfe2b9f2c990906f44 ON public.woz_wozobjecten USING btree (_id, volgnummer);
 
 
 --
@@ -66784,6 +74078,27 @@ CREATE INDEX woz_wot_613273a0ec2090693894cea102aa8c06 ON public.woz_wozobjecten 
 --
 
 CREATE INDEX woz_wot_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.woz_wozobjecten USING btree (_date_deleted);
+
+
+--
+-- Name: woz_wot_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wot_97beaa21d4819a1131833b897504ce31 ON public.woz_wozobjecten USING btree (_tid);
+
+
+--
+-- Name: woz_wot_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wot_b80bb7740288fda1f201890375a60c8f ON public.woz_wozobjecten USING btree (_id);
+
+
+--
+-- Name: woz_wot_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wot_d05569f886377400312d8c2edd4c6f4c ON public.woz_wozobjecten USING btree (_gobid);
 
 
 --
