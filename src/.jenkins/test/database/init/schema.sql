@@ -406,6 +406,31 @@ $$;
 ALTER FUNCTION public.remove_indexes_brp() OWNER TO gobtest;
 
 --
+-- Name: remove_indexes_gist(); Type: FUNCTION; Schema: public; Owner: gobtest
+--
+
+CREATE FUNCTION public.remove_indexes_gist() RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+        declare
+            indices CURSOR FOR
+            SELECT
+                indexname
+            FROM
+                pg_catalog.pg_indexes
+            WHERE
+                schemaname = 'public' AND LOWER(indexdef) LIKE '%gist (geometrie)';
+        begin
+            for i in indices loop
+                execute 'DROP INDEX ' || i.indexname;
+            end loop;
+        end;
+        $$;
+
+
+ALTER FUNCTION public.remove_indexes_gist() OWNER TO gobtest;
+
+--
 -- Name: set_rel_ids(); Type: FUNCTION; Schema: public; Owner: gobtest
 --
 
@@ -4184,83 +4209,6 @@ CREATE VIEW legacy.gebieden_wijken AS
 ALTER TABLE legacy.gebieden_wijken OWNER TO gobtest;
 
 --
--- Name: meetbouten_metingen; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.meetbouten_metingen (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    hoort_bij_meetbouten_meetbout jsonb,
-    datum date,
-    type_meting character(1),
-    wijze_van_inwinnen jsonb,
-    hoogte_tov_nap numeric,
-    zakking numeric,
-    refereert_aan_meetbouten_referentiepunten jsonb,
-    zakkingssnelheid numeric,
-    zakking_cumulatief numeric,
-    is_gemeten_door character varying,
-    hoeveelste_meting integer,
-    aantal_dagen integer,
-    publiceerbaar boolean,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.meetbouten_metingen OWNER TO gobtest;
-
---
--- Name: meetbouten_metingen; Type: VIEW; Schema: legacy; Owner: gobtest
---
-
-CREATE VIEW legacy.meetbouten_metingen AS
- SELECT meetbouten_metingen.identificatie,
-    meetbouten_metingen.hoort_bij_meetbouten_meetbout AS hoort_bij_meetbout,
-    meetbouten_metingen.datum,
-    meetbouten_metingen.type_meting,
-    meetbouten_metingen.wijze_van_inwinnen,
-    meetbouten_metingen.hoogte_tov_nap,
-    meetbouten_metingen.zakking,
-    meetbouten_metingen.refereert_aan_meetbouten_referentiepunten AS refereert_aan_referentiepunten,
-    meetbouten_metingen.zakkingssnelheid,
-    meetbouten_metingen.zakking_cumulatief,
-    meetbouten_metingen.is_gemeten_door,
-    meetbouten_metingen.hoeveelste_meting,
-    meetbouten_metingen.aantal_dagen,
-    meetbouten_metingen.publiceerbaar,
-    meetbouten_metingen._source,
-    meetbouten_metingen._application,
-    meetbouten_metingen._source_id,
-    meetbouten_metingen._last_event,
-    meetbouten_metingen._hash,
-    meetbouten_metingen._version,
-    meetbouten_metingen._date_created,
-    meetbouten_metingen._date_confirmed,
-    meetbouten_metingen._date_modified,
-    meetbouten_metingen._date_deleted,
-    meetbouten_metingen._expiration_date,
-    meetbouten_metingen._gobid,
-    meetbouten_metingen._id,
-    meetbouten_metingen._tid
-   FROM public.meetbouten_metingen;
-
-
-ALTER TABLE legacy.meetbouten_metingen OWNER TO gobtest;
-
---
 -- Name: meetbouten_rollagen; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -5747,9 +5695,9 @@ CREATE TABLE public.brk2_kadastraleobjecten (
     afwijking_lijst_rechthebbenden character varying,
     geometrie public.geometry(Geometry,28992),
     plaatscoordinaten public.geometry(Point,28992),
-    perceelnummer_rotatie numeric,
+    perceelnummer_rotatie numeric(13,3),
     bijpijling_geometrie public.geometry(Geometry,28992),
-    koopsom numeric,
+    koopsom numeric(12,2),
     koopsom_valutacode character varying,
     koopjaar character varying,
     indicatie_meer_objecten character varying,
@@ -6935,6 +6883,45 @@ ALTER SEQUENCE public.meetbouten_meetbouten__gobid_seq OWNED BY public.meetboute
 
 
 --
+-- Name: meetbouten_metingen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.meetbouten_metingen (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    hoort_bij_meetbouten_meetbout jsonb,
+    datum date,
+    type_meting character(1),
+    wijze_van_inwinnen jsonb,
+    hoogte_tov_nap numeric(14,4),
+    zakking numeric(11,1),
+    refereert_aan_meetbouten_referentiepunten jsonb,
+    zakkingssnelheid numeric(14,4),
+    zakking_cumulatief numeric(11,1),
+    is_gemeten_door character varying,
+    hoeveelste_meting integer,
+    aantal_dagen integer,
+    publiceerbaar boolean,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.meetbouten_metingen OWNER TO gobtest;
+
+--
 -- Name: meetbouten_metingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -6973,7 +6960,7 @@ CREATE TABLE public.meetbouten_referentiepunten (
     _date_deleted timestamp without time zone,
     identificatie character varying,
     locatie character varying,
-    hoogte_tov_nap numeric,
+    hoogte_tov_nap numeric(14,4),
     datum date,
     status jsonb,
     vervaldatum date,
@@ -9086,10 +9073,10 @@ CREATE MATERIALIZED VIEW public.mv_bag_wps_bag_ozk_heeft_onderzoeken AS
 ALTER TABLE public.mv_bag_wps_bag_ozk_heeft_onderzoeken OWNER TO gobtest;
 
 --
--- Name: rel_bag_wps_brk_gme_ligt_in_gemeente; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_ligt_in_gemeente; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_bag_wps_brk_gme_ligt_in_gemeente (
+CREATE TABLE public.rel_bag_wps_brk2_gme_ligt_in_gemeente (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -9099,6 +9086,10 @@ CREATE TABLE public.rel_bag_wps_brk_gme_ligt_in_gemeente (
     dst_source character varying,
     dst_id character varying,
     dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
     _source character varying,
     _application character varying,
     _source_id character varying,
@@ -9112,35 +9103,31 @@ CREATE TABLE public.rel_bag_wps_brk_gme_ligt_in_gemeente (
     _expiration_date timestamp without time zone,
     _gobid integer NOT NULL,
     _id character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _last_dst_event integer,
-    _last_src_event integer,
     _tid character varying
 );
 
 
-ALTER TABLE public.rel_bag_wps_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.rel_bag_wps_brk2_gme_ligt_in_gemeente OWNER TO gobtest;
 
 --
--- Name: mv_bag_wps_brk_gme_ligt_in_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_bag_wps_brk2_gme_ligt_in_gemeente; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_bag_wps_brk_gme_ligt_in_gemeente AS
- SELECT rel_bag_wps_brk_gme_ligt_in_gemeente._gobid,
-    rel_bag_wps_brk_gme_ligt_in_gemeente.src_id,
-    rel_bag_wps_brk_gme_ligt_in_gemeente.src_volgnummer,
-    rel_bag_wps_brk_gme_ligt_in_gemeente.dst_id,
-    rel_bag_wps_brk_gme_ligt_in_gemeente.dst_volgnummer,
-    rel_bag_wps_brk_gme_ligt_in_gemeente.begin_geldigheid,
-    rel_bag_wps_brk_gme_ligt_in_gemeente.eind_geldigheid,
-    rel_bag_wps_brk_gme_ligt_in_gemeente.bronwaarde
-   FROM public.rel_bag_wps_brk_gme_ligt_in_gemeente
-  WHERE (rel_bag_wps_brk_gme_ligt_in_gemeente._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_bag_wps_brk2_gme_ligt_in_gemeente AS
+ SELECT rel_bag_wps_brk2_gme_ligt_in_gemeente._gobid,
+    rel_bag_wps_brk2_gme_ligt_in_gemeente.src_id,
+    rel_bag_wps_brk2_gme_ligt_in_gemeente.src_volgnummer,
+    rel_bag_wps_brk2_gme_ligt_in_gemeente.dst_id,
+    rel_bag_wps_brk2_gme_ligt_in_gemeente.dst_volgnummer,
+    rel_bag_wps_brk2_gme_ligt_in_gemeente.begin_geldigheid,
+    rel_bag_wps_brk2_gme_ligt_in_gemeente.eind_geldigheid,
+    rel_bag_wps_brk2_gme_ligt_in_gemeente.bronwaarde
+   FROM public.rel_bag_wps_brk2_gme_ligt_in_gemeente
+  WHERE (rel_bag_wps_brk2_gme_ligt_in_gemeente._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_bag_wps_brk_gme_ligt_in_gemeente OWNER TO gobtest;
+ALTER TABLE public.mv_bag_wps_brk2_gme_ligt_in_gemeente OWNER TO gobtest;
 
 --
 -- Name: rel_brk2_akt_brk2_kot__hft_btrk_op_brk_kot_; Type: TABLE; Schema: public; Owner: gobtest
@@ -16944,7 +16931,7 @@ CREATE TABLE public.nap_peilmerken (
     _date_modified timestamp without time zone,
     _date_deleted timestamp without time zone,
     identificatie character varying,
-    hoogte_tov_nap numeric,
+    hoogte_tov_nap numeric(14,4),
     jaar integer,
     omschrijving character varying,
     windrichting character varying,
@@ -21831,10 +21818,10 @@ ALTER SEQUENCE public.rel_bag_wps_bag_ozk_heeft_onderzoeken__gobid_seq OWNED BY 
 
 
 --
--- Name: rel_bag_wps_brk_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_bag_wps_brk_gme_ligt_in_gemeente__gobid_seq
+CREATE SEQUENCE public.rel_bag_wps_brk2_gme_ligt_in_gemeente__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21843,13 +21830,13 @@ CREATE SEQUENCE public.rel_bag_wps_brk_gme_ligt_in_gemeente__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.rel_bag_wps_brk_gme_ligt_in_gemeente__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_bag_wps_brk2_gme_ligt_in_gemeente__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_bag_wps_brk_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_ligt_in_gemeente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_bag_wps_brk_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_bag_wps_brk_gme_ligt_in_gemeente._gobid;
+ALTER SEQUENCE public.rel_bag_wps_brk2_gme_ligt_in_gemeente__gobid_seq OWNED BY public.rel_bag_wps_brk2_gme_ligt_in_gemeente._gobid;
 
 
 --
@@ -26544,10 +26531,10 @@ ALTER TABLE ONLY public.rel_bag_wps_bag_ozk_heeft_onderzoeken ALTER COLUMN _gobi
 
 
 --
--- Name: rel_bag_wps_brk_gme_ligt_in_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_ligt_in_gemeente _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_bag_wps_brk_gme_ligt_in_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_bag_wps_brk_gme_ligt_in_gemeente__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_bag_wps_brk2_gme_ligt_in_gemeente ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_bag_wps_brk2_gme_ligt_in_gemeente__gobid_seq'::regclass);
 
 
 --
@@ -31892,27 +31879,27 @@ ALTER TABLE ONLY public.rel_bag_wps_bag_ozk_heeft_onderzoeken
 
 
 --
--- Name: rel_bag_wps_brk_gme_ligt_in_gemeente rel_bag_wps_brk_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_ligt_in_gemeente rel_bag_wps_brk2_gme_ligt_in_gemeente__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_bag_wps_brk_gme_ligt_in_gemeente
-    ADD CONSTRAINT rel_bag_wps_brk_gme_ligt_in_gemeente__tid_key UNIQUE (_tid);
-
-
---
--- Name: rel_bag_wps_brk_gme_ligt_in_gemeente rel_bag_wps_brk_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_bag_wps_brk_gme_ligt_in_gemeente
-    ADD CONSTRAINT rel_bag_wps_brk_gme_ligt_in_gemeente_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_bag_wps_brk2_gme_ligt_in_gemeente
+    ADD CONSTRAINT rel_bag_wps_brk2_gme_ligt_in_gemeente__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_bag_wps_brk_gme_ligt_in_gemeente rel_bag_wps_brk_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_ligt_in_gemeente rel_bag_wps_brk2_gme_ligt_in_gemeente_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_bag_wps_brk_gme_ligt_in_gemeente
-    ADD CONSTRAINT rel_bag_wps_brk_gme_ligt_in_gemeente_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_bag_wps_brk2_gme_ligt_in_gemeente
+    ADD CONSTRAINT rel_bag_wps_brk2_gme_ligt_in_gemeente_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_ligt_in_gemeente rel_bag_wps_brk2_gme_ligt_in_gemeente_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_bag_wps_brk2_gme_ligt_in_gemeente
+    ADD CONSTRAINT rel_bag_wps_brk2_gme_ligt_in_gemeente_uniq UNIQUE (_source_id);
 
 
 --
@@ -36654,7 +36641,7 @@ CREATE INDEX bag_lps_d05569f886377400312d8c2edd4c6f4c ON public.bag_ligplaatsen 
 -- Name: bag_lps_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX bag_lps_dc6c1fae5cee1f6a7f71cac88a73adda ON public.bag_ligplaatsen USING gist (geometrie);
+CREATE INDEX bag_lps_dc6c1fae5cee1f6a7f71cac88a73adda ON public.bag_ligplaatsen USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -37060,7 +37047,7 @@ CREATE INDEX bag_pnd_d05569f886377400312d8c2edd4c6f4c ON public.bag_panden USING
 -- Name: bag_pnd_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX bag_pnd_dc6c1fae5cee1f6a7f71cac88a73adda ON public.bag_panden USING gist (geometrie);
+CREATE INDEX bag_pnd_dc6c1fae5cee1f6a7f71cac88a73adda ON public.bag_panden USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -37179,7 +37166,7 @@ CREATE INDEX bag_sps_d05569f886377400312d8c2edd4c6f4c ON public.bag_standplaatse
 -- Name: bag_sps_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX bag_sps_dc6c1fae5cee1f6a7f71cac88a73adda ON public.bag_standplaatsen USING gist (geometrie);
+CREATE INDEX bag_sps_dc6c1fae5cee1f6a7f71cac88a73adda ON public.bag_standplaatsen USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -37305,7 +37292,7 @@ CREATE INDEX bag_vot_d05569f886377400312d8c2edd4c6f4c ON public.bag_verblijfsobj
 -- Name: bag_vot_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX bag_vot_dc6c1fae5cee1f6a7f71cac88a73adda ON public.bag_verblijfsobjecten USING gist (geometrie);
+CREATE INDEX bag_vot_dc6c1fae5cee1f6a7f71cac88a73adda ON public.bag_verblijfsobjecten USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -37778,6 +37765,13 @@ CREATE INDEX brk2_art_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_aantekenin
 
 
 --
+-- Name: brk2_gme_092c471623d23f2c0aa0e6210db86166; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_gme_092c471623d23f2c0aa0e6210db86166 ON public.brk2_gemeentes USING btree (identificatie);
+
+
+--
 -- Name: brk2_gme_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -37858,7 +37852,7 @@ CREATE INDEX brk2_gme_d05569f886377400312d8c2edd4c6f4c ON public.brk2_gemeentes 
 -- Name: brk2_gme_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX brk2_gme_dc6c1fae5cee1f6a7f71cac88a73adda ON public.brk2_gemeentes USING gist (geometrie);
+CREATE INDEX brk2_gme_dc6c1fae5cee1f6a7f71cac88a73adda ON public.brk2_gemeentes USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -38152,7 +38146,7 @@ CREATE INDEX brk2_kot_d05569f886377400312d8c2edd4c6f4c ON public.brk2_kadastrale
 -- Name: brk2_kot_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX brk2_kot_dc6c1fae5cee1f6a7f71cac88a73adda ON public.brk2_kadastraleobjecten USING gist (geometrie);
+CREATE INDEX brk2_kot_dc6c1fae5cee1f6a7f71cac88a73adda ON public.brk2_kadastraleobjecten USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -39132,7 +39126,7 @@ CREATE INDEX brk_gme_d05569f886377400312d8c2edd4c6f4c ON public.brk_gemeentes US
 -- Name: brk_gme_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX brk_gme_dc6c1fae5cee1f6a7f71cac88a73adda ON public.brk_gemeentes USING gist (geometrie);
+CREATE INDEX brk_gme_dc6c1fae5cee1f6a7f71cac88a73adda ON public.brk_gemeentes USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -40263,10 +40257,10 @@ CREATE INDEX dst_id_mv_bag_wps_bag_ozk_heeft_onderzoeken ON public.mv_bag_wps_ba
 
 
 --
--- Name: dst_id_mv_bag_wps_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_bag_wps_brk2_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_bag_wps_brk_gme_ligt_in_gemeente ON public.mv_bag_wps_brk_gme_ligt_in_gemeente USING btree (dst_id);
+CREATE INDEX dst_id_mv_bag_wps_brk2_gme_ligt_in_gemeente ON public.mv_bag_wps_brk2_gme_ligt_in_gemeente USING btree (dst_id);
 
 
 --
@@ -41358,7 +41352,7 @@ CREATE INDEX gbd_bbk_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_bouwblo
 -- Name: gbd_bbk_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gbd_bbk_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_bouwblokken USING gist (geometrie);
+CREATE INDEX gbd_bbk_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_bouwblokken USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -41456,7 +41450,7 @@ CREATE INDEX gbd_brt_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_buurten
 -- Name: gbd_brt_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gbd_brt_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_buurten USING gist (geometrie);
+CREATE INDEX gbd_brt_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_buurten USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -41540,7 +41534,7 @@ CREATE INDEX gbd_ggp_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_ggpgebi
 -- Name: gbd_ggp_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gbd_ggp_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_ggpgebieden USING gist (geometrie);
+CREATE INDEX gbd_ggp_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_ggpgebieden USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -41638,7 +41632,7 @@ CREATE INDEX gbd_ggw_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_ggwgebi
 -- Name: gbd_ggw_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gbd_ggw_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_ggwgebieden USING gist (geometrie);
+CREATE INDEX gbd_ggw_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_ggwgebieden USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -41736,7 +41730,7 @@ CREATE INDEX gbd_sdl_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_stadsde
 -- Name: gbd_sdl_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gbd_sdl_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_stadsdelen USING gist (geometrie);
+CREATE INDEX gbd_sdl_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_stadsdelen USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -41841,7 +41835,7 @@ CREATE INDEX gbd_wijk_d05569f886377400312d8c2edd4c6f4c ON public.gebieden_wijken
 -- Name: gbd_wijk_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gbd_wijk_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_wijken USING gist (geometrie);
+CREATE INDEX gbd_wijk_dc6c1fae5cee1f6a7f71cac88a73adda ON public.gebieden_wijken USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -42104,10 +42098,10 @@ CREATE INDEX gobid_mv_bag_wps_bag_ozk_heeft_onderzoeken ON public.mv_bag_wps_bag
 
 
 --
--- Name: gobid_mv_bag_wps_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_bag_wps_brk2_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_bag_wps_brk_gme_ligt_in_gemeente ON public.mv_bag_wps_brk_gme_ligt_in_gemeente USING btree (_gobid);
+CREATE INDEX gobid_mv_bag_wps_brk2_gme_ligt_in_gemeente ON public.mv_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_gobid);
 
 
 --
@@ -43640,7 +43634,7 @@ CREATE INDEX mbn_mbt_d05569f886377400312d8c2edd4c6f4c ON public.meetbouten_meetb
 -- Name: mbn_mbt_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX mbn_mbt_dc6c1fae5cee1f6a7f71cac88a73adda ON public.meetbouten_meetbouten USING gist (geometrie);
+CREATE INDEX mbn_mbt_dc6c1fae5cee1f6a7f71cac88a73adda ON public.meetbouten_meetbouten USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -43899,7 +43893,7 @@ CREATE INDEX mbn_rpt_d05569f886377400312d8c2edd4c6f4c ON public.meetbouten_refer
 -- Name: mbn_rpt_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX mbn_rpt_dc6c1fae5cee1f6a7f71cac88a73adda ON public.meetbouten_referentiepunten USING gist (geometrie);
+CREATE INDEX mbn_rpt_dc6c1fae5cee1f6a7f71cac88a73adda ON public.meetbouten_referentiepunten USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
@@ -53668,122 +53662,122 @@ CREATE INDEX rel_bag_wps_bag_ozk_fb10656a_f49c273bd9b194a2b48ebed02cfba269 ON pu
 
 
 --
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_source_id);
-
-
---
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_expiration_date);
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_source_id);
 
 
 --
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_application);
-
-
---
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_source);
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_1a9d849ff5a68997176b6144236806ae ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_expiration_date);
 
 
 --
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_source, _last_event DESC);
-
-
---
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_47c61233d92dd28822986676f8650441 ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_application);
 
 
 --
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_gobid, _expiration_date);
-
-
---
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06 ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_last_event);
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_source);
 
 
 --
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_date_deleted);
-
-
---
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (bronwaarde);
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_id);
-
-
---
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_47c61233d92dd28822986676f8650441 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_gobid);
-
-
---
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021 ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_last_src_event);
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
-
-
---
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_613273a0ec2090693894cea102aa8c06 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_last_event);
 
 
 --
--- Name: rel_bag_wps_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_bag_wps_brk_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_wps_brk_gme_ligt_in_gemeente USING btree (_last_dst_event);
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_date_deleted);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (bronwaarde);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_b80bb7740288fda1f201890375a60c8f ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_id);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_c5625cb292cd152f07c13709330d1712 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_d05569f886377400312d8c2edd4c6f4c ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_gobid);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_dc79a884dc55f09863437f9198baf021 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_last_src_event);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_bag_wps_brk2_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_bag_wps_brk2_gme_c0a7bf7e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_bag_wps_brk2_gme_ligt_in_gemeente USING btree (_last_dst_event);
 
 
 --
@@ -70279,10 +70273,10 @@ CREATE INDEX src_dst_wide_mv_bag_wps_bag_ozk_heeft_onderzoeken ON public.mv_bag_
 
 
 --
--- Name: src_dst_wide_mv_bag_wps_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_bag_wps_brk2_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_bag_wps_brk_gme_ligt_in_gemeente ON public.mv_bag_wps_brk_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_bag_wps_brk2_gme_ligt_in_gemeente ON public.mv_bag_wps_brk2_gme_ligt_in_gemeente USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
 
 
 --
@@ -71546,10 +71540,10 @@ CREATE INDEX src_id_mv_bag_wps_bag_ozk_heeft_onderzoeken ON public.mv_bag_wps_ba
 
 
 --
--- Name: src_id_mv_bag_wps_brk_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_bag_wps_brk2_gme_ligt_in_gemeente; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_bag_wps_brk_gme_ligt_in_gemeente ON public.mv_bag_wps_brk_gme_ligt_in_gemeente USING btree (src_id);
+CREATE INDEX src_id_mv_bag_wps_brk2_gme_ligt_in_gemeente ON public.mv_bag_wps_brk2_gme_ligt_in_gemeente USING btree (src_id);
 
 
 --
@@ -75819,19 +75813,19 @@ ALTER TABLE ONLY public.rel_bag_wps_bag_ozk_heeft_onderzoeken
 
 
 --
--- Name: rel_bag_wps_brk_gme_ligt_in_gemeente rel_bag_wps_brk_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_ligt_in_gemeente rel_bag_wps_brk2_gme_ligt_in_gemeente_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_bag_wps_brk_gme_ligt_in_gemeente
-    ADD CONSTRAINT rel_bag_wps_brk_gme_ligt_in_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk_gemeentes(_id, volgnummer);
+ALTER TABLE ONLY public.rel_bag_wps_brk2_gme_ligt_in_gemeente
+    ADD CONSTRAINT rel_bag_wps_brk2_gme_ligt_in_gemeente_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk2_gemeentes(_id, volgnummer);
 
 
 --
--- Name: rel_bag_wps_brk_gme_ligt_in_gemeente rel_bag_wps_brk_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_bag_wps_brk2_gme_ligt_in_gemeente rel_bag_wps_brk2_gme_ligt_in_gemeente_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_bag_wps_brk_gme_ligt_in_gemeente
-    ADD CONSTRAINT rel_bag_wps_brk_gme_ligt_in_gemeente_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.bag_woonplaatsen(_id, volgnummer);
+ALTER TABLE ONLY public.rel_bag_wps_brk2_gme_ligt_in_gemeente
+    ADD CONSTRAINT rel_bag_wps_brk2_gme_ligt_in_gemeente_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.bag_woonplaatsen(_id, volgnummer);
 
 
 --
