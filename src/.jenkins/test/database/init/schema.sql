@@ -3185,124 +3185,6 @@ CREATE VIEW legacy.brk_kadastralegemeentes AS
 ALTER TABLE legacy.brk_kadastralegemeentes OWNER TO gobtest;
 
 --
--- Name: brk_kadastraleobjecten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.brk_kadastraleobjecten (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    aangeduid_door_gemeente jsonb,
-    aangeduid_door_kadastralegemeente jsonb,
-    aangeduid_door_kadastralegemeentecode jsonb,
-    aangeduid_door_kadastralesectie jsonb,
-    perceelnummer integer,
-    indexletter character(1),
-    indexnummer integer,
-    gemeente character varying,
-    soort_grootte jsonb,
-    grootte numeric,
-    soort_cultuur_bebouwd jsonb,
-    soort_cultuur_onbebouwd jsonb,
-    status character(1),
-    geometrie public.geometry(Geometry,28992),
-    plaatscoordinaten public.geometry(Geometry,28992),
-    perceelnummer_rotatie numeric,
-    perceelnummer_verschuiving jsonb,
-    indicatie_voorlopige_geometrie character(1),
-    koopsom bigint,
-    koopsom_valutacode character varying,
-    koopjaar character varying,
-    indicatie_meer_objecten character(1),
-    toestandsdatum timestamp without time zone,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    in_onderzoek character varying,
-    is_ontstaan_uit_g_perceel jsonb,
-    heeft_een_relatie_met_verblijfsobject jsonb,
-    id character varying,
-    is_ontstaan_uit_kadastraalobject jsonb,
-    bijpijling_geometrie public.geometry(Geometry,28992),
-    kadastrale_aanduiding character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.brk_kadastraleobjecten OWNER TO gobtest;
-
---
--- Name: brk_kadastraleobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
---
-
-CREATE VIEW legacy.brk_kadastraleobjecten AS
- SELECT brk_kadastraleobjecten._gobid,
-    brk_kadastraleobjecten._id,
-    brk_kadastraleobjecten._source,
-    brk_kadastraleobjecten._application,
-    brk_kadastraleobjecten._source_id,
-    brk_kadastraleobjecten._last_event,
-    brk_kadastraleobjecten._hash,
-    brk_kadastraleobjecten._version,
-    brk_kadastraleobjecten._date_created,
-    brk_kadastraleobjecten._date_confirmed,
-    brk_kadastraleobjecten._date_modified,
-    brk_kadastraleobjecten._date_deleted,
-    brk_kadastraleobjecten._expiration_date,
-    brk_kadastraleobjecten.volgnummer,
-    brk_kadastraleobjecten.registratiedatum,
-    brk_kadastraleobjecten.identificatie,
-    brk_kadastraleobjecten.aangeduid_door_gemeente,
-    brk_kadastraleobjecten.aangeduid_door_kadastralegemeente,
-    brk_kadastraleobjecten.aangeduid_door_kadastralegemeentecode,
-    brk_kadastraleobjecten.aangeduid_door_kadastralesectie,
-    brk_kadastraleobjecten.perceelnummer,
-    brk_kadastraleobjecten.indexletter,
-    brk_kadastraleobjecten.indexnummer,
-    brk_kadastraleobjecten.gemeente,
-    brk_kadastraleobjecten.soort_grootte,
-    brk_kadastraleobjecten.grootte,
-    brk_kadastraleobjecten.soort_cultuur_bebouwd,
-    brk_kadastraleobjecten.soort_cultuur_onbebouwd,
-    brk_kadastraleobjecten.status,
-    brk_kadastraleobjecten.geometrie,
-    brk_kadastraleobjecten.plaatscoordinaten,
-    brk_kadastraleobjecten.perceelnummer_rotatie,
-    brk_kadastraleobjecten.perceelnummer_verschuiving,
-    brk_kadastraleobjecten.indicatie_voorlopige_geometrie,
-    brk_kadastraleobjecten.koopsom,
-    brk_kadastraleobjecten.koopsom_valutacode,
-    brk_kadastraleobjecten.koopjaar,
-    brk_kadastraleobjecten.indicatie_meer_objecten,
-    brk_kadastraleobjecten.toestandsdatum,
-    brk_kadastraleobjecten.begin_geldigheid,
-    brk_kadastraleobjecten.eind_geldigheid,
-    brk_kadastraleobjecten.in_onderzoek,
-    brk_kadastraleobjecten.is_ontstaan_uit_g_perceel,
-    brk_kadastraleobjecten.heeft_een_relatie_met_verblijfsobject,
-    brk_kadastraleobjecten.id,
-    brk_kadastraleobjecten.is_ontstaan_uit_kadastraalobject,
-    brk_kadastraleobjecten.bijpijling_geometrie,
-    brk_kadastraleobjecten.kadastrale_aanduiding,
-    brk_kadastraleobjecten._tid
-   FROM public.brk_kadastraleobjecten;
-
-
-ALTER TABLE legacy.brk_kadastraleobjecten OWNER TO gobtest;
-
---
 -- Name: brk_kadastralesecties; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -5589,7 +5471,8 @@ CREATE TABLE public.brk2_kadastralegemeentecodes (
     _expiration_date timestamp without time zone,
     _gobid integer NOT NULL,
     _id character varying,
-    _tid character varying
+    _tid character varying,
+    code character varying
 );
 
 
@@ -5638,7 +5521,8 @@ CREATE TABLE public.brk2_kadastralegemeentes (
     _expiration_date timestamp without time zone,
     _gobid integer NOT NULL,
     _id character varying,
-    _tid character varying
+    _tid character varying,
+    code character varying
 );
 
 
@@ -5682,7 +5566,7 @@ CREATE TABLE public.brk2_kadastraleobjecten (
     indexletter character varying,
     indexnummer integer,
     soort_grootte jsonb,
-    grootte numeric,
+    grootte numeric(12,2),
     soort_cultuur_onbebouwd jsonb,
     soort_cultuur_bebouwd jsonb,
     referentie character varying,
@@ -6262,6 +6146,65 @@ ALTER TABLE public.brk_kadastralegemeentes__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.brk_kadastralegemeentes__gobid_seq OWNED BY public.brk_kadastralegemeentes._gobid;
 
+
+--
+-- Name: brk_kadastraleobjecten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.brk_kadastraleobjecten (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    aangeduid_door_gemeente jsonb,
+    aangeduid_door_kadastralegemeente jsonb,
+    aangeduid_door_kadastralegemeentecode jsonb,
+    aangeduid_door_kadastralesectie jsonb,
+    perceelnummer integer,
+    indexletter character(1),
+    indexnummer integer,
+    gemeente character varying,
+    soort_grootte jsonb,
+    grootte numeric(12,2),
+    soort_cultuur_bebouwd jsonb,
+    soort_cultuur_onbebouwd jsonb,
+    status character(1),
+    geometrie public.geometry(Geometry,28992),
+    plaatscoordinaten public.geometry(Geometry,28992),
+    perceelnummer_rotatie numeric(13,3),
+    perceelnummer_verschuiving jsonb,
+    indicatie_voorlopige_geometrie character(1),
+    koopsom bigint,
+    koopsom_valutacode character varying,
+    koopjaar character varying,
+    indicatie_meer_objecten character(1),
+    toestandsdatum timestamp without time zone,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    in_onderzoek character varying,
+    is_ontstaan_uit_g_perceel jsonb,
+    heeft_een_relatie_met_verblijfsobject jsonb,
+    id character varying,
+    is_ontstaan_uit_kadastraalobject jsonb,
+    bijpijling_geometrie public.geometry(Geometry,28992),
+    kadastrale_aanduiding character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.brk_kadastraleobjecten OWNER TO gobtest;
 
 --
 -- Name: brk_kadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
