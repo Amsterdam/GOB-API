@@ -27,8 +27,6 @@ services:
       UWSGI_MODULE: "gobapi.wsgi"
       UWSGI_CALLABLE: "application"
       UWSGI_MASTER: "0"
-      UWSGI_ENABLE_THREADS: "1"
-      UWSGI_PROCESSES: "6"
       UWSGI_LAZY_APPS: "1"
       UWSGI_BUFFER_SIZE: "8192"
       UWSGI_DIE_ON_TERM: "1"
@@ -42,14 +40,6 @@ services:
       UWSGI_SINGLE_INTERPRETER: "1"
       UWSGI_ROUTE: "^/status/health break:200 OK"
       UWSGI_CACHE2: "name=mycache,items=5"
-
-      # uWSGI Cheaper, make sure we always have minimum of 4 workers and scale to <PROCESSES>
-      UWSGI_CHEAPER: "4"
-      UWSGI_CHEAPER_ALGO: "spare"
-      UWSGI_CHEAPER_INITIAL: "4"
-      UWSGI_CHEAPER_STEP: "1"
-      UWSGI_CHEAPER_OVERLOAD: "5"
-      UWSGI_MIN_WORKER_LIFETIME: "1800"
 
       OAUTH2_PROXY_CLIENT_ID: ${OAUTH2_PROXY_CLIENT_ID}
       OAUTH2_PROXY_CLIENT_SECRET: ${OAUTH2_PROXY_CLIENT_SECRET}
