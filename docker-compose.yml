@@ -26,7 +26,7 @@ services:
       UWSGI_HTTP: ":8001"
       UWSGI_MODULE: "gobapi.wsgi"
       UWSGI_CALLABLE: "application"
-      UWSGI_MASTER: "1"
+      UWSGI_MASTER: "0"
       UWSGI_ENABLE_THREADS: "1"
       UWSGI_PROCESSES: "6"
       UWSGI_LAZY_APPS: "1"
