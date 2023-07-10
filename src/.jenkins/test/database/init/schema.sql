@@ -5311,7 +5311,8 @@ CREATE TABLE public.brk2_aantekeningenkadastraleobjecten (
     _expiration_date timestamp without time zone,
     _gobid integer NOT NULL,
     _id character varying,
-    _tid character varying
+    _tid character varying,
+    was_identificatie character varying
 );
 
 
@@ -5369,7 +5370,8 @@ CREATE TABLE public.brk2_aantekeningenrechten (
     _expiration_date timestamp without time zone,
     _gobid integer NOT NULL,
     _id character varying,
-    _tid character varying
+    _tid character varying,
+    was_identificatie character varying
 );
 
 
@@ -5853,7 +5855,9 @@ CREATE TABLE public.brk2_stukdelen (
     _expiration_date timestamp without time zone,
     _gobid integer NOT NULL,
     _id character varying,
-    _tid character varying
+    _tid character varying,
+    was_identificatie character varying,
+    is_bron_voor_brk_erfpachtcanon jsonb
 );
 
 
@@ -5918,7 +5922,8 @@ CREATE TABLE public.brk2_tenaamstellingen (
     _id character varying,
     _tid character varying,
     is_gebaseerd_op_brk_stukdelen jsonb,
-    registratiedatum timestamp without time zone
+    registratiedatum timestamp without time zone,
+    was_identificatie character varying
 );
 
 
@@ -5987,7 +5992,8 @@ CREATE TABLE public.brk2_zakelijkerechten (
     _id character varying,
     _tid character varying,
     ontstaan_uit_appartementsrechtsplitsing_vve character varying,
-    betrokken_bij_appartementsrechtsplitsing_vve character varying
+    betrokken_bij_appartementsrechtsplitsing_vve character varying,
+    was_identificatie character varying
 );
 
 
