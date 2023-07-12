@@ -5400,6 +5400,58 @@ ALTER SEQUENCE public.brk2_aantekeningenrechten__gobid_seq OWNED BY public.brk2_
 
 
 --
+-- Name: brk2_aardzakelijkerechten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.brk2_aardzakelijkerechten (
+    code integer,
+    waarde character varying,
+    datum_vanaf date,
+    datum_tot date,
+    toelichting character varying,
+    akr_code character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.brk2_aardzakelijkerechten OWNER TO gobtest;
+
+--
+-- Name: brk2_aardzakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_aardzakelijkerechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_aardzakelijkerechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_aardzakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_aardzakelijkerechten__gobid_seq OWNED BY public.brk2_aardzakelijkerechten._gobid;
+
+
+--
 -- Name: brk2_gemeentes; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -17726,6 +17778,63 @@ ALTER SEQUENCE public.qa_brk2_aantekeningenrechten__gobid_seq OWNED BY public.qa
 
 
 --
+-- Name: qa_brk2_aardzakelijkerechten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_brk2_aardzakelijkerechten (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_brk2_aardzakelijkerechten OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_aardzakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_brk2_aardzakelijkerechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_brk2_aardzakelijkerechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_brk2_aardzakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_brk2_aardzakelijkerechten__gobid_seq OWNED BY public.qa_brk2_aardzakelijkerechten._gobid;
+
+
+--
 -- Name: qa_brk2_gemeentes; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -25458,6 +25567,13 @@ ALTER TABLE ONLY public.brk2_aantekeningenrechten ALTER COLUMN _gobid SET DEFAUL
 
 
 --
+-- Name: brk2_aardzakelijkerechten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_aardzakelijkerechten ALTER COLUMN _gobid SET DEFAULT nextval('public.brk2_aardzakelijkerechten__gobid_seq'::regclass);
+
+
+--
 -- Name: brk2_gemeentes _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
@@ -25826,6 +25942,13 @@ ALTER TABLE ONLY public.qa_brk2_aantekeningenkadastraleobjecten ALTER COLUMN _go
 --
 
 ALTER TABLE ONLY public.qa_brk2_aantekeningenrechten ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_brk2_aantekeningenrechten__gobid_seq'::regclass);
+
+
+--
+-- Name: qa_brk2_aardzakelijkerechten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_aardzakelijkerechten ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_brk2_aardzakelijkerechten__gobid_seq'::regclass);
 
 
 --
@@ -28348,6 +28471,30 @@ ALTER TABLE ONLY public.brk2_aantekeningenrechten
 
 
 --
+-- Name: brk2_aardzakelijkerechten brk2_aardzakelijkerechten__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_aardzakelijkerechten
+    ADD CONSTRAINT brk2_aardzakelijkerechten__id_key UNIQUE (_id);
+
+
+--
+-- Name: brk2_aardzakelijkerechten brk2_aardzakelijkerechten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_aardzakelijkerechten
+    ADD CONSTRAINT brk2_aardzakelijkerechten__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: brk2_aardzakelijkerechten brk2_aardzakelijkerechten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.brk2_aardzakelijkerechten
+    ADD CONSTRAINT brk2_aardzakelijkerechten_pkey PRIMARY KEY (_gobid);
+
+
+--
 -- Name: brk2_gemeentes brk2_gemeentes__id_volgnummer_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
@@ -29593,6 +29740,30 @@ ALTER TABLE ONLY public.qa_brk2_aantekeningenrechten
 
 ALTER TABLE ONLY public.qa_brk2_aantekeningenrechten
     ADD CONSTRAINT qa_brk2_aantekeningenrechten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: qa_brk2_aardzakelijkerechten qa_brk2_aardzakelijkerechten__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_aardzakelijkerechten
+    ADD CONSTRAINT qa_brk2_aardzakelijkerechten__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_brk2_aardzakelijkerechten qa_brk2_aardzakelijkerechten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_aardzakelijkerechten
+    ADD CONSTRAINT qa_brk2_aardzakelijkerechten__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_brk2_aardzakelijkerechten qa_brk2_aardzakelijkerechten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_brk2_aardzakelijkerechten
+    ADD CONSTRAINT qa_brk2_aardzakelijkerechten_pkey PRIMARY KEY (_gobid);
 
 
 --
@@ -37714,6 +37885,76 @@ CREATE INDEX brk2_art_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_aantekenin
 
 
 --
+-- Name: brk2_azt_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_0afd9202ba86aa11ce63ad7007e7990b ON public.brk2_aardzakelijkerechten USING btree (_source_id);
+
+
+--
+-- Name: brk2_azt_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_1a9d849ff5a68997176b6144236806ae ON public.brk2_aardzakelijkerechten USING btree (_expiration_date);
+
+
+--
+-- Name: brk2_azt_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_3676d55f84497cbeadfc614c1b1b62fc ON public.brk2_aardzakelijkerechten USING btree (_application);
+
+
+--
+-- Name: brk2_azt_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_37abd7da5cbd49b20a1090ba960d82e7 ON public.brk2_aardzakelijkerechten USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: brk2_azt_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_613273a0ec2090693894cea102aa8c06 ON public.brk2_aardzakelijkerechten USING btree (_last_event);
+
+
+--
+-- Name: brk2_azt_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.brk2_aardzakelijkerechten USING btree (_date_deleted);
+
+
+--
+-- Name: brk2_azt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_97beaa21d4819a1131833b897504ce31 ON public.brk2_aardzakelijkerechten USING btree (_tid);
+
+
+--
+-- Name: brk2_azt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_b80bb7740288fda1f201890375a60c8f ON public.brk2_aardzakelijkerechten USING btree (_id);
+
+
+--
+-- Name: brk2_azt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_d05569f886377400312d8c2edd4c6f4c ON public.brk2_aardzakelijkerechten USING btree (_gobid);
+
+
+--
+-- Name: brk2_azt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX brk2_azt_ed3f22b3eec2fb035647f924a5b2136e ON public.brk2_aardzakelijkerechten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
 -- Name: brk2_gme_092c471623d23f2c0aa0e6210db86166; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45012,6 +45253,83 @@ CREATE INDEX qa_brk2_art_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_aant
 --
 
 CREATE INDEX qa_brk2_art_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_brk2_aantekeningenrechten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: qa_brk2_azt_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_brk2_aardzakelijkerechten USING btree (_source_id);
+
+
+--
+-- Name: qa_brk2_azt_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_1a9d849ff5a68997176b6144236806ae ON public.qa_brk2_aardzakelijkerechten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_brk2_azt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_brk2_aardzakelijkerechten USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_brk2_azt_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_brk2_aardzakelijkerechten USING btree (_application);
+
+
+--
+-- Name: qa_brk2_azt_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_brk2_aardzakelijkerechten USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_brk2_azt_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_613273a0ec2090693894cea102aa8c06 ON public.qa_brk2_aardzakelijkerechten USING btree (_last_event);
+
+
+--
+-- Name: qa_brk2_azt_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_brk2_aardzakelijkerechten USING btree (_date_deleted);
+
+
+--
+-- Name: qa_brk2_azt_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_97beaa21d4819a1131833b897504ce31 ON public.qa_brk2_aardzakelijkerechten USING btree (_tid);
+
+
+--
+-- Name: qa_brk2_azt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_b80bb7740288fda1f201890375a60c8f ON public.qa_brk2_aardzakelijkerechten USING btree (_id);
+
+
+--
+-- Name: qa_brk2_azt_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_d05569f886377400312d8c2edd4c6f4c ON public.qa_brk2_aardzakelijkerechten USING btree (_gobid);
+
+
+--
+-- Name: qa_brk2_azt_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_brk2_azt_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_brk2_aardzakelijkerechten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
