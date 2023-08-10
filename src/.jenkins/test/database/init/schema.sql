@@ -1655,17 +1655,6 @@ ALTER TABLE ONLY events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok ATTACH PAR
 ALTER TABLE events.rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok_gob OWNER TO gobtest;
 
 --
--- Name: alembic_version; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.alembic_version (
-    version_num character varying(32) NOT NULL
-);
-
-
-ALTER TABLE public.alembic_version OWNER TO gobtest;
-
---
 -- Name: bag_brondocumenten; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -1695,26 +1684,33 @@ CREATE TABLE public.bag_brondocumenten (
 ALTER TABLE public.bag_brondocumenten OWNER TO gobtest;
 
 --
--- Name: bag_brondocumenten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_brondocumenten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_brondocumenten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_brondocumenten AS
+ SELECT bag_brondocumenten._gobid,
+    bag_brondocumenten._id,
+    bag_brondocumenten._source,
+    bag_brondocumenten._application,
+    bag_brondocumenten._source_id,
+    bag_brondocumenten._last_event,
+    bag_brondocumenten._hash,
+    bag_brondocumenten._version,
+    bag_brondocumenten._date_created,
+    bag_brondocumenten._date_confirmed,
+    bag_brondocumenten._date_modified,
+    bag_brondocumenten._date_deleted,
+    bag_brondocumenten.documentnummer,
+    bag_brondocumenten.bronleverancier,
+    bag_brondocumenten.type_dossier,
+    bag_brondocumenten.type_brondocument,
+    bag_brondocumenten.registratiedatum,
+    bag_brondocumenten._expiration_date,
+    bag_brondocumenten._tid
+   FROM public.bag_brondocumenten;
 
 
-ALTER TABLE public.bag_brondocumenten__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_brondocumenten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_brondocumenten__gobid_seq OWNED BY public.bag_brondocumenten._gobid;
-
+ALTER TABLE legacy.bag_brondocumenten OWNER TO gobtest;
 
 --
 -- Name: bag_dossiers; Type: TABLE; Schema: public; Owner: gobtest
@@ -1743,26 +1739,30 @@ CREATE TABLE public.bag_dossiers (
 ALTER TABLE public.bag_dossiers OWNER TO gobtest;
 
 --
--- Name: bag_dossiers__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_dossiers; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_dossiers__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_dossiers AS
+ SELECT bag_dossiers.dossier,
+    bag_dossiers.heeft_brondocumenten,
+    bag_dossiers._source,
+    bag_dossiers._application,
+    bag_dossiers._source_id,
+    bag_dossiers._last_event,
+    bag_dossiers._hash,
+    bag_dossiers._version,
+    bag_dossiers._date_created,
+    bag_dossiers._date_confirmed,
+    bag_dossiers._date_modified,
+    bag_dossiers._date_deleted,
+    bag_dossiers._expiration_date,
+    bag_dossiers._gobid,
+    bag_dossiers._id,
+    bag_dossiers._tid
+   FROM public.bag_dossiers;
 
 
-ALTER TABLE public.bag_dossiers__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_dossiers__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_dossiers__gobid_seq OWNED BY public.bag_dossiers._gobid;
-
+ALTER TABLE legacy.bag_dossiers OWNER TO gobtest;
 
 --
 -- Name: bag_ligplaatsen; Type: TABLE; Schema: public; Owner: gobtest
@@ -1807,26 +1807,46 @@ CREATE TABLE public.bag_ligplaatsen (
 ALTER TABLE public.bag_ligplaatsen OWNER TO gobtest;
 
 --
--- Name: bag_ligplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_ligplaatsen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_ligplaatsen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_ligplaatsen AS
+ SELECT bag_ligplaatsen._gobid,
+    bag_ligplaatsen._id,
+    bag_ligplaatsen._source,
+    bag_ligplaatsen._application,
+    bag_ligplaatsen._source_id,
+    bag_ligplaatsen._last_event,
+    bag_ligplaatsen._version,
+    bag_ligplaatsen._date_created,
+    bag_ligplaatsen._date_confirmed,
+    bag_ligplaatsen._date_modified,
+    bag_ligplaatsen._date_deleted,
+    bag_ligplaatsen.volgnummer,
+    bag_ligplaatsen.registratiedatum,
+    bag_ligplaatsen.identificatie,
+    bag_ligplaatsen.geconstateerd,
+    bag_ligplaatsen.status,
+    bag_ligplaatsen.heeft_hoofdadres,
+    bag_ligplaatsen.heeft_nevenadres,
+    bag_ligplaatsen.geometrie,
+    bag_ligplaatsen.begin_geldigheid,
+    bag_ligplaatsen.eind_geldigheid,
+    bag_ligplaatsen.documentdatum,
+    bag_ligplaatsen.documentnummer,
+    bag_ligplaatsen.ligt_in_buurt,
+    bag_ligplaatsen.bagproces,
+    bag_ligplaatsen._hash,
+    bag_ligplaatsen._expiration_date,
+    bag_ligplaatsen.heeft_dossier,
+    bag_ligplaatsen.heeft_onderzoeken,
+    bag_ligplaatsen.gebruiksdoel,
+    bag_ligplaatsen._tid,
+    bag_ligplaatsen.ligt_in_gemeente
+   FROM public.bag_ligplaatsen;
 
 
-ALTER TABLE public.bag_ligplaatsen__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_ligplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_ligplaatsen__gobid_seq OWNED BY public.bag_ligplaatsen._gobid;
-
+ALTER TABLE legacy.bag_ligplaatsen OWNER TO gobtest;
 
 --
 -- Name: bag_nummeraanduidingen; Type: TABLE; Schema: public; Owner: gobtest
@@ -1876,26 +1896,51 @@ CREATE TABLE public.bag_nummeraanduidingen (
 ALTER TABLE public.bag_nummeraanduidingen OWNER TO gobtest;
 
 --
--- Name: bag_nummeraanduidingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_nummeraanduidingen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_nummeraanduidingen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_nummeraanduidingen AS
+ SELECT bag_nummeraanduidingen._gobid,
+    bag_nummeraanduidingen._id,
+    bag_nummeraanduidingen._source,
+    bag_nummeraanduidingen._application,
+    bag_nummeraanduidingen._source_id,
+    bag_nummeraanduidingen._last_event,
+    bag_nummeraanduidingen._hash,
+    bag_nummeraanduidingen._version,
+    bag_nummeraanduidingen._date_created,
+    bag_nummeraanduidingen._date_confirmed,
+    bag_nummeraanduidingen._date_modified,
+    bag_nummeraanduidingen._date_deleted,
+    bag_nummeraanduidingen.volgnummer,
+    bag_nummeraanduidingen.registratiedatum,
+    bag_nummeraanduidingen.identificatie,
+    bag_nummeraanduidingen.huisnummer,
+    bag_nummeraanduidingen.geconstateerd,
+    bag_nummeraanduidingen.huisletter,
+    bag_nummeraanduidingen.huisnummertoevoeging,
+    bag_nummeraanduidingen.postcode,
+    bag_nummeraanduidingen.ligt_in_woonplaats,
+    bag_nummeraanduidingen.begin_geldigheid,
+    bag_nummeraanduidingen.eind_geldigheid,
+    bag_nummeraanduidingen.ligt_aan_openbareruimte,
+    bag_nummeraanduidingen.type_adresseerbaar_object,
+    bag_nummeraanduidingen.documentdatum,
+    bag_nummeraanduidingen.documentnummer,
+    bag_nummeraanduidingen.status,
+    bag_nummeraanduidingen.type_adres,
+    bag_nummeraanduidingen.adresseert_verblijfsobject,
+    bag_nummeraanduidingen.adresseert_ligplaats,
+    bag_nummeraanduidingen.adresseert_standplaats,
+    bag_nummeraanduidingen.bagproces,
+    bag_nummeraanduidingen._expiration_date,
+    bag_nummeraanduidingen.heeft_dossier,
+    bag_nummeraanduidingen.heeft_onderzoeken,
+    bag_nummeraanduidingen._tid
+   FROM public.bag_nummeraanduidingen;
 
 
-ALTER TABLE public.bag_nummeraanduidingen__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_nummeraanduidingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_nummeraanduidingen__gobid_seq OWNED BY public.bag_nummeraanduidingen._gobid;
-
+ALTER TABLE legacy.bag_nummeraanduidingen OWNER TO gobtest;
 
 --
 -- Name: bag_onderzoeken; Type: TABLE; Schema: public; Owner: gobtest
@@ -1935,26 +1980,41 @@ CREATE TABLE public.bag_onderzoeken (
 ALTER TABLE public.bag_onderzoeken OWNER TO gobtest;
 
 --
--- Name: bag_onderzoeken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_onderzoeken; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_onderzoeken__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_onderzoeken AS
+ SELECT bag_onderzoeken.volgnummer,
+    bag_onderzoeken.registratiedatum,
+    bag_onderzoeken.identificatie,
+    bag_onderzoeken.object_identificatie,
+    bag_onderzoeken.objecttype,
+    bag_onderzoeken.kenmerk,
+    bag_onderzoeken.in_onderzoek,
+    bag_onderzoeken.begin_geldigheid,
+    bag_onderzoeken.eind_geldigheid,
+    bag_onderzoeken.documentdatum,
+    bag_onderzoeken.documentnummer,
+    bag_onderzoeken.tijdstip_registratie,
+    bag_onderzoeken.eind_registratie,
+    bag_onderzoeken._source,
+    bag_onderzoeken._application,
+    bag_onderzoeken._source_id,
+    bag_onderzoeken._last_event,
+    bag_onderzoeken._hash,
+    bag_onderzoeken._version,
+    bag_onderzoeken._date_created,
+    bag_onderzoeken._date_confirmed,
+    bag_onderzoeken._date_modified,
+    bag_onderzoeken._date_deleted,
+    bag_onderzoeken._expiration_date,
+    bag_onderzoeken._gobid,
+    bag_onderzoeken._id,
+    bag_onderzoeken._tid
+   FROM public.bag_onderzoeken;
 
 
-ALTER TABLE public.bag_onderzoeken__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_onderzoeken__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_onderzoeken__gobid_seq OWNED BY public.bag_onderzoeken._gobid;
-
+ALTER TABLE legacy.bag_onderzoeken OWNER TO gobtest;
 
 --
 -- Name: bag_openbareruimtes; Type: TABLE; Schema: public; Owner: gobtest
@@ -2001,26 +2061,48 @@ CREATE TABLE public.bag_openbareruimtes (
 ALTER TABLE public.bag_openbareruimtes OWNER TO gobtest;
 
 --
--- Name: bag_openbareruimtes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_openbareruimtes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_openbareruimtes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_openbareruimtes AS
+ SELECT bag_openbareruimtes._gobid,
+    bag_openbareruimtes._id,
+    bag_openbareruimtes._source,
+    bag_openbareruimtes._application,
+    bag_openbareruimtes._source_id,
+    bag_openbareruimtes._last_event,
+    bag_openbareruimtes._version,
+    bag_openbareruimtes._date_created,
+    bag_openbareruimtes._date_confirmed,
+    bag_openbareruimtes._date_modified,
+    bag_openbareruimtes._date_deleted,
+    bag_openbareruimtes.volgnummer,
+    bag_openbareruimtes.registratiedatum,
+    bag_openbareruimtes.identificatie,
+    bag_openbareruimtes.status,
+    bag_openbareruimtes.begin_geldigheid,
+    bag_openbareruimtes.eind_geldigheid,
+    bag_openbareruimtes.geconstateerd,
+    bag_openbareruimtes.type,
+    bag_openbareruimtes.documentdatum,
+    bag_openbareruimtes.documentnummer,
+    bag_openbareruimtes.naam,
+    bag_openbareruimtes.naam_nen,
+    bag_openbareruimtes.ligt_in_woonplaats,
+    bag_openbareruimtes.beschrijving_naam,
+    bag_openbareruimtes.bagproces,
+    bag_openbareruimtes.geometrie,
+    bag_openbareruimtes._hash,
+    bag_openbareruimtes._expiration_date,
+    bag_openbareruimtes.heeft_dossier,
+    bag_openbareruimtes.straatcode,
+    bag_openbareruimtes.straatnaam_ptt,
+    bag_openbareruimtes.heeft_onderzoeken,
+    bag_openbareruimtes._tid
+   FROM public.bag_openbareruimtes;
 
 
-ALTER TABLE public.bag_openbareruimtes__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_openbareruimtes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_openbareruimtes__gobid_seq OWNED BY public.bag_openbareruimtes._gobid;
-
+ALTER TABLE legacy.bag_openbareruimtes OWNER TO gobtest;
 
 --
 -- Name: bag_panden; Type: TABLE; Schema: public; Owner: gobtest
@@ -2069,26 +2151,50 @@ CREATE TABLE public.bag_panden (
 ALTER TABLE public.bag_panden OWNER TO gobtest;
 
 --
--- Name: bag_panden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_panden; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_panden__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_panden AS
+ SELECT bag_panden._gobid,
+    bag_panden._id,
+    bag_panden._source,
+    bag_panden._application,
+    bag_panden._source_id,
+    bag_panden._last_event,
+    bag_panden._hash,
+    bag_panden._version,
+    bag_panden._date_created,
+    bag_panden._date_confirmed,
+    bag_panden._date_modified,
+    bag_panden._date_deleted,
+    bag_panden.volgnummer,
+    bag_panden.registratiedatum,
+    bag_panden.identificatie,
+    bag_panden.geconstateerd,
+    bag_panden.geometrie,
+    bag_panden.oorspronkelijk_bouwjaar,
+    bag_panden.status,
+    bag_panden.begin_geldigheid,
+    bag_panden.eind_geldigheid,
+    bag_panden.documentdatum,
+    bag_panden.documentnummer,
+    bag_panden.naam,
+    bag_panden.ligging,
+    bag_panden.type_woonobject,
+    bag_panden.ligt_in_bouwblok,
+    bag_panden.aantal_bouwlagen,
+    bag_panden.hoogste_bouwlaag,
+    bag_panden.laagste_bouwlaag,
+    bag_panden.bagproces,
+    bag_panden._expiration_date,
+    bag_panden.heeft_dossier,
+    bag_panden.heeft_onderzoeken,
+    bag_panden._tid,
+    bag_panden.ligt_in_buurt
+   FROM public.bag_panden;
 
 
-ALTER TABLE public.bag_panden__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_panden__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_panden__gobid_seq OWNED BY public.bag_panden._gobid;
-
+ALTER TABLE legacy.bag_panden OWNER TO gobtest;
 
 --
 -- Name: bag_standplaatsen; Type: TABLE; Schema: public; Owner: gobtest
@@ -2133,26 +2239,46 @@ CREATE TABLE public.bag_standplaatsen (
 ALTER TABLE public.bag_standplaatsen OWNER TO gobtest;
 
 --
--- Name: bag_standplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_standplaatsen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_standplaatsen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_standplaatsen AS
+ SELECT bag_standplaatsen._gobid,
+    bag_standplaatsen._id,
+    bag_standplaatsen._source,
+    bag_standplaatsen._application,
+    bag_standplaatsen._source_id,
+    bag_standplaatsen._last_event,
+    bag_standplaatsen._version,
+    bag_standplaatsen._date_created,
+    bag_standplaatsen._date_confirmed,
+    bag_standplaatsen._date_modified,
+    bag_standplaatsen._date_deleted,
+    bag_standplaatsen.volgnummer,
+    bag_standplaatsen.registratiedatum,
+    bag_standplaatsen.identificatie,
+    bag_standplaatsen.geconstateerd,
+    bag_standplaatsen.status,
+    bag_standplaatsen.heeft_hoofdadres,
+    bag_standplaatsen.heeft_nevenadres,
+    bag_standplaatsen.geometrie,
+    bag_standplaatsen.begin_geldigheid,
+    bag_standplaatsen.eind_geldigheid,
+    bag_standplaatsen.documentdatum,
+    bag_standplaatsen.documentnummer,
+    bag_standplaatsen.ligt_in_buurt,
+    bag_standplaatsen.bagproces,
+    bag_standplaatsen._hash,
+    bag_standplaatsen._expiration_date,
+    bag_standplaatsen.heeft_dossier,
+    bag_standplaatsen.heeft_onderzoeken,
+    bag_standplaatsen.gebruiksdoel,
+    bag_standplaatsen._tid,
+    bag_standplaatsen.ligt_in_gemeente
+   FROM public.bag_standplaatsen;
 
 
-ALTER TABLE public.bag_standplaatsen__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_standplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_standplaatsen__gobid_seq OWNED BY public.bag_standplaatsen._gobid;
-
+ALTER TABLE legacy.bag_standplaatsen OWNER TO gobtest;
 
 --
 -- Name: bag_verblijfsobjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2215,26 +2341,64 @@ CREATE TABLE public.bag_verblijfsobjecten (
 ALTER TABLE public.bag_verblijfsobjecten OWNER TO gobtest;
 
 --
--- Name: bag_verblijfsobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_verblijfsobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_verblijfsobjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_verblijfsobjecten AS
+ SELECT bag_verblijfsobjecten._gobid,
+    bag_verblijfsobjecten._id,
+    bag_verblijfsobjecten._source,
+    bag_verblijfsobjecten._application,
+    bag_verblijfsobjecten._source_id,
+    bag_verblijfsobjecten._last_event,
+    bag_verblijfsobjecten._hash,
+    bag_verblijfsobjecten._version,
+    bag_verblijfsobjecten._date_created,
+    bag_verblijfsobjecten._date_confirmed,
+    bag_verblijfsobjecten._date_modified,
+    bag_verblijfsobjecten._date_deleted,
+    bag_verblijfsobjecten.volgnummer,
+    bag_verblijfsobjecten.registratiedatum,
+    bag_verblijfsobjecten.identificatie,
+    bag_verblijfsobjecten.geconstateerd,
+    bag_verblijfsobjecten.heeft_hoofdadres,
+    bag_verblijfsobjecten.heeft_nevenadres,
+    bag_verblijfsobjecten.geometrie,
+    bag_verblijfsobjecten.gebruiksdoel,
+    bag_verblijfsobjecten.oppervlakte,
+    bag_verblijfsobjecten.status,
+    bag_verblijfsobjecten.ligt_in_panden,
+    bag_verblijfsobjecten.begin_geldigheid,
+    bag_verblijfsobjecten.eind_geldigheid,
+    bag_verblijfsobjecten.documentdatum,
+    bag_verblijfsobjecten.documentnummer,
+    bag_verblijfsobjecten.gebruiksdoel_woonfunctie,
+    bag_verblijfsobjecten.gebruiksdoel_gezondheidszorgfunctie,
+    bag_verblijfsobjecten.aantal_eenheden_complex,
+    bag_verblijfsobjecten.verdieping_toegang,
+    bag_verblijfsobjecten.aantal_bouwlagen,
+    bag_verblijfsobjecten.hoogste_bouwlaag,
+    bag_verblijfsobjecten.laagste_bouwlaag,
+    bag_verblijfsobjecten.aantal_kamers,
+    bag_verblijfsobjecten.feitelijk_gebruik,
+    bag_verblijfsobjecten.toegang,
+    bag_verblijfsobjecten.redenopvoer,
+    bag_verblijfsobjecten.redenafvoer,
+    bag_verblijfsobjecten.ligt_in_buurt,
+    bag_verblijfsobjecten.bagproces,
+    bag_verblijfsobjecten.eigendomsverhouding,
+    bag_verblijfsobjecten._expiration_date,
+    bag_verblijfsobjecten.heeft_dossier,
+    bag_verblijfsobjecten.cbs_nummer,
+    bag_verblijfsobjecten.financieringscode,
+    bag_verblijfsobjecten.indicatie_woningvoorraad,
+    bag_verblijfsobjecten.heeft_onderzoeken,
+    bag_verblijfsobjecten._tid,
+    bag_verblijfsobjecten.ligt_in_gemeente
+   FROM public.bag_verblijfsobjecten;
 
 
-ALTER TABLE public.bag_verblijfsobjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_verblijfsobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_verblijfsobjecten__gobid_seq OWNED BY public.bag_verblijfsobjecten._gobid;
-
+ALTER TABLE legacy.bag_verblijfsobjecten OWNER TO gobtest;
 
 --
 -- Name: bag_woonplaatsen; Type: TABLE; Schema: public; Owner: gobtest
@@ -2277,26 +2441,44 @@ CREATE TABLE public.bag_woonplaatsen (
 ALTER TABLE public.bag_woonplaatsen OWNER TO gobtest;
 
 --
--- Name: bag_woonplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bag_woonplaatsen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bag_woonplaatsen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bag_woonplaatsen AS
+ SELECT bag_woonplaatsen._gobid,
+    bag_woonplaatsen._id,
+    bag_woonplaatsen._source,
+    bag_woonplaatsen._application,
+    bag_woonplaatsen._source_id,
+    bag_woonplaatsen._last_event,
+    bag_woonplaatsen._version,
+    bag_woonplaatsen._date_created,
+    bag_woonplaatsen._date_confirmed,
+    bag_woonplaatsen._date_modified,
+    bag_woonplaatsen._date_deleted,
+    bag_woonplaatsen.volgnummer,
+    bag_woonplaatsen.registratiedatum,
+    bag_woonplaatsen.identificatie,
+    bag_woonplaatsen.naam,
+    bag_woonplaatsen.geometrie,
+    bag_woonplaatsen.geconstateerd,
+    bag_woonplaatsen.begin_geldigheid,
+    bag_woonplaatsen.eind_geldigheid,
+    bag_woonplaatsen.documentdatum,
+    bag_woonplaatsen.documentnummer,
+    bag_woonplaatsen.status,
+    bag_woonplaatsen.ligt_in_gemeente,
+    bag_woonplaatsen.bagproces,
+    bag_woonplaatsen._hash,
+    bag_woonplaatsen._expiration_date,
+    bag_woonplaatsen.heeft_dossier,
+    bag_woonplaatsen.woonplaats_ptt,
+    bag_woonplaatsen.heeft_onderzoeken,
+    bag_woonplaatsen._tid
+   FROM public.bag_woonplaatsen;
 
 
-ALTER TABLE public.bag_woonplaatsen__gobid_seq OWNER TO gobtest;
-
---
--- Name: bag_woonplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bag_woonplaatsen__gobid_seq OWNED BY public.bag_woonplaatsen._gobid;
-
+ALTER TABLE legacy.bag_woonplaatsen OWNER TO gobtest;
 
 --
 -- Name: bgt_onderbouw; Type: TABLE; Schema: public; Owner: gobtest
@@ -2330,26 +2512,35 @@ CREATE TABLE public.bgt_onderbouw (
 ALTER TABLE public.bgt_onderbouw OWNER TO gobtest;
 
 --
--- Name: bgt_onderbouw__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bgt_onderbouw; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bgt_onderbouw__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bgt_onderbouw AS
+ SELECT bgt_onderbouw.identificatie,
+    bgt_onderbouw.volgnummer,
+    bgt_onderbouw.begin_geldigheid,
+    bgt_onderbouw.eind_geldigheid,
+    bgt_onderbouw.registratiedatum,
+    bgt_onderbouw.relatieve_hoogteligging,
+    bgt_onderbouw.geometrie,
+    bgt_onderbouw._source,
+    bgt_onderbouw._application,
+    bgt_onderbouw._source_id,
+    bgt_onderbouw._last_event,
+    bgt_onderbouw._hash,
+    bgt_onderbouw._version,
+    bgt_onderbouw._date_created,
+    bgt_onderbouw._date_confirmed,
+    bgt_onderbouw._date_modified,
+    bgt_onderbouw._date_deleted,
+    bgt_onderbouw._expiration_date,
+    bgt_onderbouw._gobid,
+    bgt_onderbouw._id,
+    bgt_onderbouw._tid
+   FROM public.bgt_onderbouw;
 
 
-ALTER TABLE public.bgt_onderbouw__gobid_seq OWNER TO gobtest;
-
---
--- Name: bgt_onderbouw__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bgt_onderbouw__gobid_seq OWNED BY public.bgt_onderbouw._gobid;
-
+ALTER TABLE legacy.bgt_onderbouw OWNER TO gobtest;
 
 --
 -- Name: bgt_overbouw; Type: TABLE; Schema: public; Owner: gobtest
@@ -2383,26 +2574,35 @@ CREATE TABLE public.bgt_overbouw (
 ALTER TABLE public.bgt_overbouw OWNER TO gobtest;
 
 --
--- Name: bgt_overbouw__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: bgt_overbouw; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.bgt_overbouw__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.bgt_overbouw AS
+ SELECT bgt_overbouw.volgnummer,
+    bgt_overbouw.registratiedatum,
+    bgt_overbouw.identificatie,
+    bgt_overbouw.begin_geldigheid,
+    bgt_overbouw.eind_geldigheid,
+    bgt_overbouw.relatieve_hoogteligging,
+    bgt_overbouw.geometrie,
+    bgt_overbouw._source,
+    bgt_overbouw._application,
+    bgt_overbouw._source_id,
+    bgt_overbouw._last_event,
+    bgt_overbouw._hash,
+    bgt_overbouw._version,
+    bgt_overbouw._date_created,
+    bgt_overbouw._date_confirmed,
+    bgt_overbouw._date_modified,
+    bgt_overbouw._date_deleted,
+    bgt_overbouw._expiration_date,
+    bgt_overbouw._gobid,
+    bgt_overbouw._id,
+    bgt_overbouw._tid
+   FROM public.bgt_overbouw;
 
 
-ALTER TABLE public.bgt_overbouw__gobid_seq OWNER TO gobtest;
-
---
--- Name: bgt_overbouw__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.bgt_overbouw__gobid_seq OWNED BY public.bgt_overbouw._gobid;
-
+ALTER TABLE legacy.bgt_overbouw OWNER TO gobtest;
 
 --
 -- Name: brk2_aantekeningenkadastraleobjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2445,26 +2645,44 @@ CREATE TABLE public.brk2_aantekeningenkadastraleobjecten (
 ALTER TABLE public.brk2_aantekeningenkadastraleobjecten OWNER TO gobtest;
 
 --
--- Name: brk2_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_aantekeningenkadastraleobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_aantekeningenkadastraleobjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_aantekeningenkadastraleobjecten AS
+ SELECT brk2_aantekeningenkadastraleobjecten.volgnummer,
+    brk2_aantekeningenkadastraleobjecten.registratiedatum,
+    brk2_aantekeningenkadastraleobjecten.begin_geldigheid,
+    brk2_aantekeningenkadastraleobjecten.eind_geldigheid,
+    brk2_aantekeningenkadastraleobjecten.einddatum_recht,
+    brk2_aantekeningenkadastraleobjecten.identificatie,
+    brk2_aantekeningenkadastraleobjecten.aard,
+    brk2_aantekeningenkadastraleobjecten.omschrijving,
+    brk2_aantekeningenkadastraleobjecten.betreft_gedeelte_van_perceel,
+    brk2_aantekeningenkadastraleobjecten.heeft_brk_betrokken_persoon,
+    brk2_aantekeningenkadastraleobjecten.heeft_betrekking_op_brk_kadastraal_object,
+    brk2_aantekeningenkadastraleobjecten.is_gebaseerd_op_brk_stukdeel,
+    brk2_aantekeningenkadastraleobjecten.einddatum,
+    brk2_aantekeningenkadastraleobjecten.datum_actueel_tot,
+    brk2_aantekeningenkadastraleobjecten.toestandsdatum,
+    brk2_aantekeningenkadastraleobjecten._source,
+    brk2_aantekeningenkadastraleobjecten._application,
+    brk2_aantekeningenkadastraleobjecten._source_id,
+    brk2_aantekeningenkadastraleobjecten._last_event,
+    brk2_aantekeningenkadastraleobjecten._hash,
+    brk2_aantekeningenkadastraleobjecten._version,
+    brk2_aantekeningenkadastraleobjecten._date_created,
+    brk2_aantekeningenkadastraleobjecten._date_confirmed,
+    brk2_aantekeningenkadastraleobjecten._date_modified,
+    brk2_aantekeningenkadastraleobjecten._date_deleted,
+    brk2_aantekeningenkadastraleobjecten._expiration_date,
+    brk2_aantekeningenkadastraleobjecten._gobid,
+    brk2_aantekeningenkadastraleobjecten._id,
+    brk2_aantekeningenkadastraleobjecten._tid,
+    brk2_aantekeningenkadastraleobjecten.was_identificatie
+   FROM public.brk2_aantekeningenkadastraleobjecten;
 
 
-ALTER TABLE public.brk2_aantekeningenkadastraleobjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_aantekeningenkadastraleobjecten__gobid_seq OWNED BY public.brk2_aantekeningenkadastraleobjecten._gobid;
-
+ALTER TABLE legacy.brk2_aantekeningenkadastraleobjecten OWNER TO gobtest;
 
 --
 -- Name: brk2_aantekeningenrechten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2504,26 +2722,41 @@ CREATE TABLE public.brk2_aantekeningenrechten (
 ALTER TABLE public.brk2_aantekeningenrechten OWNER TO gobtest;
 
 --
--- Name: brk2_aantekeningenrechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_aantekeningenrechten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_aantekeningenrechten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_aantekeningenrechten AS
+ SELECT brk2_aantekeningenrechten.neuron_id,
+    brk2_aantekeningenrechten.identificatie,
+    brk2_aantekeningenrechten.einddatum_recht,
+    brk2_aantekeningenrechten.aard,
+    brk2_aantekeningenrechten.omschrijving,
+    brk2_aantekeningenrechten.betreft_gedeelte_van_perceel,
+    brk2_aantekeningenrechten.betrokken_brk_tenaamstelling,
+    brk2_aantekeningenrechten.heeft_brk_betrokken_persoon,
+    brk2_aantekeningenrechten.is_gebaseerd_op_brk_stukdeel,
+    brk2_aantekeningenrechten.einddatum,
+    brk2_aantekeningenrechten.datum_actueel_tot,
+    brk2_aantekeningenrechten.toestandsdatum,
+    brk2_aantekeningenrechten._source,
+    brk2_aantekeningenrechten._application,
+    brk2_aantekeningenrechten._source_id,
+    brk2_aantekeningenrechten._last_event,
+    brk2_aantekeningenrechten._hash,
+    brk2_aantekeningenrechten._version,
+    brk2_aantekeningenrechten._date_created,
+    brk2_aantekeningenrechten._date_confirmed,
+    brk2_aantekeningenrechten._date_modified,
+    brk2_aantekeningenrechten._date_deleted,
+    brk2_aantekeningenrechten._expiration_date,
+    brk2_aantekeningenrechten._gobid,
+    brk2_aantekeningenrechten._id,
+    brk2_aantekeningenrechten._tid,
+    brk2_aantekeningenrechten.was_identificatie
+   FROM public.brk2_aantekeningenrechten;
 
 
-ALTER TABLE public.brk2_aantekeningenrechten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_aantekeningenrechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_aantekeningenrechten__gobid_seq OWNED BY public.brk2_aantekeningenrechten._gobid;
-
+ALTER TABLE legacy.brk2_aantekeningenrechten OWNER TO gobtest;
 
 --
 -- Name: brk2_aardzakelijkerechten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2556,26 +2789,34 @@ CREATE TABLE public.brk2_aardzakelijkerechten (
 ALTER TABLE public.brk2_aardzakelijkerechten OWNER TO gobtest;
 
 --
--- Name: brk2_aardzakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_aardzakelijkerechten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_aardzakelijkerechten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_aardzakelijkerechten AS
+ SELECT brk2_aardzakelijkerechten.code,
+    brk2_aardzakelijkerechten.waarde,
+    brk2_aardzakelijkerechten.datum_vanaf,
+    brk2_aardzakelijkerechten.datum_tot,
+    brk2_aardzakelijkerechten.toelichting,
+    brk2_aardzakelijkerechten.akr_code,
+    brk2_aardzakelijkerechten._source,
+    brk2_aardzakelijkerechten._application,
+    brk2_aardzakelijkerechten._source_id,
+    brk2_aardzakelijkerechten._last_event,
+    brk2_aardzakelijkerechten._hash,
+    brk2_aardzakelijkerechten._version,
+    brk2_aardzakelijkerechten._date_created,
+    brk2_aardzakelijkerechten._date_confirmed,
+    brk2_aardzakelijkerechten._date_modified,
+    brk2_aardzakelijkerechten._date_deleted,
+    brk2_aardzakelijkerechten._expiration_date,
+    brk2_aardzakelijkerechten._gobid,
+    brk2_aardzakelijkerechten._id,
+    brk2_aardzakelijkerechten._tid
+   FROM public.brk2_aardzakelijkerechten;
 
 
-ALTER TABLE public.brk2_aardzakelijkerechten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_aardzakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_aardzakelijkerechten__gobid_seq OWNED BY public.brk2_aardzakelijkerechten._gobid;
-
+ALTER TABLE legacy.brk2_aardzakelijkerechten OWNER TO gobtest;
 
 --
 -- Name: brk2_erfpachtcanons; Type: TABLE; Schema: public; Owner: gobtest
@@ -2614,26 +2855,40 @@ CREATE TABLE public.brk2_erfpachtcanons (
 ALTER TABLE public.brk2_erfpachtcanons OWNER TO gobtest;
 
 --
--- Name: brk2_erfpachtcanons__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_erfpachtcanons; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_erfpachtcanons__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_erfpachtcanons AS
+ SELECT brk2_erfpachtcanons.volgnummer,
+    brk2_erfpachtcanons.registratiedatum,
+    brk2_erfpachtcanons.begin_geldigheid,
+    brk2_erfpachtcanons.eind_geldigheid,
+    brk2_erfpachtcanons.identificatie,
+    brk2_erfpachtcanons.soort,
+    brk2_erfpachtcanons.jaarlijks_bedrag,
+    brk2_erfpachtcanons.is_gebaseerd_op_brk_stukdeel,
+    brk2_erfpachtcanons.einddatum,
+    brk2_erfpachtcanons.datum_actueel_tot,
+    brk2_erfpachtcanons.toestandsdatum,
+    brk2_erfpachtcanons.betreft_brk_zakelijkrecht,
+    brk2_erfpachtcanons._source,
+    brk2_erfpachtcanons._application,
+    brk2_erfpachtcanons._source_id,
+    brk2_erfpachtcanons._last_event,
+    brk2_erfpachtcanons._hash,
+    brk2_erfpachtcanons._version,
+    brk2_erfpachtcanons._date_created,
+    brk2_erfpachtcanons._date_confirmed,
+    brk2_erfpachtcanons._date_modified,
+    brk2_erfpachtcanons._date_deleted,
+    brk2_erfpachtcanons._expiration_date,
+    brk2_erfpachtcanons._gobid,
+    brk2_erfpachtcanons._id,
+    brk2_erfpachtcanons._tid
+   FROM public.brk2_erfpachtcanons;
 
 
-ALTER TABLE public.brk2_erfpachtcanons__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_erfpachtcanons__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_erfpachtcanons__gobid_seq OWNED BY public.brk2_erfpachtcanons._gobid;
-
+ALTER TABLE legacy.brk2_erfpachtcanons OWNER TO gobtest;
 
 --
 -- Name: brk2_gemeentes; Type: TABLE; Schema: public; Owner: gobtest
@@ -2667,26 +2922,35 @@ CREATE TABLE public.brk2_gemeentes (
 ALTER TABLE public.brk2_gemeentes OWNER TO gobtest;
 
 --
--- Name: brk2_gemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_gemeentes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_gemeentes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_gemeentes AS
+ SELECT brk2_gemeentes.volgnummer,
+    brk2_gemeentes.registratiedatum,
+    brk2_gemeentes.begin_geldigheid,
+    brk2_gemeentes.eind_geldigheid,
+    brk2_gemeentes.identificatie,
+    brk2_gemeentes.naam,
+    brk2_gemeentes.geometrie,
+    brk2_gemeentes._source,
+    brk2_gemeentes._application,
+    brk2_gemeentes._source_id,
+    brk2_gemeentes._last_event,
+    brk2_gemeentes._hash,
+    brk2_gemeentes._version,
+    brk2_gemeentes._date_created,
+    brk2_gemeentes._date_confirmed,
+    brk2_gemeentes._date_modified,
+    brk2_gemeentes._date_deleted,
+    brk2_gemeentes._expiration_date,
+    brk2_gemeentes._gobid,
+    brk2_gemeentes._id,
+    brk2_gemeentes._tid
+   FROM public.brk2_gemeentes;
 
 
-ALTER TABLE public.brk2_gemeentes__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_gemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_gemeentes__gobid_seq OWNED BY public.brk2_gemeentes._gobid;
-
+ALTER TABLE legacy.brk2_gemeentes OWNER TO gobtest;
 
 --
 -- Name: brk2_kadastralegemeentecodes; Type: TABLE; Schema: public; Owner: gobtest
@@ -2717,26 +2981,32 @@ CREATE TABLE public.brk2_kadastralegemeentecodes (
 ALTER TABLE public.brk2_kadastralegemeentecodes OWNER TO gobtest;
 
 --
--- Name: brk2_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_kadastralegemeentecodes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_kadastralegemeentecodes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_kadastralegemeentecodes AS
+ SELECT brk2_kadastralegemeentecodes.identificatie,
+    brk2_kadastralegemeentecodes.is_onderdeel_van_brk_kadastrale_gemeente,
+    brk2_kadastralegemeentecodes.geometrie,
+    brk2_kadastralegemeentecodes._source,
+    brk2_kadastralegemeentecodes._application,
+    brk2_kadastralegemeentecodes._source_id,
+    brk2_kadastralegemeentecodes._last_event,
+    brk2_kadastralegemeentecodes._hash,
+    brk2_kadastralegemeentecodes._version,
+    brk2_kadastralegemeentecodes._date_created,
+    brk2_kadastralegemeentecodes._date_confirmed,
+    brk2_kadastralegemeentecodes._date_modified,
+    brk2_kadastralegemeentecodes._date_deleted,
+    brk2_kadastralegemeentecodes._expiration_date,
+    brk2_kadastralegemeentecodes._gobid,
+    brk2_kadastralegemeentecodes._id,
+    brk2_kadastralegemeentecodes._tid,
+    brk2_kadastralegemeentecodes.code
+   FROM public.brk2_kadastralegemeentecodes;
 
 
-ALTER TABLE public.brk2_kadastralegemeentecodes__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_kadastralegemeentecodes__gobid_seq OWNED BY public.brk2_kadastralegemeentecodes._gobid;
-
+ALTER TABLE legacy.brk2_kadastralegemeentecodes OWNER TO gobtest;
 
 --
 -- Name: brk2_kadastralegemeentes; Type: TABLE; Schema: public; Owner: gobtest
@@ -2767,26 +3037,32 @@ CREATE TABLE public.brk2_kadastralegemeentes (
 ALTER TABLE public.brk2_kadastralegemeentes OWNER TO gobtest;
 
 --
--- Name: brk2_kadastralegemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_kadastralegemeentes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_kadastralegemeentes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_kadastralegemeentes AS
+ SELECT brk2_kadastralegemeentes.identificatie,
+    brk2_kadastralegemeentes.ligt_in_brk_gemeente,
+    brk2_kadastralegemeentes.geometrie,
+    brk2_kadastralegemeentes._source,
+    brk2_kadastralegemeentes._application,
+    brk2_kadastralegemeentes._source_id,
+    brk2_kadastralegemeentes._last_event,
+    brk2_kadastralegemeentes._hash,
+    brk2_kadastralegemeentes._version,
+    brk2_kadastralegemeentes._date_created,
+    brk2_kadastralegemeentes._date_confirmed,
+    brk2_kadastralegemeentes._date_modified,
+    brk2_kadastralegemeentes._date_deleted,
+    brk2_kadastralegemeentes._expiration_date,
+    brk2_kadastralegemeentes._gobid,
+    brk2_kadastralegemeentes._id,
+    brk2_kadastralegemeentes._tid,
+    brk2_kadastralegemeentes.code
+   FROM public.brk2_kadastralegemeentes;
 
 
-ALTER TABLE public.brk2_kadastralegemeentes__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_kadastralegemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_kadastralegemeentes__gobid_seq OWNED BY public.brk2_kadastralegemeentes._gobid;
-
+ALTER TABLE legacy.brk2_kadastralegemeentes OWNER TO gobtest;
 
 --
 -- Name: brk2_kadastraleobjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2855,26 +3131,70 @@ CREATE TABLE public.brk2_kadastraleobjecten (
 ALTER TABLE public.brk2_kadastraleobjecten OWNER TO gobtest;
 
 --
--- Name: brk2_kadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_kadastraleobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_kadastraleobjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_kadastraleobjecten AS
+ SELECT brk2_kadastraleobjecten.volgnummer,
+    brk2_kadastraleobjecten.registratiedatum,
+    brk2_kadastraleobjecten.begin_geldigheid,
+    brk2_kadastraleobjecten.eind_geldigheid,
+    brk2_kadastraleobjecten.identificatie,
+    brk2_kadastraleobjecten.neuron_id,
+    brk2_kadastraleobjecten.kadastrale_aanduiding,
+    brk2_kadastraleobjecten.perceelnummer,
+    brk2_kadastraleobjecten.indexletter,
+    brk2_kadastraleobjecten.indexnummer,
+    brk2_kadastraleobjecten.soort_grootte,
+    brk2_kadastraleobjecten.grootte,
+    brk2_kadastraleobjecten.soort_cultuur_onbebouwd,
+    brk2_kadastraleobjecten.soort_cultuur_bebouwd,
+    brk2_kadastraleobjecten.referentie,
+    brk2_kadastraleobjecten.oudst_digitaal_bekend,
+    brk2_kadastraleobjecten.mutatie_id,
+    brk2_kadastraleobjecten.meettarief_verschuldigd,
+    brk2_kadastraleobjecten.toelichting_bewaarder,
+    brk2_kadastraleobjecten.tijdstip_ontstaan_object,
+    brk2_kadastraleobjecten.hoofdsplitsing_identificatie,
+    brk2_kadastraleobjecten.afwijking_lijst_rechthebbenden,
+    brk2_kadastraleobjecten.geometrie,
+    brk2_kadastraleobjecten.plaatscoordinaten,
+    brk2_kadastraleobjecten.perceelnummer_rotatie,
+    brk2_kadastraleobjecten.bijpijling_geometrie,
+    brk2_kadastraleobjecten.koopsom,
+    brk2_kadastraleobjecten.koopsom_valutacode,
+    brk2_kadastraleobjecten.koopjaar,
+    brk2_kadastraleobjecten.indicatie_meer_objecten,
+    brk2_kadastraleobjecten.toestandsdatum,
+    brk2_kadastraleobjecten.in_onderzoek,
+    brk2_kadastraleobjecten.datum_actueel_tot,
+    brk2_kadastraleobjecten._source,
+    brk2_kadastraleobjecten._application,
+    brk2_kadastraleobjecten._source_id,
+    brk2_kadastraleobjecten._last_event,
+    brk2_kadastraleobjecten._hash,
+    brk2_kadastraleobjecten._version,
+    brk2_kadastraleobjecten._date_created,
+    brk2_kadastraleobjecten._date_confirmed,
+    brk2_kadastraleobjecten._date_modified,
+    brk2_kadastraleobjecten._date_deleted,
+    brk2_kadastraleobjecten._expiration_date,
+    brk2_kadastraleobjecten._gobid,
+    brk2_kadastraleobjecten._id,
+    brk2_kadastraleobjecten._tid,
+    brk2_kadastraleobjecten.aangeduid_door_brk_gemeente,
+    brk2_kadastraleobjecten.aangeduid_door_brk_kadastralegemeente,
+    brk2_kadastraleobjecten.aangeduid_door_brk_kadastralegemeentecode,
+    brk2_kadastraleobjecten.aangeduid_door_brk_kadastralesectie,
+    brk2_kadastraleobjecten.indicatie_voorlopige_kadastrale_grens,
+    brk2_kadastraleobjecten.perceelnummer_verschuiving,
+    brk2_kadastraleobjecten.is_ontstaan_uit_brk_g_perceel,
+    brk2_kadastraleobjecten.heeft_een_relatie_met_bag_verblijfsobject,
+    brk2_kadastraleobjecten.is_ontstaan_uit_brk_kadastraalobject
+   FROM public.brk2_kadastraleobjecten;
 
 
-ALTER TABLE public.brk2_kadastraleobjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_kadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_kadastraleobjecten__gobid_seq OWNED BY public.brk2_kadastraleobjecten._gobid;
-
+ALTER TABLE legacy.brk2_kadastraleobjecten OWNER TO gobtest;
 
 --
 -- Name: brk2_kadastralesecties; Type: TABLE; Schema: public; Owner: gobtest
@@ -2905,26 +3225,32 @@ CREATE TABLE public.brk2_kadastralesecties (
 ALTER TABLE public.brk2_kadastralesecties OWNER TO gobtest;
 
 --
--- Name: brk2_kadastralesecties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_kadastralesecties; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_kadastralesecties__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_kadastralesecties AS
+ SELECT brk2_kadastralesecties.identificatie,
+    brk2_kadastralesecties.code,
+    brk2_kadastralesecties.is_onderdeel_van_brk_kadastrale_gemeentecode,
+    brk2_kadastralesecties.geometrie,
+    brk2_kadastralesecties._source,
+    brk2_kadastralesecties._application,
+    brk2_kadastralesecties._source_id,
+    brk2_kadastralesecties._last_event,
+    brk2_kadastralesecties._hash,
+    brk2_kadastralesecties._version,
+    brk2_kadastralesecties._date_created,
+    brk2_kadastralesecties._date_confirmed,
+    brk2_kadastralesecties._date_modified,
+    brk2_kadastralesecties._date_deleted,
+    brk2_kadastralesecties._expiration_date,
+    brk2_kadastralesecties._gobid,
+    brk2_kadastralesecties._id,
+    brk2_kadastralesecties._tid
+   FROM public.brk2_kadastralesecties;
 
 
-ALTER TABLE public.brk2_kadastralesecties__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_kadastralesecties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_kadastralesecties__gobid_seq OWNED BY public.brk2_kadastralesecties._gobid;
-
+ALTER TABLE legacy.brk2_kadastralesecties OWNER TO gobtest;
 
 --
 -- Name: brk2_kadastralesubjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -2983,26 +3309,60 @@ CREATE TABLE public.brk2_kadastralesubjecten (
 ALTER TABLE public.brk2_kadastralesubjecten OWNER TO gobtest;
 
 --
--- Name: brk2_kadastralesubjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_kadastralesubjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_kadastralesubjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_kadastralesubjecten AS
+ SELECT brk2_kadastralesubjecten.identificatie,
+    brk2_kadastralesubjecten.type_subject,
+    brk2_kadastralesubjecten.beschikkingsbevoegdheid,
+    brk2_kadastralesubjecten.indicatie_afscherming_gegevens,
+    brk2_kadastralesubjecten.heeft_bsn_voor_brp_persoon,
+    brk2_kadastralesubjecten.voornamen,
+    brk2_kadastralesubjecten.voorvoegsels,
+    brk2_kadastralesubjecten.geslachtsnaam,
+    brk2_kadastralesubjecten.geslacht,
+    brk2_kadastralesubjecten.naam_gebruik,
+    brk2_kadastralesubjecten.titel_of_predicaat,
+    brk2_kadastralesubjecten.indicatie_diakriet_niet_toonbaar,
+    brk2_kadastralesubjecten.geboortedatum,
+    brk2_kadastralesubjecten.geboortedatum_onvolledig,
+    brk2_kadastralesubjecten.geboorteplaats,
+    brk2_kadastralesubjecten.geboorteland,
+    brk2_kadastralesubjecten.datum_overlijden,
+    brk2_kadastralesubjecten.datum_overlijden_onvolledig,
+    brk2_kadastralesubjecten.indicatie_overleden,
+    brk2_kadastralesubjecten.voornamen_partner,
+    brk2_kadastralesubjecten.voorvoegsels_partner,
+    brk2_kadastralesubjecten.geslachtsnaam_partner,
+    brk2_kadastralesubjecten.heeft_rsin_voor_hr_niet_natuurlijkepersoon,
+    brk2_kadastralesubjecten.heeft_kvknummer_voor_hr_maatschappelijkeactiviteit,
+    brk2_kadastralesubjecten.rechtsvorm,
+    brk2_kadastralesubjecten.statutaire_naam,
+    brk2_kadastralesubjecten.statutaire_zetel,
+    brk2_kadastralesubjecten.woonadres,
+    brk2_kadastralesubjecten.land_waarnaar_vertrokken,
+    brk2_kadastralesubjecten.postadres,
+    brk2_kadastralesubjecten.datum_actueel_tot,
+    brk2_kadastralesubjecten.toestandsdatum,
+    brk2_kadastralesubjecten._source,
+    brk2_kadastralesubjecten._application,
+    brk2_kadastralesubjecten._source_id,
+    brk2_kadastralesubjecten._last_event,
+    brk2_kadastralesubjecten._hash,
+    brk2_kadastralesubjecten._version,
+    brk2_kadastralesubjecten._date_created,
+    brk2_kadastralesubjecten._date_confirmed,
+    brk2_kadastralesubjecten._date_modified,
+    brk2_kadastralesubjecten._date_deleted,
+    brk2_kadastralesubjecten._expiration_date,
+    brk2_kadastralesubjecten._gobid,
+    brk2_kadastralesubjecten._id,
+    brk2_kadastralesubjecten._tid
+   FROM public.brk2_kadastralesubjecten;
 
 
-ALTER TABLE public.brk2_kadastralesubjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_kadastralesubjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_kadastralesubjecten__gobid_seq OWNED BY public.brk2_kadastralesubjecten._gobid;
-
+ALTER TABLE legacy.brk2_kadastralesubjecten OWNER TO gobtest;
 
 --
 -- Name: brk2_meta; Type: TABLE; Schema: public; Owner: gobtest
@@ -3031,26 +3391,30 @@ CREATE TABLE public.brk2_meta (
 ALTER TABLE public.brk2_meta OWNER TO gobtest;
 
 --
--- Name: brk2_meta__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_meta; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_meta__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_meta AS
+ SELECT brk2_meta.id,
+    brk2_meta.kennisgevingsdatum,
+    brk2_meta._source,
+    brk2_meta._application,
+    brk2_meta._source_id,
+    brk2_meta._last_event,
+    brk2_meta._hash,
+    brk2_meta._version,
+    brk2_meta._date_created,
+    brk2_meta._date_confirmed,
+    brk2_meta._date_modified,
+    brk2_meta._date_deleted,
+    brk2_meta._expiration_date,
+    brk2_meta._gobid,
+    brk2_meta._id,
+    brk2_meta._tid
+   FROM public.brk2_meta;
 
 
-ALTER TABLE public.brk2_meta__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_meta__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_meta__gobid_seq OWNED BY public.brk2_meta._gobid;
-
+ALTER TABLE legacy.brk2_meta OWNER TO gobtest;
 
 --
 -- Name: brk2_stukdelen; Type: TABLE; Schema: public; Owner: gobtest
@@ -3100,26 +3464,51 @@ CREATE TABLE public.brk2_stukdelen (
 ALTER TABLE public.brk2_stukdelen OWNER TO gobtest;
 
 --
--- Name: brk2_stukdelen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_stukdelen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_stukdelen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_stukdelen AS
+ SELECT brk2_stukdelen.neuron_id,
+    brk2_stukdelen.identificatie,
+    brk2_stukdelen.aard,
+    brk2_stukdelen.bedrag_transactie,
+    brk2_stukdelen.is_bron_voor_brk_tenaamstelling,
+    brk2_stukdelen.is_bron_voor_brk_aantekening_kadastraal_object,
+    brk2_stukdelen.is_bron_voor_brk_aantekening_recht,
+    brk2_stukdelen.is_bron_voor_brk_zakelijk_recht,
+    brk2_stukdelen.stukidentificatie,
+    brk2_stukdelen.portefeuillenummer_akr,
+    brk2_stukdelen.tijdstip_aanbieding_stuk,
+    brk2_stukdelen.reeks,
+    brk2_stukdelen.volgnummer_stuk,
+    brk2_stukdelen.registercode_stuk,
+    brk2_stukdelen.soort_register_stuk,
+    brk2_stukdelen.deel_soort_stuk,
+    brk2_stukdelen.toestandsdatum,
+    brk2_stukdelen.tekening_ingeschreven,
+    brk2_stukdelen.tijdstip_ondertekening,
+    brk2_stukdelen.toelichting_bewaarder,
+    brk2_stukdelen.datum_actueel_tot,
+    brk2_stukdelen._source,
+    brk2_stukdelen._application,
+    brk2_stukdelen._source_id,
+    brk2_stukdelen._last_event,
+    brk2_stukdelen._hash,
+    brk2_stukdelen._version,
+    brk2_stukdelen._date_created,
+    brk2_stukdelen._date_confirmed,
+    brk2_stukdelen._date_modified,
+    brk2_stukdelen._date_deleted,
+    brk2_stukdelen._expiration_date,
+    brk2_stukdelen._gobid,
+    brk2_stukdelen._id,
+    brk2_stukdelen._tid,
+    brk2_stukdelen.was_identificatie,
+    brk2_stukdelen.is_bron_voor_brk_erfpachtcanon
+   FROM public.brk2_stukdelen;
 
 
-ALTER TABLE public.brk2_stukdelen__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_stukdelen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_stukdelen__gobid_seq OWNED BY public.brk2_stukdelen._gobid;
-
+ALTER TABLE legacy.brk2_stukdelen OWNER TO gobtest;
 
 --
 -- Name: brk2_tenaamstellingen; Type: TABLE; Schema: public; Owner: gobtest
@@ -3166,26 +3555,48 @@ CREATE TABLE public.brk2_tenaamstellingen (
 ALTER TABLE public.brk2_tenaamstellingen OWNER TO gobtest;
 
 --
--- Name: brk2_tenaamstellingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_tenaamstellingen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_tenaamstellingen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_tenaamstellingen AS
+ SELECT brk2_tenaamstellingen.identificatie,
+    brk2_tenaamstellingen.volgnummer,
+    brk2_tenaamstellingen.neuron_id,
+    brk2_tenaamstellingen.van_brk_kadastraalsubject,
+    brk2_tenaamstellingen.begin_geldigheid,
+    brk2_tenaamstellingen.eind_geldigheid,
+    brk2_tenaamstellingen.datum_actueel_tot,
+    brk2_tenaamstellingen.aandeel,
+    brk2_tenaamstellingen.geldt_voor,
+    brk2_tenaamstellingen.burgerlijke_staat_ten_tijde_van_verkrijging,
+    brk2_tenaamstellingen.betrokken_partner_brk_subject,
+    brk2_tenaamstellingen.betrokken_samenwerkingsverband_brk_subject,
+    brk2_tenaamstellingen.verkregen_namens_samenwerkingsverband,
+    brk2_tenaamstellingen.betrokken_gorzen_en_aanwassen_brk_subject,
+    brk2_tenaamstellingen.in_onderzoek,
+    brk2_tenaamstellingen.van_brk_zakelijk_recht,
+    brk2_tenaamstellingen.toestandsdatum,
+    brk2_tenaamstellingen._source,
+    brk2_tenaamstellingen._application,
+    brk2_tenaamstellingen._source_id,
+    brk2_tenaamstellingen._last_event,
+    brk2_tenaamstellingen._hash,
+    brk2_tenaamstellingen._version,
+    brk2_tenaamstellingen._date_created,
+    brk2_tenaamstellingen._date_confirmed,
+    brk2_tenaamstellingen._date_modified,
+    brk2_tenaamstellingen._date_deleted,
+    brk2_tenaamstellingen._expiration_date,
+    brk2_tenaamstellingen._gobid,
+    brk2_tenaamstellingen._id,
+    brk2_tenaamstellingen._tid,
+    brk2_tenaamstellingen.is_gebaseerd_op_brk_stukdelen,
+    brk2_tenaamstellingen.registratiedatum,
+    brk2_tenaamstellingen.was_identificatie
+   FROM public.brk2_tenaamstellingen;
 
 
-ALTER TABLE public.brk2_tenaamstellingen__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_tenaamstellingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_tenaamstellingen__gobid_seq OWNED BY public.brk2_tenaamstellingen._gobid;
-
+ALTER TABLE legacy.brk2_tenaamstellingen OWNER TO gobtest;
 
 --
 -- Name: brk2_zakelijkerechten; Type: TABLE; Schema: public; Owner: gobtest
@@ -3236,26 +3647,52 @@ CREATE TABLE public.brk2_zakelijkerechten (
 ALTER TABLE public.brk2_zakelijkerechten OWNER TO gobtest;
 
 --
--- Name: brk2_zakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk2_zakelijkerechten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk2_zakelijkerechten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk2_zakelijkerechten AS
+ SELECT brk2_zakelijkerechten.volgnummer,
+    brk2_zakelijkerechten.registratiedatum,
+    brk2_zakelijkerechten.begin_geldigheid,
+    brk2_zakelijkerechten.eind_geldigheid,
+    brk2_zakelijkerechten.identificatie,
+    brk2_zakelijkerechten.datum_actueel_tot,
+    brk2_zakelijkerechten.belast_brk_zakelijke_rechten,
+    brk2_zakelijkerechten.belast_met_brk_zakelijke_rechten,
+    brk2_zakelijkerechten.ontstaan_uit_brk_zakelijke_rechten,
+    brk2_zakelijkerechten.betrokken_bij_brk_zakelijke_rechten,
+    brk2_zakelijkerechten.is_beperkt_tot_brk_tenaamstellingen,
+    brk2_zakelijkerechten.rust_op_brk_kadastraal_object,
+    brk2_zakelijkerechten.vve_identificatie_ontstaan_uit,
+    brk2_zakelijkerechten.vve_identificatie_betrokken_bij,
+    brk2_zakelijkerechten.appartementsrechtsplitsing_type,
+    brk2_zakelijkerechten.is_bestemd_tot_identificatie,
+    brk2_zakelijkerechten.toelichting_bewaarder,
+    brk2_zakelijkerechten.in_onderzoek,
+    brk2_zakelijkerechten.aard_zakelijk_recht,
+    brk2_zakelijkerechten.akr_aard_zakelijk_recht,
+    brk2_zakelijkerechten.toestandsdatum,
+    brk2_zakelijkerechten._source,
+    brk2_zakelijkerechten._application,
+    brk2_zakelijkerechten._source_id,
+    brk2_zakelijkerechten._last_event,
+    brk2_zakelijkerechten._hash,
+    brk2_zakelijkerechten._version,
+    brk2_zakelijkerechten._date_created,
+    brk2_zakelijkerechten._date_confirmed,
+    brk2_zakelijkerechten._date_modified,
+    brk2_zakelijkerechten._date_deleted,
+    brk2_zakelijkerechten._expiration_date,
+    brk2_zakelijkerechten._gobid,
+    brk2_zakelijkerechten._id,
+    brk2_zakelijkerechten._tid,
+    brk2_zakelijkerechten.ontstaan_uit_appartementsrechtsplitsing_vve,
+    brk2_zakelijkerechten.betrokken_bij_appartementsrechtsplitsing_vve,
+    brk2_zakelijkerechten.was_identificatie
+   FROM public.brk2_zakelijkerechten;
 
 
-ALTER TABLE public.brk2_zakelijkerechten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk2_zakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk2_zakelijkerechten__gobid_seq OWNED BY public.brk2_zakelijkerechten._gobid;
-
+ALTER TABLE legacy.brk2_zakelijkerechten OWNER TO gobtest;
 
 --
 -- Name: brk_aantekeningenkadastraleobjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -3295,26 +3732,41 @@ CREATE TABLE public.brk_aantekeningenkadastraleobjecten (
 ALTER TABLE public.brk_aantekeningenkadastraleobjecten OWNER TO gobtest;
 
 --
--- Name: brk_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_aantekeningenkadastraleobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_aantekeningenkadastraleobjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_aantekeningenkadastraleobjecten AS
+ SELECT brk_aantekeningenkadastraleobjecten.volgnummer,
+    brk_aantekeningenkadastraleobjecten.registratiedatum,
+    brk_aantekeningenkadastraleobjecten.id,
+    brk_aantekeningenkadastraleobjecten.begin_geldigheid,
+    brk_aantekeningenkadastraleobjecten.eind_geldigheid,
+    brk_aantekeningenkadastraleobjecten.identificatie,
+    brk_aantekeningenkadastraleobjecten.aard,
+    brk_aantekeningenkadastraleobjecten.omschrijving,
+    brk_aantekeningenkadastraleobjecten.heeft_betrokken_persoon,
+    brk_aantekeningenkadastraleobjecten.heeft_betrekking_op_kadastraal_object,
+    brk_aantekeningenkadastraleobjecten.is_gebaseerd_op_stukdeel,
+    brk_aantekeningenkadastraleobjecten.einddatum,
+    brk_aantekeningenkadastraleobjecten._source,
+    brk_aantekeningenkadastraleobjecten._application,
+    brk_aantekeningenkadastraleobjecten._source_id,
+    brk_aantekeningenkadastraleobjecten._last_event,
+    brk_aantekeningenkadastraleobjecten._hash,
+    brk_aantekeningenkadastraleobjecten._version,
+    brk_aantekeningenkadastraleobjecten._date_created,
+    brk_aantekeningenkadastraleobjecten._date_confirmed,
+    brk_aantekeningenkadastraleobjecten._date_modified,
+    brk_aantekeningenkadastraleobjecten._date_deleted,
+    brk_aantekeningenkadastraleobjecten._expiration_date,
+    brk_aantekeningenkadastraleobjecten._gobid,
+    brk_aantekeningenkadastraleobjecten._id,
+    brk_aantekeningenkadastraleobjecten.toestandsdatum,
+    brk_aantekeningenkadastraleobjecten._tid
+   FROM public.brk_aantekeningenkadastraleobjecten;
 
 
-ALTER TABLE public.brk_aantekeningenkadastraleobjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_aantekeningenkadastraleobjecten__gobid_seq OWNED BY public.brk_aantekeningenkadastraleobjecten._gobid;
-
+ALTER TABLE legacy.brk_aantekeningenkadastraleobjecten OWNER TO gobtest;
 
 --
 -- Name: brk_aantekeningenrechten; Type: TABLE; Schema: public; Owner: gobtest
@@ -3350,26 +3802,37 @@ CREATE TABLE public.brk_aantekeningenrechten (
 ALTER TABLE public.brk_aantekeningenrechten OWNER TO gobtest;
 
 --
--- Name: brk_aantekeningenrechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_aantekeningenrechten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_aantekeningenrechten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_aantekeningenrechten AS
+ SELECT brk_aantekeningenrechten.identificatie,
+    brk_aantekeningenrechten.aard,
+    brk_aantekeningenrechten.omschrijving,
+    brk_aantekeningenrechten.betrokken_tenaamstelling,
+    brk_aantekeningenrechten.heeft_betrokken_persoon,
+    brk_aantekeningenrechten.is_gebaseerd_op_stukdeel,
+    brk_aantekeningenrechten.einddatum,
+    brk_aantekeningenrechten._source,
+    brk_aantekeningenrechten._application,
+    brk_aantekeningenrechten._source_id,
+    brk_aantekeningenrechten._last_event,
+    brk_aantekeningenrechten._hash,
+    brk_aantekeningenrechten._version,
+    brk_aantekeningenrechten._date_created,
+    brk_aantekeningenrechten._date_confirmed,
+    brk_aantekeningenrechten._date_modified,
+    brk_aantekeningenrechten._date_deleted,
+    brk_aantekeningenrechten._expiration_date,
+    brk_aantekeningenrechten._gobid,
+    brk_aantekeningenrechten._id,
+    brk_aantekeningenrechten.id,
+    brk_aantekeningenrechten.toestandsdatum,
+    brk_aantekeningenrechten._tid
+   FROM public.brk_aantekeningenrechten;
 
 
-ALTER TABLE public.brk_aantekeningenrechten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_aantekeningenrechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_aantekeningenrechten__gobid_seq OWNED BY public.brk_aantekeningenrechten._gobid;
-
+ALTER TABLE legacy.brk_aantekeningenrechten OWNER TO gobtest;
 
 --
 -- Name: brk_aardzakelijkerechten; Type: TABLE; Schema: public; Owner: gobtest
@@ -3402,26 +3865,34 @@ CREATE TABLE public.brk_aardzakelijkerechten (
 ALTER TABLE public.brk_aardzakelijkerechten OWNER TO gobtest;
 
 --
--- Name: brk_aardzakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_aardzakelijkerechten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_aardzakelijkerechten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_aardzakelijkerechten AS
+ SELECT brk_aardzakelijkerechten.code,
+    brk_aardzakelijkerechten.waarde,
+    brk_aardzakelijkerechten.datum_vanaf,
+    brk_aardzakelijkerechten.datum_tot,
+    brk_aardzakelijkerechten.toelichting,
+    brk_aardzakelijkerechten.akr_code,
+    brk_aardzakelijkerechten._source,
+    brk_aardzakelijkerechten._application,
+    brk_aardzakelijkerechten._source_id,
+    brk_aardzakelijkerechten._last_event,
+    brk_aardzakelijkerechten._hash,
+    brk_aardzakelijkerechten._version,
+    brk_aardzakelijkerechten._date_created,
+    brk_aardzakelijkerechten._date_confirmed,
+    brk_aardzakelijkerechten._date_modified,
+    brk_aardzakelijkerechten._date_deleted,
+    brk_aardzakelijkerechten._expiration_date,
+    brk_aardzakelijkerechten._gobid,
+    brk_aardzakelijkerechten._id,
+    brk_aardzakelijkerechten._tid
+   FROM public.brk_aardzakelijkerechten;
 
 
-ALTER TABLE public.brk_aardzakelijkerechten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_aardzakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_aardzakelijkerechten__gobid_seq OWNED BY public.brk_aardzakelijkerechten._gobid;
-
+ALTER TABLE legacy.brk_aardzakelijkerechten OWNER TO gobtest;
 
 --
 -- Name: brk_gemeentes; Type: TABLE; Schema: public; Owner: gobtest
@@ -3455,26 +3926,35 @@ CREATE TABLE public.brk_gemeentes (
 ALTER TABLE public.brk_gemeentes OWNER TO gobtest;
 
 --
--- Name: brk_gemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_gemeentes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_gemeentes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_gemeentes AS
+ SELECT brk_gemeentes.identificatie,
+    brk_gemeentes.naam,
+    brk_gemeentes.begin_geldigheid,
+    brk_gemeentes.eind_geldigheid,
+    brk_gemeentes.geometrie,
+    brk_gemeentes._source,
+    brk_gemeentes._application,
+    brk_gemeentes._source_id,
+    brk_gemeentes._last_event,
+    brk_gemeentes._hash,
+    brk_gemeentes._version,
+    brk_gemeentes._date_created,
+    brk_gemeentes._date_confirmed,
+    brk_gemeentes._date_modified,
+    brk_gemeentes._date_deleted,
+    brk_gemeentes._expiration_date,
+    brk_gemeentes._gobid,
+    brk_gemeentes._id,
+    brk_gemeentes._tid,
+    brk_gemeentes.volgnummer,
+    brk_gemeentes.registratiedatum
+   FROM public.brk_gemeentes;
 
 
-ALTER TABLE public.brk_gemeentes__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_gemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_gemeentes__gobid_seq OWNED BY public.brk_gemeentes._gobid;
-
+ALTER TABLE legacy.brk_gemeentes OWNER TO gobtest;
 
 --
 -- Name: brk_kadastralegemeentecodes; Type: TABLE; Schema: public; Owner: gobtest
@@ -3504,26 +3984,31 @@ CREATE TABLE public.brk_kadastralegemeentecodes (
 ALTER TABLE public.brk_kadastralegemeentecodes OWNER TO gobtest;
 
 --
--- Name: brk_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastralegemeentecodes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastralegemeentecodes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastralegemeentecodes AS
+ SELECT brk_kadastralegemeentecodes.identificatie,
+    brk_kadastralegemeentecodes.is_onderdeel_van_kadastralegemeente,
+    brk_kadastralegemeentecodes.geometrie,
+    brk_kadastralegemeentecodes._source,
+    brk_kadastralegemeentecodes._application,
+    brk_kadastralegemeentecodes._source_id,
+    brk_kadastralegemeentecodes._last_event,
+    brk_kadastralegemeentecodes._hash,
+    brk_kadastralegemeentecodes._version,
+    brk_kadastralegemeentecodes._date_created,
+    brk_kadastralegemeentecodes._date_confirmed,
+    brk_kadastralegemeentecodes._date_modified,
+    brk_kadastralegemeentecodes._date_deleted,
+    brk_kadastralegemeentecodes._expiration_date,
+    brk_kadastralegemeentecodes._gobid,
+    brk_kadastralegemeentecodes._id,
+    brk_kadastralegemeentecodes._tid
+   FROM public.brk_kadastralegemeentecodes;
 
 
-ALTER TABLE public.brk_kadastralegemeentecodes__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastralegemeentecodes__gobid_seq OWNED BY public.brk_kadastralegemeentecodes._gobid;
-
+ALTER TABLE legacy.brk_kadastralegemeentecodes OWNER TO gobtest;
 
 --
 -- Name: brk_kadastralegemeentes; Type: TABLE; Schema: public; Owner: gobtest
@@ -3553,26 +4038,31 @@ CREATE TABLE public.brk_kadastralegemeentes (
 ALTER TABLE public.brk_kadastralegemeentes OWNER TO gobtest;
 
 --
--- Name: brk_kadastralegemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastralegemeentes; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastralegemeentes__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastralegemeentes AS
+ SELECT brk_kadastralegemeentes.identificatie,
+    brk_kadastralegemeentes.ligt_in_gemeente,
+    brk_kadastralegemeentes.geometrie,
+    brk_kadastralegemeentes._source,
+    brk_kadastralegemeentes._application,
+    brk_kadastralegemeentes._source_id,
+    brk_kadastralegemeentes._last_event,
+    brk_kadastralegemeentes._hash,
+    brk_kadastralegemeentes._version,
+    brk_kadastralegemeentes._date_created,
+    brk_kadastralegemeentes._date_confirmed,
+    brk_kadastralegemeentes._date_modified,
+    brk_kadastralegemeentes._date_deleted,
+    brk_kadastralegemeentes._expiration_date,
+    brk_kadastralegemeentes._gobid,
+    brk_kadastralegemeentes._id,
+    brk_kadastralegemeentes._tid
+   FROM public.brk_kadastralegemeentes;
 
 
-ALTER TABLE public.brk_kadastralegemeentes__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastralegemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastralegemeentes__gobid_seq OWNED BY public.brk_kadastralegemeentes._gobid;
-
+ALTER TABLE legacy.brk_kadastralegemeentes OWNER TO gobtest;
 
 --
 -- Name: brk_kadastraleobjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -3634,26 +4124,63 @@ CREATE TABLE public.brk_kadastraleobjecten (
 ALTER TABLE public.brk_kadastraleobjecten OWNER TO gobtest;
 
 --
--- Name: brk_kadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastraleobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastraleobjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastraleobjecten AS
+ SELECT brk_kadastraleobjecten._gobid,
+    brk_kadastraleobjecten._id,
+    brk_kadastraleobjecten._source,
+    brk_kadastraleobjecten._application,
+    brk_kadastraleobjecten._source_id,
+    brk_kadastraleobjecten._last_event,
+    brk_kadastraleobjecten._hash,
+    brk_kadastraleobjecten._version,
+    brk_kadastraleobjecten._date_created,
+    brk_kadastraleobjecten._date_confirmed,
+    brk_kadastraleobjecten._date_modified,
+    brk_kadastraleobjecten._date_deleted,
+    brk_kadastraleobjecten._expiration_date,
+    brk_kadastraleobjecten.volgnummer,
+    brk_kadastraleobjecten.registratiedatum,
+    brk_kadastraleobjecten.identificatie,
+    brk_kadastraleobjecten.aangeduid_door_gemeente,
+    brk_kadastraleobjecten.aangeduid_door_kadastralegemeente,
+    brk_kadastraleobjecten.aangeduid_door_kadastralegemeentecode,
+    brk_kadastraleobjecten.aangeduid_door_kadastralesectie,
+    brk_kadastraleobjecten.perceelnummer,
+    brk_kadastraleobjecten.indexletter,
+    brk_kadastraleobjecten.indexnummer,
+    brk_kadastraleobjecten.gemeente,
+    brk_kadastraleobjecten.soort_grootte,
+    brk_kadastraleobjecten.grootte,
+    brk_kadastraleobjecten.soort_cultuur_bebouwd,
+    brk_kadastraleobjecten.soort_cultuur_onbebouwd,
+    brk_kadastraleobjecten.status,
+    brk_kadastraleobjecten.geometrie,
+    brk_kadastraleobjecten.plaatscoordinaten,
+    brk_kadastraleobjecten.perceelnummer_rotatie,
+    brk_kadastraleobjecten.perceelnummer_verschuiving,
+    brk_kadastraleobjecten.indicatie_voorlopige_geometrie,
+    brk_kadastraleobjecten.koopsom,
+    brk_kadastraleobjecten.koopsom_valutacode,
+    brk_kadastraleobjecten.koopjaar,
+    brk_kadastraleobjecten.indicatie_meer_objecten,
+    brk_kadastraleobjecten.toestandsdatum,
+    brk_kadastraleobjecten.begin_geldigheid,
+    brk_kadastraleobjecten.eind_geldigheid,
+    brk_kadastraleobjecten.in_onderzoek,
+    brk_kadastraleobjecten.is_ontstaan_uit_g_perceel,
+    brk_kadastraleobjecten.heeft_een_relatie_met_verblijfsobject,
+    brk_kadastraleobjecten.id,
+    brk_kadastraleobjecten.is_ontstaan_uit_kadastraalobject,
+    brk_kadastraleobjecten.bijpijling_geometrie,
+    brk_kadastraleobjecten.kadastrale_aanduiding,
+    brk_kadastraleobjecten._tid
+   FROM public.brk_kadastraleobjecten;
 
 
-ALTER TABLE public.brk_kadastraleobjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastraleobjecten__gobid_seq OWNED BY public.brk_kadastraleobjecten._gobid;
-
+ALTER TABLE legacy.brk_kadastraleobjecten OWNER TO gobtest;
 
 --
 -- Name: brk_kadastralesecties; Type: TABLE; Schema: public; Owner: gobtest
@@ -3684,26 +4211,32 @@ CREATE TABLE public.brk_kadastralesecties (
 ALTER TABLE public.brk_kadastralesecties OWNER TO gobtest;
 
 --
--- Name: brk_kadastralesecties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastralesecties; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastralesecties__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastralesecties AS
+ SELECT brk_kadastralesecties.identificatie,
+    brk_kadastralesecties.code,
+    brk_kadastralesecties.geometrie,
+    brk_kadastralesecties._source,
+    brk_kadastralesecties._application,
+    brk_kadastralesecties._source_id,
+    brk_kadastralesecties._last_event,
+    brk_kadastralesecties._hash,
+    brk_kadastralesecties._version,
+    brk_kadastralesecties._date_created,
+    brk_kadastralesecties._date_confirmed,
+    brk_kadastralesecties._date_modified,
+    brk_kadastralesecties._date_deleted,
+    brk_kadastralesecties._expiration_date,
+    brk_kadastralesecties._gobid,
+    brk_kadastralesecties._id,
+    brk_kadastralesecties.is_onderdeel_van_kadastralegemeentecode,
+    brk_kadastralesecties._tid
+   FROM public.brk_kadastralesecties;
 
 
-ALTER TABLE public.brk_kadastralesecties__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastralesecties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastralesecties__gobid_seq OWNED BY public.brk_kadastralesecties._gobid;
-
+ALTER TABLE legacy.brk_kadastralesecties OWNER TO gobtest;
 
 --
 -- Name: brk_kadastralesubjecten; Type: TABLE; Schema: public; Owner: gobtest
@@ -3759,26 +4292,57 @@ CREATE TABLE public.brk_kadastralesubjecten (
 ALTER TABLE public.brk_kadastralesubjecten OWNER TO gobtest;
 
 --
--- Name: brk_kadastralesubjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_kadastralesubjecten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_kadastralesubjecten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_kadastralesubjecten AS
+ SELECT brk_kadastralesubjecten.identificatie,
+    brk_kadastralesubjecten.type_subject,
+    brk_kadastralesubjecten.beschikkingsbevoegdheid,
+    brk_kadastralesubjecten.heeft_bsn_voor,
+    brk_kadastralesubjecten.voornamen,
+    brk_kadastralesubjecten.voorvoegsels,
+    brk_kadastralesubjecten.geslachtsnaam,
+    brk_kadastralesubjecten.geslacht,
+    brk_kadastralesubjecten.naam_gebruik,
+    brk_kadastralesubjecten.geboortedatum,
+    brk_kadastralesubjecten.geboorteplaats,
+    brk_kadastralesubjecten.geboorteland,
+    brk_kadastralesubjecten.datum_overlijden,
+    brk_kadastralesubjecten.indicatie_overleden,
+    brk_kadastralesubjecten.voornamen_partner,
+    brk_kadastralesubjecten.voorvoegsels_partner,
+    brk_kadastralesubjecten.geslachtsnaam_partner,
+    brk_kadastralesubjecten.heeft_rsin_voor,
+    brk_kadastralesubjecten.heeft_kvknummer_voor,
+    brk_kadastralesubjecten.rechtsvorm,
+    brk_kadastralesubjecten.statutaire_naam,
+    brk_kadastralesubjecten.statutaire_zetel,
+    brk_kadastralesubjecten.woonadres,
+    brk_kadastralesubjecten.land_waarnaar_vertrokken,
+    brk_kadastralesubjecten.woonadres_buitenland,
+    brk_kadastralesubjecten.postadres,
+    brk_kadastralesubjecten.postadres_buitenland,
+    brk_kadastralesubjecten.postadres_postbus,
+    brk_kadastralesubjecten._source,
+    brk_kadastralesubjecten._application,
+    brk_kadastralesubjecten._source_id,
+    brk_kadastralesubjecten._last_event,
+    brk_kadastralesubjecten._hash,
+    brk_kadastralesubjecten._version,
+    brk_kadastralesubjecten._date_created,
+    brk_kadastralesubjecten._date_confirmed,
+    brk_kadastralesubjecten._date_modified,
+    brk_kadastralesubjecten._date_deleted,
+    brk_kadastralesubjecten._expiration_date,
+    brk_kadastralesubjecten._gobid,
+    brk_kadastralesubjecten._id,
+    brk_kadastralesubjecten.id,
+    brk_kadastralesubjecten._tid
+   FROM public.brk_kadastralesubjecten;
 
 
-ALTER TABLE public.brk_kadastralesubjecten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_kadastralesubjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_kadastralesubjecten__gobid_seq OWNED BY public.brk_kadastralesubjecten._gobid;
-
+ALTER TABLE legacy.brk_kadastralesubjecten OWNER TO gobtest;
 
 --
 -- Name: brk_meta; Type: TABLE; Schema: public; Owner: gobtest
@@ -3807,26 +4371,30 @@ CREATE TABLE public.brk_meta (
 ALTER TABLE public.brk_meta OWNER TO gobtest;
 
 --
--- Name: brk_meta__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_meta; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_meta__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_meta AS
+ SELECT brk_meta.id,
+    brk_meta.kennisgevingsdatum,
+    brk_meta._source,
+    brk_meta._application,
+    brk_meta._source_id,
+    brk_meta._last_event,
+    brk_meta._hash,
+    brk_meta._version,
+    brk_meta._date_created,
+    brk_meta._date_confirmed,
+    brk_meta._date_modified,
+    brk_meta._date_deleted,
+    brk_meta._expiration_date,
+    brk_meta._gobid,
+    brk_meta._id,
+    brk_meta._tid
+   FROM public.brk_meta;
 
 
-ALTER TABLE public.brk_meta__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_meta__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_meta__gobid_seq OWNED BY public.brk_meta._gobid;
-
+ALTER TABLE legacy.brk_meta OWNER TO gobtest;
 
 --
 -- Name: brk_stukdelen; Type: TABLE; Schema: public; Owner: gobtest
@@ -3870,26 +4438,45 @@ CREATE TABLE public.brk_stukdelen (
 ALTER TABLE public.brk_stukdelen OWNER TO gobtest;
 
 --
--- Name: brk_stukdelen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_stukdelen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_stukdelen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_stukdelen AS
+ SELECT brk_stukdelen.id,
+    brk_stukdelen.identificatie,
+    brk_stukdelen.aard,
+    brk_stukdelen.bedrag_transactie,
+    brk_stukdelen.is_bron_voor_tenaamstelling,
+    brk_stukdelen.is_bron_voor_aantekening_kadastraal_object,
+    brk_stukdelen.is_bron_voor_aantekening_recht,
+    brk_stukdelen.is_bron_voor_zakelijk_recht,
+    brk_stukdelen.stukidentificatie,
+    brk_stukdelen.portefeuillenummer_akr,
+    brk_stukdelen.tijdstip_aanbieding_stuk,
+    brk_stukdelen.reeks,
+    brk_stukdelen.volgnummer_stuk,
+    brk_stukdelen.registercode_stuk,
+    brk_stukdelen.soort_register_stuk,
+    brk_stukdelen.deel_soort_stuk,
+    brk_stukdelen._source,
+    brk_stukdelen._application,
+    brk_stukdelen._source_id,
+    brk_stukdelen._last_event,
+    brk_stukdelen._hash,
+    brk_stukdelen._version,
+    brk_stukdelen._date_created,
+    brk_stukdelen._date_confirmed,
+    brk_stukdelen._date_modified,
+    brk_stukdelen._date_deleted,
+    brk_stukdelen._expiration_date,
+    brk_stukdelen._gobid,
+    brk_stukdelen._id,
+    brk_stukdelen.toestandsdatum,
+    brk_stukdelen._tid
+   FROM public.brk_stukdelen;
 
 
-ALTER TABLE public.brk_stukdelen__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_stukdelen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_stukdelen__gobid_seq OWNED BY public.brk_stukdelen._gobid;
-
+ALTER TABLE legacy.brk_stukdelen OWNER TO gobtest;
 
 --
 -- Name: brk_tenaamstellingen; Type: TABLE; Schema: public; Owner: gobtest
@@ -3930,26 +4517,42 @@ CREATE TABLE public.brk_tenaamstellingen (
 ALTER TABLE public.brk_tenaamstellingen OWNER TO gobtest;
 
 --
--- Name: brk_tenaamstellingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_tenaamstellingen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_tenaamstellingen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_tenaamstellingen AS
+ SELECT brk_tenaamstellingen.identificatie,
+    brk_tenaamstellingen.van_kadastraalsubject,
+    brk_tenaamstellingen.aandeel,
+    brk_tenaamstellingen.geldt_voor,
+    brk_tenaamstellingen.burgerlijke_staat_ten_tijde_van_verkrijging,
+    brk_tenaamstellingen.verkregen_namens_samenwerkingsverband,
+    brk_tenaamstellingen.in_onderzoek,
+    brk_tenaamstellingen.van_zakelijkrecht,
+    brk_tenaamstellingen._source,
+    brk_tenaamstellingen._application,
+    brk_tenaamstellingen._source_id,
+    brk_tenaamstellingen._last_event,
+    brk_tenaamstellingen._hash,
+    brk_tenaamstellingen._version,
+    brk_tenaamstellingen._date_created,
+    brk_tenaamstellingen._date_confirmed,
+    brk_tenaamstellingen._date_modified,
+    brk_tenaamstellingen._date_deleted,
+    brk_tenaamstellingen._expiration_date,
+    brk_tenaamstellingen._gobid,
+    brk_tenaamstellingen._id,
+    brk_tenaamstellingen.begin_geldigheid,
+    brk_tenaamstellingen.eind_geldigheid,
+    brk_tenaamstellingen.volgnummer,
+    brk_tenaamstellingen.id,
+    brk_tenaamstellingen.is_gebaseerd_op_stukdeel,
+    brk_tenaamstellingen.toestandsdatum,
+    brk_tenaamstellingen._tid
+   FROM public.brk_tenaamstellingen;
 
 
-ALTER TABLE public.brk_tenaamstellingen__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_tenaamstellingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_tenaamstellingen__gobid_seq OWNED BY public.brk_tenaamstellingen._gobid;
-
+ALTER TABLE legacy.brk_tenaamstellingen OWNER TO gobtest;
 
 --
 -- Name: brk_zakelijkerechten; Type: TABLE; Schema: public; Owner: gobtest
@@ -3997,26 +4600,49 @@ CREATE TABLE public.brk_zakelijkerechten (
 ALTER TABLE public.brk_zakelijkerechten OWNER TO gobtest;
 
 --
--- Name: brk_zakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: brk_zakelijkerechten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.brk_zakelijkerechten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.brk_zakelijkerechten AS
+ SELECT brk_zakelijkerechten.identificatie,
+    brk_zakelijkerechten.is_beperkt_tot,
+    brk_zakelijkerechten.appartementsrechtsplitsingidentificatie,
+    brk_zakelijkerechten.appartementsrechtsplitsingtype,
+    brk_zakelijkerechten.einddatum_appartementsrechtsplitsing,
+    brk_zakelijkerechten.indicatie_actueel_appartementsrechtsplitsing,
+    brk_zakelijkerechten.aard_zakelijk_recht,
+    brk_zakelijkerechten.akr_aard_zakelijk_recht,
+    brk_zakelijkerechten.toestandsdatum,
+    brk_zakelijkerechten._source,
+    brk_zakelijkerechten._application,
+    brk_zakelijkerechten._source_id,
+    brk_zakelijkerechten._last_event,
+    brk_zakelijkerechten._hash,
+    brk_zakelijkerechten._version,
+    brk_zakelijkerechten._date_created,
+    brk_zakelijkerechten._date_confirmed,
+    brk_zakelijkerechten._date_modified,
+    brk_zakelijkerechten._date_deleted,
+    brk_zakelijkerechten._expiration_date,
+    brk_zakelijkerechten._gobid,
+    brk_zakelijkerechten._id,
+    brk_zakelijkerechten.begin_geldigheid,
+    brk_zakelijkerechten.eind_geldigheid,
+    brk_zakelijkerechten.registratiedatum,
+    brk_zakelijkerechten.volgnummer,
+    brk_zakelijkerechten.belast_met_zakelijkerechten,
+    brk_zakelijkerechten.belast_zakelijkerechten,
+    brk_zakelijkerechten.betrokken_bij_zakelijkerechten,
+    brk_zakelijkerechten.ontstaan_uit_zakelijkerechten,
+    brk_zakelijkerechten.rust_op_kadastraalobject,
+    brk_zakelijkerechten.id,
+    brk_zakelijkerechten.betrokken_bij_appartementsrechtsplitsing_vve,
+    brk_zakelijkerechten.ontstaan_uit_appartementsrechtsplitsing_vve,
+    brk_zakelijkerechten._tid
+   FROM public.brk_zakelijkerechten;
 
 
-ALTER TABLE public.brk_zakelijkerechten__gobid_seq OWNER TO gobtest;
-
---
--- Name: brk_zakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.brk_zakelijkerechten__gobid_seq OWNED BY public.brk_zakelijkerechten._gobid;
-
+ALTER TABLE legacy.brk_zakelijkerechten OWNER TO gobtest;
 
 --
 -- Name: gebieden_bouwblokken; Type: TABLE; Schema: public; Owner: gobtest
@@ -4053,26 +4679,37 @@ CREATE TABLE public.gebieden_bouwblokken (
 ALTER TABLE public.gebieden_bouwblokken OWNER TO gobtest;
 
 --
--- Name: gebieden_bouwblokken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: gebieden_bouwblokken; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.gebieden_bouwblokken__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.gebieden_bouwblokken AS
+ SELECT gebieden_bouwblokken.volgnummer,
+    gebieden_bouwblokken.registratiedatum,
+    gebieden_bouwblokken.begin_geldigheid,
+    gebieden_bouwblokken.eind_geldigheid,
+    gebieden_bouwblokken.identificatie,
+    gebieden_bouwblokken.code,
+    gebieden_bouwblokken.ligt_in_gebieden_buurt AS ligt_in_buurt,
+    gebieden_bouwblokken.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_bouwblokken.geometrie,
+    gebieden_bouwblokken._source,
+    gebieden_bouwblokken._application,
+    gebieden_bouwblokken._source_id,
+    gebieden_bouwblokken._last_event,
+    gebieden_bouwblokken._hash,
+    gebieden_bouwblokken._version,
+    gebieden_bouwblokken._date_created,
+    gebieden_bouwblokken._date_confirmed,
+    gebieden_bouwblokken._date_modified,
+    gebieden_bouwblokken._date_deleted,
+    gebieden_bouwblokken._expiration_date,
+    gebieden_bouwblokken._gobid,
+    gebieden_bouwblokken._id,
+    gebieden_bouwblokken._tid
+   FROM public.gebieden_bouwblokken;
 
 
-ALTER TABLE public.gebieden_bouwblokken__gobid_seq OWNER TO gobtest;
-
---
--- Name: gebieden_bouwblokken__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.gebieden_bouwblokken__gobid_seq OWNED BY public.gebieden_bouwblokken._gobid;
-
+ALTER TABLE legacy.gebieden_bouwblokken OWNER TO gobtest;
 
 --
 -- Name: gebieden_buurten; Type: TABLE; Schema: public; Owner: gobtest
@@ -4115,26 +4752,43 @@ CREATE TABLE public.gebieden_buurten (
 ALTER TABLE public.gebieden_buurten OWNER TO gobtest;
 
 --
--- Name: gebieden_buurten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: gebieden_buurten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.gebieden_buurten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.gebieden_buurten AS
+ SELECT gebieden_buurten.volgnummer,
+    gebieden_buurten.registratiedatum,
+    gebieden_buurten.begin_geldigheid,
+    gebieden_buurten.eind_geldigheid,
+    gebieden_buurten.identificatie,
+    gebieden_buurten.naam,
+    gebieden_buurten.code,
+    gebieden_buurten.documentdatum,
+    gebieden_buurten.documentnummer,
+    gebieden_buurten.cbs_code,
+    gebieden_buurten.ligt_in_gebieden_wijk AS ligt_in_wijk,
+    gebieden_buurten.geometrie,
+    gebieden_buurten.ligt_in_gebieden_ggpgebied AS ligt_in_ggpgebied,
+    gebieden_buurten.ligt_in_gebieden_ggwgebied AS ligt_in_ggwgebied,
+    gebieden_buurten.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_buurten._source,
+    gebieden_buurten._application,
+    gebieden_buurten._source_id,
+    gebieden_buurten._last_event,
+    gebieden_buurten._hash,
+    gebieden_buurten._version,
+    gebieden_buurten._date_created,
+    gebieden_buurten._date_confirmed,
+    gebieden_buurten._date_modified,
+    gebieden_buurten._date_deleted,
+    gebieden_buurten._expiration_date,
+    gebieden_buurten._gobid,
+    gebieden_buurten._id,
+    gebieden_buurten._tid
+   FROM public.gebieden_buurten;
 
 
-ALTER TABLE public.gebieden_buurten__gobid_seq OWNER TO gobtest;
-
---
--- Name: gebieden_buurten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.gebieden_buurten__gobid_seq OWNED BY public.gebieden_buurten._gobid;
-
+ALTER TABLE legacy.gebieden_buurten OWNER TO gobtest;
 
 --
 -- Name: gebieden_ggpgebieden; Type: TABLE; Schema: public; Owner: gobtest
@@ -4175,26 +4829,41 @@ CREATE TABLE public.gebieden_ggpgebieden (
 ALTER TABLE public.gebieden_ggpgebieden OWNER TO gobtest;
 
 --
--- Name: gebieden_ggpgebieden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: gebieden_ggpgebieden; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.gebieden_ggpgebieden__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.gebieden_ggpgebieden AS
+ SELECT gebieden_ggpgebieden.volgnummer,
+    gebieden_ggpgebieden.registratiedatum,
+    gebieden_ggpgebieden.begin_geldigheid,
+    gebieden_ggpgebieden.eind_geldigheid,
+    gebieden_ggpgebieden.identificatie,
+    gebieden_ggpgebieden.naam,
+    gebieden_ggpgebieden.code,
+    gebieden_ggpgebieden.documentdatum,
+    gebieden_ggpgebieden.documentnummer,
+    gebieden_ggpgebieden.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    gebieden_ggpgebieden.bestaat_uit_gebieden_buurten AS bestaat_uit_buurten,
+    gebieden_ggpgebieden.geometrie,
+    gebieden_ggpgebieden.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_ggpgebieden._source,
+    gebieden_ggpgebieden._application,
+    gebieden_ggpgebieden._source_id,
+    gebieden_ggpgebieden._last_event,
+    gebieden_ggpgebieden._hash,
+    gebieden_ggpgebieden._version,
+    gebieden_ggpgebieden._date_created,
+    gebieden_ggpgebieden._date_confirmed,
+    gebieden_ggpgebieden._date_modified,
+    gebieden_ggpgebieden._date_deleted,
+    gebieden_ggpgebieden._expiration_date,
+    gebieden_ggpgebieden._gobid,
+    gebieden_ggpgebieden._id,
+    gebieden_ggpgebieden._tid
+   FROM public.gebieden_ggpgebieden;
 
 
-ALTER TABLE public.gebieden_ggpgebieden__gobid_seq OWNER TO gobtest;
-
---
--- Name: gebieden_ggpgebieden__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.gebieden_ggpgebieden__gobid_seq OWNED BY public.gebieden_ggpgebieden._gobid;
-
+ALTER TABLE legacy.gebieden_ggpgebieden OWNER TO gobtest;
 
 --
 -- Name: gebieden_ggwgebieden; Type: TABLE; Schema: public; Owner: gobtest
@@ -4235,26 +4904,41 @@ CREATE TABLE public.gebieden_ggwgebieden (
 ALTER TABLE public.gebieden_ggwgebieden OWNER TO gobtest;
 
 --
--- Name: gebieden_ggwgebieden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: gebieden_ggwgebieden; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.gebieden_ggwgebieden__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.gebieden_ggwgebieden AS
+ SELECT gebieden_ggwgebieden.volgnummer,
+    gebieden_ggwgebieden.registratiedatum,
+    gebieden_ggwgebieden.begin_geldigheid,
+    gebieden_ggwgebieden.eind_geldigheid,
+    gebieden_ggwgebieden.identificatie,
+    gebieden_ggwgebieden.naam,
+    gebieden_ggwgebieden.code,
+    gebieden_ggwgebieden.documentdatum,
+    gebieden_ggwgebieden.documentnummer,
+    gebieden_ggwgebieden.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    gebieden_ggwgebieden.bestaat_uit_gebieden_buurten AS bestaat_uit_buurten,
+    gebieden_ggwgebieden.geometrie,
+    gebieden_ggwgebieden.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_ggwgebieden._source,
+    gebieden_ggwgebieden._application,
+    gebieden_ggwgebieden._source_id,
+    gebieden_ggwgebieden._last_event,
+    gebieden_ggwgebieden._hash,
+    gebieden_ggwgebieden._version,
+    gebieden_ggwgebieden._date_created,
+    gebieden_ggwgebieden._date_confirmed,
+    gebieden_ggwgebieden._date_modified,
+    gebieden_ggwgebieden._date_deleted,
+    gebieden_ggwgebieden._expiration_date,
+    gebieden_ggwgebieden._gobid,
+    gebieden_ggwgebieden._id,
+    gebieden_ggwgebieden._tid
+   FROM public.gebieden_ggwgebieden;
 
 
-ALTER TABLE public.gebieden_ggwgebieden__gobid_seq OWNER TO gobtest;
-
---
--- Name: gebieden_ggwgebieden__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.gebieden_ggwgebieden__gobid_seq OWNED BY public.gebieden_ggwgebieden._gobid;
-
+ALTER TABLE legacy.gebieden_ggwgebieden OWNER TO gobtest;
 
 --
 -- Name: gebieden_stadsdelen; Type: TABLE; Schema: public; Owner: gobtest
@@ -4293,26 +4977,39 @@ CREATE TABLE public.gebieden_stadsdelen (
 ALTER TABLE public.gebieden_stadsdelen OWNER TO gobtest;
 
 --
--- Name: gebieden_stadsdelen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: gebieden_stadsdelen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.gebieden_stadsdelen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.gebieden_stadsdelen AS
+ SELECT gebieden_stadsdelen.volgnummer,
+    gebieden_stadsdelen.registratiedatum,
+    gebieden_stadsdelen.begin_geldigheid,
+    gebieden_stadsdelen.eind_geldigheid,
+    gebieden_stadsdelen.identificatie,
+    gebieden_stadsdelen.naam,
+    gebieden_stadsdelen.code,
+    gebieden_stadsdelen.documentdatum,
+    gebieden_stadsdelen.documentnummer,
+    gebieden_stadsdelen.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_stadsdelen.geometrie,
+    gebieden_stadsdelen._source,
+    gebieden_stadsdelen._application,
+    gebieden_stadsdelen._source_id,
+    gebieden_stadsdelen._last_event,
+    gebieden_stadsdelen._hash,
+    gebieden_stadsdelen._version,
+    gebieden_stadsdelen._date_created,
+    gebieden_stadsdelen._date_confirmed,
+    gebieden_stadsdelen._date_modified,
+    gebieden_stadsdelen._date_deleted,
+    gebieden_stadsdelen._expiration_date,
+    gebieden_stadsdelen._gobid,
+    gebieden_stadsdelen._id,
+    gebieden_stadsdelen._tid
+   FROM public.gebieden_stadsdelen;
 
 
-ALTER TABLE public.gebieden_stadsdelen__gobid_seq OWNER TO gobtest;
-
---
--- Name: gebieden_stadsdelen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.gebieden_stadsdelen__gobid_seq OWNED BY public.gebieden_stadsdelen._gobid;
-
+ALTER TABLE legacy.gebieden_stadsdelen OWNER TO gobtest;
 
 --
 -- Name: gebieden_wijken; Type: TABLE; Schema: public; Owner: gobtest
@@ -4354,298 +5051,42 @@ CREATE TABLE public.gebieden_wijken (
 ALTER TABLE public.gebieden_wijken OWNER TO gobtest;
 
 --
--- Name: gebieden_wijken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: gebieden_wijken; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.gebieden_wijken__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.gebieden_wijken AS
+ SELECT gebieden_wijken.volgnummer,
+    gebieden_wijken.registratiedatum,
+    gebieden_wijken.begin_geldigheid,
+    gebieden_wijken.eind_geldigheid,
+    gebieden_wijken.identificatie,
+    gebieden_wijken.naam,
+    gebieden_wijken.code,
+    gebieden_wijken.documentdatum,
+    gebieden_wijken.documentnummer,
+    gebieden_wijken.cbs_code,
+    gebieden_wijken.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    gebieden_wijken.geometrie,
+    gebieden_wijken.ligt_in_gebieden_ggwgebied AS ligt_in_ggwgebied,
+    gebieden_wijken.ligt_in_brk_gemeente AS ligt_in_gemeente,
+    gebieden_wijken._source,
+    gebieden_wijken._application,
+    gebieden_wijken._source_id,
+    gebieden_wijken._last_event,
+    gebieden_wijken._hash,
+    gebieden_wijken._version,
+    gebieden_wijken._date_created,
+    gebieden_wijken._date_confirmed,
+    gebieden_wijken._date_modified,
+    gebieden_wijken._date_deleted,
+    gebieden_wijken._expiration_date,
+    gebieden_wijken._gobid,
+    gebieden_wijken._id,
+    gebieden_wijken._tid
+   FROM public.gebieden_wijken;
 
 
-ALTER TABLE public.gebieden_wijken__gobid_seq OWNER TO gobtest;
-
---
--- Name: gebieden_wijken__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.gebieden_wijken__gobid_seq OWNED BY public.gebieden_wijken._gobid;
-
-
---
--- Name: hr_locaties; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.hr_locaties (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    tijdstip_registratie timestamp without time zone,
-    datum_aanvang jsonb,
-    datum_einde jsonb,
-    afgeschermd boolean,
-    toevoeging_adres character varying,
-    volledig_adres character varying,
-    heeft_nummeraanduiding jsonb,
-    heeft_verblijfsobject jsonb,
-    heeft_ligplaats jsonb,
-    heeft_standplaats jsonb,
-    straatnaam character varying,
-    huisnummer integer,
-    huisletter character varying,
-    huisnummer_toevoeging character varying,
-    postbusnummer character varying,
-    postcode character varying,
-    plaats character varying,
-    straat_huisnummer_buitenland character varying,
-    postcode_plaats_buitenland character varying,
-    regio_buitenland character varying,
-    land_buitenland character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _tid character varying
-);
-
-
-ALTER TABLE public.hr_locaties OWNER TO gobtest;
-
---
--- Name: hr_locaties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.hr_locaties__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.hr_locaties__gobid_seq OWNER TO gobtest;
-
---
--- Name: hr_locaties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.hr_locaties__gobid_seq OWNED BY public.hr_locaties._gobid;
-
-
---
--- Name: hr_maatschappelijkeactiviteiten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.hr_maatschappelijkeactiviteiten (
-    kvknummer character varying,
-    datum_aanvang_maatschappelijke_activiteit jsonb,
-    datum_einde_maatschappelijke_activiteit jsonb,
-    registratie_tijdstip_maatschappelijke_activiteit timestamp without time zone,
-    naam character varying,
-    heeft_bezoekadres jsonb,
-    heeft_postadres jsonb,
-    communicatienummer jsonb,
-    domeinnaam jsonb,
-    email_adres jsonb,
-    non_mailing boolean,
-    incidenteel_uitlenen_arbeidskrachten boolean,
-    heeft_hoofdvestiging jsonb,
-    heeft_sbi_activiteiten_voor_maatschappelijke_activiteit jsonb,
-    registratie_tijdstip_onderneming timestamp without time zone,
-    datum_aanvang_onderneming jsonb,
-    datum_einde_onderneming jsonb,
-    is_overdracht_voortzetting_onderneming boolean,
-    datum_overdracht_voortzetting_onderneming jsonb,
-    totaal_werkzame_personen integer,
-    voltijd_werkzame_personen integer,
-    deeltijd_werkzame_personen integer,
-    heeft_sbi_activiteiten_voor_onderneming jsonb,
-    wordt_uitgeoefend_in_commerciele_vestiging jsonb,
-    wordt_uitgeoefend_in_niet_commerciele_vestiging jsonb,
-    handelt_onder_handelsnamen jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.hr_maatschappelijkeactiviteiten OWNER TO gobtest;
-
---
--- Name: hr_maatschappelijkeactiviteiten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.hr_maatschappelijkeactiviteiten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.hr_maatschappelijkeactiviteiten__gobid_seq OWNER TO gobtest;
-
---
--- Name: hr_maatschappelijkeactiviteiten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.hr_maatschappelijkeactiviteiten__gobid_seq OWNED BY public.hr_maatschappelijkeactiviteiten._gobid;
-
-
---
--- Name: hr_sbiactiviteiten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.hr_sbiactiviteiten (
-    sbi_activiteit_nummer character varying,
-    sbi_code character varying,
-    omschrijving character varying,
-    is_hoofdactiviteit boolean,
-    volgorde integer,
-    datum_aanvang_sbiactiviteit jsonb,
-    datum_einde_sbiactiviteit jsonb,
-    tijdstip_registratie timestamp without time zone,
-    heeft_als_maatschappelijkactiviteit jsonb,
-    heeft_als_vestiging jsonb,
-    heeft_als_rechtspersoon jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.hr_sbiactiviteiten OWNER TO gobtest;
-
---
--- Name: hr_sbiactiviteiten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.hr_sbiactiviteiten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.hr_sbiactiviteiten__gobid_seq OWNER TO gobtest;
-
---
--- Name: hr_sbiactiviteiten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.hr_sbiactiviteiten__gobid_seq OWNED BY public.hr_sbiactiviteiten._gobid;
-
-
---
--- Name: hr_vestigingen; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.hr_vestigingen (
-    vestigingsnummer character varying,
-    tijdstip_registratie timestamp without time zone,
-    datum_aanvang jsonb,
-    datum_einde jsonb,
-    datum_voortzetting jsonb,
-    is_commerciele_vestiging boolean,
-    eerste_handelsnaam character varying,
-    heeft_als_postadres jsonb,
-    heeft_als_bezoekadres jsonb,
-    communicatienummer jsonb,
-    domeinnaam jsonb,
-    emailadres jsonb,
-    naam character varying,
-    verkorte_naam character varying,
-    ook_genoemd character varying,
-    handelt_onder_handelsnamen jsonb,
-    totaal_werkzame_personen integer,
-    voltijd_werkzame_personen integer,
-    deeltijd_werkzame_personen integer,
-    importeert boolean,
-    exporteert boolean,
-    activiteiten_omschrijving character varying,
-    heeft_sbi_activiteiten jsonb,
-    is_overgegaan_in_vestiging jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    is_een_uitoefening_van jsonb,
-    _tid character varying
-);
-
-
-ALTER TABLE public.hr_vestigingen OWNER TO gobtest;
-
---
--- Name: hr_vestigingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.hr_vestigingen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.hr_vestigingen__gobid_seq OWNER TO gobtest;
-
---
--- Name: hr_vestigingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.hr_vestigingen__gobid_seq OWNED BY public.hr_vestigingen._gobid;
-
+ALTER TABLE legacy.gebieden_wijken OWNER TO gobtest;
 
 --
 -- Name: meetbouten_meetbouten; Type: TABLE; Schema: public; Owner: gobtest
@@ -4687,26 +5128,42 @@ CREATE TABLE public.meetbouten_meetbouten (
 ALTER TABLE public.meetbouten_meetbouten OWNER TO gobtest;
 
 --
--- Name: meetbouten_meetbouten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: meetbouten_meetbouten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.meetbouten_meetbouten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.meetbouten_meetbouten AS
+ SELECT meetbouten_meetbouten.identificatie,
+    json_build_object('bronwaarde', meetbouten_meetbouten.nabij_adres) AS nabij_nummeraanduiding,
+    meetbouten_meetbouten.locatie,
+    meetbouten_meetbouten.status,
+    meetbouten_meetbouten.vervaldatum,
+    meetbouten_meetbouten.merk,
+    meetbouten_meetbouten.x_coordinaat_muurvlak,
+    meetbouten_meetbouten.y_coordinaat_muurvlak,
+    meetbouten_meetbouten.windrichting,
+    meetbouten_meetbouten.ligt_in_gebieden_bouwblok AS ligt_in_bouwblok,
+    meetbouten_meetbouten.ligt_in_gebieden_buurt AS ligt_in_buurt,
+    meetbouten_meetbouten.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    meetbouten_meetbouten.geometrie,
+    meetbouten_meetbouten.publiceerbaar,
+    meetbouten_meetbouten._source,
+    meetbouten_meetbouten._application,
+    meetbouten_meetbouten._source_id,
+    meetbouten_meetbouten._last_event,
+    meetbouten_meetbouten._hash,
+    meetbouten_meetbouten._version,
+    meetbouten_meetbouten._date_created,
+    meetbouten_meetbouten._date_confirmed,
+    meetbouten_meetbouten._date_modified,
+    meetbouten_meetbouten._date_deleted,
+    meetbouten_meetbouten._expiration_date,
+    meetbouten_meetbouten._gobid,
+    meetbouten_meetbouten._id,
+    meetbouten_meetbouten._tid
+   FROM public.meetbouten_meetbouten;
 
 
-ALTER TABLE public.meetbouten_meetbouten__gobid_seq OWNER TO gobtest;
-
---
--- Name: meetbouten_meetbouten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.meetbouten_meetbouten__gobid_seq OWNED BY public.meetbouten_meetbouten._gobid;
-
+ALTER TABLE legacy.meetbouten_meetbouten OWNER TO gobtest;
 
 --
 -- Name: meetbouten_metingen; Type: TABLE; Schema: public; Owner: gobtest
@@ -4748,26 +5205,42 @@ CREATE TABLE public.meetbouten_metingen (
 ALTER TABLE public.meetbouten_metingen OWNER TO gobtest;
 
 --
--- Name: meetbouten_metingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: meetbouten_metingen; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.meetbouten_metingen__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.meetbouten_metingen AS
+ SELECT meetbouten_metingen.identificatie,
+    meetbouten_metingen.hoort_bij_meetbouten_meetbout AS hoort_bij_meetbout,
+    meetbouten_metingen.datum,
+    meetbouten_metingen.type_meting,
+    meetbouten_metingen.wijze_van_inwinnen,
+    meetbouten_metingen.hoogte_tov_nap,
+    meetbouten_metingen.zakking,
+    meetbouten_metingen.refereert_aan_meetbouten_referentiepunten AS refereert_aan_referentiepunten,
+    meetbouten_metingen.zakkingssnelheid,
+    meetbouten_metingen.zakking_cumulatief,
+    meetbouten_metingen.is_gemeten_door,
+    meetbouten_metingen.hoeveelste_meting,
+    meetbouten_metingen.aantal_dagen,
+    meetbouten_metingen.publiceerbaar,
+    meetbouten_metingen._source,
+    meetbouten_metingen._application,
+    meetbouten_metingen._source_id,
+    meetbouten_metingen._last_event,
+    meetbouten_metingen._hash,
+    meetbouten_metingen._version,
+    meetbouten_metingen._date_created,
+    meetbouten_metingen._date_confirmed,
+    meetbouten_metingen._date_modified,
+    meetbouten_metingen._date_deleted,
+    meetbouten_metingen._expiration_date,
+    meetbouten_metingen._gobid,
+    meetbouten_metingen._id,
+    meetbouten_metingen._tid
+   FROM public.meetbouten_metingen;
 
 
-ALTER TABLE public.meetbouten_metingen__gobid_seq OWNER TO gobtest;
-
---
--- Name: meetbouten_metingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.meetbouten_metingen__gobid_seq OWNED BY public.meetbouten_metingen._gobid;
-
+ALTER TABLE legacy.meetbouten_metingen OWNER TO gobtest;
 
 --
 -- Name: meetbouten_referentiepunten; Type: TABLE; Schema: public; Owner: gobtest
@@ -4812,26 +5285,45 @@ CREATE TABLE public.meetbouten_referentiepunten (
 ALTER TABLE public.meetbouten_referentiepunten OWNER TO gobtest;
 
 --
--- Name: meetbouten_referentiepunten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: meetbouten_referentiepunten; Type: VIEW; Schema: legacy; Owner: gobtest
 --
 
-CREATE SEQUENCE public.meetbouten_referentiepunten__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE VIEW legacy.meetbouten_referentiepunten AS
+ SELECT meetbouten_referentiepunten.identificatie,
+    json_build_object('bronwaarde', meetbouten_referentiepunten.nabij_adres) AS nabij_nummeraanduiding,
+    meetbouten_referentiepunten.locatie,
+    meetbouten_referentiepunten.hoogte_tov_nap,
+    meetbouten_referentiepunten.datum,
+    meetbouten_referentiepunten.status,
+    meetbouten_referentiepunten.vervaldatum,
+    meetbouten_referentiepunten.merk,
+    meetbouten_referentiepunten.x_coordinaat_muurvlak,
+    meetbouten_referentiepunten.y_coordinaat_muurvlak,
+    meetbouten_referentiepunten.windrichting,
+    meetbouten_referentiepunten.ligt_in_gebieden_bouwblok AS ligt_in_bouwblok,
+    meetbouten_referentiepunten.ligt_in_gebieden_buurt AS ligt_in_buurt,
+    meetbouten_referentiepunten.ligt_in_gebieden_stadsdeel AS ligt_in_stadsdeel,
+    meetbouten_referentiepunten.geometrie,
+    meetbouten_referentiepunten.is_nap_peilmerk,
+    meetbouten_referentiepunten.publiceerbaar,
+    meetbouten_referentiepunten._source,
+    meetbouten_referentiepunten._application,
+    meetbouten_referentiepunten._source_id,
+    meetbouten_referentiepunten._last_event,
+    meetbouten_referentiepunten._hash,
+    meetbouten_referentiepunten._version,
+    meetbouten_referentiepunten._date_created,
+    meetbouten_referentiepunten._date_confirmed,
+    meetbouten_referentiepunten._date_modified,
+    meetbouten_referentiepunten._date_deleted,
+    meetbouten_referentiepunten._expiration_date,
+    meetbouten_referentiepunten._gobid,
+    meetbouten_referentiepunten._id,
+    meetbouten_referentiepunten._tid
+   FROM public.meetbouten_referentiepunten;
 
 
-ALTER TABLE public.meetbouten_referentiepunten__gobid_seq OWNER TO gobtest;
-
---
--- Name: meetbouten_referentiepunten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.meetbouten_referentiepunten__gobid_seq OWNED BY public.meetbouten_referentiepunten._gobid;
-
+ALTER TABLE legacy.meetbouten_referentiepunten OWNER TO gobtest;
 
 --
 -- Name: meetbouten_rollagen; Type: TABLE; Schema: public; Owner: gobtest
@@ -4859,6 +5351,2749 @@ CREATE TABLE public.meetbouten_rollagen (
 
 
 ALTER TABLE public.meetbouten_rollagen OWNER TO gobtest;
+
+--
+-- Name: meetbouten_rollagen; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.meetbouten_rollagen AS
+ SELECT meetbouten_rollagen.identificatie,
+    meetbouten_rollagen.is_gemeten_van_gebieden_bouwblok AS is_gemeten_van_bouwblok,
+    meetbouten_rollagen._source,
+    meetbouten_rollagen._application,
+    meetbouten_rollagen._source_id,
+    meetbouten_rollagen._last_event,
+    meetbouten_rollagen._hash,
+    meetbouten_rollagen._version,
+    meetbouten_rollagen._date_created,
+    meetbouten_rollagen._date_confirmed,
+    meetbouten_rollagen._date_modified,
+    meetbouten_rollagen._date_deleted,
+    meetbouten_rollagen._expiration_date,
+    meetbouten_rollagen._gobid,
+    meetbouten_rollagen._id,
+    meetbouten_rollagen._tid
+   FROM public.meetbouten_rollagen;
+
+
+ALTER TABLE legacy.meetbouten_rollagen OWNER TO gobtest;
+
+--
+-- Name: nap_peilmerken; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.nap_peilmerken (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    identificatie character varying,
+    hoogte_tov_nap numeric(14,4),
+    jaar integer,
+    omschrijving character varying,
+    windrichting character varying,
+    x_coordinaat_muurvlak integer,
+    y_coordinaat_muurvlak integer,
+    rws_nummer character varying,
+    geometrie public.geometry(Point,28992),
+    vervaldatum date,
+    ligt_in_gebieden_bouwblok jsonb,
+    publiceerbaar boolean,
+    _application character varying,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    _tid character varying,
+    merk_code character varying,
+    merk_omschrijving character varying,
+    status_code integer,
+    status_omschrijving character varying,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.nap_peilmerken OWNER TO gobtest;
+
+--
+-- Name: nap_peilmerken; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.nap_peilmerken AS
+ SELECT nap_peilmerken.identificatie,
+    nap_peilmerken.hoogte_tov_nap,
+    nap_peilmerken.jaar,
+    jsonb_build_object('code', nap_peilmerken.merk_code, 'omschrijving', nap_peilmerken.merk_omschrijving) AS merk,
+    nap_peilmerken.omschrijving,
+    nap_peilmerken.windrichting,
+    nap_peilmerken.x_coordinaat_muurvlak,
+    nap_peilmerken.y_coordinaat_muurvlak,
+    nap_peilmerken.rws_nummer,
+    nap_peilmerken.geometrie,
+    jsonb_build_object('code', nap_peilmerken.status_code, 'omschrijving', nap_peilmerken.status_omschrijving) AS status,
+    nap_peilmerken.vervaldatum,
+    nap_peilmerken.ligt_in_gebieden_bouwblok AS ligt_in_bouwblok,
+    nap_peilmerken.publiceerbaar,
+    nap_peilmerken._source,
+    nap_peilmerken._application,
+    nap_peilmerken._source_id,
+    nap_peilmerken._last_event,
+    nap_peilmerken._hash,
+    nap_peilmerken._version,
+    nap_peilmerken._date_created,
+    nap_peilmerken._date_confirmed,
+    nap_peilmerken._date_modified,
+    nap_peilmerken._date_deleted,
+    nap_peilmerken._expiration_date,
+    nap_peilmerken._gobid,
+    nap_peilmerken._id,
+    nap_peilmerken._tid
+   FROM public.nap_peilmerken;
+
+
+ALTER TABLE legacy.nap_peilmerken OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_collapsed_a; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_collapsed_a (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    reference jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_collapsed_a OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_collapsed_a; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_collapsed_a AS
+ SELECT test_catalogue_rel_collapsed_a.volgnummer,
+    test_catalogue_rel_collapsed_a.registratiedatum,
+    test_catalogue_rel_collapsed_a.id,
+    test_catalogue_rel_collapsed_a.identificatie,
+    test_catalogue_rel_collapsed_a.begin_geldigheid,
+    test_catalogue_rel_collapsed_a.eind_geldigheid,
+    test_catalogue_rel_collapsed_a.reference,
+    test_catalogue_rel_collapsed_a._source,
+    test_catalogue_rel_collapsed_a._application,
+    test_catalogue_rel_collapsed_a._source_id,
+    test_catalogue_rel_collapsed_a._last_event,
+    test_catalogue_rel_collapsed_a._hash,
+    test_catalogue_rel_collapsed_a._version,
+    test_catalogue_rel_collapsed_a._date_created,
+    test_catalogue_rel_collapsed_a._date_confirmed,
+    test_catalogue_rel_collapsed_a._date_modified,
+    test_catalogue_rel_collapsed_a._date_deleted,
+    test_catalogue_rel_collapsed_a._expiration_date,
+    test_catalogue_rel_collapsed_a._gobid,
+    test_catalogue_rel_collapsed_a._id,
+    test_catalogue_rel_collapsed_a._tid
+   FROM public.test_catalogue_rel_collapsed_a;
+
+
+ALTER TABLE legacy.test_catalogue_rel_collapsed_a OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_collapsed_b; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_collapsed_b (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_collapsed_b OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_collapsed_b; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_collapsed_b AS
+ SELECT test_catalogue_rel_collapsed_b.volgnummer,
+    test_catalogue_rel_collapsed_b.registratiedatum,
+    test_catalogue_rel_collapsed_b.id,
+    test_catalogue_rel_collapsed_b.identificatie,
+    test_catalogue_rel_collapsed_b.begin_geldigheid,
+    test_catalogue_rel_collapsed_b.eind_geldigheid,
+    test_catalogue_rel_collapsed_b._source,
+    test_catalogue_rel_collapsed_b._application,
+    test_catalogue_rel_collapsed_b._source_id,
+    test_catalogue_rel_collapsed_b._last_event,
+    test_catalogue_rel_collapsed_b._hash,
+    test_catalogue_rel_collapsed_b._version,
+    test_catalogue_rel_collapsed_b._date_created,
+    test_catalogue_rel_collapsed_b._date_confirmed,
+    test_catalogue_rel_collapsed_b._date_modified,
+    test_catalogue_rel_collapsed_b._date_deleted,
+    test_catalogue_rel_collapsed_b._expiration_date,
+    test_catalogue_rel_collapsed_b._gobid,
+    test_catalogue_rel_collapsed_b._id,
+    test_catalogue_rel_collapsed_b._tid
+   FROM public.test_catalogue_rel_collapsed_b;
+
+
+ALTER TABLE legacy.test_catalogue_rel_collapsed_b OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_dst; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_multiple_allowed_dst (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    referenced_attribute character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_multiple_allowed_dst OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_dst; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_multiple_allowed_dst AS
+ SELECT test_catalogue_rel_multiple_allowed_dst.volgnummer,
+    test_catalogue_rel_multiple_allowed_dst.registratiedatum,
+    test_catalogue_rel_multiple_allowed_dst.id,
+    test_catalogue_rel_multiple_allowed_dst.identificatie,
+    test_catalogue_rel_multiple_allowed_dst.begin_geldigheid,
+    test_catalogue_rel_multiple_allowed_dst.eind_geldigheid,
+    test_catalogue_rel_multiple_allowed_dst.referenced_attribute,
+    test_catalogue_rel_multiple_allowed_dst._source,
+    test_catalogue_rel_multiple_allowed_dst._application,
+    test_catalogue_rel_multiple_allowed_dst._source_id,
+    test_catalogue_rel_multiple_allowed_dst._last_event,
+    test_catalogue_rel_multiple_allowed_dst._hash,
+    test_catalogue_rel_multiple_allowed_dst._version,
+    test_catalogue_rel_multiple_allowed_dst._date_created,
+    test_catalogue_rel_multiple_allowed_dst._date_confirmed,
+    test_catalogue_rel_multiple_allowed_dst._date_modified,
+    test_catalogue_rel_multiple_allowed_dst._date_deleted,
+    test_catalogue_rel_multiple_allowed_dst._expiration_date,
+    test_catalogue_rel_multiple_allowed_dst._gobid,
+    test_catalogue_rel_multiple_allowed_dst._id,
+    test_catalogue_rel_multiple_allowed_dst._tid
+   FROM public.test_catalogue_rel_multiple_allowed_dst;
+
+
+ALTER TABLE legacy.test_catalogue_rel_multiple_allowed_dst OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_multisource_src; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_multiple_allowed_multisource_src (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    reference jsonb,
+    manyreference jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_multiple_allowed_multisource_src OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_multisource_src; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_multiple_allowed_multisource_src AS
+ SELECT test_catalogue_rel_multiple_allowed_multisource_src.volgnummer,
+    test_catalogue_rel_multiple_allowed_multisource_src.registratiedatum,
+    test_catalogue_rel_multiple_allowed_multisource_src.id,
+    test_catalogue_rel_multiple_allowed_multisource_src.identificatie,
+    test_catalogue_rel_multiple_allowed_multisource_src.begin_geldigheid,
+    test_catalogue_rel_multiple_allowed_multisource_src.eind_geldigheid,
+    test_catalogue_rel_multiple_allowed_multisource_src.reference,
+    test_catalogue_rel_multiple_allowed_multisource_src.manyreference,
+    test_catalogue_rel_multiple_allowed_multisource_src._source,
+    test_catalogue_rel_multiple_allowed_multisource_src._application,
+    test_catalogue_rel_multiple_allowed_multisource_src._source_id,
+    test_catalogue_rel_multiple_allowed_multisource_src._last_event,
+    test_catalogue_rel_multiple_allowed_multisource_src._hash,
+    test_catalogue_rel_multiple_allowed_multisource_src._version,
+    test_catalogue_rel_multiple_allowed_multisource_src._date_created,
+    test_catalogue_rel_multiple_allowed_multisource_src._date_confirmed,
+    test_catalogue_rel_multiple_allowed_multisource_src._date_modified,
+    test_catalogue_rel_multiple_allowed_multisource_src._date_deleted,
+    test_catalogue_rel_multiple_allowed_multisource_src._expiration_date,
+    test_catalogue_rel_multiple_allowed_multisource_src._gobid,
+    test_catalogue_rel_multiple_allowed_multisource_src._id,
+    test_catalogue_rel_multiple_allowed_multisource_src._tid
+   FROM public.test_catalogue_rel_multiple_allowed_multisource_src;
+
+
+ALTER TABLE legacy.test_catalogue_rel_multiple_allowed_multisource_src OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_src; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_multiple_allowed_src (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    reference jsonb,
+    manyreference jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_multiple_allowed_src OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_multiple_allowed_src; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_multiple_allowed_src AS
+ SELECT test_catalogue_rel_multiple_allowed_src.volgnummer,
+    test_catalogue_rel_multiple_allowed_src.registratiedatum,
+    test_catalogue_rel_multiple_allowed_src.id,
+    test_catalogue_rel_multiple_allowed_src.identificatie,
+    test_catalogue_rel_multiple_allowed_src.begin_geldigheid,
+    test_catalogue_rel_multiple_allowed_src.eind_geldigheid,
+    test_catalogue_rel_multiple_allowed_src.reference,
+    test_catalogue_rel_multiple_allowed_src.manyreference,
+    test_catalogue_rel_multiple_allowed_src._source,
+    test_catalogue_rel_multiple_allowed_src._application,
+    test_catalogue_rel_multiple_allowed_src._source_id,
+    test_catalogue_rel_multiple_allowed_src._last_event,
+    test_catalogue_rel_multiple_allowed_src._hash,
+    test_catalogue_rel_multiple_allowed_src._version,
+    test_catalogue_rel_multiple_allowed_src._date_created,
+    test_catalogue_rel_multiple_allowed_src._date_confirmed,
+    test_catalogue_rel_multiple_allowed_src._date_modified,
+    test_catalogue_rel_multiple_allowed_src._date_deleted,
+    test_catalogue_rel_multiple_allowed_src._expiration_date,
+    test_catalogue_rel_multiple_allowed_src._gobid,
+    test_catalogue_rel_multiple_allowed_src._id,
+    test_catalogue_rel_multiple_allowed_src._tid
+   FROM public.test_catalogue_rel_multiple_allowed_src;
+
+
+ALTER TABLE legacy.test_catalogue_rel_multiple_allowed_src OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_a; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_test_entity_a (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    ref_to_c jsonb,
+    manyref_to_c jsonb,
+    ref_to_d jsonb,
+    manyref_to_d jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_test_entity_a OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_a; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_test_entity_a AS
+ SELECT test_catalogue_rel_test_entity_a.volgnummer,
+    test_catalogue_rel_test_entity_a.registratiedatum,
+    test_catalogue_rel_test_entity_a.id,
+    test_catalogue_rel_test_entity_a.identificatie,
+    test_catalogue_rel_test_entity_a.begin_geldigheid,
+    test_catalogue_rel_test_entity_a.eind_geldigheid,
+    test_catalogue_rel_test_entity_a.ref_to_c,
+    test_catalogue_rel_test_entity_a.manyref_to_c,
+    test_catalogue_rel_test_entity_a.ref_to_d,
+    test_catalogue_rel_test_entity_a.manyref_to_d,
+    test_catalogue_rel_test_entity_a._source,
+    test_catalogue_rel_test_entity_a._application,
+    test_catalogue_rel_test_entity_a._source_id,
+    test_catalogue_rel_test_entity_a._last_event,
+    test_catalogue_rel_test_entity_a._hash,
+    test_catalogue_rel_test_entity_a._version,
+    test_catalogue_rel_test_entity_a._date_created,
+    test_catalogue_rel_test_entity_a._date_confirmed,
+    test_catalogue_rel_test_entity_a._date_modified,
+    test_catalogue_rel_test_entity_a._date_deleted,
+    test_catalogue_rel_test_entity_a._expiration_date,
+    test_catalogue_rel_test_entity_a._gobid,
+    test_catalogue_rel_test_entity_a._id,
+    test_catalogue_rel_test_entity_a._tid
+   FROM public.test_catalogue_rel_test_entity_a;
+
+
+ALTER TABLE legacy.test_catalogue_rel_test_entity_a OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_b; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_test_entity_b (
+    id integer,
+    identificatie character varying,
+    ref_to_c jsonb,
+    manyref_to_c jsonb,
+    ref_to_d jsonb,
+    manyref_to_d jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_test_entity_b OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_b; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_test_entity_b AS
+ SELECT test_catalogue_rel_test_entity_b.id,
+    test_catalogue_rel_test_entity_b.identificatie,
+    test_catalogue_rel_test_entity_b.ref_to_c,
+    test_catalogue_rel_test_entity_b.manyref_to_c,
+    test_catalogue_rel_test_entity_b.ref_to_d,
+    test_catalogue_rel_test_entity_b.manyref_to_d,
+    test_catalogue_rel_test_entity_b._source,
+    test_catalogue_rel_test_entity_b._application,
+    test_catalogue_rel_test_entity_b._source_id,
+    test_catalogue_rel_test_entity_b._last_event,
+    test_catalogue_rel_test_entity_b._hash,
+    test_catalogue_rel_test_entity_b._version,
+    test_catalogue_rel_test_entity_b._date_created,
+    test_catalogue_rel_test_entity_b._date_confirmed,
+    test_catalogue_rel_test_entity_b._date_modified,
+    test_catalogue_rel_test_entity_b._date_deleted,
+    test_catalogue_rel_test_entity_b._expiration_date,
+    test_catalogue_rel_test_entity_b._gobid,
+    test_catalogue_rel_test_entity_b._id,
+    test_catalogue_rel_test_entity_b._tid
+   FROM public.test_catalogue_rel_test_entity_b;
+
+
+ALTER TABLE legacy.test_catalogue_rel_test_entity_b OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_c; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_test_entity_c (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    id integer,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_test_entity_c OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_c; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_test_entity_c AS
+ SELECT test_catalogue_rel_test_entity_c.volgnummer,
+    test_catalogue_rel_test_entity_c.registratiedatum,
+    test_catalogue_rel_test_entity_c.id,
+    test_catalogue_rel_test_entity_c.identificatie,
+    test_catalogue_rel_test_entity_c.begin_geldigheid,
+    test_catalogue_rel_test_entity_c.eind_geldigheid,
+    test_catalogue_rel_test_entity_c._source,
+    test_catalogue_rel_test_entity_c._application,
+    test_catalogue_rel_test_entity_c._source_id,
+    test_catalogue_rel_test_entity_c._last_event,
+    test_catalogue_rel_test_entity_c._hash,
+    test_catalogue_rel_test_entity_c._version,
+    test_catalogue_rel_test_entity_c._date_created,
+    test_catalogue_rel_test_entity_c._date_confirmed,
+    test_catalogue_rel_test_entity_c._date_modified,
+    test_catalogue_rel_test_entity_c._date_deleted,
+    test_catalogue_rel_test_entity_c._expiration_date,
+    test_catalogue_rel_test_entity_c._gobid,
+    test_catalogue_rel_test_entity_c._id,
+    test_catalogue_rel_test_entity_c._tid
+   FROM public.test_catalogue_rel_test_entity_c;
+
+
+ALTER TABLE legacy.test_catalogue_rel_test_entity_c OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_d; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_rel_test_entity_d (
+    id integer,
+    identificatie character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_rel_test_entity_d OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_rel_test_entity_d; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_rel_test_entity_d AS
+ SELECT test_catalogue_rel_test_entity_d.id,
+    test_catalogue_rel_test_entity_d.identificatie,
+    test_catalogue_rel_test_entity_d._source,
+    test_catalogue_rel_test_entity_d._application,
+    test_catalogue_rel_test_entity_d._source_id,
+    test_catalogue_rel_test_entity_d._last_event,
+    test_catalogue_rel_test_entity_d._hash,
+    test_catalogue_rel_test_entity_d._version,
+    test_catalogue_rel_test_entity_d._date_created,
+    test_catalogue_rel_test_entity_d._date_confirmed,
+    test_catalogue_rel_test_entity_d._date_modified,
+    test_catalogue_rel_test_entity_d._date_deleted,
+    test_catalogue_rel_test_entity_d._expiration_date,
+    test_catalogue_rel_test_entity_d._gobid,
+    test_catalogue_rel_test_entity_d._id,
+    test_catalogue_rel_test_entity_d._tid
+   FROM public.test_catalogue_rel_test_entity_d;
+
+
+ALTER TABLE legacy.test_catalogue_rel_test_entity_d OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_secure; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_secure (
+    id character varying,
+    secure_string character varying,
+    secure_number character varying,
+    secure_datetime character varying,
+    string character varying,
+    number numeric,
+    datetime timestamp without time zone,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    secure_reference jsonb,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_secure OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_secure; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_secure AS
+ SELECT test_catalogue_secure.id,
+    test_catalogue_secure.secure_string,
+    test_catalogue_secure.secure_number,
+    test_catalogue_secure.secure_datetime,
+    test_catalogue_secure.string,
+    test_catalogue_secure.number,
+    test_catalogue_secure.datetime,
+    test_catalogue_secure._source,
+    test_catalogue_secure._application,
+    test_catalogue_secure._source_id,
+    test_catalogue_secure._last_event,
+    test_catalogue_secure._hash,
+    test_catalogue_secure._version,
+    test_catalogue_secure._date_created,
+    test_catalogue_secure._date_confirmed,
+    test_catalogue_secure._date_modified,
+    test_catalogue_secure._date_deleted,
+    test_catalogue_secure._expiration_date,
+    test_catalogue_secure._gobid,
+    test_catalogue_secure._id,
+    test_catalogue_secure.secure_reference,
+    test_catalogue_secure._tid
+   FROM public.test_catalogue_secure;
+
+
+ALTER TABLE legacy.test_catalogue_secure OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_test_entity (
+    _gobid integer NOT NULL,
+    _id character varying,
+    _source character varying,
+    _source_id character varying,
+    _last_event integer,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    string character varying,
+    "character" character(1),
+    "decimal" numeric,
+    "integer" integer,
+    point public.geometry(Point,28992),
+    date date,
+    "boolean" boolean,
+    _application character varying,
+    json jsonb,
+    datetime timestamp without time zone,
+    geometry public.geometry(Geometry,28992),
+    manyreference jsonb,
+    polygon public.geometry(Polygon,28992),
+    reference jsonb,
+    _hash character varying,
+    _expiration_date timestamp without time zone,
+    incomplete_date jsonb,
+    biginteger bigint,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_test_entity OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_test_entity AS
+ SELECT test_catalogue_test_entity._gobid,
+    test_catalogue_test_entity._id,
+    test_catalogue_test_entity._source,
+    test_catalogue_test_entity._source_id,
+    test_catalogue_test_entity._last_event,
+    test_catalogue_test_entity._version,
+    test_catalogue_test_entity._date_created,
+    test_catalogue_test_entity._date_confirmed,
+    test_catalogue_test_entity._date_modified,
+    test_catalogue_test_entity._date_deleted,
+    test_catalogue_test_entity.string,
+    test_catalogue_test_entity."character",
+    test_catalogue_test_entity."decimal",
+    test_catalogue_test_entity."integer",
+    test_catalogue_test_entity.point,
+    test_catalogue_test_entity.date,
+    test_catalogue_test_entity."boolean",
+    test_catalogue_test_entity._application,
+    test_catalogue_test_entity.json,
+    test_catalogue_test_entity.datetime,
+    test_catalogue_test_entity.geometry,
+    test_catalogue_test_entity.manyreference,
+    test_catalogue_test_entity.polygon,
+    test_catalogue_test_entity.reference,
+    test_catalogue_test_entity._hash,
+    test_catalogue_test_entity._expiration_date,
+    test_catalogue_test_entity.incomplete_date,
+    test_catalogue_test_entity.biginteger,
+    test_catalogue_test_entity._tid
+   FROM public.test_catalogue_test_entity;
+
+
+ALTER TABLE legacy.test_catalogue_test_entity OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_autoid; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_test_entity_autoid (
+    identificatie character varying,
+    code character varying,
+    autoid character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_test_entity_autoid OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_autoid; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_test_entity_autoid AS
+ SELECT test_catalogue_test_entity_autoid.identificatie,
+    test_catalogue_test_entity_autoid.code,
+    test_catalogue_test_entity_autoid.autoid,
+    test_catalogue_test_entity_autoid._source,
+    test_catalogue_test_entity_autoid._application,
+    test_catalogue_test_entity_autoid._source_id,
+    test_catalogue_test_entity_autoid._last_event,
+    test_catalogue_test_entity_autoid._hash,
+    test_catalogue_test_entity_autoid._version,
+    test_catalogue_test_entity_autoid._date_created,
+    test_catalogue_test_entity_autoid._date_confirmed,
+    test_catalogue_test_entity_autoid._date_modified,
+    test_catalogue_test_entity_autoid._date_deleted,
+    test_catalogue_test_entity_autoid._expiration_date,
+    test_catalogue_test_entity_autoid._gobid,
+    test_catalogue_test_entity_autoid._id,
+    test_catalogue_test_entity_autoid._tid
+   FROM public.test_catalogue_test_entity_autoid;
+
+
+ALTER TABLE legacy.test_catalogue_test_entity_autoid OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_autoid_states; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_test_entity_autoid_states (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    code character varying,
+    autoid character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_test_entity_autoid_states OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_autoid_states; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_test_entity_autoid_states AS
+ SELECT test_catalogue_test_entity_autoid_states.volgnummer,
+    test_catalogue_test_entity_autoid_states.registratiedatum,
+    test_catalogue_test_entity_autoid_states.identificatie,
+    test_catalogue_test_entity_autoid_states.begin_geldigheid,
+    test_catalogue_test_entity_autoid_states.eind_geldigheid,
+    test_catalogue_test_entity_autoid_states.code,
+    test_catalogue_test_entity_autoid_states.autoid,
+    test_catalogue_test_entity_autoid_states._source,
+    test_catalogue_test_entity_autoid_states._application,
+    test_catalogue_test_entity_autoid_states._source_id,
+    test_catalogue_test_entity_autoid_states._last_event,
+    test_catalogue_test_entity_autoid_states._hash,
+    test_catalogue_test_entity_autoid_states._version,
+    test_catalogue_test_entity_autoid_states._date_created,
+    test_catalogue_test_entity_autoid_states._date_confirmed,
+    test_catalogue_test_entity_autoid_states._date_modified,
+    test_catalogue_test_entity_autoid_states._date_deleted,
+    test_catalogue_test_entity_autoid_states._expiration_date,
+    test_catalogue_test_entity_autoid_states._gobid,
+    test_catalogue_test_entity_autoid_states._id,
+    test_catalogue_test_entity_autoid_states._tid
+   FROM public.test_catalogue_test_entity_autoid_states;
+
+
+ALTER TABLE legacy.test_catalogue_test_entity_autoid_states OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_reference; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.test_catalogue_test_entity_reference (
+    string character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.test_catalogue_test_entity_reference OWNER TO gobtest;
+
+--
+-- Name: test_catalogue_test_entity_reference; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.test_catalogue_test_entity_reference AS
+ SELECT test_catalogue_test_entity_reference.string,
+    test_catalogue_test_entity_reference._source,
+    test_catalogue_test_entity_reference._application,
+    test_catalogue_test_entity_reference._source_id,
+    test_catalogue_test_entity_reference._last_event,
+    test_catalogue_test_entity_reference._hash,
+    test_catalogue_test_entity_reference._version,
+    test_catalogue_test_entity_reference._date_created,
+    test_catalogue_test_entity_reference._date_confirmed,
+    test_catalogue_test_entity_reference._date_modified,
+    test_catalogue_test_entity_reference._date_deleted,
+    test_catalogue_test_entity_reference._expiration_date,
+    test_catalogue_test_entity_reference._gobid,
+    test_catalogue_test_entity_reference._id,
+    test_catalogue_test_entity_reference._tid
+   FROM public.test_catalogue_test_entity_reference;
+
+
+ALTER TABLE legacy.test_catalogue_test_entity_reference OWNER TO gobtest;
+
+--
+-- Name: wkpb_beperkingen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.wkpb_beperkingen (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    identificatie character varying,
+    beperking jsonb,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    belast_kadastrale_objecten jsonb,
+    documentnummer character varying,
+    heeft_dossier jsonb,
+    datum_bekendmaking date,
+    aard jsonb,
+    orgaan jsonb,
+    persoonsgegevens_afschermen boolean,
+    heeft_voorgaande_beperking jsonb,
+    status jsonb,
+    geometrie public.geometry(Geometry,28992),
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.wkpb_beperkingen OWNER TO gobtest;
+
+--
+-- Name: wkpb_beperkingen; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.wkpb_beperkingen AS
+ SELECT wkpb_beperkingen.volgnummer,
+    wkpb_beperkingen.registratiedatum,
+    wkpb_beperkingen.identificatie,
+    wkpb_beperkingen.beperking,
+    wkpb_beperkingen.begin_geldigheid,
+    wkpb_beperkingen.eind_geldigheid,
+    wkpb_beperkingen.belast_kadastrale_objecten,
+    wkpb_beperkingen.documentnummer,
+    wkpb_beperkingen.heeft_dossier,
+    wkpb_beperkingen.datum_bekendmaking,
+    wkpb_beperkingen.aard,
+    wkpb_beperkingen.orgaan,
+    wkpb_beperkingen.persoonsgegevens_afschermen,
+    wkpb_beperkingen.heeft_voorgaande_beperking,
+    wkpb_beperkingen.status,
+    wkpb_beperkingen.geometrie,
+    wkpb_beperkingen._source,
+    wkpb_beperkingen._application,
+    wkpb_beperkingen._source_id,
+    wkpb_beperkingen._last_event,
+    wkpb_beperkingen._hash,
+    wkpb_beperkingen._version,
+    wkpb_beperkingen._date_created,
+    wkpb_beperkingen._date_confirmed,
+    wkpb_beperkingen._date_modified,
+    wkpb_beperkingen._date_deleted,
+    wkpb_beperkingen._expiration_date,
+    wkpb_beperkingen._gobid,
+    wkpb_beperkingen._id,
+    wkpb_beperkingen._tid
+   FROM public.wkpb_beperkingen;
+
+
+ALTER TABLE legacy.wkpb_beperkingen OWNER TO gobtest;
+
+--
+-- Name: wkpb_brondocumenten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.wkpb_brondocumenten (
+    documentnummer character varying,
+    registratiedatum timestamp without time zone,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.wkpb_brondocumenten OWNER TO gobtest;
+
+--
+-- Name: wkpb_brondocumenten; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.wkpb_brondocumenten AS
+ SELECT wkpb_brondocumenten.documentnummer,
+    wkpb_brondocumenten.registratiedatum,
+    wkpb_brondocumenten._source,
+    wkpb_brondocumenten._application,
+    wkpb_brondocumenten._source_id,
+    wkpb_brondocumenten._last_event,
+    wkpb_brondocumenten._hash,
+    wkpb_brondocumenten._version,
+    wkpb_brondocumenten._date_created,
+    wkpb_brondocumenten._date_confirmed,
+    wkpb_brondocumenten._date_modified,
+    wkpb_brondocumenten._date_deleted,
+    wkpb_brondocumenten._expiration_date,
+    wkpb_brondocumenten._gobid,
+    wkpb_brondocumenten._id,
+    wkpb_brondocumenten._tid
+   FROM public.wkpb_brondocumenten;
+
+
+ALTER TABLE legacy.wkpb_brondocumenten OWNER TO gobtest;
+
+--
+-- Name: wkpb_dossiers; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.wkpb_dossiers (
+    dossier character varying,
+    heeft_brondocumenten jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.wkpb_dossiers OWNER TO gobtest;
+
+--
+-- Name: wkpb_dossiers; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.wkpb_dossiers AS
+ SELECT wkpb_dossiers.dossier,
+    wkpb_dossiers.heeft_brondocumenten,
+    wkpb_dossiers._source,
+    wkpb_dossiers._application,
+    wkpb_dossiers._source_id,
+    wkpb_dossiers._last_event,
+    wkpb_dossiers._hash,
+    wkpb_dossiers._version,
+    wkpb_dossiers._date_created,
+    wkpb_dossiers._date_confirmed,
+    wkpb_dossiers._date_modified,
+    wkpb_dossiers._date_deleted,
+    wkpb_dossiers._expiration_date,
+    wkpb_dossiers._gobid,
+    wkpb_dossiers._id,
+    wkpb_dossiers._tid
+   FROM public.wkpb_dossiers;
+
+
+ALTER TABLE legacy.wkpb_dossiers OWNER TO gobtest;
+
+--
+-- Name: woz_deelobjecten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.woz_deelobjecten (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    begin_geldigheid date,
+    eind_geldigheid date,
+    wozdeelobjectnummer character varying,
+    deelnummer character varying,
+    wozobjectnummer character varying,
+    soort_object jsonb,
+    is_verbonden_met_bag_verblijfsobject jsonb,
+    is_verbonden_met_bag_ligplaats jsonb,
+    is_verbonden_met_bag_standplaats jsonb,
+    heeft_bag_pand jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.woz_deelobjecten OWNER TO gobtest;
+
+--
+-- Name: woz_deelobjecten; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.woz_deelobjecten AS
+ SELECT woz_deelobjecten.volgnummer,
+    woz_deelobjecten.registratiedatum,
+    woz_deelobjecten.begin_geldigheid,
+    woz_deelobjecten.eind_geldigheid,
+    woz_deelobjecten.wozdeelobjectnummer,
+    woz_deelobjecten.deelnummer,
+    woz_deelobjecten.wozobjectnummer,
+    woz_deelobjecten.soort_object,
+    woz_deelobjecten.is_verbonden_met_bag_verblijfsobject,
+    woz_deelobjecten.is_verbonden_met_bag_ligplaats,
+    woz_deelobjecten.is_verbonden_met_bag_standplaats,
+    woz_deelobjecten.heeft_bag_pand,
+    woz_deelobjecten._source,
+    woz_deelobjecten._application,
+    woz_deelobjecten._source_id,
+    woz_deelobjecten._last_event,
+    woz_deelobjecten._hash,
+    woz_deelobjecten._version,
+    woz_deelobjecten._date_created,
+    woz_deelobjecten._date_confirmed,
+    woz_deelobjecten._date_modified,
+    woz_deelobjecten._date_deleted,
+    woz_deelobjecten._expiration_date,
+    woz_deelobjecten._gobid,
+    woz_deelobjecten._id,
+    woz_deelobjecten._tid
+   FROM public.woz_deelobjecten;
+
+
+ALTER TABLE legacy.woz_deelobjecten OWNER TO gobtest;
+
+--
+-- Name: woz_objecten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.woz_objecten (
+    volgnummer integer,
+    registratiedatum timestamp without time zone,
+    begin_geldigheid date,
+    eind_geldigheid date,
+    wozobjectnummer character varying,
+    gebruik jsonb,
+    soort_object jsonb,
+    bevat_brk_kadastraalobject jsonb,
+    bestaat_uit_woz_deelobjecten jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.woz_objecten OWNER TO gobtest;
+
+--
+-- Name: woz_objecten; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.woz_objecten AS
+ SELECT woz_objecten.volgnummer,
+    woz_objecten.registratiedatum,
+    woz_objecten.begin_geldigheid,
+    woz_objecten.eind_geldigheid,
+    woz_objecten.wozobjectnummer,
+    woz_objecten.gebruik,
+    woz_objecten.soort_object,
+    woz_objecten.bevat_brk_kadastraalobject,
+    woz_objecten.bestaat_uit_woz_deelobjecten,
+    woz_objecten._source,
+    woz_objecten._application,
+    woz_objecten._source_id,
+    woz_objecten._last_event,
+    woz_objecten._hash,
+    woz_objecten._version,
+    woz_objecten._date_created,
+    woz_objecten._date_confirmed,
+    woz_objecten._date_modified,
+    woz_objecten._date_deleted,
+    woz_objecten._expiration_date,
+    woz_objecten._gobid,
+    woz_objecten._id,
+    woz_objecten._tid
+   FROM public.woz_objecten;
+
+
+ALTER TABLE legacy.woz_objecten OWNER TO gobtest;
+
+--
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.alembic_version (
+    version_num character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.alembic_version OWNER TO gobtest;
+
+--
+-- Name: bag_brondocumenten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_brondocumenten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_brondocumenten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_brondocumenten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_brondocumenten__gobid_seq OWNED BY public.bag_brondocumenten._gobid;
+
+
+--
+-- Name: bag_dossiers__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_dossiers__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_dossiers__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_dossiers__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_dossiers__gobid_seq OWNED BY public.bag_dossiers._gobid;
+
+
+--
+-- Name: bag_ligplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_ligplaatsen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_ligplaatsen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_ligplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_ligplaatsen__gobid_seq OWNED BY public.bag_ligplaatsen._gobid;
+
+
+--
+-- Name: bag_nummeraanduidingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_nummeraanduidingen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_nummeraanduidingen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_nummeraanduidingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_nummeraanduidingen__gobid_seq OWNED BY public.bag_nummeraanduidingen._gobid;
+
+
+--
+-- Name: bag_onderzoeken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_onderzoeken__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_onderzoeken__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_onderzoeken__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_onderzoeken__gobid_seq OWNED BY public.bag_onderzoeken._gobid;
+
+
+--
+-- Name: bag_openbareruimtes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_openbareruimtes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_openbareruimtes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_openbareruimtes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_openbareruimtes__gobid_seq OWNED BY public.bag_openbareruimtes._gobid;
+
+
+--
+-- Name: bag_panden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_panden__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_panden__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_panden__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_panden__gobid_seq OWNED BY public.bag_panden._gobid;
+
+
+--
+-- Name: bag_standplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_standplaatsen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_standplaatsen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_standplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_standplaatsen__gobid_seq OWNED BY public.bag_standplaatsen._gobid;
+
+
+--
+-- Name: bag_verblijfsobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_verblijfsobjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_verblijfsobjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_verblijfsobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_verblijfsobjecten__gobid_seq OWNED BY public.bag_verblijfsobjecten._gobid;
+
+
+--
+-- Name: bag_woonplaatsen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bag_woonplaatsen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bag_woonplaatsen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bag_woonplaatsen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bag_woonplaatsen__gobid_seq OWNED BY public.bag_woonplaatsen._gobid;
+
+
+--
+-- Name: bgt_onderbouw__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bgt_onderbouw__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bgt_onderbouw__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bgt_onderbouw__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bgt_onderbouw__gobid_seq OWNED BY public.bgt_onderbouw._gobid;
+
+
+--
+-- Name: bgt_overbouw__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.bgt_overbouw__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bgt_overbouw__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: bgt_overbouw__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.bgt_overbouw__gobid_seq OWNED BY public.bgt_overbouw._gobid;
+
+
+--
+-- Name: brk2_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_aantekeningenkadastraleobjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_aantekeningenkadastraleobjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_aantekeningenkadastraleobjecten__gobid_seq OWNED BY public.brk2_aantekeningenkadastraleobjecten._gobid;
+
+
+--
+-- Name: brk2_aantekeningenrechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_aantekeningenrechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_aantekeningenrechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_aantekeningenrechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_aantekeningenrechten__gobid_seq OWNED BY public.brk2_aantekeningenrechten._gobid;
+
+
+--
+-- Name: brk2_aardzakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_aardzakelijkerechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_aardzakelijkerechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_aardzakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_aardzakelijkerechten__gobid_seq OWNED BY public.brk2_aardzakelijkerechten._gobid;
+
+
+--
+-- Name: brk2_erfpachtcanons__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_erfpachtcanons__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_erfpachtcanons__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_erfpachtcanons__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_erfpachtcanons__gobid_seq OWNED BY public.brk2_erfpachtcanons._gobid;
+
+
+--
+-- Name: brk2_gemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_gemeentes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_gemeentes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_gemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_gemeentes__gobid_seq OWNED BY public.brk2_gemeentes._gobid;
+
+
+--
+-- Name: brk2_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_kadastralegemeentecodes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_kadastralegemeentecodes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_kadastralegemeentecodes__gobid_seq OWNED BY public.brk2_kadastralegemeentecodes._gobid;
+
+
+--
+-- Name: brk2_kadastralegemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_kadastralegemeentes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_kadastralegemeentes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastralegemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_kadastralegemeentes__gobid_seq OWNED BY public.brk2_kadastralegemeentes._gobid;
+
+
+--
+-- Name: brk2_kadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_kadastraleobjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_kadastraleobjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_kadastraleobjecten__gobid_seq OWNED BY public.brk2_kadastraleobjecten._gobid;
+
+
+--
+-- Name: brk2_kadastralesecties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_kadastralesecties__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_kadastralesecties__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastralesecties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_kadastralesecties__gobid_seq OWNED BY public.brk2_kadastralesecties._gobid;
+
+
+--
+-- Name: brk2_kadastralesubjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_kadastralesubjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_kadastralesubjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_kadastralesubjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_kadastralesubjecten__gobid_seq OWNED BY public.brk2_kadastralesubjecten._gobid;
+
+
+--
+-- Name: brk2_meta__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_meta__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_meta__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_meta__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_meta__gobid_seq OWNED BY public.brk2_meta._gobid;
+
+
+--
+-- Name: brk2_stukdelen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_stukdelen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_stukdelen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_stukdelen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_stukdelen__gobid_seq OWNED BY public.brk2_stukdelen._gobid;
+
+
+--
+-- Name: brk2_tenaamstellingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_tenaamstellingen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_tenaamstellingen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_tenaamstellingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_tenaamstellingen__gobid_seq OWNED BY public.brk2_tenaamstellingen._gobid;
+
+
+--
+-- Name: brk2_zakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk2_zakelijkerechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk2_zakelijkerechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk2_zakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk2_zakelijkerechten__gobid_seq OWNED BY public.brk2_zakelijkerechten._gobid;
+
+
+--
+-- Name: brk_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_aantekeningenkadastraleobjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_aantekeningenkadastraleobjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_aantekeningenkadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_aantekeningenkadastraleobjecten__gobid_seq OWNED BY public.brk_aantekeningenkadastraleobjecten._gobid;
+
+
+--
+-- Name: brk_aantekeningenrechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_aantekeningenrechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_aantekeningenrechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_aantekeningenrechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_aantekeningenrechten__gobid_seq OWNED BY public.brk_aantekeningenrechten._gobid;
+
+
+--
+-- Name: brk_aardzakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_aardzakelijkerechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_aardzakelijkerechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_aardzakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_aardzakelijkerechten__gobid_seq OWNED BY public.brk_aardzakelijkerechten._gobid;
+
+
+--
+-- Name: brk_gemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_gemeentes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_gemeentes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_gemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_gemeentes__gobid_seq OWNED BY public.brk_gemeentes._gobid;
+
+
+--
+-- Name: brk_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastralegemeentecodes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastralegemeentecodes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastralegemeentecodes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastralegemeentecodes__gobid_seq OWNED BY public.brk_kadastralegemeentecodes._gobid;
+
+
+--
+-- Name: brk_kadastralegemeentes__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastralegemeentes__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastralegemeentes__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastralegemeentes__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastralegemeentes__gobid_seq OWNED BY public.brk_kadastralegemeentes._gobid;
+
+
+--
+-- Name: brk_kadastraleobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastraleobjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastraleobjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastraleobjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastraleobjecten__gobid_seq OWNED BY public.brk_kadastraleobjecten._gobid;
+
+
+--
+-- Name: brk_kadastralesecties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastralesecties__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastralesecties__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastralesecties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastralesecties__gobid_seq OWNED BY public.brk_kadastralesecties._gobid;
+
+
+--
+-- Name: brk_kadastralesubjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_kadastralesubjecten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_kadastralesubjecten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_kadastralesubjecten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_kadastralesubjecten__gobid_seq OWNED BY public.brk_kadastralesubjecten._gobid;
+
+
+--
+-- Name: brk_meta__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_meta__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_meta__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_meta__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_meta__gobid_seq OWNED BY public.brk_meta._gobid;
+
+
+--
+-- Name: brk_stukdelen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_stukdelen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_stukdelen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_stukdelen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_stukdelen__gobid_seq OWNED BY public.brk_stukdelen._gobid;
+
+
+--
+-- Name: brk_tenaamstellingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_tenaamstellingen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_tenaamstellingen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_tenaamstellingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_tenaamstellingen__gobid_seq OWNED BY public.brk_tenaamstellingen._gobid;
+
+
+--
+-- Name: brk_zakelijkerechten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.brk_zakelijkerechten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brk_zakelijkerechten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: brk_zakelijkerechten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.brk_zakelijkerechten__gobid_seq OWNED BY public.brk_zakelijkerechten._gobid;
+
+
+--
+-- Name: gebieden_bouwblokken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.gebieden_bouwblokken__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gebieden_bouwblokken__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: gebieden_bouwblokken__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.gebieden_bouwblokken__gobid_seq OWNED BY public.gebieden_bouwblokken._gobid;
+
+
+--
+-- Name: gebieden_buurten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.gebieden_buurten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gebieden_buurten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: gebieden_buurten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.gebieden_buurten__gobid_seq OWNED BY public.gebieden_buurten._gobid;
+
+
+--
+-- Name: gebieden_ggpgebieden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.gebieden_ggpgebieden__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gebieden_ggpgebieden__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: gebieden_ggpgebieden__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.gebieden_ggpgebieden__gobid_seq OWNED BY public.gebieden_ggpgebieden._gobid;
+
+
+--
+-- Name: gebieden_ggwgebieden__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.gebieden_ggwgebieden__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gebieden_ggwgebieden__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: gebieden_ggwgebieden__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.gebieden_ggwgebieden__gobid_seq OWNED BY public.gebieden_ggwgebieden._gobid;
+
+
+--
+-- Name: gebieden_stadsdelen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.gebieden_stadsdelen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gebieden_stadsdelen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: gebieden_stadsdelen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.gebieden_stadsdelen__gobid_seq OWNED BY public.gebieden_stadsdelen._gobid;
+
+
+--
+-- Name: gebieden_wijken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.gebieden_wijken__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gebieden_wijken__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: gebieden_wijken__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.gebieden_wijken__gobid_seq OWNED BY public.gebieden_wijken._gobid;
+
+
+--
+-- Name: hr_functievervulling; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.hr_functievervulling (
+    identificatie character varying,
+    langstzittende boolean,
+    datum_aanvang date,
+    datum_einde date,
+    functie_titel character varying,
+    indicatie_statutair boolean,
+    schorsing jsonb,
+    aansprakelijke jsonb,
+    handelingsbekwaam character varying,
+    bevoegdheids_aansprakelijke jsonb,
+    bestuursfunctie jsonb,
+    bevoegdheid_bestuurder jsonb,
+    vertegenwoordiger_bestuurder_rechtspersoon character varying,
+    gemachtigde jsonb,
+    volmacht boolean,
+    statutair boolean,
+    heeft_hr_vestiging jsonb,
+    beperkte_volmacht boolean,
+    beperking_in_geld boolean,
+    doen_van_opgave_aan_handelsregister boolean,
+    overige_volmacht boolean,
+    omschrijving_overige_beperkingen character varying,
+    beperking_in_handeling boolean,
+    soort_handeling character varying,
+    volledige_volmacht boolean,
+    overige_functionaris jsonb,
+    afwijkend_aansprakelijkheidsbeding boolean,
+    bevoegdheid_funtionaris_volgens_buitlands_recht jsonb,
+    publiekrechtelijke_functionaris jsonb,
+    bevoegdheid_publiek_rechtelijke_functionaris boolean,
+    soort_bevoegdheid character varying,
+    functionaris_bijzondere_rechtstoestand jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.hr_functievervulling OWNER TO gobtest;
+
+--
+-- Name: hr_functievervulling__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.hr_functievervulling__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hr_functievervulling__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: hr_functievervulling__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.hr_functievervulling__gobid_seq OWNED BY public.hr_functievervulling._gobid;
+
+
+--
+-- Name: hr_maatschappelijkeactiviteiten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.hr_maatschappelijkeactiviteiten (
+    kvknummer character varying,
+    datum_actueel_tot timestamp without time zone,
+    datum_aanvang_maatschappelijke_activiteit date,
+    datum_einde_maatschappelijke_activiteit date,
+    registratie_tijdstip_maatschappelijke_activiteit timestamp without time zone,
+    naam character varying,
+    non_mailing character varying,
+    incidenteel_uitlenen_arbeidskrachten character varying,
+    activiteiten jsonb,
+    heeft_hoofdvestiging jsonb,
+    datum_aanvang_maatschappelijke_activiteit_vestiging date,
+    datum_einde_maatschappelijke_activiteit_vestiging date,
+    wordt_uitgeoefend_in_niet_commerciele_vestiging jsonb,
+    heeft_als_eigenaar_np jsonb,
+    heeft_als_eigenaar_nnp jsonb,
+    onderneming character varying,
+    totaal_werkzame_personen integer,
+    voltijd_werkzame_personen integer,
+    deeltijd_werkzame_personen integer,
+    datum_aanvang_onderneming date,
+    datum_einde_onderneming date,
+    is_overdracht_voortzetting_onderneming character varying,
+    datum_overdracht_voortzetting_onderneming date,
+    wordt_uitgeoefend_in_commerciele_vestiging jsonb,
+    datum_aanvang_onderneming_vestiging date,
+    datum_einde_onderneming_vestiging date,
+    datum_aanvang_onderneming_handelsnaam date,
+    datum_einde_onderneming_handelsnaam date,
+    handelsnamen jsonb,
+    communicatie jsonb,
+    email_adressen jsonb,
+    domeinnamen jsonb,
+    bezoek_locatie jsonb,
+    bezoek_geopunt public.geometry(Point,28992),
+    heeft_nummeraanduiding jsonb,
+    heeft_verblijfsobject jsonb,
+    heeft_ligplaats jsonb,
+    heeft_standplaats jsonb,
+    post_locatie jsonb,
+    post_geopunt public.geometry(Point,28992),
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.hr_maatschappelijkeactiviteiten OWNER TO gobtest;
+
+--
+-- Name: hr_maatschappelijkeactiviteiten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.hr_maatschappelijkeactiviteiten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hr_maatschappelijkeactiviteiten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: hr_maatschappelijkeactiviteiten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.hr_maatschappelijkeactiviteiten__gobid_seq OWNED BY public.hr_maatschappelijkeactiviteiten._gobid;
+
+
+--
+-- Name: hr_natuurlijkpersoon; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.hr_natuurlijkpersoon (
+    identificatie character varying,
+    bsn character varying,
+    datum_actueel_tot timestamp without time zone,
+    geslachtsnaam character varying,
+    voorvoegsel_geslachtsnaam character varying,
+    voornamen jsonb,
+    geslachtsaanduiding character varying,
+    volledige_naam character varying,
+    geboortedatum date,
+    geboorteplaats character varying,
+    geboorteland character varying,
+    overlijdensdatum date,
+    schuldsanering character varying,
+    surceance_van_betaling boolean,
+    status character varying,
+    duur integer,
+    faillisement character varying,
+    persoon_rechtsvorm character varying,
+    uitgebreide_rechtsvorm character varying,
+    type_persoon character varying,
+    rol character varying,
+    toegangscode character varying,
+    nummer integer,
+    heeft_functie_vervulling jsonb,
+    is_functie_vervulling jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.hr_natuurlijkpersoon OWNER TO gobtest;
+
+--
+-- Name: hr_natuurlijkpersoon__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.hr_natuurlijkpersoon__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hr_natuurlijkpersoon__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: hr_natuurlijkpersoon__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.hr_natuurlijkpersoon__gobid_seq OWNED BY public.hr_natuurlijkpersoon._gobid;
+
+
+--
+-- Name: hr_nietnatuurlijkpersoon; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.hr_nietnatuurlijkpersoon (
+    rsin character varying,
+    datum_actueel_tot timestamp without time zone,
+    datum_uitschrijving date,
+    schuldsanering character varying,
+    surceance_van_betaling boolean,
+    status character varying,
+    duur integer,
+    faillisement character varying,
+    naam character varying,
+    volledige_naam character varying,
+    ook_genoemd character varying,
+    verkorte_naam character varying,
+    type_persoon character varying,
+    toegangscode character varying,
+    nummer integer,
+    doelrechtsvorm character varying,
+    rechtsvorm character varying,
+    persoon_rechtsvorm character varying,
+    uitgebreide_rechtsvorm character varying,
+    rol character varying,
+    datum_aanvang date,
+    datum_einde date,
+    heeft_functie_vervulling jsonb,
+    is_functie_vervulling jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.hr_nietnatuurlijkpersoon OWNER TO gobtest;
+
+--
+-- Name: hr_nietnatuurlijkpersoon__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.hr_nietnatuurlijkpersoon__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hr_nietnatuurlijkpersoon__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: hr_nietnatuurlijkpersoon__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.hr_nietnatuurlijkpersoon__gobid_seq OWNED BY public.hr_nietnatuurlijkpersoon._gobid;
+
+
+--
+-- Name: hr_vestigingen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.hr_vestigingen (
+    vestigingsnummer character varying,
+    datum_actueel_tot timestamp without time zone,
+    datum_aanvang date,
+    datum_einde date,
+    datum_voortzetting date,
+    is_commerciele_vestiging character varying,
+    eerste_handelsnaam character varying,
+    communicatie jsonb,
+    email_adressen jsonb,
+    domeinnamen jsonb,
+    is_samengevoegd_met_vestiging jsonb,
+    datum_afgesloten date,
+    datum_samenvoeging date,
+    naam character varying,
+    verkorte_naam character varying,
+    ook_genoemd character varying,
+    totaal_werkzame_personen integer,
+    voltijd_werkzame_personen integer,
+    deeltijd_werkzame_personen integer,
+    hoofd_vestiging character varying,
+    activiteit_omschrijving character varying,
+    importeert character varying,
+    exporteert character varying,
+    activiteiten jsonb,
+    handelsnamen jsonb,
+    is_een_uitoefening_van jsonb,
+    bezoek_locatie jsonb,
+    bezoek_geopunt public.geometry(Point,28992),
+    bezoek_heeft_nummeraanduiding jsonb,
+    bezoek_heeft_verblijfsobject jsonb,
+    bezoek_heeft_ligplaats jsonb,
+    bezoek_heeft_standplaats jsonb,
+    post_locatie jsonb,
+    post_geopunt public.geometry(Point,28992),
+    post_heeft_nummeraanduiding jsonb,
+    post_heeft_verblijfsobject jsonb,
+    post_heeft_ligplaats jsonb,
+    post_heeft_standplaats jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.hr_vestigingen OWNER TO gobtest;
+
+--
+-- Name: hr_vestigingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.hr_vestigingen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hr_vestigingen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: hr_vestigingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.hr_vestigingen__gobid_seq OWNED BY public.hr_vestigingen._gobid;
+
+
+--
+-- Name: meetbouten_meetbouten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.meetbouten_meetbouten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.meetbouten_meetbouten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: meetbouten_meetbouten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.meetbouten_meetbouten__gobid_seq OWNED BY public.meetbouten_meetbouten._gobid;
+
+
+--
+-- Name: meetbouten_metingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.meetbouten_metingen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.meetbouten_metingen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: meetbouten_metingen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.meetbouten_metingen__gobid_seq OWNED BY public.meetbouten_metingen._gobid;
+
+
+--
+-- Name: meetbouten_referentiepunten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.meetbouten_referentiepunten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.meetbouten_referentiepunten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: meetbouten_referentiepunten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.meetbouten_referentiepunten__gobid_seq OWNED BY public.meetbouten_referentiepunten._gobid;
+
 
 --
 -- Name: meetbouten_rollagen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -11711,10 +14946,10 @@ CREATE MATERIALIZED VIEW public.mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel A
 ALTER TABLE public.mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel OWNER TO gobtest;
 
 --
--- Name: rel_hr_loc_bag_lps_heeft_ligplaats; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_heeft_ligplaats; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_loc_bag_lps_heeft_ligplaats (
+CREATE TABLE public.rel_hr_mac_bag_lps_heeft_ligplaats (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -11745,33 +14980,32 @@ CREATE TABLE public.rel_hr_loc_bag_lps_heeft_ligplaats (
 );
 
 
-ALTER TABLE public.rel_hr_loc_bag_lps_heeft_ligplaats OWNER TO gobtest;
+ALTER TABLE public.rel_hr_mac_bag_lps_heeft_ligplaats OWNER TO gobtest;
 
 --
--- Name: mv_hr_loc_bag_lps_heeft_ligplaats; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_mac_bag_lps_heeft_ligplaats; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_loc_bag_lps_heeft_ligplaats AS
- SELECT rel_hr_loc_bag_lps_heeft_ligplaats._gobid,
-    rel_hr_loc_bag_lps_heeft_ligplaats.src_id,
-    rel_hr_loc_bag_lps_heeft_ligplaats.src_volgnummer,
-    rel_hr_loc_bag_lps_heeft_ligplaats.dst_id,
-    rel_hr_loc_bag_lps_heeft_ligplaats.dst_volgnummer,
-    rel_hr_loc_bag_lps_heeft_ligplaats.begin_geldigheid,
-    rel_hr_loc_bag_lps_heeft_ligplaats.eind_geldigheid,
-    rel_hr_loc_bag_lps_heeft_ligplaats.bronwaarde
-   FROM public.rel_hr_loc_bag_lps_heeft_ligplaats
-  WHERE (rel_hr_loc_bag_lps_heeft_ligplaats._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_mac_bag_lps_heeft_ligplaats AS
+ SELECT rel_hr_mac_bag_lps_heeft_ligplaats._gobid,
+    rel_hr_mac_bag_lps_heeft_ligplaats.src_id,
+    rel_hr_mac_bag_lps_heeft_ligplaats.dst_id,
+    rel_hr_mac_bag_lps_heeft_ligplaats.dst_volgnummer,
+    rel_hr_mac_bag_lps_heeft_ligplaats.begin_geldigheid,
+    rel_hr_mac_bag_lps_heeft_ligplaats.eind_geldigheid,
+    rel_hr_mac_bag_lps_heeft_ligplaats.bronwaarde
+   FROM public.rel_hr_mac_bag_lps_heeft_ligplaats
+  WHERE (rel_hr_mac_bag_lps_heeft_ligplaats._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_loc_bag_lps_heeft_ligplaats OWNER TO gobtest;
+ALTER TABLE public.mv_hr_mac_bag_lps_heeft_ligplaats OWNER TO gobtest;
 
 --
--- Name: rel_hr_loc_bag_nag_heeft_nummeraanduiding; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_heeft_nummeraanduiding; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_loc_bag_nag_heeft_nummeraanduiding (
+CREATE TABLE public.rel_hr_mac_bag_nag_heeft_nummeraanduiding (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -11802,33 +15036,32 @@ CREATE TABLE public.rel_hr_loc_bag_nag_heeft_nummeraanduiding (
 );
 
 
-ALTER TABLE public.rel_hr_loc_bag_nag_heeft_nummeraanduiding OWNER TO gobtest;
+ALTER TABLE public.rel_hr_mac_bag_nag_heeft_nummeraanduiding OWNER TO gobtest;
 
 --
--- Name: mv_hr_loc_bag_nag_heeft_nummeraanduiding; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_mac_bag_nag_heeft_nummeraanduiding; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_loc_bag_nag_heeft_nummeraanduiding AS
- SELECT rel_hr_loc_bag_nag_heeft_nummeraanduiding._gobid,
-    rel_hr_loc_bag_nag_heeft_nummeraanduiding.src_id,
-    rel_hr_loc_bag_nag_heeft_nummeraanduiding.src_volgnummer,
-    rel_hr_loc_bag_nag_heeft_nummeraanduiding.dst_id,
-    rel_hr_loc_bag_nag_heeft_nummeraanduiding.dst_volgnummer,
-    rel_hr_loc_bag_nag_heeft_nummeraanduiding.begin_geldigheid,
-    rel_hr_loc_bag_nag_heeft_nummeraanduiding.eind_geldigheid,
-    rel_hr_loc_bag_nag_heeft_nummeraanduiding.bronwaarde
-   FROM public.rel_hr_loc_bag_nag_heeft_nummeraanduiding
-  WHERE (rel_hr_loc_bag_nag_heeft_nummeraanduiding._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_mac_bag_nag_heeft_nummeraanduiding AS
+ SELECT rel_hr_mac_bag_nag_heeft_nummeraanduiding._gobid,
+    rel_hr_mac_bag_nag_heeft_nummeraanduiding.src_id,
+    rel_hr_mac_bag_nag_heeft_nummeraanduiding.dst_id,
+    rel_hr_mac_bag_nag_heeft_nummeraanduiding.dst_volgnummer,
+    rel_hr_mac_bag_nag_heeft_nummeraanduiding.begin_geldigheid,
+    rel_hr_mac_bag_nag_heeft_nummeraanduiding.eind_geldigheid,
+    rel_hr_mac_bag_nag_heeft_nummeraanduiding.bronwaarde
+   FROM public.rel_hr_mac_bag_nag_heeft_nummeraanduiding
+  WHERE (rel_hr_mac_bag_nag_heeft_nummeraanduiding._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_loc_bag_nag_heeft_nummeraanduiding OWNER TO gobtest;
+ALTER TABLE public.mv_hr_mac_bag_nag_heeft_nummeraanduiding OWNER TO gobtest;
 
 --
--- Name: rel_hr_loc_bag_sps_heeft_standplaats; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_heeft_standplaats; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_loc_bag_sps_heeft_standplaats (
+CREATE TABLE public.rel_hr_mac_bag_sps_heeft_standplaats (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -11859,33 +15092,32 @@ CREATE TABLE public.rel_hr_loc_bag_sps_heeft_standplaats (
 );
 
 
-ALTER TABLE public.rel_hr_loc_bag_sps_heeft_standplaats OWNER TO gobtest;
+ALTER TABLE public.rel_hr_mac_bag_sps_heeft_standplaats OWNER TO gobtest;
 
 --
--- Name: mv_hr_loc_bag_sps_heeft_standplaats; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_mac_bag_sps_heeft_standplaats; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_loc_bag_sps_heeft_standplaats AS
- SELECT rel_hr_loc_bag_sps_heeft_standplaats._gobid,
-    rel_hr_loc_bag_sps_heeft_standplaats.src_id,
-    rel_hr_loc_bag_sps_heeft_standplaats.src_volgnummer,
-    rel_hr_loc_bag_sps_heeft_standplaats.dst_id,
-    rel_hr_loc_bag_sps_heeft_standplaats.dst_volgnummer,
-    rel_hr_loc_bag_sps_heeft_standplaats.begin_geldigheid,
-    rel_hr_loc_bag_sps_heeft_standplaats.eind_geldigheid,
-    rel_hr_loc_bag_sps_heeft_standplaats.bronwaarde
-   FROM public.rel_hr_loc_bag_sps_heeft_standplaats
-  WHERE (rel_hr_loc_bag_sps_heeft_standplaats._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_mac_bag_sps_heeft_standplaats AS
+ SELECT rel_hr_mac_bag_sps_heeft_standplaats._gobid,
+    rel_hr_mac_bag_sps_heeft_standplaats.src_id,
+    rel_hr_mac_bag_sps_heeft_standplaats.dst_id,
+    rel_hr_mac_bag_sps_heeft_standplaats.dst_volgnummer,
+    rel_hr_mac_bag_sps_heeft_standplaats.begin_geldigheid,
+    rel_hr_mac_bag_sps_heeft_standplaats.eind_geldigheid,
+    rel_hr_mac_bag_sps_heeft_standplaats.bronwaarde
+   FROM public.rel_hr_mac_bag_sps_heeft_standplaats
+  WHERE (rel_hr_mac_bag_sps_heeft_standplaats._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_loc_bag_sps_heeft_standplaats OWNER TO gobtest;
+ALTER TABLE public.mv_hr_mac_bag_sps_heeft_standplaats OWNER TO gobtest;
 
 --
--- Name: rel_hr_loc_bag_vot_heeft_verblijfsobject; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_heeft_verblijfsobject; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_loc_bag_vot_heeft_verblijfsobject (
+CREATE TABLE public.rel_hr_mac_bag_vot_heeft_verblijfsobject (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -11916,33 +15148,32 @@ CREATE TABLE public.rel_hr_loc_bag_vot_heeft_verblijfsobject (
 );
 
 
-ALTER TABLE public.rel_hr_loc_bag_vot_heeft_verblijfsobject OWNER TO gobtest;
+ALTER TABLE public.rel_hr_mac_bag_vot_heeft_verblijfsobject OWNER TO gobtest;
 
 --
--- Name: mv_hr_loc_bag_vot_heeft_verblijfsobject; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_mac_bag_vot_heeft_verblijfsobject; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_loc_bag_vot_heeft_verblijfsobject AS
- SELECT rel_hr_loc_bag_vot_heeft_verblijfsobject._gobid,
-    rel_hr_loc_bag_vot_heeft_verblijfsobject.src_id,
-    rel_hr_loc_bag_vot_heeft_verblijfsobject.src_volgnummer,
-    rel_hr_loc_bag_vot_heeft_verblijfsobject.dst_id,
-    rel_hr_loc_bag_vot_heeft_verblijfsobject.dst_volgnummer,
-    rel_hr_loc_bag_vot_heeft_verblijfsobject.begin_geldigheid,
-    rel_hr_loc_bag_vot_heeft_verblijfsobject.eind_geldigheid,
-    rel_hr_loc_bag_vot_heeft_verblijfsobject.bronwaarde
-   FROM public.rel_hr_loc_bag_vot_heeft_verblijfsobject
-  WHERE (rel_hr_loc_bag_vot_heeft_verblijfsobject._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_mac_bag_vot_heeft_verblijfsobject AS
+ SELECT rel_hr_mac_bag_vot_heeft_verblijfsobject._gobid,
+    rel_hr_mac_bag_vot_heeft_verblijfsobject.src_id,
+    rel_hr_mac_bag_vot_heeft_verblijfsobject.dst_id,
+    rel_hr_mac_bag_vot_heeft_verblijfsobject.dst_volgnummer,
+    rel_hr_mac_bag_vot_heeft_verblijfsobject.begin_geldigheid,
+    rel_hr_mac_bag_vot_heeft_verblijfsobject.eind_geldigheid,
+    rel_hr_mac_bag_vot_heeft_verblijfsobject.bronwaarde
+   FROM public.rel_hr_mac_bag_vot_heeft_verblijfsobject
+  WHERE (rel_hr_mac_bag_vot_heeft_verblijfsobject._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_loc_bag_vot_heeft_verblijfsobject OWNER TO gobtest;
+ALTER TABLE public.mv_hr_mac_bag_vot_heeft_verblijfsobject OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_bezoekadres; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_bezoek_heeft_ligplaats; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_mac_hr_loc_heeft_bezoekadres (
+CREATE TABLE public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -11973,32 +15204,32 @@ CREATE TABLE public.rel_hr_mac_hr_loc_heeft_bezoekadres (
 );
 
 
-ALTER TABLE public.rel_hr_mac_hr_loc_heeft_bezoekadres OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats OWNER TO gobtest;
 
 --
--- Name: mv_hr_mac_hr_loc_heeft_bezoekadres; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_ves_bag_lps_bezoek_heeft_ligplaats; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_mac_hr_loc_heeft_bezoekadres AS
- SELECT rel_hr_mac_hr_loc_heeft_bezoekadres._gobid,
-    rel_hr_mac_hr_loc_heeft_bezoekadres.src_id,
-    rel_hr_mac_hr_loc_heeft_bezoekadres.dst_id,
-    rel_hr_mac_hr_loc_heeft_bezoekadres.dst_volgnummer,
-    rel_hr_mac_hr_loc_heeft_bezoekadres.begin_geldigheid,
-    rel_hr_mac_hr_loc_heeft_bezoekadres.eind_geldigheid,
-    rel_hr_mac_hr_loc_heeft_bezoekadres.bronwaarde
-   FROM public.rel_hr_mac_hr_loc_heeft_bezoekadres
-  WHERE (rel_hr_mac_hr_loc_heeft_bezoekadres._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_ves_bag_lps_bezoek_heeft_ligplaats AS
+ SELECT rel_hr_ves_bag_lps_bezoek_heeft_ligplaats._gobid,
+    rel_hr_ves_bag_lps_bezoek_heeft_ligplaats.src_id,
+    rel_hr_ves_bag_lps_bezoek_heeft_ligplaats.dst_id,
+    rel_hr_ves_bag_lps_bezoek_heeft_ligplaats.dst_volgnummer,
+    rel_hr_ves_bag_lps_bezoek_heeft_ligplaats.begin_geldigheid,
+    rel_hr_ves_bag_lps_bezoek_heeft_ligplaats.eind_geldigheid,
+    rel_hr_ves_bag_lps_bezoek_heeft_ligplaats.bronwaarde
+   FROM public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats
+  WHERE (rel_hr_ves_bag_lps_bezoek_heeft_ligplaats._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_mac_hr_loc_heeft_bezoekadres OWNER TO gobtest;
+ALTER TABLE public.mv_hr_ves_bag_lps_bezoek_heeft_ligplaats OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_postadres; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_post_heeft_ligplaats; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_mac_hr_loc_heeft_postadres (
+CREATE TABLE public.rel_hr_ves_bag_lps_post_heeft_ligplaats (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -12029,32 +15260,32 @@ CREATE TABLE public.rel_hr_mac_hr_loc_heeft_postadres (
 );
 
 
-ALTER TABLE public.rel_hr_mac_hr_loc_heeft_postadres OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_lps_post_heeft_ligplaats OWNER TO gobtest;
 
 --
--- Name: mv_hr_mac_hr_loc_heeft_postadres; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_ves_bag_lps_post_heeft_ligplaats; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_mac_hr_loc_heeft_postadres AS
- SELECT rel_hr_mac_hr_loc_heeft_postadres._gobid,
-    rel_hr_mac_hr_loc_heeft_postadres.src_id,
-    rel_hr_mac_hr_loc_heeft_postadres.dst_id,
-    rel_hr_mac_hr_loc_heeft_postadres.dst_volgnummer,
-    rel_hr_mac_hr_loc_heeft_postadres.begin_geldigheid,
-    rel_hr_mac_hr_loc_heeft_postadres.eind_geldigheid,
-    rel_hr_mac_hr_loc_heeft_postadres.bronwaarde
-   FROM public.rel_hr_mac_hr_loc_heeft_postadres
-  WHERE (rel_hr_mac_hr_loc_heeft_postadres._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_ves_bag_lps_post_heeft_ligplaats AS
+ SELECT rel_hr_ves_bag_lps_post_heeft_ligplaats._gobid,
+    rel_hr_ves_bag_lps_post_heeft_ligplaats.src_id,
+    rel_hr_ves_bag_lps_post_heeft_ligplaats.dst_id,
+    rel_hr_ves_bag_lps_post_heeft_ligplaats.dst_volgnummer,
+    rel_hr_ves_bag_lps_post_heeft_ligplaats.begin_geldigheid,
+    rel_hr_ves_bag_lps_post_heeft_ligplaats.eind_geldigheid,
+    rel_hr_ves_bag_lps_post_heeft_ligplaats.bronwaarde
+   FROM public.rel_hr_ves_bag_lps_post_heeft_ligplaats
+  WHERE (rel_hr_ves_bag_lps_post_heeft_ligplaats._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_mac_hr_loc_heeft_postadres OWNER TO gobtest;
+ALTER TABLE public.mv_hr_ves_bag_lps_post_heeft_ligplaats OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ (
+CREATE TABLE public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -12085,31 +15316,32 @@ CREATE TABLE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ (
 );
 
 
-ALTER TABLE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding OWNER TO gobtest;
 
 --
--- Name: mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ AS
- SELECT rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_._gobid,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_.src_id,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_.dst_id,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_.begin_geldigheid,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_.eind_geldigheid,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_.bronwaarde
-   FROM public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_
-  WHERE (rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding AS
+ SELECT rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding._gobid,
+    rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding.src_id,
+    rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding.dst_id,
+    rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding.dst_volgnummer,
+    rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding.begin_geldigheid,
+    rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding.eind_geldigheid,
+    rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding.bronwaarde
+   FROM public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding
+  WHERE (rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ OWNER TO gobtest;
+ALTER TABLE public.mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_post_heeft_nummeraanduiding; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming (
+CREATE TABLE public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -12140,31 +15372,32 @@ CREATE TABLE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming (
 );
 
 
-ALTER TABLE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding OWNER TO gobtest;
 
 --
--- Name: mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_ves_bag_nag_post_heeft_nummeraanduiding; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming AS
- SELECT rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming._gobid,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming.src_id,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming.dst_id,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming.begin_geldigheid,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming.eind_geldigheid,
-    rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming.bronwaarde
-   FROM public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming
-  WHERE (rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_ves_bag_nag_post_heeft_nummeraanduiding AS
+ SELECT rel_hr_ves_bag_nag_post_heeft_nummeraanduiding._gobid,
+    rel_hr_ves_bag_nag_post_heeft_nummeraanduiding.src_id,
+    rel_hr_ves_bag_nag_post_heeft_nummeraanduiding.dst_id,
+    rel_hr_ves_bag_nag_post_heeft_nummeraanduiding.dst_volgnummer,
+    rel_hr_ves_bag_nag_post_heeft_nummeraanduiding.begin_geldigheid,
+    rel_hr_ves_bag_nag_post_heeft_nummeraanduiding.eind_geldigheid,
+    rel_hr_ves_bag_nag_post_heeft_nummeraanduiding.bronwaarde
+   FROM public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding
+  WHERE (rel_hr_ves_bag_nag_post_heeft_nummeraanduiding._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming OWNER TO gobtest;
+ALTER TABLE public.mv_hr_ves_bag_nag_post_heeft_nummeraanduiding OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_bezoek_heeft_standplaats; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ (
+CREATE TABLE public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -12195,31 +15428,32 @@ CREATE TABLE public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ (
 );
 
 
-ALTER TABLE public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats OWNER TO gobtest;
 
 --
--- Name: mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_ves_bag_sps_bezoek_heeft_standplaats; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ AS
- SELECT rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_._gobid,
-    rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_.src_id,
-    rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_.dst_id,
-    rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_.begin_geldigheid,
-    rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_.eind_geldigheid,
-    rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_.bronwaarde
-   FROM public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_
-  WHERE (rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_ves_bag_sps_bezoek_heeft_standplaats AS
+ SELECT rel_hr_ves_bag_sps_bezoek_heeft_standplaats._gobid,
+    rel_hr_ves_bag_sps_bezoek_heeft_standplaats.src_id,
+    rel_hr_ves_bag_sps_bezoek_heeft_standplaats.dst_id,
+    rel_hr_ves_bag_sps_bezoek_heeft_standplaats.dst_volgnummer,
+    rel_hr_ves_bag_sps_bezoek_heeft_standplaats.begin_geldigheid,
+    rel_hr_ves_bag_sps_bezoek_heeft_standplaats.eind_geldigheid,
+    rel_hr_ves_bag_sps_bezoek_heeft_standplaats.bronwaarde
+   FROM public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats
+  WHERE (rel_hr_ves_bag_sps_bezoek_heeft_standplaats._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ OWNER TO gobtest;
+ALTER TABLE public.mv_hr_ves_bag_sps_bezoek_heeft_standplaats OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_post_heeft_standplaats; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ (
+CREATE TABLE public.rel_hr_ves_bag_sps_post_heeft_standplaats (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -12250,31 +15484,32 @@ CREATE TABLE public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ (
 );
 
 
-ALTER TABLE public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_sps_post_heeft_standplaats OWNER TO gobtest;
 
 --
--- Name: mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_ves_bag_sps_post_heeft_standplaats; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ AS
- SELECT rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_._gobid,
-    rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_.src_id,
-    rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_.dst_id,
-    rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_.begin_geldigheid,
-    rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_.eind_geldigheid,
-    rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_.bronwaarde
-   FROM public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_
-  WHERE (rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_ves_bag_sps_post_heeft_standplaats AS
+ SELECT rel_hr_ves_bag_sps_post_heeft_standplaats._gobid,
+    rel_hr_ves_bag_sps_post_heeft_standplaats.src_id,
+    rel_hr_ves_bag_sps_post_heeft_standplaats.dst_id,
+    rel_hr_ves_bag_sps_post_heeft_standplaats.dst_volgnummer,
+    rel_hr_ves_bag_sps_post_heeft_standplaats.begin_geldigheid,
+    rel_hr_ves_bag_sps_post_heeft_standplaats.eind_geldigheid,
+    rel_hr_ves_bag_sps_post_heeft_standplaats.bronwaarde
+   FROM public.rel_hr_ves_bag_sps_post_heeft_standplaats
+  WHERE (rel_hr_ves_bag_sps_post_heeft_standplaats._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ OWNER TO gobtest;
+ALTER TABLE public.mv_hr_ves_bag_sps_post_heeft_standplaats OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_ves_heeft_hoofdvestiging; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_mac_hr_ves_heeft_hoofdvestiging (
+CREATE TABLE public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -12305,31 +15540,32 @@ CREATE TABLE public.rel_hr_mac_hr_ves_heeft_hoofdvestiging (
 );
 
 
-ALTER TABLE public.rel_hr_mac_hr_ves_heeft_hoofdvestiging OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject OWNER TO gobtest;
 
 --
--- Name: mv_hr_mac_hr_ves_heeft_hoofdvestiging; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_mac_hr_ves_heeft_hoofdvestiging AS
- SELECT rel_hr_mac_hr_ves_heeft_hoofdvestiging._gobid,
-    rel_hr_mac_hr_ves_heeft_hoofdvestiging.src_id,
-    rel_hr_mac_hr_ves_heeft_hoofdvestiging.dst_id,
-    rel_hr_mac_hr_ves_heeft_hoofdvestiging.begin_geldigheid,
-    rel_hr_mac_hr_ves_heeft_hoofdvestiging.eind_geldigheid,
-    rel_hr_mac_hr_ves_heeft_hoofdvestiging.bronwaarde
-   FROM public.rel_hr_mac_hr_ves_heeft_hoofdvestiging
-  WHERE (rel_hr_mac_hr_ves_heeft_hoofdvestiging._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject AS
+ SELECT rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject._gobid,
+    rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject.src_id,
+    rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject.dst_id,
+    rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject.dst_volgnummer,
+    rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject.begin_geldigheid,
+    rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject.eind_geldigheid,
+    rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject.bronwaarde
+   FROM public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject
+  WHERE (rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_mac_hr_ves_heeft_hoofdvestiging OWNER TO gobtest;
+ALTER TABLE public.mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject OWNER TO gobtest;
 
 --
--- Name: rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_post_heeft_verblijfsobject; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit (
+CREATE TABLE public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject (
     id character varying,
     src_source character varying,
     src_id character varying,
@@ -12360,357 +15596,26 @@ CREATE TABLE public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit (
 );
 
 
-ALTER TABLE public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject OWNER TO gobtest;
 
 --
--- Name: mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+-- Name: mv_hr_ves_bag_vot_post_heeft_verblijfsobject; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
 --
 
-CREATE MATERIALIZED VIEW public.mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit AS
- SELECT rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit._gobid,
-    rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit.src_id,
-    rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit.dst_id,
-    rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit.begin_geldigheid,
-    rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit.eind_geldigheid,
-    rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit.bronwaarde
-   FROM public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit
-  WHERE (rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit._date_deleted IS NULL)
+CREATE MATERIALIZED VIEW public.mv_hr_ves_bag_vot_post_heeft_verblijfsobject AS
+ SELECT rel_hr_ves_bag_vot_post_heeft_verblijfsobject._gobid,
+    rel_hr_ves_bag_vot_post_heeft_verblijfsobject.src_id,
+    rel_hr_ves_bag_vot_post_heeft_verblijfsobject.dst_id,
+    rel_hr_ves_bag_vot_post_heeft_verblijfsobject.dst_volgnummer,
+    rel_hr_ves_bag_vot_post_heeft_verblijfsobject.begin_geldigheid,
+    rel_hr_ves_bag_vot_post_heeft_verblijfsobject.eind_geldigheid,
+    rel_hr_ves_bag_vot_post_heeft_verblijfsobject.bronwaarde
+   FROM public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject
+  WHERE (rel_hr_ves_bag_vot_post_heeft_verblijfsobject._date_deleted IS NULL)
   WITH NO DATA;
 
 
-ALTER TABLE public.mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit OWNER TO gobtest;
-
---
--- Name: rel_hr_sac_hr_ves_heeft_als_vestiging; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.rel_hr_sac_hr_ves_heeft_als_vestiging (
-    id character varying,
-    src_source character varying,
-    src_id character varying,
-    src_volgnummer integer,
-    bronwaarde character varying,
-    derivation character varying,
-    dst_source character varying,
-    dst_id character varying,
-    dst_volgnummer integer,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _last_src_event integer,
-    _last_dst_event integer,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.rel_hr_sac_hr_ves_heeft_als_vestiging OWNER TO gobtest;
-
---
--- Name: mv_hr_sac_hr_ves_heeft_als_vestiging; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
---
-
-CREATE MATERIALIZED VIEW public.mv_hr_sac_hr_ves_heeft_als_vestiging AS
- SELECT rel_hr_sac_hr_ves_heeft_als_vestiging._gobid,
-    rel_hr_sac_hr_ves_heeft_als_vestiging.src_id,
-    rel_hr_sac_hr_ves_heeft_als_vestiging.dst_id,
-    rel_hr_sac_hr_ves_heeft_als_vestiging.begin_geldigheid,
-    rel_hr_sac_hr_ves_heeft_als_vestiging.eind_geldigheid,
-    rel_hr_sac_hr_ves_heeft_als_vestiging.bronwaarde
-   FROM public.rel_hr_sac_hr_ves_heeft_als_vestiging
-  WHERE (rel_hr_sac_hr_ves_heeft_als_vestiging._date_deleted IS NULL)
-  WITH NO DATA;
-
-
-ALTER TABLE public.mv_hr_sac_hr_ves_heeft_als_vestiging OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_bezoekadres; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.rel_hr_ves_hr_loc_heeft_als_bezoekadres (
-    id character varying,
-    src_source character varying,
-    src_id character varying,
-    src_volgnummer integer,
-    bronwaarde character varying,
-    derivation character varying,
-    dst_source character varying,
-    dst_id character varying,
-    dst_volgnummer integer,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _last_src_event integer,
-    _last_dst_event integer,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.rel_hr_ves_hr_loc_heeft_als_bezoekadres OWNER TO gobtest;
-
---
--- Name: mv_hr_ves_hr_loc_heeft_als_bezoekadres; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
---
-
-CREATE MATERIALIZED VIEW public.mv_hr_ves_hr_loc_heeft_als_bezoekadres AS
- SELECT rel_hr_ves_hr_loc_heeft_als_bezoekadres._gobid,
-    rel_hr_ves_hr_loc_heeft_als_bezoekadres.src_id,
-    rel_hr_ves_hr_loc_heeft_als_bezoekadres.dst_id,
-    rel_hr_ves_hr_loc_heeft_als_bezoekadres.dst_volgnummer,
-    rel_hr_ves_hr_loc_heeft_als_bezoekadres.begin_geldigheid,
-    rel_hr_ves_hr_loc_heeft_als_bezoekadres.eind_geldigheid,
-    rel_hr_ves_hr_loc_heeft_als_bezoekadres.bronwaarde
-   FROM public.rel_hr_ves_hr_loc_heeft_als_bezoekadres
-  WHERE (rel_hr_ves_hr_loc_heeft_als_bezoekadres._date_deleted IS NULL)
-  WITH NO DATA;
-
-
-ALTER TABLE public.mv_hr_ves_hr_loc_heeft_als_bezoekadres OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_postadres; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.rel_hr_ves_hr_loc_heeft_als_postadres (
-    id character varying,
-    src_source character varying,
-    src_id character varying,
-    src_volgnummer integer,
-    bronwaarde character varying,
-    derivation character varying,
-    dst_source character varying,
-    dst_id character varying,
-    dst_volgnummer integer,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _last_src_event integer,
-    _last_dst_event integer,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.rel_hr_ves_hr_loc_heeft_als_postadres OWNER TO gobtest;
-
---
--- Name: mv_hr_ves_hr_loc_heeft_als_postadres; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
---
-
-CREATE MATERIALIZED VIEW public.mv_hr_ves_hr_loc_heeft_als_postadres AS
- SELECT rel_hr_ves_hr_loc_heeft_als_postadres._gobid,
-    rel_hr_ves_hr_loc_heeft_als_postadres.src_id,
-    rel_hr_ves_hr_loc_heeft_als_postadres.dst_id,
-    rel_hr_ves_hr_loc_heeft_als_postadres.dst_volgnummer,
-    rel_hr_ves_hr_loc_heeft_als_postadres.begin_geldigheid,
-    rel_hr_ves_hr_loc_heeft_als_postadres.eind_geldigheid,
-    rel_hr_ves_hr_loc_heeft_als_postadres.bronwaarde
-   FROM public.rel_hr_ves_hr_loc_heeft_als_postadres
-  WHERE (rel_hr_ves_hr_loc_heeft_als_postadres._date_deleted IS NULL)
-  WITH NO DATA;
-
-
-ALTER TABLE public.mv_hr_ves_hr_loc_heeft_als_postadres OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_mac_is_een_uitoefening_van; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.rel_hr_ves_hr_mac_is_een_uitoefening_van (
-    id character varying,
-    src_source character varying,
-    src_id character varying,
-    src_volgnummer integer,
-    bronwaarde character varying,
-    derivation character varying,
-    dst_source character varying,
-    dst_id character varying,
-    dst_volgnummer integer,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _last_src_event integer,
-    _last_dst_event integer,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.rel_hr_ves_hr_mac_is_een_uitoefening_van OWNER TO gobtest;
-
---
--- Name: mv_hr_ves_hr_mac_is_een_uitoefening_van; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
---
-
-CREATE MATERIALIZED VIEW public.mv_hr_ves_hr_mac_is_een_uitoefening_van AS
- SELECT rel_hr_ves_hr_mac_is_een_uitoefening_van._gobid,
-    rel_hr_ves_hr_mac_is_een_uitoefening_van.src_id,
-    rel_hr_ves_hr_mac_is_een_uitoefening_van.dst_id,
-    rel_hr_ves_hr_mac_is_een_uitoefening_van.begin_geldigheid,
-    rel_hr_ves_hr_mac_is_een_uitoefening_van.eind_geldigheid,
-    rel_hr_ves_hr_mac_is_een_uitoefening_van.bronwaarde
-   FROM public.rel_hr_ves_hr_mac_is_een_uitoefening_van
-  WHERE (rel_hr_ves_hr_mac_is_een_uitoefening_van._date_deleted IS NULL)
-  WITH NO DATA;
-
-
-ALTER TABLE public.mv_hr_ves_hr_mac_is_een_uitoefening_van OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_sac__heeft_sbi_act_; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.rel_hr_ves_hr_sac__heeft_sbi_act_ (
-    id character varying,
-    src_source character varying,
-    src_id character varying,
-    src_volgnummer integer,
-    bronwaarde character varying,
-    derivation character varying,
-    dst_source character varying,
-    dst_id character varying,
-    dst_volgnummer integer,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _last_src_event integer,
-    _last_dst_event integer,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.rel_hr_ves_hr_sac__heeft_sbi_act_ OWNER TO gobtest;
-
---
--- Name: mv_hr_ves_hr_sac__heeft_sbi_act_; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
---
-
-CREATE MATERIALIZED VIEW public.mv_hr_ves_hr_sac__heeft_sbi_act_ AS
- SELECT rel_hr_ves_hr_sac__heeft_sbi_act_._gobid,
-    rel_hr_ves_hr_sac__heeft_sbi_act_.src_id,
-    rel_hr_ves_hr_sac__heeft_sbi_act_.dst_id,
-    rel_hr_ves_hr_sac__heeft_sbi_act_.begin_geldigheid,
-    rel_hr_ves_hr_sac__heeft_sbi_act_.eind_geldigheid,
-    rel_hr_ves_hr_sac__heeft_sbi_act_.bronwaarde
-   FROM public.rel_hr_ves_hr_sac__heeft_sbi_act_
-  WHERE (rel_hr_ves_hr_sac__heeft_sbi_act_._date_deleted IS NULL)
-  WITH NO DATA;
-
-
-ALTER TABLE public.mv_hr_ves_hr_sac__heeft_sbi_act_ OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_ves_is_overgegaan_in_vestiging; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging (
-    id character varying,
-    src_source character varying,
-    src_id character varying,
-    src_volgnummer integer,
-    bronwaarde character varying,
-    derivation character varying,
-    dst_source character varying,
-    dst_id character varying,
-    dst_volgnummer integer,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _last_src_event integer,
-    _last_dst_event integer,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging OWNER TO gobtest;
-
---
--- Name: mv_hr_ves_hr_ves_is_overgegaan_in_vestiging; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
---
-
-CREATE MATERIALIZED VIEW public.mv_hr_ves_hr_ves_is_overgegaan_in_vestiging AS
- SELECT rel_hr_ves_hr_ves_is_overgegaan_in_vestiging._gobid,
-    rel_hr_ves_hr_ves_is_overgegaan_in_vestiging.src_id,
-    rel_hr_ves_hr_ves_is_overgegaan_in_vestiging.dst_id,
-    rel_hr_ves_hr_ves_is_overgegaan_in_vestiging.begin_geldigheid,
-    rel_hr_ves_hr_ves_is_overgegaan_in_vestiging.eind_geldigheid,
-    rel_hr_ves_hr_ves_is_overgegaan_in_vestiging.bronwaarde
-   FROM public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging
-  WHERE (rel_hr_ves_hr_ves_is_overgegaan_in_vestiging._date_deleted IS NULL)
-  WITH NO DATA;
-
-
-ALTER TABLE public.mv_hr_ves_hr_ves_is_overgegaan_in_vestiging OWNER TO gobtest;
+ALTER TABLE public.mv_hr_ves_bag_vot_post_heeft_verblijfsobject OWNER TO gobtest;
 
 --
 -- Name: rel_mbn_mbt_gbd_bbk_ligt_in_gebieden_bouwblok; Type: TABLE; Schema: public; Owner: gobtest
@@ -14785,47 +17690,6 @@ CREATE MATERIALIZED VIEW public.mv_woz_wot_woz_wdt_bestaat_uit_woz_deelobjecten 
 
 
 ALTER TABLE public.mv_woz_wot_woz_wdt_bestaat_uit_woz_deelobjecten OWNER TO gobtest;
-
---
--- Name: nap_peilmerken; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.nap_peilmerken (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    identificatie character varying,
-    hoogte_tov_nap numeric(14,4),
-    jaar integer,
-    omschrijving character varying,
-    windrichting character varying,
-    x_coordinaat_muurvlak integer,
-    y_coordinaat_muurvlak integer,
-    rws_nummer character varying,
-    geometrie public.geometry(Point,28992),
-    vervaldatum date,
-    ligt_in_gebieden_bouwblok jsonb,
-    publiceerbaar boolean,
-    _application character varying,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    _tid character varying,
-    merk_code character varying,
-    merk_omschrijving character varying,
-    status_code integer,
-    status_omschrijving character varying,
-    datum_actueel_tot timestamp without time zone
-);
-
-
-ALTER TABLE public.nap_peilmerken OWNER TO gobtest;
 
 --
 -- Name: nap_peilmerken__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -17415,10 +20279,10 @@ ALTER SEQUENCE public.qa_gebieden_wijken__gobid_seq OWNED BY public.qa_gebieden_
 
 
 --
--- Name: qa_hr_locaties; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: qa_hr_functievervulling; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.qa_hr_locaties (
+CREATE TABLE public.qa_hr_functievervulling (
     meldingnummer character varying,
     code character varying,
     proces character varying,
@@ -17447,13 +20311,13 @@ CREATE TABLE public.qa_hr_locaties (
 );
 
 
-ALTER TABLE public.qa_hr_locaties OWNER TO gobtest;
+ALTER TABLE public.qa_hr_functievervulling OWNER TO gobtest;
 
 --
--- Name: qa_hr_locaties__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: qa_hr_functievervulling__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.qa_hr_locaties__gobid_seq
+CREATE SEQUENCE public.qa_hr_functievervulling__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -17462,13 +20326,13 @@ CREATE SEQUENCE public.qa_hr_locaties__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.qa_hr_locaties__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.qa_hr_functievervulling__gobid_seq OWNER TO gobtest;
 
 --
--- Name: qa_hr_locaties__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: qa_hr_functievervulling__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.qa_hr_locaties__gobid_seq OWNED BY public.qa_hr_locaties._gobid;
+ALTER SEQUENCE public.qa_hr_functievervulling__gobid_seq OWNED BY public.qa_hr_functievervulling._gobid;
 
 
 --
@@ -17529,10 +20393,10 @@ ALTER SEQUENCE public.qa_hr_maatschappelijkeactiviteiten__gobid_seq OWNED BY pub
 
 
 --
--- Name: qa_hr_sbiactiviteiten; Type: TABLE; Schema: public; Owner: gobtest
+-- Name: qa_hr_natuurlijkpersoon; Type: TABLE; Schema: public; Owner: gobtest
 --
 
-CREATE TABLE public.qa_hr_sbiactiviteiten (
+CREATE TABLE public.qa_hr_natuurlijkpersoon (
     meldingnummer character varying,
     code character varying,
     proces character varying,
@@ -17561,13 +20425,13 @@ CREATE TABLE public.qa_hr_sbiactiviteiten (
 );
 
 
-ALTER TABLE public.qa_hr_sbiactiviteiten OWNER TO gobtest;
+ALTER TABLE public.qa_hr_natuurlijkpersoon OWNER TO gobtest;
 
 --
--- Name: qa_hr_sbiactiviteiten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: qa_hr_natuurlijkpersoon__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.qa_hr_sbiactiviteiten__gobid_seq
+CREATE SEQUENCE public.qa_hr_natuurlijkpersoon__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -17576,13 +20440,70 @@ CREATE SEQUENCE public.qa_hr_sbiactiviteiten__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.qa_hr_sbiactiviteiten__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.qa_hr_natuurlijkpersoon__gobid_seq OWNER TO gobtest;
 
 --
--- Name: qa_hr_sbiactiviteiten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: qa_hr_natuurlijkpersoon__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.qa_hr_sbiactiviteiten__gobid_seq OWNED BY public.qa_hr_sbiactiviteiten._gobid;
+ALTER SEQUENCE public.qa_hr_natuurlijkpersoon__gobid_seq OWNED BY public.qa_hr_natuurlijkpersoon._gobid;
+
+
+--
+-- Name: qa_hr_nietnatuurlijkpersoon; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_hr_nietnatuurlijkpersoon (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_hr_nietnatuurlijkpersoon OWNER TO gobtest;
+
+--
+-- Name: qa_hr_nietnatuurlijkpersoon__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_hr_nietnatuurlijkpersoon__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_hr_nietnatuurlijkpersoon__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_hr_nietnatuurlijkpersoon__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_hr_nietnatuurlijkpersoon__gobid_seq OWNED BY public.qa_hr_nietnatuurlijkpersoon._gobid;
 
 
 --
@@ -21673,10 +24594,10 @@ ALTER SEQUENCE public.rel_gbd_wijk_gbd_sdl_ligt_in_stadsdeel__gobid_seq OWNED BY
 
 
 --
--- Name: rel_hr_loc_bag_lps_heeft_ligplaats__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_heeft_ligplaats__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_loc_bag_lps_heeft_ligplaats__gobid_seq
+CREATE SEQUENCE public.rel_hr_mac_bag_lps_heeft_ligplaats__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21685,20 +24606,20 @@ CREATE SEQUENCE public.rel_hr_loc_bag_lps_heeft_ligplaats__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_loc_bag_lps_heeft_ligplaats__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_mac_bag_lps_heeft_ligplaats__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_loc_bag_lps_heeft_ligplaats__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_heeft_ligplaats__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_loc_bag_lps_heeft_ligplaats__gobid_seq OWNED BY public.rel_hr_loc_bag_lps_heeft_ligplaats._gobid;
+ALTER SEQUENCE public.rel_hr_mac_bag_lps_heeft_ligplaats__gobid_seq OWNED BY public.rel_hr_mac_bag_lps_heeft_ligplaats._gobid;
 
 
 --
--- Name: rel_hr_loc_bag_nag_heeft_nummeraanduiding__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_heeft_nummeraanduiding__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_loc_bag_nag_heeft_nummeraanduiding__gobid_seq
+CREATE SEQUENCE public.rel_hr_mac_bag_nag_heeft_nummeraanduiding__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21707,20 +24628,20 @@ CREATE SEQUENCE public.rel_hr_loc_bag_nag_heeft_nummeraanduiding__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_loc_bag_nag_heeft_nummeraanduiding__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_mac_bag_nag_heeft_nummeraanduiding__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_loc_bag_nag_heeft_nummeraanduiding__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_heeft_nummeraanduiding__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_loc_bag_nag_heeft_nummeraanduiding__gobid_seq OWNED BY public.rel_hr_loc_bag_nag_heeft_nummeraanduiding._gobid;
+ALTER SEQUENCE public.rel_hr_mac_bag_nag_heeft_nummeraanduiding__gobid_seq OWNED BY public.rel_hr_mac_bag_nag_heeft_nummeraanduiding._gobid;
 
 
 --
--- Name: rel_hr_loc_bag_sps_heeft_standplaats__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_heeft_standplaats__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_loc_bag_sps_heeft_standplaats__gobid_seq
+CREATE SEQUENCE public.rel_hr_mac_bag_sps_heeft_standplaats__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21729,20 +24650,20 @@ CREATE SEQUENCE public.rel_hr_loc_bag_sps_heeft_standplaats__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_loc_bag_sps_heeft_standplaats__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_mac_bag_sps_heeft_standplaats__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_loc_bag_sps_heeft_standplaats__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_heeft_standplaats__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_loc_bag_sps_heeft_standplaats__gobid_seq OWNED BY public.rel_hr_loc_bag_sps_heeft_standplaats._gobid;
+ALTER SEQUENCE public.rel_hr_mac_bag_sps_heeft_standplaats__gobid_seq OWNED BY public.rel_hr_mac_bag_sps_heeft_standplaats._gobid;
 
 
 --
--- Name: rel_hr_loc_bag_vot_heeft_verblijfsobject__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_heeft_verblijfsobject__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_loc_bag_vot_heeft_verblijfsobject__gobid_seq
+CREATE SEQUENCE public.rel_hr_mac_bag_vot_heeft_verblijfsobject__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21751,20 +24672,20 @@ CREATE SEQUENCE public.rel_hr_loc_bag_vot_heeft_verblijfsobject__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_loc_bag_vot_heeft_verblijfsobject__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_mac_bag_vot_heeft_verblijfsobject__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_loc_bag_vot_heeft_verblijfsobject__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_heeft_verblijfsobject__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_loc_bag_vot_heeft_verblijfsobject__gobid_seq OWNED BY public.rel_hr_loc_bag_vot_heeft_verblijfsobject._gobid;
+ALTER SEQUENCE public.rel_hr_mac_bag_vot_heeft_verblijfsobject__gobid_seq OWNED BY public.rel_hr_mac_bag_vot_heeft_verblijfsobject._gobid;
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_bezoekadres__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_bezoek_heeft_ligplaats__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_mac_hr_loc_heeft_bezoekadres__gobid_seq
+CREATE SEQUENCE public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21773,20 +24694,20 @@ CREATE SEQUENCE public.rel_hr_mac_hr_loc_heeft_bezoekadres__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_mac_hr_loc_heeft_bezoekadres__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_bezoekadres__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_bezoek_heeft_ligplaats__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_mac_hr_loc_heeft_bezoekadres__gobid_seq OWNED BY public.rel_hr_mac_hr_loc_heeft_bezoekadres._gobid;
+ALTER SEQUENCE public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats__gobid_seq OWNED BY public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats._gobid;
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_postadres__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_post_heeft_ligplaats__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_mac_hr_loc_heeft_postadres__gobid_seq
+CREATE SEQUENCE public.rel_hr_ves_bag_lps_post_heeft_ligplaats__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21795,20 +24716,20 @@ CREATE SEQUENCE public.rel_hr_mac_hr_loc_heeft_postadres__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_mac_hr_loc_heeft_postadres__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_lps_post_heeft_ligplaats__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_postadres__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_post_heeft_ligplaats__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_mac_hr_loc_heeft_postadres__gobid_seq OWNED BY public.rel_hr_mac_hr_loc_heeft_postadres._gobid;
+ALTER SEQUENCE public.rel_hr_ves_bag_lps_post_heeft_ligplaats__gobid_seq OWNED BY public.rel_hr_ves_bag_lps_post_heeft_ligplaats._gobid;
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act___gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act___gobid_seq
+CREATE SEQUENCE public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21817,20 +24738,20 @@ CREATE SEQUENCE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act___gob
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act___gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act___gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act___gobid_seq OWNED BY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_._gobid;
+ALTER SEQUENCE public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding__gobid_seq OWNED BY public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding._gobid;
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_post_heeft_nummeraanduiding__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming__gobid_seq
+CREATE SEQUENCE public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21839,20 +24760,20 @@ CREATE SEQUENCE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming__gobid
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_post_heeft_nummeraanduiding__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming__gobid_seq OWNED BY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming._gobid;
+ALTER SEQUENCE public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding__gobid_seq OWNED BY public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding._gobid;
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng___gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_bezoek_heeft_standplaats__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng___gobid_seq
+CREATE SEQUENCE public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21861,20 +24782,20 @@ CREATE SEQUENCE public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng___gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng___gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng___gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_bezoek_heeft_standplaats__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng___gobid_seq OWNED BY public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_._gobid;
+ALTER SEQUENCE public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats__gobid_seq OWNED BY public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats._gobid;
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng___gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_post_heeft_standplaats__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng___gobid_seq
+CREATE SEQUENCE public.rel_hr_ves_bag_sps_post_heeft_standplaats__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21883,20 +24804,20 @@ CREATE SEQUENCE public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng___gobid_
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng___gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_sps_post_heeft_standplaats__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng___gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_post_heeft_standplaats__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng___gobid_seq OWNED BY public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_._gobid;
+ALTER SEQUENCE public.rel_hr_ves_bag_sps_post_heeft_standplaats__gobid_seq OWNED BY public.rel_hr_ves_bag_sps_post_heeft_standplaats._gobid;
 
 
 --
--- Name: rel_hr_mac_hr_ves_heeft_hoofdvestiging__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_mac_hr_ves_heeft_hoofdvestiging__gobid_seq
+CREATE SEQUENCE public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21905,20 +24826,20 @@ CREATE SEQUENCE public.rel_hr_mac_hr_ves_heeft_hoofdvestiging__gobid_seq
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_mac_hr_ves_heeft_hoofdvestiging__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_mac_hr_ves_heeft_hoofdvestiging__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_mac_hr_ves_heeft_hoofdvestiging__gobid_seq OWNED BY public.rel_hr_mac_hr_ves_heeft_hoofdvestiging._gobid;
+ALTER SEQUENCE public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject__gobid_seq OWNED BY public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject._gobid;
 
 
 --
--- Name: rel_hr_sac_hr_mac_heeft_als_maatschappelijkactivitei__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_post_heeft_verblijfsobject__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
-CREATE SEQUENCE public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactivitei__gobid_seq
+CREATE SEQUENCE public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject__gobid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -21927,145 +24848,13 @@ CREATE SEQUENCE public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactivitei__gob
     CACHE 1;
 
 
-ALTER TABLE public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactivitei__gobid_seq OWNER TO gobtest;
+ALTER TABLE public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject__gobid_seq OWNER TO gobtest;
 
 --
--- Name: rel_hr_sac_hr_mac_heeft_als_maatschappelijkactivitei__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_post_heeft_verblijfsobject__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
 --
 
-ALTER SEQUENCE public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactivitei__gobid_seq OWNED BY public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit._gobid;
-
-
---
--- Name: rel_hr_sac_hr_ves_heeft_als_vestiging__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.rel_hr_sac_hr_ves_heeft_als_vestiging__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.rel_hr_sac_hr_ves_heeft_als_vestiging__gobid_seq OWNER TO gobtest;
-
---
--- Name: rel_hr_sac_hr_ves_heeft_als_vestiging__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.rel_hr_sac_hr_ves_heeft_als_vestiging__gobid_seq OWNED BY public.rel_hr_sac_hr_ves_heeft_als_vestiging._gobid;
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_bezoekadres__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.rel_hr_ves_hr_loc_heeft_als_bezoekadres__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.rel_hr_ves_hr_loc_heeft_als_bezoekadres__gobid_seq OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_bezoekadres__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.rel_hr_ves_hr_loc_heeft_als_bezoekadres__gobid_seq OWNED BY public.rel_hr_ves_hr_loc_heeft_als_bezoekadres._gobid;
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_postadres__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.rel_hr_ves_hr_loc_heeft_als_postadres__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.rel_hr_ves_hr_loc_heeft_als_postadres__gobid_seq OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_postadres__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.rel_hr_ves_hr_loc_heeft_als_postadres__gobid_seq OWNED BY public.rel_hr_ves_hr_loc_heeft_als_postadres._gobid;
-
-
---
--- Name: rel_hr_ves_hr_mac_is_een_uitoefening_van__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.rel_hr_ves_hr_mac_is_een_uitoefening_van__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.rel_hr_ves_hr_mac_is_een_uitoefening_van__gobid_seq OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_mac_is_een_uitoefening_van__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.rel_hr_ves_hr_mac_is_een_uitoefening_van__gobid_seq OWNED BY public.rel_hr_ves_hr_mac_is_een_uitoefening_van._gobid;
-
-
---
--- Name: rel_hr_ves_hr_sac__heeft_sbi_act___gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.rel_hr_ves_hr_sac__heeft_sbi_act___gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.rel_hr_ves_hr_sac__heeft_sbi_act___gobid_seq OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_sac__heeft_sbi_act___gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.rel_hr_ves_hr_sac__heeft_sbi_act___gobid_seq OWNED BY public.rel_hr_ves_hr_sac__heeft_sbi_act_._gobid;
-
-
---
--- Name: rel_hr_ves_hr_ves_is_overgegaan_in_vestiging__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
---
-
-CREATE SEQUENCE public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging__gobid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging__gobid_seq OWNER TO gobtest;
-
---
--- Name: rel_hr_ves_hr_ves_is_overgegaan_in_vestiging__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
---
-
-ALTER SEQUENCE public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging__gobid_seq OWNED BY public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging._gobid;
+ALTER SEQUENCE public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject__gobid_seq OWNED BY public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject._gobid;
 
 
 --
@@ -22861,6 +25650,65 @@ ALTER SEQUENCE public.rel_woz_wot_brk2_kot_bevat_brk_kadastraalobject__gobid_seq
 
 
 --
+-- Name: rel_woz_wot_brk2_kot_bevat_kadastraalobject; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_woz_wot_brk2_kot_bevat_kadastraalobject (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_woz_wot_brk2_kot_bevat_kadastraalobject OWNER TO gobtest;
+
+--
+-- Name: rel_woz_wot_brk2_kot_bevat_kadastraalobject__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_woz_wot_brk2_kot_bevat_kadastraalobject__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_woz_wot_brk2_kot_bevat_kadastraalobject__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_woz_wot_brk2_kot_bevat_kadastraalobject__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_woz_wot_brk2_kot_bevat_kadastraalobject__gobid_seq OWNED BY public.rel_woz_wot_brk2_kot_bevat_kadastraalobject._gobid;
+
+
+--
 -- Name: rel_woz_wot_woz_wdt_bestaat_uit_woz_deelobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -22881,37 +25729,6 @@ ALTER TABLE public.rel_woz_wot_woz_wdt_bestaat_uit_woz_deelobjecten__gobid_seq O
 
 ALTER SEQUENCE public.rel_woz_wot_woz_wdt_bestaat_uit_woz_deelobjecten__gobid_seq OWNED BY public.rel_woz_wot_woz_wdt_bestaat_uit_woz_deelobjecten._gobid;
 
-
---
--- Name: test_catalogue_rel_collapsed_a; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_collapsed_a (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    reference jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_collapsed_a OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_collapsed_a__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -22936,36 +25753,6 @@ ALTER SEQUENCE public.test_catalogue_rel_collapsed_a__gobid_seq OWNED BY public.
 
 
 --
--- Name: test_catalogue_rel_collapsed_b; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_collapsed_b (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_collapsed_b OWNER TO gobtest;
-
---
 -- Name: test_catalogue_rel_collapsed_b__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -22986,37 +25773,6 @@ ALTER TABLE public.test_catalogue_rel_collapsed_b__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.test_catalogue_rel_collapsed_b__gobid_seq OWNED BY public.test_catalogue_rel_collapsed_b._gobid;
 
-
---
--- Name: test_catalogue_rel_multiple_allowed_dst; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_multiple_allowed_dst (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    referenced_attribute character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_multiple_allowed_dst OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_multiple_allowed_dst__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -23041,38 +25797,6 @@ ALTER SEQUENCE public.test_catalogue_rel_multiple_allowed_dst__gobid_seq OWNED B
 
 
 --
--- Name: test_catalogue_rel_multiple_allowed_multisource_src; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_multiple_allowed_multisource_src (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    reference jsonb,
-    manyreference jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_multiple_allowed_multisource_src OWNER TO gobtest;
-
---
 -- Name: test_catalogue_rel_multiple_allowed_multisource_src__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -23093,38 +25817,6 @@ ALTER TABLE public.test_catalogue_rel_multiple_allowed_multisource_src__gobid_se
 
 ALTER SEQUENCE public.test_catalogue_rel_multiple_allowed_multisource_src__gobid_seq OWNED BY public.test_catalogue_rel_multiple_allowed_multisource_src._gobid;
 
-
---
--- Name: test_catalogue_rel_multiple_allowed_src; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_multiple_allowed_src (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    reference jsonb,
-    manyreference jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_multiple_allowed_src OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_multiple_allowed_src__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -23149,40 +25841,6 @@ ALTER SEQUENCE public.test_catalogue_rel_multiple_allowed_src__gobid_seq OWNED B
 
 
 --
--- Name: test_catalogue_rel_test_entity_a; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_test_entity_a (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    ref_to_c jsonb,
-    manyref_to_c jsonb,
-    ref_to_d jsonb,
-    manyref_to_d jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_test_entity_a OWNER TO gobtest;
-
---
 -- Name: test_catalogue_rel_test_entity_a__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -23203,36 +25861,6 @@ ALTER TABLE public.test_catalogue_rel_test_entity_a__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.test_catalogue_rel_test_entity_a__gobid_seq OWNED BY public.test_catalogue_rel_test_entity_a._gobid;
 
-
---
--- Name: test_catalogue_rel_test_entity_b; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_test_entity_b (
-    id integer,
-    identificatie character varying,
-    ref_to_c jsonb,
-    manyref_to_c jsonb,
-    ref_to_d jsonb,
-    manyref_to_d jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_test_entity_b OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_test_entity_b__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -23257,36 +25885,6 @@ ALTER SEQUENCE public.test_catalogue_rel_test_entity_b__gobid_seq OWNED BY publi
 
 
 --
--- Name: test_catalogue_rel_test_entity_c; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_test_entity_c (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    id integer,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_test_entity_c OWNER TO gobtest;
-
---
 -- Name: test_catalogue_rel_test_entity_c__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -23307,32 +25905,6 @@ ALTER TABLE public.test_catalogue_rel_test_entity_c__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.test_catalogue_rel_test_entity_c__gobid_seq OWNED BY public.test_catalogue_rel_test_entity_c._gobid;
 
-
---
--- Name: test_catalogue_rel_test_entity_d; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_rel_test_entity_d (
-    id integer,
-    identificatie character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_rel_test_entity_d OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_rel_test_entity_d__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -23357,38 +25929,6 @@ ALTER SEQUENCE public.test_catalogue_rel_test_entity_d__gobid_seq OWNED BY publi
 
 
 --
--- Name: test_catalogue_secure; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_secure (
-    id character varying,
-    secure_string character varying,
-    secure_number character varying,
-    secure_datetime character varying,
-    string character varying,
-    number numeric,
-    datetime timestamp without time zone,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    secure_reference jsonb,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_secure OWNER TO gobtest;
-
---
 -- Name: test_catalogue_secure__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -23409,45 +25949,6 @@ ALTER TABLE public.test_catalogue_secure__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.test_catalogue_secure__gobid_seq OWNED BY public.test_catalogue_secure._gobid;
 
-
---
--- Name: test_catalogue_test_entity; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_test_entity (
-    _gobid integer NOT NULL,
-    _id character varying,
-    _source character varying,
-    _source_id character varying,
-    _last_event integer,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    string character varying,
-    "character" character(1),
-    "decimal" numeric,
-    "integer" integer,
-    point public.geometry(Point,28992),
-    date date,
-    "boolean" boolean,
-    _application character varying,
-    json jsonb,
-    datetime timestamp without time zone,
-    geometry public.geometry(Geometry,28992),
-    manyreference jsonb,
-    polygon public.geometry(Polygon,28992),
-    reference jsonb,
-    _hash character varying,
-    _expiration_date timestamp without time zone,
-    incomplete_date jsonb,
-    biginteger bigint,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_test_entity OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_test_entity__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -23472,33 +25973,6 @@ ALTER SEQUENCE public.test_catalogue_test_entity__gobid_seq OWNED BY public.test
 
 
 --
--- Name: test_catalogue_test_entity_autoid; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_test_entity_autoid (
-    identificatie character varying,
-    code character varying,
-    autoid character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_test_entity_autoid OWNER TO gobtest;
-
---
 -- Name: test_catalogue_test_entity_autoid__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -23519,37 +25993,6 @@ ALTER TABLE public.test_catalogue_test_entity_autoid__gobid_seq OWNER TO gobtest
 
 ALTER SEQUENCE public.test_catalogue_test_entity_autoid__gobid_seq OWNED BY public.test_catalogue_test_entity_autoid._gobid;
 
-
---
--- Name: test_catalogue_test_entity_autoid_states; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_test_entity_autoid_states (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    code character varying,
-    autoid character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_test_entity_autoid_states OWNER TO gobtest;
 
 --
 -- Name: test_catalogue_test_entity_autoid_states__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -23574,31 +26017,6 @@ ALTER SEQUENCE public.test_catalogue_test_entity_autoid_states__gobid_seq OWNED 
 
 
 --
--- Name: test_catalogue_test_entity_reference; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.test_catalogue_test_entity_reference (
-    string character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.test_catalogue_test_entity_reference OWNER TO gobtest;
-
---
 -- Name: test_catalogue_test_entity_reference__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -23619,46 +26037,6 @@ ALTER TABLE public.test_catalogue_test_entity_reference__gobid_seq OWNER TO gobt
 
 ALTER SEQUENCE public.test_catalogue_test_entity_reference__gobid_seq OWNED BY public.test_catalogue_test_entity_reference._gobid;
 
-
---
--- Name: wkpb_beperkingen; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.wkpb_beperkingen (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    identificatie character varying,
-    beperking jsonb,
-    begin_geldigheid timestamp without time zone,
-    eind_geldigheid timestamp without time zone,
-    belast_kadastrale_objecten jsonb,
-    documentnummer character varying,
-    heeft_dossier jsonb,
-    datum_bekendmaking date,
-    aard jsonb,
-    orgaan jsonb,
-    persoonsgegevens_afschermen boolean,
-    heeft_voorgaande_beperking jsonb,
-    status jsonb,
-    geometrie public.geometry(Geometry,28992),
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.wkpb_beperkingen OWNER TO gobtest;
 
 --
 -- Name: wkpb_beperkingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -23683,32 +26061,6 @@ ALTER SEQUENCE public.wkpb_beperkingen__gobid_seq OWNED BY public.wkpb_beperking
 
 
 --
--- Name: wkpb_brondocumenten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.wkpb_brondocumenten (
-    documentnummer character varying,
-    registratiedatum timestamp without time zone,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.wkpb_brondocumenten OWNER TO gobtest;
-
---
 -- Name: wkpb_brondocumenten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -23729,32 +26081,6 @@ ALTER TABLE public.wkpb_brondocumenten__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.wkpb_brondocumenten__gobid_seq OWNED BY public.wkpb_brondocumenten._gobid;
 
-
---
--- Name: wkpb_dossiers; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.wkpb_dossiers (
-    dossier character varying,
-    heeft_brondocumenten jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.wkpb_dossiers OWNER TO gobtest;
 
 --
 -- Name: wkpb_dossiers__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -23779,42 +26105,6 @@ ALTER SEQUENCE public.wkpb_dossiers__gobid_seq OWNED BY public.wkpb_dossiers._go
 
 
 --
--- Name: woz_deelobjecten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.woz_deelobjecten (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    begin_geldigheid date,
-    eind_geldigheid date,
-    wozdeelobjectnummer character varying,
-    deelnummer character varying,
-    wozobjectnummer character varying,
-    soort_object jsonb,
-    is_verbonden_met_bag_verblijfsobject jsonb,
-    is_verbonden_met_bag_ligplaats jsonb,
-    is_verbonden_met_bag_standplaats jsonb,
-    heeft_bag_pand jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.woz_deelobjecten OWNER TO gobtest;
-
---
 -- Name: woz_deelobjecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -23835,39 +26125,6 @@ ALTER TABLE public.woz_deelobjecten__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.woz_deelobjecten__gobid_seq OWNED BY public.woz_deelobjecten._gobid;
 
-
---
--- Name: woz_objecten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.woz_objecten (
-    volgnummer integer,
-    registratiedatum timestamp without time zone,
-    begin_geldigheid date,
-    eind_geldigheid date,
-    wozobjectnummer character varying,
-    gebruik jsonb,
-    soort_object jsonb,
-    bevat_brk_kadastraalobject jsonb,
-    bestaat_uit_woz_deelobjecten jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.woz_objecten OWNER TO gobtest;
 
 --
 -- Name: woz_objecten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -24214,10 +26471,10 @@ ALTER TABLE ONLY public.gebieden_wijken ALTER COLUMN _gobid SET DEFAULT nextval(
 
 
 --
--- Name: hr_locaties _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: hr_functievervulling _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.hr_locaties ALTER COLUMN _gobid SET DEFAULT nextval('public.hr_locaties__gobid_seq'::regclass);
+ALTER TABLE ONLY public.hr_functievervulling ALTER COLUMN _gobid SET DEFAULT nextval('public.hr_functievervulling__gobid_seq'::regclass);
 
 
 --
@@ -24228,10 +26485,17 @@ ALTER TABLE ONLY public.hr_maatschappelijkeactiviteiten ALTER COLUMN _gobid SET 
 
 
 --
--- Name: hr_sbiactiviteiten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: hr_natuurlijkpersoon _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.hr_sbiactiviteiten ALTER COLUMN _gobid SET DEFAULT nextval('public.hr_sbiactiviteiten__gobid_seq'::regclass);
+ALTER TABLE ONLY public.hr_natuurlijkpersoon ALTER COLUMN _gobid SET DEFAULT nextval('public.hr_natuurlijkpersoon__gobid_seq'::regclass);
+
+
+--
+-- Name: hr_nietnatuurlijkpersoon _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.hr_nietnatuurlijkpersoon ALTER COLUMN _gobid SET DEFAULT nextval('public.hr_nietnatuurlijkpersoon__gobid_seq'::regclass);
 
 
 --
@@ -24592,10 +26856,10 @@ ALTER TABLE ONLY public.qa_gebieden_wijken ALTER COLUMN _gobid SET DEFAULT nextv
 
 
 --
--- Name: qa_hr_locaties _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: qa_hr_functievervulling _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.qa_hr_locaties ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_hr_locaties__gobid_seq'::regclass);
+ALTER TABLE ONLY public.qa_hr_functievervulling ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_hr_functievervulling__gobid_seq'::regclass);
 
 
 --
@@ -24606,10 +26870,17 @@ ALTER TABLE ONLY public.qa_hr_maatschappelijkeactiviteiten ALTER COLUMN _gobid S
 
 
 --
--- Name: qa_hr_sbiactiviteiten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: qa_hr_natuurlijkpersoon _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.qa_hr_sbiactiviteiten ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_hr_sbiactiviteiten__gobid_seq'::regclass);
+ALTER TABLE ONLY public.qa_hr_natuurlijkpersoon ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_hr_natuurlijkpersoon__gobid_seq'::regclass);
+
+
+--
+-- Name: qa_hr_nietnatuurlijkpersoon _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_hr_nietnatuurlijkpersoon ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_hr_nietnatuurlijkpersoon__gobid_seq'::regclass);
 
 
 --
@@ -25635,129 +27906,87 @@ ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ALTER CO
 
 
 --
--- Name: rel_hr_loc_bag_lps_heeft_ligplaats _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_heeft_ligplaats _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_lps_heeft_ligplaats ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_loc_bag_lps_heeft_ligplaats__gobid_seq'::regclass);
-
-
---
--- Name: rel_hr_loc_bag_nag_heeft_nummeraanduiding _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_loc_bag_nag_heeft_nummeraanduiding ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_loc_bag_nag_heeft_nummeraanduiding__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_mac_bag_lps_heeft_ligplaats ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_bag_lps_heeft_ligplaats__gobid_seq'::regclass);
 
 
 --
--- Name: rel_hr_loc_bag_sps_heeft_standplaats _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_heeft_nummeraanduiding _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_sps_heeft_standplaats ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_loc_bag_sps_heeft_standplaats__gobid_seq'::regclass);
-
-
---
--- Name: rel_hr_loc_bag_vot_heeft_verblijfsobject _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_loc_bag_vot_heeft_verblijfsobject ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_loc_bag_vot_heeft_verblijfsobject__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_mac_bag_nag_heeft_nummeraanduiding ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_bag_nag_heeft_nummeraanduiding__gobid_seq'::regclass);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_bezoekadres _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_heeft_standplaats _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_bezoekadres ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_hr_loc_heeft_bezoekadres__gobid_seq'::regclass);
-
-
---
--- Name: rel_hr_mac_hr_loc_heeft_postadres _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_postadres ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_hr_loc_heeft_postadres__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_mac_bag_sps_heeft_standplaats ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_bag_sps_heeft_standplaats__gobid_seq'::regclass);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_heeft_verblijfsobject _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act___gobid_seq'::regclass);
-
-
---
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_mac_bag_vot_heeft_verblijfsobject ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_bag_vot_heeft_verblijfsobject__gobid_seq'::regclass);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_bezoek_heeft_ligplaats _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng___gobid_seq'::regclass);
-
-
---
--- Name: rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng___gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats__gobid_seq'::regclass);
 
 
 --
--- Name: rel_hr_mac_hr_ves_heeft_hoofdvestiging _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_post_heeft_ligplaats _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves_heeft_hoofdvestiging ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_mac_hr_ves_heeft_hoofdvestiging__gobid_seq'::regclass);
-
-
---
--- Name: rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactivitei__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_post_heeft_ligplaats ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_bag_lps_post_heeft_ligplaats__gobid_seq'::regclass);
 
 
 --
--- Name: rel_hr_sac_hr_ves_heeft_als_vestiging _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_sac_hr_ves_heeft_als_vestiging ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_sac_hr_ves_heeft_als_vestiging__gobid_seq'::regclass);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_bezoekadres _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_bezoekadres ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_hr_loc_heeft_als_bezoekadres__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding__gobid_seq'::regclass);
 
 
 --
--- Name: rel_hr_ves_hr_loc_heeft_als_postadres _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_post_heeft_nummeraanduiding _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_postadres ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_hr_loc_heeft_als_postadres__gobid_seq'::regclass);
-
-
---
--- Name: rel_hr_ves_hr_mac_is_een_uitoefening_van _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_mac_is_een_uitoefening_van ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_hr_mac_is_een_uitoefening_van__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding__gobid_seq'::regclass);
 
 
 --
--- Name: rel_hr_ves_hr_sac__heeft_sbi_act_ _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_bezoek_heeft_standplaats _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_ves_hr_sac__heeft_sbi_act_ ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_hr_sac__heeft_sbi_act___gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats__gobid_seq'::regclass);
 
 
 --
--- Name: rel_hr_ves_hr_ves_is_overgegaan_in_vestiging _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_post_heeft_standplaats _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging__gobid_seq'::regclass);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_post_heeft_standplaats ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_bag_sps_post_heeft_standplaats__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_hr_ves_bag_vot_post_heeft_verblijfsobject _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject__gobid_seq'::regclass);
 
 
 --
@@ -26010,6 +28239,13 @@ ALTER TABLE ONLY public.rel_woz_wdt_bag_vot__is_vrbdn_met_bag_vbo_ ALTER COLUMN 
 --
 
 ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_brk_kadastraalobject ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_woz_wot_brk2_kot_bevat_brk_kadastraalobject__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_woz_wot_brk2_kot_bevat_kadastraalobject _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_kadastraalobject ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_woz_wot_brk2_kot_bevat_kadastraalobject__gobid_seq'::regclass);
 
 
 --
@@ -27673,27 +29909,27 @@ ALTER TABLE ONLY public.gebieden_wijken
 
 
 --
--- Name: hr_locaties hr_locaties__id_volgnummer_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: hr_functievervulling hr_functievervulling__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.hr_locaties
-    ADD CONSTRAINT hr_locaties__id_volgnummer_key UNIQUE (_id, volgnummer);
-
-
---
--- Name: hr_locaties hr_locaties__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.hr_locaties
-    ADD CONSTRAINT hr_locaties__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.hr_functievervulling
+    ADD CONSTRAINT hr_functievervulling__id_key UNIQUE (_id);
 
 
 --
--- Name: hr_locaties hr_locaties_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: hr_functievervulling hr_functievervulling__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.hr_locaties
-    ADD CONSTRAINT hr_locaties_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.hr_functievervulling
+    ADD CONSTRAINT hr_functievervulling__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: hr_functievervulling hr_functievervulling_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.hr_functievervulling
+    ADD CONSTRAINT hr_functievervulling_pkey PRIMARY KEY (_gobid);
 
 
 --
@@ -27721,27 +29957,51 @@ ALTER TABLE ONLY public.hr_maatschappelijkeactiviteiten
 
 
 --
--- Name: hr_sbiactiviteiten hr_sbiactiviteiten__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: hr_natuurlijkpersoon hr_natuurlijkpersoon__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.hr_sbiactiviteiten
-    ADD CONSTRAINT hr_sbiactiviteiten__id_key UNIQUE (_id);
-
-
---
--- Name: hr_sbiactiviteiten hr_sbiactiviteiten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.hr_sbiactiviteiten
-    ADD CONSTRAINT hr_sbiactiviteiten__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.hr_natuurlijkpersoon
+    ADD CONSTRAINT hr_natuurlijkpersoon__id_key UNIQUE (_id);
 
 
 --
--- Name: hr_sbiactiviteiten hr_sbiactiviteiten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: hr_natuurlijkpersoon hr_natuurlijkpersoon__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.hr_sbiactiviteiten
-    ADD CONSTRAINT hr_sbiactiviteiten_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.hr_natuurlijkpersoon
+    ADD CONSTRAINT hr_natuurlijkpersoon__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: hr_natuurlijkpersoon hr_natuurlijkpersoon_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.hr_natuurlijkpersoon
+    ADD CONSTRAINT hr_natuurlijkpersoon_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: hr_nietnatuurlijkpersoon hr_nietnatuurlijkpersoon__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.hr_nietnatuurlijkpersoon
+    ADD CONSTRAINT hr_nietnatuurlijkpersoon__id_key UNIQUE (_id);
+
+
+--
+-- Name: hr_nietnatuurlijkpersoon hr_nietnatuurlijkpersoon__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.hr_nietnatuurlijkpersoon
+    ADD CONSTRAINT hr_nietnatuurlijkpersoon__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: hr_nietnatuurlijkpersoon hr_nietnatuurlijkpersoon_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.hr_nietnatuurlijkpersoon
+    ADD CONSTRAINT hr_nietnatuurlijkpersoon_pkey PRIMARY KEY (_gobid);
 
 
 --
@@ -28969,27 +31229,27 @@ ALTER TABLE ONLY public.qa_gebieden_wijken
 
 
 --
--- Name: qa_hr_locaties qa_hr_locaties__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: qa_hr_functievervulling qa_hr_functievervulling__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.qa_hr_locaties
-    ADD CONSTRAINT qa_hr_locaties__id_key UNIQUE (_id);
-
-
---
--- Name: qa_hr_locaties qa_hr_locaties__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.qa_hr_locaties
-    ADD CONSTRAINT qa_hr_locaties__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.qa_hr_functievervulling
+    ADD CONSTRAINT qa_hr_functievervulling__id_key UNIQUE (_id);
 
 
 --
--- Name: qa_hr_locaties qa_hr_locaties_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: qa_hr_functievervulling qa_hr_functievervulling__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.qa_hr_locaties
-    ADD CONSTRAINT qa_hr_locaties_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.qa_hr_functievervulling
+    ADD CONSTRAINT qa_hr_functievervulling__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_hr_functievervulling qa_hr_functievervulling_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_hr_functievervulling
+    ADD CONSTRAINT qa_hr_functievervulling_pkey PRIMARY KEY (_gobid);
 
 
 --
@@ -29017,27 +31277,51 @@ ALTER TABLE ONLY public.qa_hr_maatschappelijkeactiviteiten
 
 
 --
--- Name: qa_hr_sbiactiviteiten qa_hr_sbiactiviteiten__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: qa_hr_natuurlijkpersoon qa_hr_natuurlijkpersoon__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.qa_hr_sbiactiviteiten
-    ADD CONSTRAINT qa_hr_sbiactiviteiten__id_key UNIQUE (_id);
-
-
---
--- Name: qa_hr_sbiactiviteiten qa_hr_sbiactiviteiten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.qa_hr_sbiactiviteiten
-    ADD CONSTRAINT qa_hr_sbiactiviteiten__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.qa_hr_natuurlijkpersoon
+    ADD CONSTRAINT qa_hr_natuurlijkpersoon__id_key UNIQUE (_id);
 
 
 --
--- Name: qa_hr_sbiactiviteiten qa_hr_sbiactiviteiten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: qa_hr_natuurlijkpersoon qa_hr_natuurlijkpersoon__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.qa_hr_sbiactiviteiten
-    ADD CONSTRAINT qa_hr_sbiactiviteiten_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.qa_hr_natuurlijkpersoon
+    ADD CONSTRAINT qa_hr_natuurlijkpersoon__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_hr_natuurlijkpersoon qa_hr_natuurlijkpersoon_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_hr_natuurlijkpersoon
+    ADD CONSTRAINT qa_hr_natuurlijkpersoon_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: qa_hr_nietnatuurlijkpersoon qa_hr_nietnatuurlijkpersoon__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_hr_nietnatuurlijkpersoon
+    ADD CONSTRAINT qa_hr_nietnatuurlijkpersoon__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_hr_nietnatuurlijkpersoon qa_hr_nietnatuurlijkpersoon__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_hr_nietnatuurlijkpersoon
+    ADD CONSTRAINT qa_hr_nietnatuurlijkpersoon__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_hr_nietnatuurlijkpersoon qa_hr_nietnatuurlijkpersoon_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_hr_nietnatuurlijkpersoon
+    ADD CONSTRAINT qa_hr_nietnatuurlijkpersoon_pkey PRIMARY KEY (_gobid);
 
 
 --
@@ -32545,435 +34829,291 @@ ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel
 
 
 --
--- Name: rel_hr_loc_bag_lps_heeft_ligplaats rel_hr_loc_bag_lps_heeft_ligplaats__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_heeft_ligplaats rel_hr_mac_bag_lps_heeft_ligplaats__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_lps_heeft_ligplaats
-    ADD CONSTRAINT rel_hr_loc_bag_lps_heeft_ligplaats__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_mac_bag_lps_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_mac_bag_lps_heeft_ligplaats__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_loc_bag_lps_heeft_ligplaats rel_hr_loc_bag_lps_heeft_ligplaats_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_heeft_ligplaats rel_hr_mac_bag_lps_heeft_ligplaats_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_lps_heeft_ligplaats
-    ADD CONSTRAINT rel_hr_loc_bag_lps_heeft_ligplaats_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_mac_bag_lps_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_mac_bag_lps_heeft_ligplaats_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_loc_bag_lps_heeft_ligplaats rel_hr_loc_bag_lps_heeft_ligplaats_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_heeft_ligplaats rel_hr_mac_bag_lps_heeft_ligplaats_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_lps_heeft_ligplaats
-    ADD CONSTRAINT rel_hr_loc_bag_lps_heeft_ligplaats_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_mac_bag_lps_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_mac_bag_lps_heeft_ligplaats_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_loc_bag_nag_heeft_nummeraanduiding rel_hr_loc_bag_nag_heeft_nummeraanduiding__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_heeft_nummeraanduiding rel_hr_mac_bag_nag_heeft_nummeraanduiding__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_nag_heeft_nummeraanduiding
-    ADD CONSTRAINT rel_hr_loc_bag_nag_heeft_nummeraanduiding__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_mac_bag_nag_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_mac_bag_nag_heeft_nummeraanduiding__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_loc_bag_nag_heeft_nummeraanduiding rel_hr_loc_bag_nag_heeft_nummeraanduiding_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_heeft_nummeraanduiding rel_hr_mac_bag_nag_heeft_nummeraanduiding_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_nag_heeft_nummeraanduiding
-    ADD CONSTRAINT rel_hr_loc_bag_nag_heeft_nummeraanduiding_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_mac_bag_nag_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_mac_bag_nag_heeft_nummeraanduiding_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_loc_bag_nag_heeft_nummeraanduiding rel_hr_loc_bag_nag_heeft_nummeraanduiding_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_heeft_nummeraanduiding rel_hr_mac_bag_nag_heeft_nummeraanduiding_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_nag_heeft_nummeraanduiding
-    ADD CONSTRAINT rel_hr_loc_bag_nag_heeft_nummeraanduiding_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_mac_bag_nag_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_mac_bag_nag_heeft_nummeraanduiding_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_loc_bag_sps_heeft_standplaats rel_hr_loc_bag_sps_heeft_standplaats__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_heeft_standplaats rel_hr_mac_bag_sps_heeft_standplaats__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_sps_heeft_standplaats
-    ADD CONSTRAINT rel_hr_loc_bag_sps_heeft_standplaats__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_mac_bag_sps_heeft_standplaats
+    ADD CONSTRAINT rel_hr_mac_bag_sps_heeft_standplaats__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_loc_bag_sps_heeft_standplaats rel_hr_loc_bag_sps_heeft_standplaats_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_heeft_standplaats rel_hr_mac_bag_sps_heeft_standplaats_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_sps_heeft_standplaats
-    ADD CONSTRAINT rel_hr_loc_bag_sps_heeft_standplaats_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_mac_bag_sps_heeft_standplaats
+    ADD CONSTRAINT rel_hr_mac_bag_sps_heeft_standplaats_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_loc_bag_sps_heeft_standplaats rel_hr_loc_bag_sps_heeft_standplaats_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_heeft_standplaats rel_hr_mac_bag_sps_heeft_standplaats_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_sps_heeft_standplaats
-    ADD CONSTRAINT rel_hr_loc_bag_sps_heeft_standplaats_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_mac_bag_sps_heeft_standplaats
+    ADD CONSTRAINT rel_hr_mac_bag_sps_heeft_standplaats_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_loc_bag_vot_heeft_verblijfsobject rel_hr_loc_bag_vot_heeft_verblijfsobject__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_heeft_verblijfsobject rel_hr_mac_bag_vot_heeft_verblijfsobject__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_vot_heeft_verblijfsobject
-    ADD CONSTRAINT rel_hr_loc_bag_vot_heeft_verblijfsobject__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_mac_bag_vot_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_mac_bag_vot_heeft_verblijfsobject__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_loc_bag_vot_heeft_verblijfsobject rel_hr_loc_bag_vot_heeft_verblijfsobject_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_heeft_verblijfsobject rel_hr_mac_bag_vot_heeft_verblijfsobject_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_vot_heeft_verblijfsobject
-    ADD CONSTRAINT rel_hr_loc_bag_vot_heeft_verblijfsobject_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_mac_bag_vot_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_mac_bag_vot_heeft_verblijfsobject_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_loc_bag_vot_heeft_verblijfsobject rel_hr_loc_bag_vot_heeft_verblijfsobject_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_heeft_verblijfsobject rel_hr_mac_bag_vot_heeft_verblijfsobject_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_vot_heeft_verblijfsobject
-    ADD CONSTRAINT rel_hr_loc_bag_vot_heeft_verblijfsobject_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_mac_bag_vot_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_mac_bag_vot_heeft_verblijfsobject_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_bezoekadres rel_hr_mac_hr_loc_heeft_bezoekadres__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_bezoek_heeft_ligplaats rel_hr_ves_bag_lps_bezoek_heeft_ligplaats__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_bezoekadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_bezoekadres__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_bezoek_heeft_ligplaats__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_bezoekadres rel_hr_mac_hr_loc_heeft_bezoekadres_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_bezoek_heeft_ligplaats rel_hr_ves_bag_lps_bezoek_heeft_ligplaats_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_bezoekadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_bezoekadres_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_bezoek_heeft_ligplaats_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_bezoekadres rel_hr_mac_hr_loc_heeft_bezoekadres_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_bezoek_heeft_ligplaats rel_hr_ves_bag_lps_bezoek_heeft_ligplaats_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_bezoekadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_bezoekadres_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_bezoek_heeft_ligplaats_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_postadres rel_hr_mac_hr_loc_heeft_postadres__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_post_heeft_ligplaats rel_hr_ves_bag_lps_post_heeft_ligplaats__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_postadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_postadres__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_post_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_post_heeft_ligplaats__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_postadres rel_hr_mac_hr_loc_heeft_postadres_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_post_heeft_ligplaats rel_hr_ves_bag_lps_post_heeft_ligplaats_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_postadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_postadres_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_post_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_post_heeft_ligplaats_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_postadres rel_hr_mac_hr_loc_heeft_postadres_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_post_heeft_ligplaats rel_hr_ves_bag_lps_post_heeft_ligplaats_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_postadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_postadres_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_post_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_post_heeft_ligplaats_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act___tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act___tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act__pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act__pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act__uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act__uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_post_heeft_nummeraanduiding rel_hr_ves_bag_nag_post_heeft_nummeraanduiding__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_post_heeft_nummeraanduiding__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_post_heeft_nummeraanduiding rel_hr_ves_bag_nag_post_heeft_nummeraanduiding_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_post_heeft_nummeraanduiding_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_post_heeft_nummeraanduiding rel_hr_ves_bag_nag_post_heeft_nummeraanduiding_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_post_heeft_nummeraanduiding_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng___tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_bezoek_heeft_standplaats rel_hr_ves_bag_sps_bezoek_heeft_standplaats__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng___tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_bezoek_heeft_standplaats__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng__pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_bezoek_heeft_standplaats rel_hr_ves_bag_sps_bezoek_heeft_standplaats_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng__pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_bezoek_heeft_standplaats_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng__uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_bezoek_heeft_standplaats rel_hr_ves_bag_sps_bezoek_heeft_standplaats_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng__uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_bezoek_heeft_standplaats_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng___tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_post_heeft_standplaats rel_hr_ves_bag_sps_post_heeft_standplaats__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng___tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_post_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_post_heeft_standplaats__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng__pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_post_heeft_standplaats rel_hr_ves_bag_sps_post_heeft_standplaats_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng__pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_post_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_post_heeft_standplaats_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng__uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_post_heeft_standplaats rel_hr_ves_bag_sps_post_heeft_standplaats_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng__uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_post_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_post_heeft_standplaats_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves_heeft_hoofdvestiging rel_hr_mac_hr_ves_heeft_hoofdvestiging__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves_heeft_hoofdvestiging
-    ADD CONSTRAINT rel_hr_mac_hr_ves_heeft_hoofdvestiging__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_mac_hr_ves_heeft_hoofdvestiging rel_hr_mac_hr_ves_heeft_hoofdvestiging_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves_heeft_hoofdvestiging
-    ADD CONSTRAINT rel_hr_mac_hr_ves_heeft_hoofdvestiging_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_ves_heeft_hoofdvestiging rel_hr_mac_hr_ves_heeft_hoofdvestiging_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves_heeft_hoofdvestiging
-    ADD CONSTRAINT rel_hr_mac_hr_ves_heeft_hoofdvestiging_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject_uniq UNIQUE (_source_id);
 
 
 --
--- Name: rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_post_heeft_verblijfsobject rel_hr_ves_bag_vot_post_heeft_verblijfsobject__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit
-    ADD CONSTRAINT rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit__tid_key UNIQUE (_tid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_post_heeft_verblijfsobject__tid_key UNIQUE (_tid);
 
 
 --
--- Name: rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_post_heeft_verblijfsobject rel_hr_ves_bag_vot_post_heeft_verblijfsobject_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit
-    ADD CONSTRAINT rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit_pkey PRIMARY KEY (_gobid);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_post_heeft_verblijfsobject_pkey PRIMARY KEY (_gobid);
 
 
 --
--- Name: rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_post_heeft_verblijfsobject rel_hr_ves_bag_vot_post_heeft_verblijfsobject_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit
-    ADD CONSTRAINT rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit_uniq UNIQUE (_source_id);
-
-
---
--- Name: rel_hr_sac_hr_ves_heeft_als_vestiging rel_hr_sac_hr_ves_heeft_als_vestiging__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_sac_hr_ves_heeft_als_vestiging
-    ADD CONSTRAINT rel_hr_sac_hr_ves_heeft_als_vestiging__tid_key UNIQUE (_tid);
-
-
---
--- Name: rel_hr_sac_hr_ves_heeft_als_vestiging rel_hr_sac_hr_ves_heeft_als_vestiging_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_sac_hr_ves_heeft_als_vestiging
-    ADD CONSTRAINT rel_hr_sac_hr_ves_heeft_als_vestiging_pkey PRIMARY KEY (_gobid);
-
-
---
--- Name: rel_hr_sac_hr_ves_heeft_als_vestiging rel_hr_sac_hr_ves_heeft_als_vestiging_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_sac_hr_ves_heeft_als_vestiging
-    ADD CONSTRAINT rel_hr_sac_hr_ves_heeft_als_vestiging_uniq UNIQUE (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_bezoekadres rel_hr_ves_hr_loc_heeft_als_bezoekadres__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_bezoekadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_bezoekadres__tid_key UNIQUE (_tid);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_bezoekadres rel_hr_ves_hr_loc_heeft_als_bezoekadres_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_bezoekadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_bezoekadres_pkey PRIMARY KEY (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_bezoekadres rel_hr_ves_hr_loc_heeft_als_bezoekadres_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_bezoekadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_bezoekadres_uniq UNIQUE (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_postadres rel_hr_ves_hr_loc_heeft_als_postadres__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_postadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_postadres__tid_key UNIQUE (_tid);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_postadres rel_hr_ves_hr_loc_heeft_als_postadres_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_postadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_postadres_pkey PRIMARY KEY (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_postadres rel_hr_ves_hr_loc_heeft_als_postadres_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_postadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_postadres_uniq UNIQUE (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_mac_is_een_uitoefening_van rel_hr_ves_hr_mac_is_een_uitoefening_van__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_mac_is_een_uitoefening_van
-    ADD CONSTRAINT rel_hr_ves_hr_mac_is_een_uitoefening_van__tid_key UNIQUE (_tid);
-
-
---
--- Name: rel_hr_ves_hr_mac_is_een_uitoefening_van rel_hr_ves_hr_mac_is_een_uitoefening_van_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_mac_is_een_uitoefening_van
-    ADD CONSTRAINT rel_hr_ves_hr_mac_is_een_uitoefening_van_pkey PRIMARY KEY (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_mac_is_een_uitoefening_van rel_hr_ves_hr_mac_is_een_uitoefening_van_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_mac_is_een_uitoefening_van
-    ADD CONSTRAINT rel_hr_ves_hr_mac_is_een_uitoefening_van_uniq UNIQUE (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_sac__heeft_sbi_act_ rel_hr_ves_hr_sac__heeft_sbi_act___tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_sac__heeft_sbi_act_
-    ADD CONSTRAINT rel_hr_ves_hr_sac__heeft_sbi_act___tid_key UNIQUE (_tid);
-
-
---
--- Name: rel_hr_ves_hr_sac__heeft_sbi_act_ rel_hr_ves_hr_sac__heeft_sbi_act__pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_sac__heeft_sbi_act_
-    ADD CONSTRAINT rel_hr_ves_hr_sac__heeft_sbi_act__pkey PRIMARY KEY (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_sac__heeft_sbi_act_ rel_hr_ves_hr_sac__heeft_sbi_act__uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_sac__heeft_sbi_act_
-    ADD CONSTRAINT rel_hr_ves_hr_sac__heeft_sbi_act__uniq UNIQUE (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_ves_is_overgegaan_in_vestiging rel_hr_ves_hr_ves_is_overgegaan_in_vestiging__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging
-    ADD CONSTRAINT rel_hr_ves_hr_ves_is_overgegaan_in_vestiging__tid_key UNIQUE (_tid);
-
-
---
--- Name: rel_hr_ves_hr_ves_is_overgegaan_in_vestiging rel_hr_ves_hr_ves_is_overgegaan_in_vestiging_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging
-    ADD CONSTRAINT rel_hr_ves_hr_ves_is_overgegaan_in_vestiging_pkey PRIMARY KEY (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_ves_is_overgegaan_in_vestiging rel_hr_ves_hr_ves_is_overgegaan_in_vestiging_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging
-    ADD CONSTRAINT rel_hr_ves_hr_ves_is_overgegaan_in_vestiging_uniq UNIQUE (_source_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_post_heeft_verblijfsobject_uniq UNIQUE (_source_id);
 
 
 --
@@ -33838,6 +35978,30 @@ ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_brk_kadastraalobject
 
 ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_brk_kadastraalobject
     ADD CONSTRAINT rel_woz_wot_brk2_kot_bevat_brk_kadastraalobject_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_woz_wot_brk2_kot_bevat_kadastraalobject rel_woz_wot_brk2_kot_bevat_kadastraalobject__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_kadastraalobject
+    ADD CONSTRAINT rel_woz_wot_brk2_kot_bevat_kadastraalobject__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_woz_wot_brk2_kot_bevat_kadastraalobject rel_woz_wot_brk2_kot_bevat_kadastraalobject_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_kadastraalobject
+    ADD CONSTRAINT rel_woz_wot_brk2_kot_bevat_kadastraalobject_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_woz_wot_brk2_kot_bevat_kadastraalobject rel_woz_wot_brk2_kot_bevat_kadastraalobject_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_kadastraalobject
+    ADD CONSTRAINT rel_woz_wot_brk2_kot_bevat_kadastraalobject_uniq UNIQUE (_source_id);
 
 
 --
@@ -39725,129 +41889,87 @@ CREATE INDEX dst_id_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_
 
 
 --
--- Name: dst_id_mv_hr_loc_bag_lps_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_mac_bag_lps_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_loc_bag_lps_heeft_ligplaats ON public.mv_hr_loc_bag_lps_heeft_ligplaats USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_hr_loc_bag_nag_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_hr_loc_bag_nag_heeft_nummeraanduiding ON public.mv_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_mac_bag_lps_heeft_ligplaats ON public.mv_hr_mac_bag_lps_heeft_ligplaats USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_hr_loc_bag_sps_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_mac_bag_nag_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_loc_bag_sps_heeft_standplaats ON public.mv_hr_loc_bag_sps_heeft_standplaats USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_hr_loc_bag_vot_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_hr_loc_bag_vot_heeft_verblijfsobject ON public.mv_hr_loc_bag_vot_heeft_verblijfsobject USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_mac_bag_nag_heeft_nummeraanduiding ON public.mv_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_hr_mac_hr_loc_heeft_bezoekadres; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_mac_bag_sps_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_mac_hr_loc_heeft_bezoekadres ON public.mv_hr_mac_hr_loc_heeft_bezoekadres USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_hr_mac_hr_loc_heeft_postadres; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_hr_mac_hr_loc_heeft_postadres ON public.mv_hr_mac_hr_loc_heeft_postadres USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_mac_bag_sps_heeft_standplaats ON public.mv_hr_mac_bag_sps_heeft_standplaats USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_mac_bag_vot_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ ON public.mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming ON public.mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_mac_bag_vot_heeft_verblijfsobject ON public.mv_hr_mac_bag_vot_heeft_verblijfsobject USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_ves_bag_lps_bezoek_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ ON public.mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ ON public.mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_ves_bag_lps_bezoek_heeft_ligplaats ON public.mv_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_hr_mac_hr_ves_heeft_hoofdvestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_ves_bag_lps_post_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_mac_hr_ves_heeft_hoofdvestiging ON public.mv_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit ON public.mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_ves_bag_lps_post_heeft_ligplaats ON public.mv_hr_ves_bag_lps_post_heeft_ligplaats USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_hr_sac_hr_ves_heeft_als_vestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_sac_hr_ves_heeft_als_vestiging ON public.mv_hr_sac_hr_ves_heeft_als_vestiging USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_hr_ves_hr_loc_heeft_als_bezoekadres; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_hr_ves_hr_loc_heeft_als_bezoekadres ON public.mv_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding ON public.mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_hr_ves_hr_loc_heeft_als_postadres; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_ves_bag_nag_post_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_ves_hr_loc_heeft_als_postadres ON public.mv_hr_ves_hr_loc_heeft_als_postadres USING btree (dst_id);
-
-
---
--- Name: dst_id_mv_hr_ves_hr_mac_is_een_uitoefening_van; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX dst_id_mv_hr_ves_hr_mac_is_een_uitoefening_van ON public.mv_hr_ves_hr_mac_is_een_uitoefening_van USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_ves_bag_nag_post_heeft_nummeraanduiding ON public.mv_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_hr_ves_hr_sac__heeft_sbi_act_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_ves_bag_sps_bezoek_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_ves_hr_sac__heeft_sbi_act_ ON public.mv_hr_ves_hr_sac__heeft_sbi_act_ USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_ves_bag_sps_bezoek_heeft_standplaats ON public.mv_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (dst_id);
 
 
 --
--- Name: dst_id_mv_hr_ves_hr_ves_is_overgegaan_in_vestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: dst_id_mv_hr_ves_bag_sps_post_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX dst_id_mv_hr_ves_hr_ves_is_overgegaan_in_vestiging ON public.mv_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (dst_id);
+CREATE INDEX dst_id_mv_hr_ves_bag_sps_post_heeft_standplaats ON public.mv_hr_ves_bag_sps_post_heeft_standplaats USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject ON public.mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_hr_ves_bag_vot_post_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_hr_ves_bag_vot_post_heeft_verblijfsobject ON public.mv_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (dst_id);
 
 
 --
@@ -41531,129 +43653,87 @@ CREATE INDEX gobid_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_g
 
 
 --
--- Name: gobid_mv_hr_loc_bag_lps_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_mac_bag_lps_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_loc_bag_lps_heeft_ligplaats ON public.mv_hr_loc_bag_lps_heeft_ligplaats USING btree (_gobid);
-
-
---
--- Name: gobid_mv_hr_loc_bag_nag_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_hr_loc_bag_nag_heeft_nummeraanduiding ON public.mv_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_mac_bag_lps_heeft_ligplaats ON public.mv_hr_mac_bag_lps_heeft_ligplaats USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_hr_loc_bag_sps_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_mac_bag_nag_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_loc_bag_sps_heeft_standplaats ON public.mv_hr_loc_bag_sps_heeft_standplaats USING btree (_gobid);
-
-
---
--- Name: gobid_mv_hr_loc_bag_vot_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_hr_loc_bag_vot_heeft_verblijfsobject ON public.mv_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_mac_bag_nag_heeft_nummeraanduiding ON public.mv_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_hr_mac_hr_loc_heeft_bezoekadres; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_mac_bag_sps_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_mac_hr_loc_heeft_bezoekadres ON public.mv_hr_mac_hr_loc_heeft_bezoekadres USING btree (_gobid);
-
-
---
--- Name: gobid_mv_hr_mac_hr_loc_heeft_postadres; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_hr_mac_hr_loc_heeft_postadres ON public.mv_hr_mac_hr_loc_heeft_postadres USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_mac_bag_sps_heeft_standplaats ON public.mv_hr_mac_bag_sps_heeft_standplaats USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_mac_bag_vot_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ ON public.mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_gobid);
-
-
---
--- Name: gobid_mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming ON public.mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_mac_bag_vot_heeft_verblijfsobject ON public.mv_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_ves_bag_lps_bezoek_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ ON public.mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_gobid);
-
-
---
--- Name: gobid_mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ ON public.mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_ves_bag_lps_bezoek_heeft_ligplaats ON public.mv_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_hr_mac_hr_ves_heeft_hoofdvestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_ves_bag_lps_post_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_mac_hr_ves_heeft_hoofdvestiging ON public.mv_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_gobid);
-
-
---
--- Name: gobid_mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit ON public.mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_ves_bag_lps_post_heeft_ligplaats ON public.mv_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_hr_sac_hr_ves_heeft_als_vestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_sac_hr_ves_heeft_als_vestiging ON public.mv_hr_sac_hr_ves_heeft_als_vestiging USING btree (_gobid);
-
-
---
--- Name: gobid_mv_hr_ves_hr_loc_heeft_als_bezoekadres; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_hr_ves_hr_loc_heeft_als_bezoekadres ON public.mv_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding ON public.mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_hr_ves_hr_loc_heeft_als_postadres; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_ves_bag_nag_post_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_ves_hr_loc_heeft_als_postadres ON public.mv_hr_ves_hr_loc_heeft_als_postadres USING btree (_gobid);
-
-
---
--- Name: gobid_mv_hr_ves_hr_mac_is_een_uitoefening_van; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX gobid_mv_hr_ves_hr_mac_is_een_uitoefening_van ON public.mv_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_ves_bag_nag_post_heeft_nummeraanduiding ON public.mv_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_hr_ves_hr_sac__heeft_sbi_act_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_ves_bag_sps_bezoek_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_ves_hr_sac__heeft_sbi_act_ ON public.mv_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_ves_bag_sps_bezoek_heeft_standplaats ON public.mv_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_gobid);
 
 
 --
--- Name: gobid_mv_hr_ves_hr_ves_is_overgegaan_in_vestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: gobid_mv_hr_ves_bag_sps_post_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX gobid_mv_hr_ves_hr_ves_is_overgegaan_in_vestiging ON public.mv_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_gobid);
+CREATE INDEX gobid_mv_hr_ves_bag_sps_post_heeft_standplaats ON public.mv_hr_ves_bag_sps_post_heeft_standplaats USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject ON public.mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_hr_ves_bag_vot_post_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_hr_ves_bag_vot_post_heeft_verblijfsobject ON public.mv_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_gobid);
 
 
 --
@@ -41916,115 +43996,73 @@ CREATE INDEX gobid_mv_woz_wot_woz_wdt_bestaat_uit_woz_deelobjecten ON public.mv_
 
 
 --
--- Name: hr_loc_092c471623d23f2c0aa0e6210db86166; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_fvv_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_loc_092c471623d23f2c0aa0e6210db86166 ON public.hr_locaties USING btree (identificatie);
-
-
---
--- Name: hr_loc_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_loc_0afd9202ba86aa11ce63ad7007e7990b ON public.hr_locaties USING btree (_source_id);
+CREATE INDEX hr_fvv_0afd9202ba86aa11ce63ad7007e7990b ON public.hr_functievervulling USING btree (_source_id);
 
 
 --
--- Name: hr_loc_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_fvv_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_loc_1a9d849ff5a68997176b6144236806ae ON public.hr_locaties USING btree (_expiration_date);
-
-
---
--- Name: hr_loc_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_loc_2a4dbedb477015cfe2b9f2c990906f44 ON public.hr_locaties USING btree (_id, volgnummer);
+CREATE INDEX hr_fvv_1a9d849ff5a68997176b6144236806ae ON public.hr_functievervulling USING btree (_expiration_date);
 
 
 --
--- Name: hr_loc_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_fvv_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_loc_3676d55f84497cbeadfc614c1b1b62fc ON public.hr_locaties USING btree (_application);
-
-
---
--- Name: hr_loc_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_loc_37abd7da5cbd49b20a1090ba960d82e7 ON public.hr_locaties USING btree (_source, _last_event DESC);
+CREATE INDEX hr_fvv_3676d55f84497cbeadfc614c1b1b62fc ON public.hr_functievervulling USING btree (_application);
 
 
 --
--- Name: hr_loc_489b8bb44517d4daa74939fb174ef28a; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_fvv_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_loc_489b8bb44517d4daa74939fb174ef28a ON public.hr_locaties USING gin (heeft_standplaats);
-
-
---
--- Name: hr_loc_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_loc_613273a0ec2090693894cea102aa8c06 ON public.hr_locaties USING btree (_last_event);
+CREATE INDEX hr_fvv_37abd7da5cbd49b20a1090ba960d82e7 ON public.hr_functievervulling USING btree (_source, _last_event DESC);
 
 
 --
--- Name: hr_loc_76b00095eb0d191ad89152bc21f76828; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_fvv_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_loc_76b00095eb0d191ad89152bc21f76828 ON public.hr_locaties USING gin (heeft_nummeraanduiding);
-
-
---
--- Name: hr_loc_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_loc_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_locaties USING btree (_date_deleted);
+CREATE INDEX hr_fvv_613273a0ec2090693894cea102aa8c06 ON public.hr_functievervulling USING btree (_last_event);
 
 
 --
--- Name: hr_loc_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_fvv_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_loc_97beaa21d4819a1131833b897504ce31 ON public.hr_locaties USING btree (_tid);
-
-
---
--- Name: hr_loc_9d4208db7fbff37eecd081fa062528fa; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_loc_9d4208db7fbff37eecd081fa062528fa ON public.hr_locaties USING gin (heeft_ligplaats);
+CREATE INDEX hr_fvv_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_functievervulling USING btree (_date_deleted);
 
 
 --
--- Name: hr_loc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_fvv_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_loc_b80bb7740288fda1f201890375a60c8f ON public.hr_locaties USING btree (_id);
-
-
---
--- Name: hr_loc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_loc_d05569f886377400312d8c2edd4c6f4c ON public.hr_locaties USING btree (_gobid);
+CREATE INDEX hr_fvv_97beaa21d4819a1131833b897504ce31 ON public.hr_functievervulling USING btree (_tid);
 
 
 --
--- Name: hr_loc_da35004ef4175dbc970f027e028bb2e5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_fvv_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_loc_da35004ef4175dbc970f027e028bb2e5 ON public.hr_locaties USING gin (heeft_verblijfsobject);
+CREATE INDEX hr_fvv_b80bb7740288fda1f201890375a60c8f ON public.hr_functievervulling USING btree (_id);
 
 
 --
--- Name: hr_loc_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_fvv_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_loc_ed3f22b3eec2fb035647f924a5b2136e ON public.hr_locaties USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX hr_fvv_d05569f886377400312d8c2edd4c6f4c ON public.hr_functievervulling USING btree (_gobid);
+
+
+--
+-- Name: hr_fvv_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_fvv_ed3f22b3eec2fb035647f924a5b2136e ON public.hr_functievervulling USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
@@ -42035,13 +44073,6 @@ CREATE INDEX hr_mac_0afd9202ba86aa11ce63ad7007e7990b ON public.hr_maatschappelij
 
 
 --
--- Name: hr_mac_14664b3902813b63ed08599bb6bdd22c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_mac_14664b3902813b63ed08599bb6bdd22c ON public.hr_maatschappelijkeactiviteiten USING gin (wordt_uitgeoefend_in_commerciele_vestiging);
-
-
---
 -- Name: hr_mac_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -42049,31 +44080,10 @@ CREATE INDEX hr_mac_1a9d849ff5a68997176b6144236806ae ON public.hr_maatschappelij
 
 
 --
--- Name: hr_mac_29e73085a66a52cd8ce50ab63ae1b622; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_mac_29e73085a66a52cd8ce50ab63ae1b622 ON public.hr_maatschappelijkeactiviteiten USING gin (wordt_uitgeoefend_in_niet_commerciele_vestiging);
-
-
---
--- Name: hr_mac_3150de74c1e9b79cce27b92f0e29adcc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_mac_3150de74c1e9b79cce27b92f0e29adcc ON public.hr_maatschappelijkeactiviteiten USING btree (kvknummer);
-
-
---
 -- Name: hr_mac_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX hr_mac_3676d55f84497cbeadfc614c1b1b62fc ON public.hr_maatschappelijkeactiviteiten USING btree (_application);
-
-
---
--- Name: hr_mac_3726ae3db7507d4d6d9cd587e8d6f6a6; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_mac_3726ae3db7507d4d6d9cd587e8d6f6a6 ON public.hr_maatschappelijkeactiviteiten USING gin (heeft_sbi_activiteiten_voor_onderneming);
 
 
 --
@@ -42088,13 +44098,6 @@ CREATE INDEX hr_mac_37abd7da5cbd49b20a1090ba960d82e7 ON public.hr_maatschappelij
 --
 
 CREATE INDEX hr_mac_613273a0ec2090693894cea102aa8c06 ON public.hr_maatschappelijkeactiviteiten USING btree (_last_event);
-
-
---
--- Name: hr_mac_7b6aaad6a48ec29cd312ae646be318f1; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_mac_7b6aaad6a48ec29cd312ae646be318f1 ON public.hr_maatschappelijkeactiviteiten USING gin (heeft_sbi_activiteiten_voor_maatschappelijke_activiteit);
 
 
 --
@@ -42119,31 +44122,10 @@ CREATE INDEX hr_mac_b80bb7740288fda1f201890375a60c8f ON public.hr_maatschappelij
 
 
 --
--- Name: hr_mac_c6c68b137fac8ff2e76431c850b5e8bb; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_mac_c6c68b137fac8ff2e76431c850b5e8bb ON public.hr_maatschappelijkeactiviteiten USING gin (heeft_postadres);
-
-
---
--- Name: hr_mac_cd9b69578364bf0925e46be04e913302; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_mac_cd9b69578364bf0925e46be04e913302 ON public.hr_maatschappelijkeactiviteiten USING gin (heeft_hoofdvestiging);
-
-
---
 -- Name: hr_mac_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX hr_mac_d05569f886377400312d8c2edd4c6f4c ON public.hr_maatschappelijkeactiviteiten USING btree (_gobid);
-
-
---
--- Name: hr_mac_d87cb5ebe50b568e25343836b8756422; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_mac_d87cb5ebe50b568e25343836b8756422 ON public.hr_maatschappelijkeactiviteiten USING gin (heeft_bezoekadres);
 
 
 --
@@ -42154,108 +44136,143 @@ CREATE INDEX hr_mac_ed3f22b3eec2fb035647f924a5b2136e ON public.hr_maatschappelij
 
 
 --
--- Name: hr_sac_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_nnp_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_sac_0afd9202ba86aa11ce63ad7007e7990b ON public.hr_sbiactiviteiten USING btree (_source_id);
-
-
---
--- Name: hr_sac_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_sac_1a9d849ff5a68997176b6144236806ae ON public.hr_sbiactiviteiten USING btree (_expiration_date);
+CREATE INDEX hr_nnp_0afd9202ba86aa11ce63ad7007e7990b ON public.hr_nietnatuurlijkpersoon USING btree (_source_id);
 
 
 --
--- Name: hr_sac_30734a65617f213e870757a36f297c78; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_nnp_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_sac_30734a65617f213e870757a36f297c78 ON public.hr_sbiactiviteiten USING btree (sbi_activiteit_nummer);
-
-
---
--- Name: hr_sac_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_sac_3676d55f84497cbeadfc614c1b1b62fc ON public.hr_sbiactiviteiten USING btree (_application);
+CREATE INDEX hr_nnp_1a9d849ff5a68997176b6144236806ae ON public.hr_nietnatuurlijkpersoon USING btree (_expiration_date);
 
 
 --
--- Name: hr_sac_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_nnp_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_sac_37abd7da5cbd49b20a1090ba960d82e7 ON public.hr_sbiactiviteiten USING btree (_source, _last_event DESC);
-
-
---
--- Name: hr_sac_52d555e73e6e816d06e7c05012fa78f0; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_sac_52d555e73e6e816d06e7c05012fa78f0 ON public.hr_sbiactiviteiten USING gin (heeft_als_maatschappelijkactiviteit);
+CREATE INDEX hr_nnp_3676d55f84497cbeadfc614c1b1b62fc ON public.hr_nietnatuurlijkpersoon USING btree (_application);
 
 
 --
--- Name: hr_sac_6005c289ed83af1c073e869c920e0ae0; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_nnp_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_sac_6005c289ed83af1c073e869c920e0ae0 ON public.hr_sbiactiviteiten USING gin (heeft_als_vestiging);
-
-
---
--- Name: hr_sac_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_sac_613273a0ec2090693894cea102aa8c06 ON public.hr_sbiactiviteiten USING btree (_last_event);
+CREATE INDEX hr_nnp_37abd7da5cbd49b20a1090ba960d82e7 ON public.hr_nietnatuurlijkpersoon USING btree (_source, _last_event DESC);
 
 
 --
--- Name: hr_sac_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_nnp_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_sac_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_sbiactiviteiten USING btree (_date_deleted);
-
-
---
--- Name: hr_sac_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_sac_97beaa21d4819a1131833b897504ce31 ON public.hr_sbiactiviteiten USING btree (_tid);
+CREATE INDEX hr_nnp_613273a0ec2090693894cea102aa8c06 ON public.hr_nietnatuurlijkpersoon USING btree (_last_event);
 
 
 --
--- Name: hr_sac_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_nnp_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_sac_b80bb7740288fda1f201890375a60c8f ON public.hr_sbiactiviteiten USING btree (_id);
-
-
---
--- Name: hr_sac_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_sac_d05569f886377400312d8c2edd4c6f4c ON public.hr_sbiactiviteiten USING btree (_gobid);
+CREATE INDEX hr_nnp_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_nietnatuurlijkpersoon USING btree (_date_deleted);
 
 
 --
--- Name: hr_sac_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_nnp_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_sac_ed3f22b3eec2fb035647f924a5b2136e ON public.hr_sbiactiviteiten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
-
-
---
--- Name: hr_ves_00fa89c30a5b0c55aca1025f09dd701a; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_ves_00fa89c30a5b0c55aca1025f09dd701a ON public.hr_vestigingen USING gin (is_een_uitoefening_van);
+CREATE INDEX hr_nnp_97beaa21d4819a1131833b897504ce31 ON public.hr_nietnatuurlijkpersoon USING btree (_tid);
 
 
 --
--- Name: hr_ves_02985f22c821ea0dfa1ce1a31d668177; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: hr_nnp_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX hr_ves_02985f22c821ea0dfa1ce1a31d668177 ON public.hr_vestigingen USING btree (vestigingsnummer);
+CREATE INDEX hr_nnp_b80bb7740288fda1f201890375a60c8f ON public.hr_nietnatuurlijkpersoon USING btree (_id);
+
+
+--
+-- Name: hr_nnp_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nnp_d05569f886377400312d8c2edd4c6f4c ON public.hr_nietnatuurlijkpersoon USING btree (_gobid);
+
+
+--
+-- Name: hr_nnp_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nnp_ed3f22b3eec2fb035647f924a5b2136e ON public.hr_nietnatuurlijkpersoon USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: hr_nps_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_0afd9202ba86aa11ce63ad7007e7990b ON public.hr_natuurlijkpersoon USING btree (_source_id);
+
+
+--
+-- Name: hr_nps_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_1a9d849ff5a68997176b6144236806ae ON public.hr_natuurlijkpersoon USING btree (_expiration_date);
+
+
+--
+-- Name: hr_nps_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_3676d55f84497cbeadfc614c1b1b62fc ON public.hr_natuurlijkpersoon USING btree (_application);
+
+
+--
+-- Name: hr_nps_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_37abd7da5cbd49b20a1090ba960d82e7 ON public.hr_natuurlijkpersoon USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: hr_nps_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_613273a0ec2090693894cea102aa8c06 ON public.hr_natuurlijkpersoon USING btree (_last_event);
+
+
+--
+-- Name: hr_nps_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_natuurlijkpersoon USING btree (_date_deleted);
+
+
+--
+-- Name: hr_nps_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_97beaa21d4819a1131833b897504ce31 ON public.hr_natuurlijkpersoon USING btree (_tid);
+
+
+--
+-- Name: hr_nps_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_b80bb7740288fda1f201890375a60c8f ON public.hr_natuurlijkpersoon USING btree (_id);
+
+
+--
+-- Name: hr_nps_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_d05569f886377400312d8c2edd4c6f4c ON public.hr_natuurlijkpersoon USING btree (_gobid);
+
+
+--
+-- Name: hr_nps_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX hr_nps_ed3f22b3eec2fb035647f924a5b2136e ON public.hr_natuurlijkpersoon USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
@@ -42263,13 +44280,6 @@ CREATE INDEX hr_ves_02985f22c821ea0dfa1ce1a31d668177 ON public.hr_vestigingen US
 --
 
 CREATE INDEX hr_ves_0afd9202ba86aa11ce63ad7007e7990b ON public.hr_vestigingen USING btree (_source_id);
-
-
---
--- Name: hr_ves_144fb33aba458b630a6a03845bc3a97e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_ves_144fb33aba458b630a6a03845bc3a97e ON public.hr_vestigingen USING gin (heeft_als_postadres);
 
 
 --
@@ -42294,24 +44304,10 @@ CREATE INDEX hr_ves_37abd7da5cbd49b20a1090ba960d82e7 ON public.hr_vestigingen US
 
 
 --
--- Name: hr_ves_49e9b8a67583d83c1c75051f0fa93629; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_ves_49e9b8a67583d83c1c75051f0fa93629 ON public.hr_vestigingen USING gin (is_overgegaan_in_vestiging);
-
-
---
 -- Name: hr_ves_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX hr_ves_613273a0ec2090693894cea102aa8c06 ON public.hr_vestigingen USING btree (_last_event);
-
-
---
--- Name: hr_ves_7ace5dee25b056476a8f24fcfb7975e5; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_ves_7ace5dee25b056476a8f24fcfb7975e5 ON public.hr_vestigingen USING gin (heeft_sbi_activiteiten);
 
 
 --
@@ -42326,13 +44322,6 @@ CREATE INDEX hr_ves_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.hr_vestigingen US
 --
 
 CREATE INDEX hr_ves_97beaa21d4819a1131833b897504ce31 ON public.hr_vestigingen USING btree (_tid);
-
-
---
--- Name: hr_ves_ac17a0507a229bb2bf97272f9a5754fe; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX hr_ves_ac17a0507a229bb2bf97272f9a5754fe ON public.hr_vestigingen USING gin (heeft_als_bezoekadres);
 
 
 --
@@ -46256,80 +48245,80 @@ CREATE INDEX qa_gbd_wijk_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_gebieden_
 
 
 --
--- Name: qa_hr_loc_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_fvv_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_loc_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_hr_locaties USING btree (_source_id);
-
-
---
--- Name: qa_hr_loc_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_loc_1a9d849ff5a68997176b6144236806ae ON public.qa_hr_locaties USING btree (_expiration_date);
+CREATE INDEX qa_hr_fvv_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_hr_functievervulling USING btree (_source_id);
 
 
 --
--- Name: qa_hr_loc_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_fvv_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_loc_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_hr_locaties USING btree (_id, volgnummer);
-
-
---
--- Name: qa_hr_loc_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_loc_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_hr_locaties USING btree (_application);
+CREATE INDEX qa_hr_fvv_1a9d849ff5a68997176b6144236806ae ON public.qa_hr_functievervulling USING btree (_expiration_date);
 
 
 --
--- Name: qa_hr_loc_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_fvv_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_loc_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_hr_locaties USING btree (_source, _last_event DESC);
-
-
---
--- Name: qa_hr_loc_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_loc_613273a0ec2090693894cea102aa8c06 ON public.qa_hr_locaties USING btree (_last_event);
+CREATE INDEX qa_hr_fvv_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_hr_functievervulling USING btree (_id, volgnummer);
 
 
 --
--- Name: qa_hr_loc_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_fvv_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_loc_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_hr_locaties USING btree (_date_deleted);
-
-
---
--- Name: qa_hr_loc_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_loc_97beaa21d4819a1131833b897504ce31 ON public.qa_hr_locaties USING btree (_tid);
+CREATE INDEX qa_hr_fvv_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_hr_functievervulling USING btree (_application);
 
 
 --
--- Name: qa_hr_loc_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_fvv_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_loc_b80bb7740288fda1f201890375a60c8f ON public.qa_hr_locaties USING btree (_id);
-
-
---
--- Name: qa_hr_loc_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_loc_d05569f886377400312d8c2edd4c6f4c ON public.qa_hr_locaties USING btree (_gobid);
+CREATE INDEX qa_hr_fvv_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_hr_functievervulling USING btree (_source, _last_event DESC);
 
 
 --
--- Name: qa_hr_loc_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_fvv_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_loc_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_hr_locaties USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX qa_hr_fvv_613273a0ec2090693894cea102aa8c06 ON public.qa_hr_functievervulling USING btree (_last_event);
+
+
+--
+-- Name: qa_hr_fvv_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_fvv_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_hr_functievervulling USING btree (_date_deleted);
+
+
+--
+-- Name: qa_hr_fvv_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_fvv_97beaa21d4819a1131833b897504ce31 ON public.qa_hr_functievervulling USING btree (_tid);
+
+
+--
+-- Name: qa_hr_fvv_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_fvv_b80bb7740288fda1f201890375a60c8f ON public.qa_hr_functievervulling USING btree (_id);
+
+
+--
+-- Name: qa_hr_fvv_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_fvv_d05569f886377400312d8c2edd4c6f4c ON public.qa_hr_functievervulling USING btree (_gobid);
+
+
+--
+-- Name: qa_hr_fvv_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_fvv_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_hr_functievervulling USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
@@ -46410,80 +48399,157 @@ CREATE INDEX qa_hr_mac_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_hr_maatscha
 
 
 --
--- Name: qa_hr_sac_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_nnp_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_sac_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_hr_sbiactiviteiten USING btree (_source_id);
-
-
---
--- Name: qa_hr_sac_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_sac_1a9d849ff5a68997176b6144236806ae ON public.qa_hr_sbiactiviteiten USING btree (_expiration_date);
+CREATE INDEX qa_hr_nnp_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_hr_nietnatuurlijkpersoon USING btree (_source_id);
 
 
 --
--- Name: qa_hr_sac_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_nnp_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_sac_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_hr_sbiactiviteiten USING btree (_id, volgnummer);
-
-
---
--- Name: qa_hr_sac_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_sac_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_hr_sbiactiviteiten USING btree (_application);
+CREATE INDEX qa_hr_nnp_1a9d849ff5a68997176b6144236806ae ON public.qa_hr_nietnatuurlijkpersoon USING btree (_expiration_date);
 
 
 --
--- Name: qa_hr_sac_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_nnp_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_sac_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_hr_sbiactiviteiten USING btree (_source, _last_event DESC);
-
-
---
--- Name: qa_hr_sac_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_sac_613273a0ec2090693894cea102aa8c06 ON public.qa_hr_sbiactiviteiten USING btree (_last_event);
+CREATE INDEX qa_hr_nnp_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_hr_nietnatuurlijkpersoon USING btree (_id, volgnummer);
 
 
 --
--- Name: qa_hr_sac_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_nnp_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_sac_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_hr_sbiactiviteiten USING btree (_date_deleted);
-
-
---
--- Name: qa_hr_sac_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_sac_97beaa21d4819a1131833b897504ce31 ON public.qa_hr_sbiactiviteiten USING btree (_tid);
+CREATE INDEX qa_hr_nnp_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_hr_nietnatuurlijkpersoon USING btree (_application);
 
 
 --
--- Name: qa_hr_sac_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_nnp_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_sac_b80bb7740288fda1f201890375a60c8f ON public.qa_hr_sbiactiviteiten USING btree (_id);
-
-
---
--- Name: qa_hr_sac_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX qa_hr_sac_d05569f886377400312d8c2edd4c6f4c ON public.qa_hr_sbiactiviteiten USING btree (_gobid);
+CREATE INDEX qa_hr_nnp_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_hr_nietnatuurlijkpersoon USING btree (_source, _last_event DESC);
 
 
 --
--- Name: qa_hr_sac_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: qa_hr_nnp_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX qa_hr_sac_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_hr_sbiactiviteiten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX qa_hr_nnp_613273a0ec2090693894cea102aa8c06 ON public.qa_hr_nietnatuurlijkpersoon USING btree (_last_event);
+
+
+--
+-- Name: qa_hr_nnp_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nnp_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_hr_nietnatuurlijkpersoon USING btree (_date_deleted);
+
+
+--
+-- Name: qa_hr_nnp_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nnp_97beaa21d4819a1131833b897504ce31 ON public.qa_hr_nietnatuurlijkpersoon USING btree (_tid);
+
+
+--
+-- Name: qa_hr_nnp_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nnp_b80bb7740288fda1f201890375a60c8f ON public.qa_hr_nietnatuurlijkpersoon USING btree (_id);
+
+
+--
+-- Name: qa_hr_nnp_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nnp_d05569f886377400312d8c2edd4c6f4c ON public.qa_hr_nietnatuurlijkpersoon USING btree (_gobid);
+
+
+--
+-- Name: qa_hr_nnp_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nnp_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_hr_nietnatuurlijkpersoon USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: qa_hr_nps_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_hr_natuurlijkpersoon USING btree (_source_id);
+
+
+--
+-- Name: qa_hr_nps_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_1a9d849ff5a68997176b6144236806ae ON public.qa_hr_natuurlijkpersoon USING btree (_expiration_date);
+
+
+--
+-- Name: qa_hr_nps_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_hr_natuurlijkpersoon USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_hr_nps_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_hr_natuurlijkpersoon USING btree (_application);
+
+
+--
+-- Name: qa_hr_nps_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_hr_natuurlijkpersoon USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_hr_nps_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_613273a0ec2090693894cea102aa8c06 ON public.qa_hr_natuurlijkpersoon USING btree (_last_event);
+
+
+--
+-- Name: qa_hr_nps_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_hr_natuurlijkpersoon USING btree (_date_deleted);
+
+
+--
+-- Name: qa_hr_nps_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_97beaa21d4819a1131833b897504ce31 ON public.qa_hr_natuurlijkpersoon USING btree (_tid);
+
+
+--
+-- Name: qa_hr_nps_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_b80bb7740288fda1f201890375a60c8f ON public.qa_hr_natuurlijkpersoon USING btree (_id);
+
+
+--
+-- Name: qa_hr_nps_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_d05569f886377400312d8c2edd4c6f4c ON public.qa_hr_natuurlijkpersoon USING btree (_gobid);
+
+
+--
+-- Name: qa_hr_nps_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_hr_nps_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_hr_natuurlijkpersoon USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
@@ -62734,2145 +64800,1431 @@ CREATE INDEX rel_gbd_wijk_gbd_sdl_9fbe7908_f49c273bd9b194a2b48ebed02cfba269 ON p
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_source_id);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_source_id);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_expiration_date);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_application);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_application);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_source);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_source);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_47c61233d92dd28822986676f8650441 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_last_event);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_last_event);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_date_deleted);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (bronwaarde);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_id);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_id);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_gobid);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_gobid);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_last_src_event);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_loc_bag_lps_9d4208db_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_9d4208db_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_lps_9d4208db_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_loc_bag_lps_heeft_ligplaats USING btree (_last_dst_event);
+CREATE INDEX rel_hr_mac_bag_lps_9d4208db_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_bag_lps_heeft_ligplaats USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_source_id);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_source_id);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_expiration_date);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_application);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_application);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_source);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_source);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_47c61233d92dd28822986676f8650441 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_last_event);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_last_event);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_date_deleted);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (bronwaarde);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_id);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_id);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_gobid);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_gobid);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_last_src_event);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_loc_bag_nag_76b00095_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_76b00095_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_nag_76b00095_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (_last_dst_event);
+CREATE INDEX rel_hr_mac_bag_nag_76b00095_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_source_id);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_source_id);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_expiration_date);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_application);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_application);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_source);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_source);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_47c61233d92dd28822986676f8650441 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_last_event);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_last_event);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_date_deleted);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (bronwaarde);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_id);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_id);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_gobid);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_gobid);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_last_src_event);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_loc_bag_sps_489b8bb4_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_489b8bb4_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_sps_489b8bb4_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_loc_bag_sps_heeft_standplaats USING btree (_last_dst_event);
+CREATE INDEX rel_hr_mac_bag_sps_489b8bb4_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_bag_sps_heeft_standplaats USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_source_id);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_source_id);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_expiration_date);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_application);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_application);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_source);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_source);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_47c61233d92dd28822986676f8650441 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_last_event);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_last_event);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_date_deleted);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (bronwaarde);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_id);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_id);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_gobid);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_gobid);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_last_src_event);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_loc_bag_vot_da35004e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_da35004e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_loc_bag_vot_da35004e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_loc_bag_vot_heeft_verblijfsobject USING btree (_last_dst_event);
+CREATE INDEX rel_hr_mac_bag_vot_da35004e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_bag_vot_heeft_verblijfsobject USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_source_id);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_expiration_date);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_application);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_application);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_source);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_source);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_last_event);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_last_event);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_date_deleted);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (bronwaarde);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_id);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_id);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_gobid);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_last_src_event);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_mac_hr_loc_c6c68b13_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_187e1bdb_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_c6c68b13_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_loc_heeft_postadres USING btree (_last_dst_event);
+CREATE INDEX rel_hr_ves_bag_lps_187e1bdb_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_bag_lps_post_heeft_ligplaats USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_source_id);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_expiration_date);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_application);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_application);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_source);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_source);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_last_event);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_last_event);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_date_deleted);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (bronwaarde);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_id);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_id);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_gobid);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_last_src_event);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_mac_hr_loc_d87cb5eb_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_ab2a94da_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_loc_d87cb5eb_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_loc_heeft_bezoekadres USING btree (_last_dst_event);
+CREATE INDEX rel_hr_ves_bag_lps_ab2a94da_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_source_id);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_expiration_date);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_application);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_application);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_source);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_source);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_last_event);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_last_event);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_date_deleted);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (bronwaarde);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_id);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_id);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_gobid);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_last_src_event);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_mac_hr_sac_09ac243e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_673a160f_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_09ac243e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (_last_dst_event);
+CREATE INDEX rel_hr_ves_bag_nag_673a160f_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_source_id);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_expiration_date);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_application);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_application);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_source);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_source);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_last_event);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_last_event);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_date_deleted);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (bronwaarde);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_id);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_id);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_gobid);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_last_src_event);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_ves_bag_nag_76509324_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_mac_hr_sac_0b55b7fa_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_76509324_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_sac_0b55b7fa_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (_last_dst_event);
+CREATE INDEX rel_hr_ves_bag_nag_76509324_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_source_id);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_expiration_date);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_application);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_application);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_source);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_source);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_last_event);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_last_event);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_date_deleted);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (bronwaarde);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_id);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_gobid);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_last_src_event);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_mac_hr_ves_3e472be9_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_1b0b086e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_3e472be9_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (_last_dst_event);
+CREATE INDEX rel_hr_ves_bag_sps_1b0b086e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_bag_sps_post_heeft_standplaats USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_source_id);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_expiration_date);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_application);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_application);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_source);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_source);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_last_event);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_last_event);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_date_deleted);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (bronwaarde);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_id);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_gobid);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_last_src_event);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_mac_hr_ves_cd9b6957_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_f414ff63_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_cd9b6957_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (_last_dst_event);
+CREATE INDEX rel_hr_ves_bag_sps_f414ff63_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_source_id);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_source_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_expiration_date);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_application);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_application);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_source);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_source);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_47c61233d92dd28822986676f8650441 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_last_event);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_last_event);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_date_deleted);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (bronwaarde);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_id);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_gobid);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_gobid);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_last_src_event);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_mac_hr_ves_e4150046_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_6d8f9046_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_mac_hr_ves_e4150046_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (_last_dst_event);
+CREATE INDEX rel_hr_ves_bag_vot_6d8f9046_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (_last_dst_event);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_source_id);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_source_id);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_expiration_date);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_expiration_date);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_application);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_application);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_source);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_source);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_source, _last_event DESC);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_source, _last_event DESC);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_47c61233d92dd28822986676f8650441 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (src_id, src_volgnummer);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (src_id, src_volgnummer);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_gobid, _expiration_date);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_gobid, _expiration_date);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_last_event);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_last_event);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_date_deleted);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_date_deleted);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (bronwaarde);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (bronwaarde);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_id);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_id);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (dst_id, dst_volgnummer);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (dst_id, dst_volgnummer);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_gobid);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_gobid);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_last_src_event);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_last_src_event);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
--- Name: rel_hr_sac_hr_mac_52d555e7_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_ab909848_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX rel_hr_sac_hr_mac_52d555e7_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (_last_dst_event);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_source_id);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_expiration_date);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_application);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_source);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_source, _last_event DESC);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_47c61233d92dd28822986676f8650441 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (src_id, src_volgnummer);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_gobid, _expiration_date);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_last_event);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_date_deleted);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (bronwaarde);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_id);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (dst_id, dst_volgnummer);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_gobid);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_last_src_event);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
-
-
---
--- Name: rel_hr_sac_hr_ves_6005c289_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_sac_hr_ves_6005c289_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_sac_hr_ves_heeft_als_vestiging USING btree (_last_dst_event);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_application);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_source);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_source, _last_event DESC);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (src_id, src_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_gobid, _expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_last_event);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_date_deleted);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (bronwaarde);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_id);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (dst_id, dst_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_last_src_event);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
-
-
---
--- Name: rel_hr_ves_hr_loc_144fb33a_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_144fb33a_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_hr_loc_heeft_als_postadres USING btree (_last_dst_event);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_application);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_source);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_source, _last_event DESC);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (src_id, src_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_gobid, _expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_last_event);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_date_deleted);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (bronwaarde);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_id);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (dst_id, dst_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_last_src_event);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
-
-
---
--- Name: rel_hr_ves_hr_loc_ac17a050_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_loc_ac17a050_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (_last_dst_event);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_application);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_source);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_source, _last_event DESC);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (src_id, src_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_gobid, _expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_last_event);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_date_deleted);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (bronwaarde);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_id);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (dst_id, dst_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_last_src_event);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
-
-
---
--- Name: rel_hr_ves_hr_mac_00fa89c3_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_mac_00fa89c3_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_hr_mac_is_een_uitoefening_van USING btree (_last_dst_event);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_application);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_source);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_source, _last_event DESC);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (src_id, src_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_gobid, _expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_last_event);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_date_deleted);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (bronwaarde);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_id);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (dst_id, dst_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_last_src_event);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
-
-
---
--- Name: rel_hr_ves_hr_sac_8e0a940c_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_sac_8e0a940c_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_hr_sac__heeft_sbi_act_ USING btree (_last_dst_event);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_source_id);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_1a9d849ff5a68997176b6144236806ae ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_application);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_source);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_source, _last_event DESC);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_47c61233d92dd28822986676f8650441 ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (src_id, src_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_gobid, _expiration_date);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_613273a0ec2090693894cea102aa8c06 ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_last_event);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_date_deleted);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (bronwaarde);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_b80bb7740288fda1f201890375a60c8f ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_id);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_c5625cb292cd152f07c13709330d1712 ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (dst_id, dst_volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_d05569f886377400312d8c2edd4c6f4c ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_gobid);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_dc79a884dc55f09863437f9198baf021 ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_last_src_event);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_e0c02692eaf2daf950e3f61108280a92 ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
-
-
---
--- Name: rel_hr_ves_hr_ves_49e9b8a6_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX rel_hr_ves_hr_ves_49e9b8a6_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (_last_dst_event);
+CREATE INDEX rel_hr_ves_bag_vot_ab909848_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (_last_dst_event);
 
 
 --
@@ -70126,129 +71478,87 @@ CREATE INDEX src_dst_wide_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ON publ
 
 
 --
--- Name: src_dst_wide_mv_hr_loc_bag_lps_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_mac_bag_lps_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_loc_bag_lps_heeft_ligplaats ON public.mv_hr_loc_bag_lps_heeft_ligplaats USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_hr_loc_bag_nag_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_hr_loc_bag_nag_heeft_nummeraanduiding ON public.mv_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_hr_mac_bag_lps_heeft_ligplaats ON public.mv_hr_mac_bag_lps_heeft_ligplaats USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_hr_loc_bag_sps_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_mac_bag_nag_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_loc_bag_sps_heeft_standplaats ON public.mv_hr_loc_bag_sps_heeft_standplaats USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_hr_loc_bag_vot_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_hr_loc_bag_vot_heeft_verblijfsobject ON public.mv_hr_loc_bag_vot_heeft_verblijfsobject USING btree (src_id, src_volgnummer, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_hr_mac_bag_nag_heeft_nummeraanduiding ON public.mv_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_hr_mac_hr_loc_heeft_bezoekadres; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_mac_bag_sps_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_mac_hr_loc_heeft_bezoekadres ON public.mv_hr_mac_hr_loc_heeft_bezoekadres USING btree (src_id, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_hr_mac_hr_loc_heeft_postadres; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_hr_mac_hr_loc_heeft_postadres ON public.mv_hr_mac_hr_loc_heeft_postadres USING btree (src_id, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_hr_mac_bag_sps_heeft_standplaats ON public.mv_hr_mac_bag_sps_heeft_standplaats USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_mac_bag_vot_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act ON public.mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (src_id, dst_id);
-
-
---
--- Name: src_dst_wide_mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming ON public.mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (src_id, dst_id);
+CREATE INDEX src_dst_wide_mv_hr_mac_bag_vot_heeft_verblijfsobject ON public.mv_hr_mac_bag_vot_heeft_verblijfsobject USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_ves_bag_lps_bezoek_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ ON public.mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (src_id, dst_id);
-
-
---
--- Name: src_dst_wide_mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ ON public.mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (src_id, dst_id);
+CREATE INDEX src_dst_wide_mv_hr_ves_bag_lps_bezoek_heeft_ligplaats ON public.mv_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_hr_mac_hr_ves_heeft_hoofdvestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_ves_bag_lps_post_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_mac_hr_ves_heeft_hoofdvestiging ON public.mv_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (src_id, dst_id);
-
-
---
--- Name: src_dst_wide_mv_hr_sac_hr_mac_heeft_als_maatschappelijkactivite; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_hr_sac_hr_mac_heeft_als_maatschappelijkactivite ON public.mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (src_id, dst_id);
+CREATE INDEX src_dst_wide_mv_hr_ves_bag_lps_post_heeft_ligplaats ON public.mv_hr_ves_bag_lps_post_heeft_ligplaats USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_hr_sac_hr_ves_heeft_als_vestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_sac_hr_ves_heeft_als_vestiging ON public.mv_hr_sac_hr_ves_heeft_als_vestiging USING btree (src_id, dst_id);
-
-
---
--- Name: src_dst_wide_mv_hr_ves_hr_loc_heeft_als_bezoekadres; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_hr_ves_hr_loc_heeft_als_bezoekadres ON public.mv_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (src_id, dst_id, dst_volgnummer);
+CREATE INDEX src_dst_wide_mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding ON public.mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_hr_ves_hr_loc_heeft_als_postadres; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_ves_bag_nag_post_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_ves_hr_loc_heeft_als_postadres ON public.mv_hr_ves_hr_loc_heeft_als_postadres USING btree (src_id, dst_id, dst_volgnummer);
-
-
---
--- Name: src_dst_wide_mv_hr_ves_hr_mac_is_een_uitoefening_van; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_dst_wide_mv_hr_ves_hr_mac_is_een_uitoefening_van ON public.mv_hr_ves_hr_mac_is_een_uitoefening_van USING btree (src_id, dst_id);
+CREATE INDEX src_dst_wide_mv_hr_ves_bag_nag_post_heeft_nummeraanduiding ON public.mv_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_hr_ves_hr_sac__heeft_sbi_act_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_ves_bag_sps_bezoek_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_ves_hr_sac__heeft_sbi_act_ ON public.mv_hr_ves_hr_sac__heeft_sbi_act_ USING btree (src_id, dst_id);
+CREATE INDEX src_dst_wide_mv_hr_ves_bag_sps_bezoek_heeft_standplaats ON public.mv_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
--- Name: src_dst_wide_mv_hr_ves_hr_ves_is_overgegaan_in_vestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_dst_wide_mv_hr_ves_bag_sps_post_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_dst_wide_mv_hr_ves_hr_ves_is_overgegaan_in_vestiging ON public.mv_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (src_id, dst_id);
+CREATE INDEX src_dst_wide_mv_hr_ves_bag_sps_post_heeft_standplaats ON public.mv_hr_ves_bag_sps_post_heeft_standplaats USING btree (src_id, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject ON public.mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (src_id, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_hr_ves_bag_vot_post_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_hr_ves_bag_vot_post_heeft_verblijfsobject ON public.mv_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (src_id, dst_id, dst_volgnummer);
 
 
 --
@@ -71358,129 +72668,87 @@ CREATE INDEX src_id_mv_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_
 
 
 --
--- Name: src_id_mv_hr_loc_bag_lps_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_mac_bag_lps_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_loc_bag_lps_heeft_ligplaats ON public.mv_hr_loc_bag_lps_heeft_ligplaats USING btree (src_id);
-
-
---
--- Name: src_id_mv_hr_loc_bag_nag_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_hr_loc_bag_nag_heeft_nummeraanduiding ON public.mv_hr_loc_bag_nag_heeft_nummeraanduiding USING btree (src_id);
+CREATE INDEX src_id_mv_hr_mac_bag_lps_heeft_ligplaats ON public.mv_hr_mac_bag_lps_heeft_ligplaats USING btree (src_id);
 
 
 --
--- Name: src_id_mv_hr_loc_bag_sps_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_mac_bag_nag_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_loc_bag_sps_heeft_standplaats ON public.mv_hr_loc_bag_sps_heeft_standplaats USING btree (src_id);
-
-
---
--- Name: src_id_mv_hr_loc_bag_vot_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_hr_loc_bag_vot_heeft_verblijfsobject ON public.mv_hr_loc_bag_vot_heeft_verblijfsobject USING btree (src_id);
+CREATE INDEX src_id_mv_hr_mac_bag_nag_heeft_nummeraanduiding ON public.mv_hr_mac_bag_nag_heeft_nummeraanduiding USING btree (src_id);
 
 
 --
--- Name: src_id_mv_hr_mac_hr_loc_heeft_bezoekadres; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_mac_bag_sps_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_mac_hr_loc_heeft_bezoekadres ON public.mv_hr_mac_hr_loc_heeft_bezoekadres USING btree (src_id);
-
-
---
--- Name: src_id_mv_hr_mac_hr_loc_heeft_postadres; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_hr_mac_hr_loc_heeft_postadres ON public.mv_hr_mac_hr_loc_heeft_postadres USING btree (src_id);
+CREATE INDEX src_id_mv_hr_mac_bag_sps_heeft_standplaats ON public.mv_hr_mac_bag_sps_heeft_standplaats USING btree (src_id);
 
 
 --
--- Name: src_id_mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_mac_bag_vot_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ ON public.mv_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ USING btree (src_id);
-
-
---
--- Name: src_id_mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming ON public.mv_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming USING btree (src_id);
+CREATE INDEX src_id_mv_hr_mac_bag_vot_heeft_verblijfsobject ON public.mv_hr_mac_bag_vot_heeft_verblijfsobject USING btree (src_id);
 
 
 --
--- Name: src_id_mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_ves_bag_lps_bezoek_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ ON public.mv_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ USING btree (src_id);
-
-
---
--- Name: src_id_mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ ON public.mv_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ USING btree (src_id);
+CREATE INDEX src_id_mv_hr_ves_bag_lps_bezoek_heeft_ligplaats ON public.mv_hr_ves_bag_lps_bezoek_heeft_ligplaats USING btree (src_id);
 
 
 --
--- Name: src_id_mv_hr_mac_hr_ves_heeft_hoofdvestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_ves_bag_lps_post_heeft_ligplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_mac_hr_ves_heeft_hoofdvestiging ON public.mv_hr_mac_hr_ves_heeft_hoofdvestiging USING btree (src_id);
-
-
---
--- Name: src_id_mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit ON public.mv_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit USING btree (src_id);
+CREATE INDEX src_id_mv_hr_ves_bag_lps_post_heeft_ligplaats ON public.mv_hr_ves_bag_lps_post_heeft_ligplaats USING btree (src_id);
 
 
 --
--- Name: src_id_mv_hr_sac_hr_ves_heeft_als_vestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_sac_hr_ves_heeft_als_vestiging ON public.mv_hr_sac_hr_ves_heeft_als_vestiging USING btree (src_id);
-
-
---
--- Name: src_id_mv_hr_ves_hr_loc_heeft_als_bezoekadres; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_hr_ves_hr_loc_heeft_als_bezoekadres ON public.mv_hr_ves_hr_loc_heeft_als_bezoekadres USING btree (src_id);
+CREATE INDEX src_id_mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding ON public.mv_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding USING btree (src_id);
 
 
 --
--- Name: src_id_mv_hr_ves_hr_loc_heeft_als_postadres; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_ves_bag_nag_post_heeft_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_ves_hr_loc_heeft_als_postadres ON public.mv_hr_ves_hr_loc_heeft_als_postadres USING btree (src_id);
-
-
---
--- Name: src_id_mv_hr_ves_hr_mac_is_een_uitoefening_van; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX src_id_mv_hr_ves_hr_mac_is_een_uitoefening_van ON public.mv_hr_ves_hr_mac_is_een_uitoefening_van USING btree (src_id);
+CREATE INDEX src_id_mv_hr_ves_bag_nag_post_heeft_nummeraanduiding ON public.mv_hr_ves_bag_nag_post_heeft_nummeraanduiding USING btree (src_id);
 
 
 --
--- Name: src_id_mv_hr_ves_hr_sac__heeft_sbi_act_; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_ves_bag_sps_bezoek_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_ves_hr_sac__heeft_sbi_act_ ON public.mv_hr_ves_hr_sac__heeft_sbi_act_ USING btree (src_id);
+CREATE INDEX src_id_mv_hr_ves_bag_sps_bezoek_heeft_standplaats ON public.mv_hr_ves_bag_sps_bezoek_heeft_standplaats USING btree (src_id);
 
 
 --
--- Name: src_id_mv_hr_ves_hr_ves_is_overgegaan_in_vestiging; Type: INDEX; Schema: public; Owner: gobtest
+-- Name: src_id_mv_hr_ves_bag_sps_post_heeft_standplaats; Type: INDEX; Schema: public; Owner: gobtest
 --
 
-CREATE INDEX src_id_mv_hr_ves_hr_ves_is_overgegaan_in_vestiging ON public.mv_hr_ves_hr_ves_is_overgegaan_in_vestiging USING btree (src_id);
+CREATE INDEX src_id_mv_hr_ves_bag_sps_post_heeft_standplaats ON public.mv_hr_ves_bag_sps_post_heeft_standplaats USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject ON public.mv_hr_ves_bag_vot_bezoek_heeft_verblijfsobject USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_hr_ves_bag_vot_post_heeft_verblijfsobject; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_hr_ves_bag_vot_post_heeft_verblijfsobject ON public.mv_hr_ves_bag_vot_post_heeft_verblijfsobject USING btree (src_id);
 
 
 --
@@ -73115,6 +74383,13 @@ CREATE INDEX woz_wdt_1a9d849ff5a68997176b6144236806ae ON public.woz_deelobjecten
 
 
 --
+-- Name: woz_wdt_1db0c4a63ae8e593c267617dccb146a8; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wdt_1db0c4a63ae8e593c267617dccb146a8 ON public.woz_deelobjecten USING gin (is_verbonden_met_bag_standplaats);
+
+
+--
 -- Name: woz_wdt_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -73133,6 +74408,20 @@ CREATE INDEX woz_wdt_3676d55f84497cbeadfc614c1b1b62fc ON public.woz_deelobjecten
 --
 
 CREATE INDEX woz_wdt_37abd7da5cbd49b20a1090ba960d82e7 ON public.woz_deelobjecten USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: woz_wdt_38b810f57f686bc15ac07b426e885135; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wdt_38b810f57f686bc15ac07b426e885135 ON public.woz_deelobjecten USING btree (wozobjectnummer);
+
+
+--
+-- Name: woz_wdt_427c255e4db6473ad5a6f5c678780f7d; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wdt_427c255e4db6473ad5a6f5c678780f7d ON public.woz_deelobjecten USING gin (is_verbonden_met_bag_verblijfsobject);
 
 
 --
@@ -73157,10 +74446,24 @@ CREATE INDEX woz_wdt_97beaa21d4819a1131833b897504ce31 ON public.woz_deelobjecten
 
 
 --
+-- Name: woz_wdt_98eba142047f97c384c5e069cfb8e912; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wdt_98eba142047f97c384c5e069cfb8e912 ON public.woz_deelobjecten USING gin (is_verbonden_met_bag_ligplaats);
+
+
+--
 -- Name: woz_wdt_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX woz_wdt_b80bb7740288fda1f201890375a60c8f ON public.woz_deelobjecten USING btree (_id);
+
+
+--
+-- Name: woz_wdt_c608569bafd2fbdf527ebbf2c882f81d; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wdt_c608569bafd2fbdf527ebbf2c882f81d ON public.woz_deelobjecten USING gin (heeft_bag_pand);
 
 
 --
@@ -73213,6 +74516,13 @@ CREATE INDEX woz_wot_37abd7da5cbd49b20a1090ba960d82e7 ON public.woz_objecten USI
 
 
 --
+-- Name: woz_wot_38b810f57f686bc15ac07b426e885135; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wot_38b810f57f686bc15ac07b426e885135 ON public.woz_objecten USING btree (wozobjectnummer);
+
+
+--
 -- Name: woz_wot_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -73231,6 +74541,13 @@ CREATE INDEX woz_wot_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.woz_objecten USI
 --
 
 CREATE INDEX woz_wot_97beaa21d4819a1131833b897504ce31 ON public.woz_objecten USING btree (_tid);
+
+
+--
+-- Name: woz_wot_aa47975e4fcd9a337ca1166786496138; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX woz_wot_aa47975e4fcd9a337ca1166786496138 ON public.woz_objecten USING gin (bevat_brk_kadastraalobject);
 
 
 --
@@ -76312,291 +77629,195 @@ ALTER TABLE ONLY public.rel_gbd_wijk_gbd_sdl_ligt_in_gebieden_stadsdeel
 
 
 --
--- Name: rel_hr_loc_bag_lps_heeft_ligplaats rel_hr_loc_bag_lps_heeft_ligplaats_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_heeft_ligplaats rel_hr_mac_bag_lps_heeft_ligplaats_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_lps_heeft_ligplaats
-    ADD CONSTRAINT rel_hr_loc_bag_lps_heeft_ligplaats_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_ligplaatsen(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_mac_bag_lps_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_mac_bag_lps_heeft_ligplaats_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_ligplaatsen(_id, volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_lps_heeft_ligplaats rel_hr_loc_bag_lps_heeft_ligplaats_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_lps_heeft_ligplaats rel_hr_mac_bag_lps_heeft_ligplaats_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_lps_heeft_ligplaats
-    ADD CONSTRAINT rel_hr_loc_bag_lps_heeft_ligplaats_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.hr_locaties(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_mac_bag_lps_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_mac_bag_lps_heeft_ligplaats_sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
 
 
 --
--- Name: rel_hr_loc_bag_nag_heeft_nummeraanduiding rel_hr_loc_bag_nag_heeft_nummeraanduiding_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_heeft_nummeraanduiding rel_hr_mac_bag_nag_heeft_nummeraanduiding_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_nag_heeft_nummeraanduiding
-    ADD CONSTRAINT rel_hr_loc_bag_nag_heeft_nummeraanduiding_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_nummeraanduidingen(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_mac_bag_nag_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_mac_bag_nag_heeft_nummeraanduiding_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_nummeraanduidingen(_id, volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_nag_heeft_nummeraanduiding rel_hr_loc_bag_nag_heeft_nummeraanduiding_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_nag_heeft_nummeraanduiding rel_hr_mac_bag_nag_heeft_nummeraanduiding_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_nag_heeft_nummeraanduiding
-    ADD CONSTRAINT rel_hr_loc_bag_nag_heeft_nummeraanduiding_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.hr_locaties(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_mac_bag_nag_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_mac_bag_nag_heeft_nummeraanduiding_sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
 
 
 --
--- Name: rel_hr_loc_bag_sps_heeft_standplaats rel_hr_loc_bag_sps_heeft_standplaats_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_heeft_standplaats rel_hr_mac_bag_sps_heeft_standplaats_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_sps_heeft_standplaats
-    ADD CONSTRAINT rel_hr_loc_bag_sps_heeft_standplaats_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_standplaatsen(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_mac_bag_sps_heeft_standplaats
+    ADD CONSTRAINT rel_hr_mac_bag_sps_heeft_standplaats_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_standplaatsen(_id, volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_sps_heeft_standplaats rel_hr_loc_bag_sps_heeft_standplaats_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_sps_heeft_standplaats rel_hr_mac_bag_sps_heeft_standplaats_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_sps_heeft_standplaats
-    ADD CONSTRAINT rel_hr_loc_bag_sps_heeft_standplaats_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.hr_locaties(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_mac_bag_sps_heeft_standplaats
+    ADD CONSTRAINT rel_hr_mac_bag_sps_heeft_standplaats_sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
 
 
 --
--- Name: rel_hr_loc_bag_vot_heeft_verblijfsobject rel_hr_loc_bag_vot_heeft_verblijfsobject_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_heeft_verblijfsobject rel_hr_mac_bag_vot_heeft_verblijfsobject_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_vot_heeft_verblijfsobject
-    ADD CONSTRAINT rel_hr_loc_bag_vot_heeft_verblijfsobject_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_verblijfsobjecten(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_mac_bag_vot_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_mac_bag_vot_heeft_verblijfsobject_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_verblijfsobjecten(_id, volgnummer);
 
 
 --
--- Name: rel_hr_loc_bag_vot_heeft_verblijfsobject rel_hr_loc_bag_vot_heeft_verblijfsobject_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_mac_bag_vot_heeft_verblijfsobject rel_hr_mac_bag_vot_heeft_verblijfsobject_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_loc_bag_vot_heeft_verblijfsobject
-    ADD CONSTRAINT rel_hr_loc_bag_vot_heeft_verblijfsobject_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.hr_locaties(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_mac_bag_vot_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_mac_bag_vot_heeft_verblijfsobject_sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_bezoekadres rel_hr_mac_hr_loc_heeft_bezoekadres_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_bezoek_heeft_ligplaats rel_hr_ves_bag_lps_bezoek_heeft_ligplaats_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_bezoekadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_bezoekadres_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.hr_locaties(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_bezoek_heeft_ligplaats_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_ligplaatsen(_id, volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_bezoekadres rel_hr_mac_hr_loc_heeft_bezoekadres_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_bezoek_heeft_ligplaats rel_hr_ves_bag_lps_bezoek_heeft_ligplaats_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_bezoekadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_bezoekadres_sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_bezoek_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_bezoek_heeft_ligplaats_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_postadres rel_hr_mac_hr_loc_heeft_postadres_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_post_heeft_ligplaats rel_hr_ves_bag_lps_post_heeft_ligplaats_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_postadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_postadres_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.hr_locaties(_id, volgnummer);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_post_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_post_heeft_ligplaats_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_ligplaatsen(_id, volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_loc_heeft_postadres rel_hr_mac_hr_loc_heeft_postadres_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_lps_post_heeft_ligplaats rel_hr_ves_bag_lps_post_heeft_ligplaats_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_loc_heeft_postadres
-    ADD CONSTRAINT rel_hr_mac_hr_loc_heeft_postadres_sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_lps_post_heeft_ligplaats
+    ADD CONSTRAINT rel_hr_ves_bag_lps_post_heeft_ligplaats_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act__dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act__dfk FOREIGN KEY (dst_id) REFERENCES public.hr_sbiactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_nummeraanduidingen(_id, volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_ rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act__sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act_
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor__maatsch_act__sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_bezoek_heeft_nummeraanduiding_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_post_heeft_nummeraanduiding rel_hr_ves_bag_nag_post_heeft_nummeraanduiding_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming_dfk FOREIGN KEY (dst_id) REFERENCES public.hr_sbiactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_post_heeft_nummeraanduiding_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_nummeraanduidingen(_id, volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_nag_post_heeft_nummeraanduiding rel_hr_ves_bag_nag_post_heeft_nummeraanduiding_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming
-    ADD CONSTRAINT rel_hr_mac_hr_sac__heeft_sbi_act__voor_onderneming_sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_nag_post_heeft_nummeraanduiding
+    ADD CONSTRAINT rel_hr_ves_bag_nag_post_heeft_nummeraanduiding_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng__dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_bezoek_heeft_standplaats rel_hr_ves_bag_sps_bezoek_heeft_standplaats_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng__dfk FOREIGN KEY (dst_id) REFERENCES public.hr_vestigingen(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_bezoek_heeft_standplaats_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_standplaatsen(_id, volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng__sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_bezoek_heeft_standplaats rel_hr_ves_bag_sps_bezoek_heeft_standplaats_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in___comm_vstgng__sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_bezoek_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_bezoek_heeft_standplaats_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng__dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_post_heeft_standplaats rel_hr_ves_bag_sps_post_heeft_standplaats_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng__dfk FOREIGN KEY (dst_id) REFERENCES public.hr_vestigingen(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_post_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_post_heeft_standplaats_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_standplaatsen(_id, volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_ rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng__sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_sps_post_heeft_standplaats rel_hr_ves_bag_sps_post_heeft_standplaats_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng_
-    ADD CONSTRAINT rel_hr_mac_hr_ves__uitgoef_in__niet__comm_vstgng__sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_sps_post_heeft_standplaats
+    ADD CONSTRAINT rel_hr_ves_bag_sps_post_heeft_standplaats_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
 
 
 --
--- Name: rel_hr_mac_hr_ves_heeft_hoofdvestiging rel_hr_mac_hr_ves_heeft_hoofdvestiging_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves_heeft_hoofdvestiging
-    ADD CONSTRAINT rel_hr_mac_hr_ves_heeft_hoofdvestiging_dfk FOREIGN KEY (dst_id) REFERENCES public.hr_vestigingen(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_verblijfsobjecten(_id, volgnummer);
 
 
 --
--- Name: rel_hr_mac_hr_ves_heeft_hoofdvestiging rel_hr_mac_hr_ves_heeft_hoofdvestiging_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_mac_hr_ves_heeft_hoofdvestiging
-    ADD CONSTRAINT rel_hr_mac_hr_ves_heeft_hoofdvestiging_sfk FOREIGN KEY (src_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_bezoek_heeft_verblijfsobject_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
 
 
 --
--- Name: rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_post_heeft_verblijfsobject rel_hr_ves_bag_vot_post_heeft_verblijfsobject_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit
-    ADD CONSTRAINT rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit_dfk FOREIGN KEY (dst_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_post_heeft_verblijfsobject_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_verblijfsobjecten(_id, volgnummer);
 
 
 --
--- Name: rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+-- Name: rel_hr_ves_bag_vot_post_heeft_verblijfsobject rel_hr_ves_bag_vot_post_heeft_verblijfsobject_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
 --
 
-ALTER TABLE ONLY public.rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit
-    ADD CONSTRAINT rel_hr_sac_hr_mac_heeft_als_maatschappelijkactiviteit_sfk FOREIGN KEY (src_id) REFERENCES public.hr_sbiactiviteiten(_id);
-
-
---
--- Name: rel_hr_sac_hr_ves_heeft_als_vestiging rel_hr_sac_hr_ves_heeft_als_vestiging_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_sac_hr_ves_heeft_als_vestiging
-    ADD CONSTRAINT rel_hr_sac_hr_ves_heeft_als_vestiging_dfk FOREIGN KEY (dst_id) REFERENCES public.hr_vestigingen(_id);
-
-
---
--- Name: rel_hr_sac_hr_ves_heeft_als_vestiging rel_hr_sac_hr_ves_heeft_als_vestiging_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_sac_hr_ves_heeft_als_vestiging
-    ADD CONSTRAINT rel_hr_sac_hr_ves_heeft_als_vestiging_sfk FOREIGN KEY (src_id) REFERENCES public.hr_sbiactiviteiten(_id);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_bezoekadres rel_hr_ves_hr_loc_heeft_als_bezoekadres_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_bezoekadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_bezoekadres_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.hr_locaties(_id, volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_bezoekadres rel_hr_ves_hr_loc_heeft_als_bezoekadres_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_bezoekadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_bezoekadres_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_postadres rel_hr_ves_hr_loc_heeft_als_postadres_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_postadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_postadres_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.hr_locaties(_id, volgnummer);
-
-
---
--- Name: rel_hr_ves_hr_loc_heeft_als_postadres rel_hr_ves_hr_loc_heeft_als_postadres_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_loc_heeft_als_postadres
-    ADD CONSTRAINT rel_hr_ves_hr_loc_heeft_als_postadres_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
-
-
---
--- Name: rel_hr_ves_hr_mac_is_een_uitoefening_van rel_hr_ves_hr_mac_is_een_uitoefening_van_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_mac_is_een_uitoefening_van
-    ADD CONSTRAINT rel_hr_ves_hr_mac_is_een_uitoefening_van_dfk FOREIGN KEY (dst_id) REFERENCES public.hr_maatschappelijkeactiviteiten(_id);
-
-
---
--- Name: rel_hr_ves_hr_mac_is_een_uitoefening_van rel_hr_ves_hr_mac_is_een_uitoefening_van_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_mac_is_een_uitoefening_van
-    ADD CONSTRAINT rel_hr_ves_hr_mac_is_een_uitoefening_van_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
-
-
---
--- Name: rel_hr_ves_hr_sac__heeft_sbi_act_ rel_hr_ves_hr_sac__heeft_sbi_act__dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_sac__heeft_sbi_act_
-    ADD CONSTRAINT rel_hr_ves_hr_sac__heeft_sbi_act__dfk FOREIGN KEY (dst_id) REFERENCES public.hr_sbiactiviteiten(_id);
-
-
---
--- Name: rel_hr_ves_hr_sac__heeft_sbi_act_ rel_hr_ves_hr_sac__heeft_sbi_act__sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_sac__heeft_sbi_act_
-    ADD CONSTRAINT rel_hr_ves_hr_sac__heeft_sbi_act__sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
-
-
---
--- Name: rel_hr_ves_hr_ves_is_overgegaan_in_vestiging rel_hr_ves_hr_ves_is_overgegaan_in_vestiging_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging
-    ADD CONSTRAINT rel_hr_ves_hr_ves_is_overgegaan_in_vestiging_dfk FOREIGN KEY (dst_id) REFERENCES public.hr_vestigingen(_id);
-
-
---
--- Name: rel_hr_ves_hr_ves_is_overgegaan_in_vestiging rel_hr_ves_hr_ves_is_overgegaan_in_vestiging_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
---
-
-ALTER TABLE ONLY public.rel_hr_ves_hr_ves_is_overgegaan_in_vestiging
-    ADD CONSTRAINT rel_hr_ves_hr_ves_is_overgegaan_in_vestiging_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
+ALTER TABLE ONLY public.rel_hr_ves_bag_vot_post_heeft_verblijfsobject
+    ADD CONSTRAINT rel_hr_ves_bag_vot_post_heeft_verblijfsobject_sfk FOREIGN KEY (src_id) REFERENCES public.hr_vestigingen(_id);
 
 
 --
@@ -77157,6 +78378,22 @@ ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_brk_kadastraalobject
 
 ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_brk_kadastraalobject
     ADD CONSTRAINT rel_woz_wot_brk2_kot_bevat_brk_kadastraalobject_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.woz_objecten(_id, volgnummer);
+
+
+--
+-- Name: rel_woz_wot_brk2_kot_bevat_kadastraalobject rel_woz_wot_brk2_kot_bevat_kadastraalobject_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_kadastraalobject
+    ADD CONSTRAINT rel_woz_wot_brk2_kot_bevat_kadastraalobject_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.brk2_kadastraleobjecten(_id, volgnummer);
+
+
+--
+-- Name: rel_woz_wot_brk2_kot_bevat_kadastraalobject rel_woz_wot_brk2_kot_bevat_kadastraalobject_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_woz_wot_brk2_kot_bevat_kadastraalobject
+    ADD CONSTRAINT rel_woz_wot_brk2_kot_bevat_kadastraalobject_sfk FOREIGN KEY (src_id, src_volgnummer) REFERENCES public.woz_objecten(_id, volgnummer);
 
 
 --
