@@ -34,8 +34,8 @@ from gobapi.worker.response import WorkerResponse
 from gobapi.worker.api import worker_result, worker_status, worker_end
 
 from gobapi.states import get_states
-from gobapi.storage import connect, get_entities, get_entity, query_entities, dump_entities, query_reference_entities,\
-    clear_test_dbs
+from gobapi.storage import connect, get_entities, get_entity, query_entities, dump_entities, \
+    query_reference_entities, clear_test_dbs
 from gobapi.dbinfo.api import get_db_info
 
 from gobapi.graphql.schema import schema

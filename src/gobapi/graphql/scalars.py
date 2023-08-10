@@ -136,5 +136,5 @@ class GeoJSON(Scalar):
             return FILTER_ON_NULL_VALUE
         else:
             session = get_session()
-            geo = session.scalar(geoalchemy2.func.ST_GeomFromText(value))
+            geo = session.scalar(geoalchemy2.functions.ST_GeomFromText(value))
             return geo
