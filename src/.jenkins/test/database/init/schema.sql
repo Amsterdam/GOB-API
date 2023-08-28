@@ -5089,6 +5089,258 @@ CREATE VIEW legacy.gebieden_wijken AS
 ALTER TABLE legacy.gebieden_wijken OWNER TO gobtest;
 
 --
+-- Name: hr_maatschappelijkeactiviteiten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.hr_maatschappelijkeactiviteiten (
+    kvknummer character varying,
+    datum_actueel_tot timestamp without time zone,
+    datum_aanvang_maatschappelijke_activiteit date,
+    datum_einde_maatschappelijke_activiteit date,
+    registratie_tijdstip_maatschappelijke_activiteit timestamp without time zone,
+    naam character varying,
+    non_mailing character varying,
+    incidenteel_uitlenen_arbeidskrachten character varying,
+    activiteiten jsonb,
+    heeft_hoofdvestiging jsonb,
+    datum_aanvang_maatschappelijke_activiteit_vestiging date,
+    datum_einde_maatschappelijke_activiteit_vestiging date,
+    wordt_uitgeoefend_in_niet_commerciele_vestiging jsonb,
+    heeft_als_eigenaar_np jsonb,
+    heeft_als_eigenaar_nnp jsonb,
+    onderneming character varying,
+    totaal_werkzame_personen integer,
+    voltijd_werkzame_personen integer,
+    deeltijd_werkzame_personen integer,
+    datum_aanvang_onderneming date,
+    datum_einde_onderneming date,
+    is_overdracht_voortzetting_onderneming character varying,
+    datum_overdracht_voortzetting_onderneming date,
+    wordt_uitgeoefend_in_commerciele_vestiging jsonb,
+    datum_aanvang_onderneming_vestiging date,
+    datum_einde_onderneming_vestiging date,
+    datum_aanvang_onderneming_handelsnaam date,
+    datum_einde_onderneming_handelsnaam date,
+    handelsnamen jsonb,
+    communicatie jsonb,
+    email_adressen jsonb,
+    domeinnamen jsonb,
+    bezoek_locatie jsonb,
+    bezoek_geopunt public.geometry(Point,28992),
+    heeft_nummeraanduiding jsonb,
+    heeft_verblijfsobject jsonb,
+    heeft_ligplaats jsonb,
+    heeft_standplaats jsonb,
+    post_locatie jsonb,
+    post_geopunt public.geometry(Point,28992),
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.hr_maatschappelijkeactiviteiten OWNER TO gobtest;
+
+--
+-- Name: hr_maatschappelijkeactiviteiten; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.hr_maatschappelijkeactiviteiten AS
+ SELECT hr_maatschappelijkeactiviteiten.kvknummer,
+    hr_maatschappelijkeactiviteiten.datum_actueel_tot,
+    hr_maatschappelijkeactiviteiten.datum_aanvang_maatschappelijke_activiteit,
+    hr_maatschappelijkeactiviteiten.datum_einde_maatschappelijke_activiteit,
+    hr_maatschappelijkeactiviteiten.registratie_tijdstip_maatschappelijke_activiteit,
+    hr_maatschappelijkeactiviteiten.naam,
+    hr_maatschappelijkeactiviteiten.non_mailing,
+    hr_maatschappelijkeactiviteiten.incidenteel_uitlenen_arbeidskrachten,
+    hr_maatschappelijkeactiviteiten.activiteiten,
+    hr_maatschappelijkeactiviteiten.heeft_hoofdvestiging,
+    hr_maatschappelijkeactiviteiten.datum_aanvang_maatschappelijke_activiteit_vestiging,
+    hr_maatschappelijkeactiviteiten.datum_einde_maatschappelijke_activiteit_vestiging,
+    hr_maatschappelijkeactiviteiten.wordt_uitgeoefend_in_niet_commerciele_vestiging,
+    hr_maatschappelijkeactiviteiten.heeft_als_eigenaar_np,
+    hr_maatschappelijkeactiviteiten.heeft_als_eigenaar_nnp,
+    hr_maatschappelijkeactiviteiten.onderneming,
+    hr_maatschappelijkeactiviteiten.totaal_werkzame_personen,
+    hr_maatschappelijkeactiviteiten.voltijd_werkzame_personen,
+    hr_maatschappelijkeactiviteiten.deeltijd_werkzame_personen,
+    hr_maatschappelijkeactiviteiten.datum_aanvang_onderneming,
+    hr_maatschappelijkeactiviteiten.datum_einde_onderneming,
+    hr_maatschappelijkeactiviteiten.is_overdracht_voortzetting_onderneming,
+    hr_maatschappelijkeactiviteiten.datum_overdracht_voortzetting_onderneming,
+    hr_maatschappelijkeactiviteiten.wordt_uitgeoefend_in_commerciele_vestiging,
+    hr_maatschappelijkeactiviteiten.datum_aanvang_onderneming_vestiging,
+    hr_maatschappelijkeactiviteiten.datum_einde_onderneming_vestiging,
+    hr_maatschappelijkeactiviteiten.datum_aanvang_onderneming_handelsnaam,
+    hr_maatschappelijkeactiviteiten.datum_einde_onderneming_handelsnaam,
+    hr_maatschappelijkeactiviteiten.handelsnamen,
+    hr_maatschappelijkeactiviteiten.communicatie,
+    hr_maatschappelijkeactiviteiten.email_adressen,
+    hr_maatschappelijkeactiviteiten.domeinnamen,
+    hr_maatschappelijkeactiviteiten.bezoek_locatie,
+    hr_maatschappelijkeactiviteiten.bezoek_geopunt,
+    hr_maatschappelijkeactiviteiten.heeft_nummeraanduiding,
+    hr_maatschappelijkeactiviteiten.heeft_verblijfsobject,
+    hr_maatschappelijkeactiviteiten.heeft_ligplaats,
+    hr_maatschappelijkeactiviteiten.heeft_standplaats,
+    hr_maatschappelijkeactiviteiten.post_locatie,
+    hr_maatschappelijkeactiviteiten.post_geopunt,
+    hr_maatschappelijkeactiviteiten._source,
+    hr_maatschappelijkeactiviteiten._application,
+    hr_maatschappelijkeactiviteiten._source_id,
+    hr_maatschappelijkeactiviteiten._last_event,
+    hr_maatschappelijkeactiviteiten._hash,
+    hr_maatschappelijkeactiviteiten._version,
+    hr_maatschappelijkeactiviteiten._date_created,
+    hr_maatschappelijkeactiviteiten._date_confirmed,
+    hr_maatschappelijkeactiviteiten._date_modified,
+    hr_maatschappelijkeactiviteiten._date_deleted,
+    hr_maatschappelijkeactiviteiten._expiration_date,
+    hr_maatschappelijkeactiviteiten._gobid,
+    hr_maatschappelijkeactiviteiten._id,
+    hr_maatschappelijkeactiviteiten._tid
+   FROM public.hr_maatschappelijkeactiviteiten;
+
+
+ALTER TABLE legacy.hr_maatschappelijkeactiviteiten OWNER TO gobtest;
+
+--
+-- Name: hr_vestigingen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.hr_vestigingen (
+    vestigingsnummer character varying,
+    datum_actueel_tot timestamp without time zone,
+    datum_aanvang date,
+    datum_einde date,
+    datum_voortzetting date,
+    is_commerciele_vestiging character varying,
+    eerste_handelsnaam character varying,
+    communicatie jsonb,
+    email_adressen jsonb,
+    domeinnamen jsonb,
+    is_samengevoegd_met_vestiging jsonb,
+    datum_afgesloten date,
+    datum_samenvoeging date,
+    naam character varying,
+    verkorte_naam character varying,
+    ook_genoemd character varying,
+    totaal_werkzame_personen integer,
+    voltijd_werkzame_personen integer,
+    deeltijd_werkzame_personen integer,
+    hoofd_vestiging character varying,
+    activiteit_omschrijving character varying,
+    importeert character varying,
+    exporteert character varying,
+    activiteiten jsonb,
+    handelsnamen jsonb,
+    is_een_uitoefening_van jsonb,
+    bezoek_locatie jsonb,
+    bezoek_geopunt public.geometry(Point,28992),
+    bezoek_heeft_nummeraanduiding jsonb,
+    bezoek_heeft_verblijfsobject jsonb,
+    bezoek_heeft_ligplaats jsonb,
+    bezoek_heeft_standplaats jsonb,
+    post_locatie jsonb,
+    post_geopunt public.geometry(Point,28992),
+    post_heeft_nummeraanduiding jsonb,
+    post_heeft_verblijfsobject jsonb,
+    post_heeft_ligplaats jsonb,
+    post_heeft_standplaats jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.hr_vestigingen OWNER TO gobtest;
+
+--
+-- Name: hr_vestigingen; Type: VIEW; Schema: legacy; Owner: gobtest
+--
+
+CREATE VIEW legacy.hr_vestigingen AS
+ SELECT hr_vestigingen.vestigingsnummer,
+    hr_vestigingen.datum_actueel_tot,
+    hr_vestigingen.datum_aanvang,
+    hr_vestigingen.datum_einde,
+    hr_vestigingen.datum_voortzetting,
+    hr_vestigingen.is_commerciele_vestiging,
+    hr_vestigingen.eerste_handelsnaam,
+    hr_vestigingen.communicatie,
+    hr_vestigingen.email_adressen,
+    hr_vestigingen.domeinnamen,
+    hr_vestigingen.is_samengevoegd_met_vestiging,
+    hr_vestigingen.datum_afgesloten,
+    hr_vestigingen.datum_samenvoeging,
+    hr_vestigingen.naam,
+    hr_vestigingen.verkorte_naam,
+    hr_vestigingen.ook_genoemd,
+    hr_vestigingen.totaal_werkzame_personen,
+    hr_vestigingen.voltijd_werkzame_personen,
+    hr_vestigingen.deeltijd_werkzame_personen,
+    hr_vestigingen.hoofd_vestiging,
+    hr_vestigingen.activiteit_omschrijving,
+    hr_vestigingen.importeert,
+    hr_vestigingen.exporteert,
+    hr_vestigingen.activiteiten,
+    hr_vestigingen.handelsnamen,
+    hr_vestigingen.is_een_uitoefening_van,
+    hr_vestigingen.bezoek_locatie,
+    hr_vestigingen.bezoek_geopunt,
+    hr_vestigingen.bezoek_heeft_nummeraanduiding,
+    hr_vestigingen.bezoek_heeft_verblijfsobject,
+    hr_vestigingen.bezoek_heeft_ligplaats,
+    hr_vestigingen.bezoek_heeft_standplaats,
+    hr_vestigingen.post_locatie,
+    hr_vestigingen.post_geopunt,
+    hr_vestigingen.post_heeft_nummeraanduiding,
+    hr_vestigingen.post_heeft_verblijfsobject,
+    hr_vestigingen.post_heeft_ligplaats,
+    hr_vestigingen.post_heeft_standplaats,
+    hr_vestigingen._source,
+    hr_vestigingen._application,
+    hr_vestigingen._source_id,
+    hr_vestigingen._last_event,
+    hr_vestigingen._hash,
+    hr_vestigingen._version,
+    hr_vestigingen._date_created,
+    hr_vestigingen._date_confirmed,
+    hr_vestigingen._date_modified,
+    hr_vestigingen._date_deleted,
+    hr_vestigingen._expiration_date,
+    hr_vestigingen._gobid,
+    hr_vestigingen._id,
+    hr_vestigingen._tid
+   FROM public.hr_vestigingen;
+
+
+ALTER TABLE legacy.hr_vestigingen OWNER TO gobtest;
+
+--
 -- Name: meetbouten_meetbouten; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -7719,70 +7971,6 @@ ALTER SEQUENCE public.hr_functievervulling__gobid_seq OWNED BY public.hr_functie
 
 
 --
--- Name: hr_maatschappelijkeactiviteiten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.hr_maatschappelijkeactiviteiten (
-    kvknummer character varying,
-    datum_actueel_tot timestamp without time zone,
-    datum_aanvang_maatschappelijke_activiteit date,
-    datum_einde_maatschappelijke_activiteit date,
-    registratie_tijdstip_maatschappelijke_activiteit timestamp without time zone,
-    naam character varying,
-    non_mailing character varying,
-    incidenteel_uitlenen_arbeidskrachten character varying,
-    activiteiten jsonb,
-    heeft_hoofdvestiging jsonb,
-    datum_aanvang_maatschappelijke_activiteit_vestiging date,
-    datum_einde_maatschappelijke_activiteit_vestiging date,
-    wordt_uitgeoefend_in_niet_commerciele_vestiging jsonb,
-    heeft_als_eigenaar_np jsonb,
-    heeft_als_eigenaar_nnp jsonb,
-    onderneming character varying,
-    totaal_werkzame_personen integer,
-    voltijd_werkzame_personen integer,
-    deeltijd_werkzame_personen integer,
-    datum_aanvang_onderneming date,
-    datum_einde_onderneming date,
-    is_overdracht_voortzetting_onderneming character varying,
-    datum_overdracht_voortzetting_onderneming date,
-    wordt_uitgeoefend_in_commerciele_vestiging jsonb,
-    datum_aanvang_onderneming_vestiging date,
-    datum_einde_onderneming_vestiging date,
-    datum_aanvang_onderneming_handelsnaam date,
-    datum_einde_onderneming_handelsnaam date,
-    handelsnamen jsonb,
-    communicatie jsonb,
-    email_adressen jsonb,
-    domeinnamen jsonb,
-    bezoek_locatie jsonb,
-    bezoek_geopunt public.geometry(Point,28992),
-    heeft_nummeraanduiding jsonb,
-    heeft_verblijfsobject jsonb,
-    heeft_ligplaats jsonb,
-    heeft_standplaats jsonb,
-    post_locatie jsonb,
-    post_geopunt public.geometry(Point,28992),
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.hr_maatschappelijkeactiviteiten OWNER TO gobtest;
-
---
 -- Name: hr_maatschappelijkeactiviteiten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -7944,68 +8132,6 @@ ALTER TABLE public.hr_nietnatuurlijkpersoon__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.hr_nietnatuurlijkpersoon__gobid_seq OWNED BY public.hr_nietnatuurlijkpersoon._gobid;
 
-
---
--- Name: hr_vestigingen; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.hr_vestigingen (
-    vestigingsnummer character varying,
-    datum_actueel_tot timestamp without time zone,
-    datum_aanvang date,
-    datum_einde date,
-    datum_voortzetting date,
-    is_commerciele_vestiging character varying,
-    eerste_handelsnaam character varying,
-    communicatie jsonb,
-    email_adressen jsonb,
-    domeinnamen jsonb,
-    is_samengevoegd_met_vestiging jsonb,
-    datum_afgesloten date,
-    datum_samenvoeging date,
-    naam character varying,
-    verkorte_naam character varying,
-    ook_genoemd character varying,
-    totaal_werkzame_personen integer,
-    voltijd_werkzame_personen integer,
-    deeltijd_werkzame_personen integer,
-    hoofd_vestiging character varying,
-    activiteit_omschrijving character varying,
-    importeert character varying,
-    exporteert character varying,
-    activiteiten jsonb,
-    handelsnamen jsonb,
-    is_een_uitoefening_van jsonb,
-    bezoek_locatie jsonb,
-    bezoek_geopunt public.geometry(Point,28992),
-    bezoek_heeft_nummeraanduiding jsonb,
-    bezoek_heeft_verblijfsobject jsonb,
-    bezoek_heeft_ligplaats jsonb,
-    bezoek_heeft_standplaats jsonb,
-    post_locatie jsonb,
-    post_geopunt public.geometry(Point,28992),
-    post_heeft_nummeraanduiding jsonb,
-    post_heeft_verblijfsobject jsonb,
-    post_heeft_ligplaats jsonb,
-    post_heeft_standplaats jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.hr_vestigingen OWNER TO gobtest;
 
 --
 -- Name: hr_vestigingen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
