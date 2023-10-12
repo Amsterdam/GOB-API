@@ -8119,6 +8119,227 @@ ALTER SEQUENCE public.meetbouten_rollagen__gobid_seq OWNED BY public.meetbouten_
 
 
 --
+-- Name: monumenten_complexen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.monumenten_complexen (
+    identificatie character varying,
+    monumentnummer_complex integer,
+    complex_naam character varying,
+    bestaat_uit_monumenten_monumenten jsonb,
+    beschrijving character varying,
+    beschrijving_publiek character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.monumenten_complexen OWNER TO gobtest;
+
+--
+-- Name: monumenten_complexen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.monumenten_complexen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.monumenten_complexen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: monumenten_complexen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.monumenten_complexen__gobid_seq OWNED BY public.monumenten_complexen._gobid;
+
+
+--
+-- Name: monumenten_monumenten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.monumenten_monumenten (
+    identificatie character varying,
+    monument_nummer integer,
+    orde_naam character varying,
+    betreft_bag_pand jsonb,
+    monument_naam character varying,
+    type character varying,
+    status character varying,
+    aanwijzingsdatum timestamp without time zone,
+    in_onderzoek character varying,
+    architect_ontwerp character varying,
+    opdrachtgever_bouw character varying,
+    bouwjaar_start_bouwperiode character varying,
+    bouwjaar_eind_bouwperiode character varying,
+    oorspronkelijke_functie character varying,
+    coordinaten public.geometry(Point,28992),
+    geometrie public.geometry(Geometry,28992),
+    redengevende_omschrijving character varying,
+    redengevende_omschrijving_publiek character varying,
+    beschrijving character varying,
+    beschrijving_publiek character varying,
+    ligt_in_monumenten_complex jsonb,
+    heeft_monumenten_situeringen jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.monumenten_monumenten OWNER TO gobtest;
+
+--
+-- Name: monumenten_monumenten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.monumenten_monumenten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.monumenten_monumenten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: monumenten_monumenten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.monumenten_monumenten__gobid_seq OWNED BY public.monumenten_monumenten._gobid;
+
+
+--
+-- Name: monumenten_situeringen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.monumenten_situeringen (
+    identificatie character varying,
+    eerste_situering character varying,
+    situering_nummeraanduiding character varying,
+    hoort_bij_monumenten_monument jsonb,
+    betreft_bag_nummeraanduiding jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.monumenten_situeringen OWNER TO gobtest;
+
+--
+-- Name: monumenten_situeringen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.monumenten_situeringen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.monumenten_situeringen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: monumenten_situeringen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.monumenten_situeringen__gobid_seq OWNED BY public.monumenten_situeringen._gobid;
+
+
+--
+-- Name: monumenten_unesco; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.monumenten_unesco (
+    identificatie character varying,
+    datum_actueel_tot timestamp without time zone,
+    naam character varying,
+    geometrie public.geometry(Geometry,28992),
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.monumenten_unesco OWNER TO gobtest;
+
+--
+-- Name: monumenten_unesco__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.monumenten_unesco__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.monumenten_unesco__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: monumenten_unesco__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.monumenten_unesco__gobid_seq OWNED BY public.monumenten_unesco._gobid;
+
+
+--
 -- Name: rel_bag_dsr_bag_bdt_heeft_brondocumenten; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -16891,6 +17112,338 @@ CREATE MATERIALIZED VIEW public.mv_mbn_rpt_nap_pmk_is_nap_peilmerk AS
 ALTER TABLE public.mv_mbn_rpt_nap_pmk_is_nap_peilmerk OWNER TO gobtest;
 
 --
+-- Name: rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten OWNER TO gobtest;
+
+--
+-- Name: mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten AS
+ SELECT rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten._gobid,
+    rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten.src_id,
+    rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten.dst_id,
+    rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten.begin_geldigheid,
+    rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten.eind_geldigheid,
+    rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten.bronwaarde
+   FROM public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten
+  WHERE (rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten OWNER TO gobtest;
+
+--
+-- Name: rel_mon_mon_bag_pnd_betreft_bag_pand; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_mon_mon_bag_pnd_betreft_bag_pand (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_mon_mon_bag_pnd_betreft_bag_pand OWNER TO gobtest;
+
+--
+-- Name: mv_mon_mon_bag_pnd_betreft_bag_pand; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_mon_mon_bag_pnd_betreft_bag_pand AS
+ SELECT rel_mon_mon_bag_pnd_betreft_bag_pand._gobid,
+    rel_mon_mon_bag_pnd_betreft_bag_pand.src_id,
+    rel_mon_mon_bag_pnd_betreft_bag_pand.dst_id,
+    rel_mon_mon_bag_pnd_betreft_bag_pand.dst_volgnummer,
+    rel_mon_mon_bag_pnd_betreft_bag_pand.begin_geldigheid,
+    rel_mon_mon_bag_pnd_betreft_bag_pand.eind_geldigheid,
+    rel_mon_mon_bag_pnd_betreft_bag_pand.bronwaarde
+   FROM public.rel_mon_mon_bag_pnd_betreft_bag_pand
+  WHERE (rel_mon_mon_bag_pnd_betreft_bag_pand._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_mon_mon_bag_pnd_betreft_bag_pand OWNER TO gobtest;
+
+--
+-- Name: rel_mon_mon_mon_cpx_ligt_in_monumenten_complex; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex OWNER TO gobtest;
+
+--
+-- Name: mv_mon_mon_mon_cpx_ligt_in_monumenten_complex; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_mon_mon_mon_cpx_ligt_in_monumenten_complex AS
+ SELECT rel_mon_mon_mon_cpx_ligt_in_monumenten_complex._gobid,
+    rel_mon_mon_mon_cpx_ligt_in_monumenten_complex.src_id,
+    rel_mon_mon_mon_cpx_ligt_in_monumenten_complex.dst_id,
+    rel_mon_mon_mon_cpx_ligt_in_monumenten_complex.begin_geldigheid,
+    rel_mon_mon_mon_cpx_ligt_in_monumenten_complex.eind_geldigheid,
+    rel_mon_mon_mon_cpx_ligt_in_monumenten_complex.bronwaarde
+   FROM public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex
+  WHERE (rel_mon_mon_mon_cpx_ligt_in_monumenten_complex._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_mon_mon_mon_cpx_ligt_in_monumenten_complex OWNER TO gobtest;
+
+--
+-- Name: rel_mon_mon_mon_sit_heeft_monumenten_situeringen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen OWNER TO gobtest;
+
+--
+-- Name: mv_mon_mon_mon_sit_heeft_monumenten_situeringen; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_mon_mon_mon_sit_heeft_monumenten_situeringen AS
+ SELECT rel_mon_mon_mon_sit_heeft_monumenten_situeringen._gobid,
+    rel_mon_mon_mon_sit_heeft_monumenten_situeringen.src_id,
+    rel_mon_mon_mon_sit_heeft_monumenten_situeringen.dst_id,
+    rel_mon_mon_mon_sit_heeft_monumenten_situeringen.begin_geldigheid,
+    rel_mon_mon_mon_sit_heeft_monumenten_situeringen.eind_geldigheid,
+    rel_mon_mon_mon_sit_heeft_monumenten_situeringen.bronwaarde
+   FROM public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen
+  WHERE (rel_mon_mon_mon_sit_heeft_monumenten_situeringen._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_mon_mon_mon_sit_heeft_monumenten_situeringen OWNER TO gobtest;
+
+--
+-- Name: rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding OWNER TO gobtest;
+
+--
+-- Name: mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding AS
+ SELECT rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding._gobid,
+    rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding.src_id,
+    rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding.dst_id,
+    rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding.dst_volgnummer,
+    rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding.begin_geldigheid,
+    rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding.eind_geldigheid,
+    rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding.bronwaarde
+   FROM public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding
+  WHERE (rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding OWNER TO gobtest;
+
+--
+-- Name: rel_mon_sit_mon_mon_hoort_bij_monumenten_monument; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument (
+    id character varying,
+    src_source character varying,
+    src_id character varying,
+    src_volgnummer integer,
+    bronwaarde character varying,
+    derivation character varying,
+    dst_source character varying,
+    dst_id character varying,
+    dst_volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    _last_src_event integer,
+    _last_dst_event integer,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument OWNER TO gobtest;
+
+--
+-- Name: mv_mon_sit_mon_mon_hoort_bij_monumenten_monument; Type: MATERIALIZED VIEW; Schema: public; Owner: gobtest
+--
+
+CREATE MATERIALIZED VIEW public.mv_mon_sit_mon_mon_hoort_bij_monumenten_monument AS
+ SELECT rel_mon_sit_mon_mon_hoort_bij_monumenten_monument._gobid,
+    rel_mon_sit_mon_mon_hoort_bij_monumenten_monument.src_id,
+    rel_mon_sit_mon_mon_hoort_bij_monumenten_monument.dst_id,
+    rel_mon_sit_mon_mon_hoort_bij_monumenten_monument.begin_geldigheid,
+    rel_mon_sit_mon_mon_hoort_bij_monumenten_monument.eind_geldigheid,
+    rel_mon_sit_mon_mon_hoort_bij_monumenten_monument.bronwaarde
+   FROM public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument
+  WHERE (rel_mon_sit_mon_mon_hoort_bij_monumenten_monument._date_deleted IS NULL)
+  WITH NO DATA;
+
+
+ALTER TABLE public.mv_mon_sit_mon_mon_hoort_bij_monumenten_monument OWNER TO gobtest;
+
+--
 -- Name: rel_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -21508,6 +22061,234 @@ ALTER SEQUENCE public.qa_meetbouten_rollagen__gobid_seq OWNED BY public.qa_meetb
 
 
 --
+-- Name: qa_monumenten_complexen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_monumenten_complexen (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_monumenten_complexen OWNER TO gobtest;
+
+--
+-- Name: qa_monumenten_complexen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_monumenten_complexen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_monumenten_complexen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_monumenten_complexen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_monumenten_complexen__gobid_seq OWNED BY public.qa_monumenten_complexen._gobid;
+
+
+--
+-- Name: qa_monumenten_monumenten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_monumenten_monumenten (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_monumenten_monumenten OWNER TO gobtest;
+
+--
+-- Name: qa_monumenten_monumenten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_monumenten_monumenten__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_monumenten_monumenten__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_monumenten_monumenten__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_monumenten_monumenten__gobid_seq OWNED BY public.qa_monumenten_monumenten._gobid;
+
+
+--
+-- Name: qa_monumenten_situeringen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_monumenten_situeringen (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_monumenten_situeringen OWNER TO gobtest;
+
+--
+-- Name: qa_monumenten_situeringen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_monumenten_situeringen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_monumenten_situeringen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_monumenten_situeringen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_monumenten_situeringen__gobid_seq OWNED BY public.qa_monumenten_situeringen._gobid;
+
+
+--
+-- Name: qa_monumenten_unesco; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.qa_monumenten_unesco (
+    meldingnummer character varying,
+    code character varying,
+    proces character varying,
+    attribuut character varying,
+    identificatie character varying,
+    volgnummer integer,
+    begin_geldigheid timestamp without time zone,
+    eind_geldigheid timestamp without time zone,
+    betwijfelde_waarde character varying,
+    onderbouwing character varying,
+    voorgestelde_waarde character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying
+);
+
+
+ALTER TABLE public.qa_monumenten_unesco OWNER TO gobtest;
+
+--
+-- Name: qa_monumenten_unesco__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.qa_monumenten_unesco__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.qa_monumenten_unesco__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: qa_monumenten_unesco__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.qa_monumenten_unesco__gobid_seq OWNED BY public.qa_monumenten_unesco._gobid;
+
+
+--
 -- Name: qa_nap_peilmerken; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -26080,6 +26861,138 @@ ALTER SEQUENCE public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk__gobid_seq OWNED BY pu
 
 
 --
+-- Name: rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumente__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumente__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumente__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumente__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumente__gobid_seq OWNED BY public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten._gobid;
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_betreft_bag_pand__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_mon_mon_bag_pnd_betreft_bag_pand__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_mon_mon_bag_pnd_betreft_bag_pand__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_mon_mon_bag_pnd_betreft_bag_pand__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_mon_mon_bag_pnd_betreft_bag_pand__gobid_seq OWNED BY public.rel_mon_mon_bag_pnd_betreft_bag_pand._gobid;
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_ligt_in_monumenten_complex__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_mon_mon_mon_cpx_ligt_in_monumenten_complex__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex__gobid_seq OWNED BY public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex._gobid;
+
+
+--
+-- Name: rel_mon_mon_mon_sit_heeft_monumenten_situeringen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_mon_mon_mon_sit_heeft_monumenten_situeringen__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen__gobid_seq OWNED BY public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen._gobid;
+
+
+--
+-- Name: rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding__gobid_seq OWNED BY public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding._gobid;
+
+
+--
+-- Name: rel_mon_sit_mon_mon_hoort_bij_monumenten_monument__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
+--
+
+CREATE SEQUENCE public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument__gobid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument__gobid_seq OWNER TO gobtest;
+
+--
+-- Name: rel_mon_sit_mon_mon_hoort_bij_monumenten_monument__gobid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gobtest
+--
+
+ALTER SEQUENCE public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument__gobid_seq OWNED BY public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument._gobid;
+
+
+--
 -- Name: rel_nap_pmk_gbd_bbk_ligt_in_bouwblok__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -27536,6 +28449,34 @@ ALTER TABLE ONLY public.meetbouten_rollagen ALTER COLUMN _gobid SET DEFAULT next
 
 
 --
+-- Name: monumenten_complexen _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_complexen ALTER COLUMN _gobid SET DEFAULT nextval('public.monumenten_complexen__gobid_seq'::regclass);
+
+
+--
+-- Name: monumenten_monumenten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_monumenten ALTER COLUMN _gobid SET DEFAULT nextval('public.monumenten_monumenten__gobid_seq'::regclass);
+
+
+--
+-- Name: monumenten_situeringen _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_situeringen ALTER COLUMN _gobid SET DEFAULT nextval('public.monumenten_situeringen__gobid_seq'::regclass);
+
+
+--
+-- Name: monumenten_unesco _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_unesco ALTER COLUMN _gobid SET DEFAULT nextval('public.monumenten_unesco__gobid_seq'::regclass);
+
+
+--
 -- Name: nap_peilmerken _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
 --
 
@@ -27918,6 +28859,34 @@ ALTER TABLE ONLY public.qa_meetbouten_referentiepunten ALTER COLUMN _gobid SET D
 --
 
 ALTER TABLE ONLY public.qa_meetbouten_rollagen ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_meetbouten_rollagen__gobid_seq'::regclass);
+
+
+--
+-- Name: qa_monumenten_complexen _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_complexen ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_monumenten_complexen__gobid_seq'::regclass);
+
+
+--
+-- Name: qa_monumenten_monumenten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_monumenten ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_monumenten_monumenten__gobid_seq'::regclass);
+
+
+--
+-- Name: qa_monumenten_situeringen _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_situeringen ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_monumenten_situeringen__gobid_seq'::regclass);
+
+
+--
+-- Name: qa_monumenten_unesco _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_unesco ALTER COLUMN _gobid SET DEFAULT nextval('public.qa_monumenten_unesco__gobid_seq'::regclass);
 
 
 --
@@ -29150,6 +30119,48 @@ ALTER TABLE ONLY public.rel_mbn_rpt_gbd_sdl_ligt_in_gebieden_stadsdeel ALTER COL
 --
 
 ALTER TABLE ONLY public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumente__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_betreft_bag_pand _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_bag_pnd_betreft_bag_pand ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_mon_mon_bag_pnd_betreft_bag_pand__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_ligt_in_monumenten_complex _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_heeft_monumenten_situeringen _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding__gobid_seq'::regclass);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_hoort_bij_monumenten_monument _gobid; Type: DEFAULT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument ALTER COLUMN _gobid SET DEFAULT nextval('public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument__gobid_seq'::regclass);
 
 
 --
@@ -31218,6 +32229,102 @@ ALTER TABLE ONLY public.meetbouten_rollagen
 
 
 --
+-- Name: monumenten_complexen monumenten_complexen__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_complexen
+    ADD CONSTRAINT monumenten_complexen__id_key UNIQUE (_id);
+
+
+--
+-- Name: monumenten_complexen monumenten_complexen__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_complexen
+    ADD CONSTRAINT monumenten_complexen__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: monumenten_complexen monumenten_complexen_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_complexen
+    ADD CONSTRAINT monumenten_complexen_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: monumenten_monumenten monumenten_monumenten__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_monumenten
+    ADD CONSTRAINT monumenten_monumenten__id_key UNIQUE (_id);
+
+
+--
+-- Name: monumenten_monumenten monumenten_monumenten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_monumenten
+    ADD CONSTRAINT monumenten_monumenten__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: monumenten_monumenten monumenten_monumenten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_monumenten
+    ADD CONSTRAINT monumenten_monumenten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: monumenten_situeringen monumenten_situeringen__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_situeringen
+    ADD CONSTRAINT monumenten_situeringen__id_key UNIQUE (_id);
+
+
+--
+-- Name: monumenten_situeringen monumenten_situeringen__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_situeringen
+    ADD CONSTRAINT monumenten_situeringen__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: monumenten_situeringen monumenten_situeringen_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_situeringen
+    ADD CONSTRAINT monumenten_situeringen_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: monumenten_unesco monumenten_unesco__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_unesco
+    ADD CONSTRAINT monumenten_unesco__id_key UNIQUE (_id);
+
+
+--
+-- Name: monumenten_unesco monumenten_unesco__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_unesco
+    ADD CONSTRAINT monumenten_unesco__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: monumenten_unesco monumenten_unesco_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.monumenten_unesco
+    ADD CONSTRAINT monumenten_unesco_pkey PRIMARY KEY (_gobid);
+
+
+--
 -- Name: nap_peilmerken nap_peilmerken__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
 --
 
@@ -32535,6 +33642,102 @@ ALTER TABLE ONLY public.qa_meetbouten_rollagen
 
 ALTER TABLE ONLY public.qa_meetbouten_rollagen
     ADD CONSTRAINT qa_meetbouten_rollagen_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: qa_monumenten_complexen qa_monumenten_complexen__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_complexen
+    ADD CONSTRAINT qa_monumenten_complexen__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_monumenten_complexen qa_monumenten_complexen__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_complexen
+    ADD CONSTRAINT qa_monumenten_complexen__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_monumenten_complexen qa_monumenten_complexen_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_complexen
+    ADD CONSTRAINT qa_monumenten_complexen_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: qa_monumenten_monumenten qa_monumenten_monumenten__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_monumenten
+    ADD CONSTRAINT qa_monumenten_monumenten__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_monumenten_monumenten qa_monumenten_monumenten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_monumenten
+    ADD CONSTRAINT qa_monumenten_monumenten__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_monumenten_monumenten qa_monumenten_monumenten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_monumenten
+    ADD CONSTRAINT qa_monumenten_monumenten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: qa_monumenten_situeringen qa_monumenten_situeringen__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_situeringen
+    ADD CONSTRAINT qa_monumenten_situeringen__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_monumenten_situeringen qa_monumenten_situeringen__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_situeringen
+    ADD CONSTRAINT qa_monumenten_situeringen__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_monumenten_situeringen qa_monumenten_situeringen_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_situeringen
+    ADD CONSTRAINT qa_monumenten_situeringen_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: qa_monumenten_unesco qa_monumenten_unesco__id_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_unesco
+    ADD CONSTRAINT qa_monumenten_unesco__id_key UNIQUE (_id);
+
+
+--
+-- Name: qa_monumenten_unesco qa_monumenten_unesco__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_unesco
+    ADD CONSTRAINT qa_monumenten_unesco__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: qa_monumenten_unesco qa_monumenten_unesco_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.qa_monumenten_unesco
+    ADD CONSTRAINT qa_monumenten_unesco_pkey PRIMARY KEY (_gobid);
 
 
 --
@@ -36759,6 +37962,150 @@ ALTER TABLE ONLY public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk
 
 ALTER TABLE ONLY public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk
     ADD CONSTRAINT rel_mbn_rpt_nap_pmk_is_nap_peilmerk_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten
+    ADD CONSTRAINT rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten
+    ADD CONSTRAINT rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten
+    ADD CONSTRAINT rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_betreft_bag_pand rel_mon_mon_bag_pnd_betreft_bag_pand__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_bag_pnd_betreft_bag_pand
+    ADD CONSTRAINT rel_mon_mon_bag_pnd_betreft_bag_pand__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_betreft_bag_pand rel_mon_mon_bag_pnd_betreft_bag_pand_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_bag_pnd_betreft_bag_pand
+    ADD CONSTRAINT rel_mon_mon_bag_pnd_betreft_bag_pand_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_betreft_bag_pand rel_mon_mon_bag_pnd_betreft_bag_pand_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_bag_pnd_betreft_bag_pand
+    ADD CONSTRAINT rel_mon_mon_bag_pnd_betreft_bag_pand_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_ligt_in_monumenten_complex rel_mon_mon_mon_cpx_ligt_in_monumenten_complex__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex
+    ADD CONSTRAINT rel_mon_mon_mon_cpx_ligt_in_monumenten_complex__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_ligt_in_monumenten_complex rel_mon_mon_mon_cpx_ligt_in_monumenten_complex_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex
+    ADD CONSTRAINT rel_mon_mon_mon_cpx_ligt_in_monumenten_complex_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_ligt_in_monumenten_complex rel_mon_mon_mon_cpx_ligt_in_monumenten_complex_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex
+    ADD CONSTRAINT rel_mon_mon_mon_cpx_ligt_in_monumenten_complex_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_heeft_monumenten_situeringen rel_mon_mon_mon_sit_heeft_monumenten_situeringen__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen
+    ADD CONSTRAINT rel_mon_mon_mon_sit_heeft_monumenten_situeringen__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_heeft_monumenten_situeringen rel_mon_mon_mon_sit_heeft_monumenten_situeringen_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen
+    ADD CONSTRAINT rel_mon_mon_mon_sit_heeft_monumenten_situeringen_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_heeft_monumenten_situeringen rel_mon_mon_mon_sit_heeft_monumenten_situeringen_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen
+    ADD CONSTRAINT rel_mon_mon_mon_sit_heeft_monumenten_situeringen_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding
+    ADD CONSTRAINT rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding
+    ADD CONSTRAINT rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding
+    ADD CONSTRAINT rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding_uniq UNIQUE (_source_id);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_hoort_bij_monumenten_monument rel_mon_sit_mon_mon_hoort_bij_monumenten_monument__tid_key; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument
+    ADD CONSTRAINT rel_mon_sit_mon_mon_hoort_bij_monumenten_monument__tid_key UNIQUE (_tid);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_hoort_bij_monumenten_monument rel_mon_sit_mon_mon_hoort_bij_monumenten_monument_pkey; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument
+    ADD CONSTRAINT rel_mon_sit_mon_mon_hoort_bij_monumenten_monument_pkey PRIMARY KEY (_gobid);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_hoort_bij_monumenten_monument rel_mon_sit_mon_mon_hoort_bij_monumenten_monument_uniq; Type: CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument
+    ADD CONSTRAINT rel_mon_sit_mon_mon_hoort_bij_monumenten_monument_uniq UNIQUE (_source_id);
 
 
 --
@@ -43539,6 +44886,48 @@ CREATE INDEX dst_id_mv_mbn_rpt_nap_pmk_is_nap_peilmerk ON public.mv_mbn_rpt_nap_
 
 
 --
+-- Name: dst_id_mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten ON public.mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_mon_mon_bag_pnd_betreft_bag_pand; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_mon_mon_bag_pnd_betreft_bag_pand ON public.mv_mon_mon_bag_pnd_betreft_bag_pand USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_mon_mon_mon_cpx_ligt_in_monumenten_complex; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_mon_mon_mon_cpx_ligt_in_monumenten_complex ON public.mv_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_mon_mon_mon_sit_heeft_monumenten_situeringen; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_mon_mon_mon_sit_heeft_monumenten_situeringen ON public.mv_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding ON public.mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (dst_id);
+
+
+--
+-- Name: dst_id_mv_mon_sit_mon_mon_hoort_bij_monumenten_monument; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX dst_id_mv_mon_sit_mon_mon_hoort_bij_monumenten_monument ON public.mv_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (dst_id);
+
+
+--
 -- Name: dst_id_mv_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -45394,6 +46783,48 @@ CREATE INDEX gobid_mv_mbn_rpt_nap_pmk_is_nap_peilmerk ON public.mv_mbn_rpt_nap_p
 
 
 --
+-- Name: gobid_mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten ON public.mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_mon_mon_bag_pnd_betreft_bag_pand; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_mon_mon_bag_pnd_betreft_bag_pand ON public.mv_mon_mon_bag_pnd_betreft_bag_pand USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_mon_mon_mon_cpx_ligt_in_monumenten_complex; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_mon_mon_mon_cpx_ligt_in_monumenten_complex ON public.mv_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_mon_mon_mon_sit_heeft_monumenten_situeringen; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_mon_mon_mon_sit_heeft_monumenten_situeringen ON public.mv_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding ON public.mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_gobid);
+
+
+--
+-- Name: gobid_mv_mon_sit_mon_mon_hoort_bij_monumenten_monument; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX gobid_mv_mon_sit_mon_mon_hoort_bij_monumenten_monument ON public.mv_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_gobid);
+
+
+--
 -- Name: gobid_mv_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -46483,6 +47914,349 @@ CREATE INDEX mbn_rpt_dc6c1fae5cee1f6a7f71cac88a73adda ON public.meetbouten_refer
 --
 
 CREATE INDEX mbn_rpt_ed3f22b3eec2fb035647f924a5b2136e ON public.meetbouten_referentiepunten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: mon_cpx_092c471623d23f2c0aa0e6210db86166; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_092c471623d23f2c0aa0e6210db86166 ON public.monumenten_complexen USING btree (identificatie);
+
+
+--
+-- Name: mon_cpx_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_0afd9202ba86aa11ce63ad7007e7990b ON public.monumenten_complexen USING btree (_source_id);
+
+
+--
+-- Name: mon_cpx_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_1a9d849ff5a68997176b6144236806ae ON public.monumenten_complexen USING btree (_expiration_date);
+
+
+--
+-- Name: mon_cpx_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_3676d55f84497cbeadfc614c1b1b62fc ON public.monumenten_complexen USING btree (_application);
+
+
+--
+-- Name: mon_cpx_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_37abd7da5cbd49b20a1090ba960d82e7 ON public.monumenten_complexen USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: mon_cpx_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_613273a0ec2090693894cea102aa8c06 ON public.monumenten_complexen USING btree (_last_event);
+
+
+--
+-- Name: mon_cpx_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.monumenten_complexen USING btree (_date_deleted);
+
+
+--
+-- Name: mon_cpx_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_97beaa21d4819a1131833b897504ce31 ON public.monumenten_complexen USING btree (_tid);
+
+
+--
+-- Name: mon_cpx_a8cff40e68550a325bd4ca7d759272bf; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_a8cff40e68550a325bd4ca7d759272bf ON public.monumenten_complexen USING gin (bestaat_uit_monumenten_monumenten);
+
+
+--
+-- Name: mon_cpx_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_b80bb7740288fda1f201890375a60c8f ON public.monumenten_complexen USING btree (_id);
+
+
+--
+-- Name: mon_cpx_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_d05569f886377400312d8c2edd4c6f4c ON public.monumenten_complexen USING btree (_gobid);
+
+
+--
+-- Name: mon_cpx_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_cpx_ed3f22b3eec2fb035647f924a5b2136e ON public.monumenten_complexen USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: mon_mon_092c471623d23f2c0aa0e6210db86166; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_092c471623d23f2c0aa0e6210db86166 ON public.monumenten_monumenten USING btree (identificatie);
+
+
+--
+-- Name: mon_mon_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_0afd9202ba86aa11ce63ad7007e7990b ON public.monumenten_monumenten USING btree (_source_id);
+
+
+--
+-- Name: mon_mon_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_1a9d849ff5a68997176b6144236806ae ON public.monumenten_monumenten USING btree (_expiration_date);
+
+
+--
+-- Name: mon_mon_35c722f575a2a6b2d87ab42a5aecbb15; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_35c722f575a2a6b2d87ab42a5aecbb15 ON public.monumenten_monumenten USING gin (heeft_monumenten_situeringen);
+
+
+--
+-- Name: mon_mon_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_3676d55f84497cbeadfc614c1b1b62fc ON public.monumenten_monumenten USING btree (_application);
+
+
+--
+-- Name: mon_mon_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_37abd7da5cbd49b20a1090ba960d82e7 ON public.monumenten_monumenten USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: mon_mon_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_613273a0ec2090693894cea102aa8c06 ON public.monumenten_monumenten USING btree (_last_event);
+
+
+--
+-- Name: mon_mon_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.monumenten_monumenten USING btree (_date_deleted);
+
+
+--
+-- Name: mon_mon_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_97beaa21d4819a1131833b897504ce31 ON public.monumenten_monumenten USING btree (_tid);
+
+
+--
+-- Name: mon_mon_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_b80bb7740288fda1f201890375a60c8f ON public.monumenten_monumenten USING btree (_id);
+
+
+--
+-- Name: mon_mon_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_d05569f886377400312d8c2edd4c6f4c ON public.monumenten_monumenten USING btree (_gobid);
+
+
+--
+-- Name: mon_mon_d069790b261c8dcd356d2069198ae091; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_d069790b261c8dcd356d2069198ae091 ON public.monumenten_monumenten USING gin (betreft_bag_pand);
+
+
+--
+-- Name: mon_mon_e7eacb14775a3f8967382571464902c3; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_e7eacb14775a3f8967382571464902c3 ON public.monumenten_monumenten USING gin (ligt_in_monumenten_complex);
+
+
+--
+-- Name: mon_mon_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_mon_ed3f22b3eec2fb035647f924a5b2136e ON public.monumenten_monumenten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: mon_sit_092c471623d23f2c0aa0e6210db86166; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_092c471623d23f2c0aa0e6210db86166 ON public.monumenten_situeringen USING btree (identificatie);
+
+
+--
+-- Name: mon_sit_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_0afd9202ba86aa11ce63ad7007e7990b ON public.monumenten_situeringen USING btree (_source_id);
+
+
+--
+-- Name: mon_sit_10dd8c9528a33b6fee205841f8d4dd36; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_10dd8c9528a33b6fee205841f8d4dd36 ON public.monumenten_situeringen USING gin (betreft_bag_nummeraanduiding);
+
+
+--
+-- Name: mon_sit_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_1a9d849ff5a68997176b6144236806ae ON public.monumenten_situeringen USING btree (_expiration_date);
+
+
+--
+-- Name: mon_sit_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_3676d55f84497cbeadfc614c1b1b62fc ON public.monumenten_situeringen USING btree (_application);
+
+
+--
+-- Name: mon_sit_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_37abd7da5cbd49b20a1090ba960d82e7 ON public.monumenten_situeringen USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: mon_sit_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_613273a0ec2090693894cea102aa8c06 ON public.monumenten_situeringen USING btree (_last_event);
+
+
+--
+-- Name: mon_sit_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.monumenten_situeringen USING btree (_date_deleted);
+
+
+--
+-- Name: mon_sit_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_97beaa21d4819a1131833b897504ce31 ON public.monumenten_situeringen USING btree (_tid);
+
+
+--
+-- Name: mon_sit_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_b80bb7740288fda1f201890375a60c8f ON public.monumenten_situeringen USING btree (_id);
+
+
+--
+-- Name: mon_sit_c9a2d4d53ce4754e6c933fcd68822cbd; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_c9a2d4d53ce4754e6c933fcd68822cbd ON public.monumenten_situeringen USING gin (hoort_bij_monumenten_monument);
+
+
+--
+-- Name: mon_sit_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_d05569f886377400312d8c2edd4c6f4c ON public.monumenten_situeringen USING btree (_gobid);
+
+
+--
+-- Name: mon_sit_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_sit_ed3f22b3eec2fb035647f924a5b2136e ON public.monumenten_situeringen USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: mon_une_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_0afd9202ba86aa11ce63ad7007e7990b ON public.monumenten_unesco USING btree (_source_id);
+
+
+--
+-- Name: mon_une_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_1a9d849ff5a68997176b6144236806ae ON public.monumenten_unesco USING btree (_expiration_date);
+
+
+--
+-- Name: mon_une_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_3676d55f84497cbeadfc614c1b1b62fc ON public.monumenten_unesco USING btree (_application);
+
+
+--
+-- Name: mon_une_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_37abd7da5cbd49b20a1090ba960d82e7 ON public.monumenten_unesco USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: mon_une_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_613273a0ec2090693894cea102aa8c06 ON public.monumenten_unesco USING btree (_last_event);
+
+
+--
+-- Name: mon_une_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.monumenten_unesco USING btree (_date_deleted);
+
+
+--
+-- Name: mon_une_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_97beaa21d4819a1131833b897504ce31 ON public.monumenten_unesco USING btree (_tid);
+
+
+--
+-- Name: mon_une_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_b80bb7740288fda1f201890375a60c8f ON public.monumenten_unesco USING btree (_id);
+
+
+--
+-- Name: mon_une_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_d05569f886377400312d8c2edd4c6f4c ON public.monumenten_unesco USING btree (_gobid);
+
+
+--
+-- Name: mon_une_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX mon_une_ed3f22b3eec2fb035647f924a5b2136e ON public.monumenten_unesco USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
@@ -50725,6 +52499,314 @@ CREATE INDEX qa_mbn_rpt_d05569f886377400312d8c2edd4c6f4c ON public.qa_meetbouten
 --
 
 CREATE INDEX qa_mbn_rpt_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_meetbouten_referentiepunten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: qa_mon_cpx_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_monumenten_complexen USING btree (_source_id);
+
+
+--
+-- Name: qa_mon_cpx_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_1a9d849ff5a68997176b6144236806ae ON public.qa_monumenten_complexen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_mon_cpx_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_monumenten_complexen USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_mon_cpx_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_monumenten_complexen USING btree (_application);
+
+
+--
+-- Name: qa_mon_cpx_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_monumenten_complexen USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_mon_cpx_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_613273a0ec2090693894cea102aa8c06 ON public.qa_monumenten_complexen USING btree (_last_event);
+
+
+--
+-- Name: qa_mon_cpx_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_monumenten_complexen USING btree (_date_deleted);
+
+
+--
+-- Name: qa_mon_cpx_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_97beaa21d4819a1131833b897504ce31 ON public.qa_monumenten_complexen USING btree (_tid);
+
+
+--
+-- Name: qa_mon_cpx_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_b80bb7740288fda1f201890375a60c8f ON public.qa_monumenten_complexen USING btree (_id);
+
+
+--
+-- Name: qa_mon_cpx_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_d05569f886377400312d8c2edd4c6f4c ON public.qa_monumenten_complexen USING btree (_gobid);
+
+
+--
+-- Name: qa_mon_cpx_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_cpx_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_monumenten_complexen USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: qa_mon_mon_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_monumenten_monumenten USING btree (_source_id);
+
+
+--
+-- Name: qa_mon_mon_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_1a9d849ff5a68997176b6144236806ae ON public.qa_monumenten_monumenten USING btree (_expiration_date);
+
+
+--
+-- Name: qa_mon_mon_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_monumenten_monumenten USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_mon_mon_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_monumenten_monumenten USING btree (_application);
+
+
+--
+-- Name: qa_mon_mon_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_monumenten_monumenten USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_mon_mon_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_613273a0ec2090693894cea102aa8c06 ON public.qa_monumenten_monumenten USING btree (_last_event);
+
+
+--
+-- Name: qa_mon_mon_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_monumenten_monumenten USING btree (_date_deleted);
+
+
+--
+-- Name: qa_mon_mon_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_97beaa21d4819a1131833b897504ce31 ON public.qa_monumenten_monumenten USING btree (_tid);
+
+
+--
+-- Name: qa_mon_mon_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_b80bb7740288fda1f201890375a60c8f ON public.qa_monumenten_monumenten USING btree (_id);
+
+
+--
+-- Name: qa_mon_mon_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_d05569f886377400312d8c2edd4c6f4c ON public.qa_monumenten_monumenten USING btree (_gobid);
+
+
+--
+-- Name: qa_mon_mon_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_mon_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_monumenten_monumenten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: qa_mon_sit_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_monumenten_situeringen USING btree (_source_id);
+
+
+--
+-- Name: qa_mon_sit_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_1a9d849ff5a68997176b6144236806ae ON public.qa_monumenten_situeringen USING btree (_expiration_date);
+
+
+--
+-- Name: qa_mon_sit_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_monumenten_situeringen USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_mon_sit_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_monumenten_situeringen USING btree (_application);
+
+
+--
+-- Name: qa_mon_sit_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_monumenten_situeringen USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_mon_sit_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_613273a0ec2090693894cea102aa8c06 ON public.qa_monumenten_situeringen USING btree (_last_event);
+
+
+--
+-- Name: qa_mon_sit_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_monumenten_situeringen USING btree (_date_deleted);
+
+
+--
+-- Name: qa_mon_sit_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_97beaa21d4819a1131833b897504ce31 ON public.qa_monumenten_situeringen USING btree (_tid);
+
+
+--
+-- Name: qa_mon_sit_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_b80bb7740288fda1f201890375a60c8f ON public.qa_monumenten_situeringen USING btree (_id);
+
+
+--
+-- Name: qa_mon_sit_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_d05569f886377400312d8c2edd4c6f4c ON public.qa_monumenten_situeringen USING btree (_gobid);
+
+
+--
+-- Name: qa_mon_sit_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_sit_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_monumenten_situeringen USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: qa_mon_une_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_0afd9202ba86aa11ce63ad7007e7990b ON public.qa_monumenten_unesco USING btree (_source_id);
+
+
+--
+-- Name: qa_mon_une_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_1a9d849ff5a68997176b6144236806ae ON public.qa_monumenten_unesco USING btree (_expiration_date);
+
+
+--
+-- Name: qa_mon_une_2a4dbedb477015cfe2b9f2c990906f44; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_2a4dbedb477015cfe2b9f2c990906f44 ON public.qa_monumenten_unesco USING btree (_id, volgnummer);
+
+
+--
+-- Name: qa_mon_une_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_3676d55f84497cbeadfc614c1b1b62fc ON public.qa_monumenten_unesco USING btree (_application);
+
+
+--
+-- Name: qa_mon_une_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_37abd7da5cbd49b20a1090ba960d82e7 ON public.qa_monumenten_unesco USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: qa_mon_une_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_613273a0ec2090693894cea102aa8c06 ON public.qa_monumenten_unesco USING btree (_last_event);
+
+
+--
+-- Name: qa_mon_une_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.qa_monumenten_unesco USING btree (_date_deleted);
+
+
+--
+-- Name: qa_mon_une_97beaa21d4819a1131833b897504ce31; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_97beaa21d4819a1131833b897504ce31 ON public.qa_monumenten_unesco USING btree (_tid);
+
+
+--
+-- Name: qa_mon_une_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_b80bb7740288fda1f201890375a60c8f ON public.qa_monumenten_unesco USING btree (_id);
+
+
+--
+-- Name: qa_mon_une_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_d05569f886377400312d8c2edd4c6f4c ON public.qa_monumenten_unesco USING btree (_gobid);
+
+
+--
+-- Name: qa_mon_une_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX qa_mon_une_ed3f22b3eec2fb035647f924a5b2136e ON public.qa_monumenten_unesco USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
 
 
 --
@@ -70755,6 +72837,720 @@ CREATE INDEX rel_mbn_rpt_nap_pmk_96ccbc9a_f49c273bd9b194a2b48ebed02cfba269 ON pu
 
 
 --
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_source_id);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_1a9d849ff5a68997176b6144236806ae ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_expiration_date);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_application);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_source);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_47c61233d92dd28822986676f8650441 ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_613273a0ec2090693894cea102aa8c06 ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_last_event);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_date_deleted);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (bronwaarde);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_b80bb7740288fda1f201890375a60c8f ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_id);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_c5625cb292cd152f07c13709330d1712 ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_d05569f886377400312d8c2edd4c6f4c ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_gobid);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_dc79a884dc55f09863437f9198baf021 ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_last_src_event);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_e0c02692eaf2daf950e3f61108280a92 ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_a8cff40e_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_cpx_mon_mon_a8cff40e_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_source_id);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_1a9d849ff5a68997176b6144236806ae ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_expiration_date);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_application);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_source);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_47c61233d92dd28822986676f8650441 ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_613273a0ec2090693894cea102aa8c06 ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_last_event);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_date_deleted);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (bronwaarde);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_b80bb7740288fda1f201890375a60c8f ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_id);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_c5625cb292cd152f07c13709330d1712 ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_d05569f886377400312d8c2edd4c6f4c ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_gobid);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_dc79a884dc55f09863437f9198baf021 ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_last_src_event);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_e0c02692eaf2daf950e3f61108280a92 ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_d069790b_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_bag_pnd_d069790b_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mon_mon_bag_pnd_betreft_bag_pand USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_source_id);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_1a9d849ff5a68997176b6144236806ae ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_expiration_date);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_application);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_source);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_47c61233d92dd28822986676f8650441 ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_613273a0ec2090693894cea102aa8c06 ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_last_event);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_date_deleted);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (bronwaarde);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_b80bb7740288fda1f201890375a60c8f ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_id);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_c5625cb292cd152f07c13709330d1712 ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_d05569f886377400312d8c2edd4c6f4c ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_gobid);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_dc79a884dc55f09863437f9198baf021 ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_last_src_event);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_e0c02692eaf2daf950e3f61108280a92 ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_e7eacb14_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_cpx_e7eacb14_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_source_id);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_1a9d849ff5a68997176b6144236806ae ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_expiration_date);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_application);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_source);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_47c61233d92dd28822986676f8650441 ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_613273a0ec2090693894cea102aa8c06 ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_last_event);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_date_deleted);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (bronwaarde);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_b80bb7740288fda1f201890375a60c8f ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_id);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_c5625cb292cd152f07c13709330d1712 ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_d05569f886377400312d8c2edd4c6f4c ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_gobid);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_dc79a884dc55f09863437f9198baf021 ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_last_src_event);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_e0c02692eaf2daf950e3f61108280a92 ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mon_mon_mon_sit_35c722f5_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_mon_mon_sit_35c722f5_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_source_id);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_1a9d849ff5a68997176b6144236806ae ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_expiration_date);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_application);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_source);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_47c61233d92dd28822986676f8650441 ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_613273a0ec2090693894cea102aa8c06 ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_last_event);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_date_deleted);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (bronwaarde);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_b80bb7740288fda1f201890375a60c8f ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_id);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_c5625cb292cd152f07c13709330d1712 ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_d05569f886377400312d8c2edd4c6f4c ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_gobid);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_dc79a884dc55f09863437f9198baf021 ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_last_src_event);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_e0c02692eaf2daf950e3f61108280a92 ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mon_sit_bag_nag_10dd8c95_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_bag_nag_10dd8c95_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (_last_dst_event);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_0afd9202ba86aa11ce63ad7007e7990b ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_source_id);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_1a9d849ff5a68997176b6144236806ae; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_1a9d849ff5a68997176b6144236806ae ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_expiration_date);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_3676d55f84497cbeadfc614c1b1b62fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_3676d55f84497cbeadfc614c1b1b62fc ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_application);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_36cd38f49b9afa08222c0dc9ebfe35eb; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_36cd38f49b9afa08222c0dc9ebfe35eb ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_source);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_37abd7da5cbd49b20a1090ba960d82e7; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_37abd7da5cbd49b20a1090ba960d82e7 ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_source, _last_event DESC);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_47c61233d92dd28822986676f8650441; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_47c61233d92dd28822986676f8650441 ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (src_id, src_volgnummer);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_4acfc3d0636d198ba3ed562be2273f9e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_4acfc3d0636d198ba3ed562be2273f9e ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_gobid, _expiration_date);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_613273a0ec2090693894cea102aa8c06; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_613273a0ec2090693894cea102aa8c06 ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_last_event);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_89d95aa5f94e9cd6b0f3a80257e3b7f5; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_89d95aa5f94e9cd6b0f3a80257e3b7f5 ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_date_deleted);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_ab35fb2f74ba637ec5dff03e521947fc; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_ab35fb2f74ba637ec5dff03e521947fc ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (bronwaarde);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_b80bb7740288fda1f201890375a60c8f; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_b80bb7740288fda1f201890375a60c8f ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_id);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_c5625cb292cd152f07c13709330d1712; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_c5625cb292cd152f07c13709330d1712 ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (dst_id, dst_volgnummer);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_d05569f886377400312d8c2edd4c6f4c ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_gobid);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_dc79a884dc55f09863437f9198baf021; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_dc79a884dc55f09863437f9198baf021 ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_last_src_event);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_e0c02692eaf2daf950e3f61108280a92; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_e0c02692eaf2daf950e3f61108280a92 ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (src_id, src_volgnummer, src_source, bronwaarde, _application);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_ed3f22b3eec2fb035647f924a5b2136e; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_ed3f22b3eec2fb035647f924a5b2136e ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (COALESCE(_expiration_date, '9999-12-31 00:00:00'::timestamp without time zone));
+
+
+--
+-- Name: rel_mon_sit_mon_mon_c9a2d4d5_f49c273bd9b194a2b48ebed02cfba269; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX rel_mon_sit_mon_mon_c9a2d4d5_f49c273bd9b194a2b48ebed02cfba269 ON public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (_last_dst_event);
+
+
+--
 -- Name: rel_nap_pmk_gbd_bbk_cadf657e_0afd9202ba86aa11ce63ad7007e7990b; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -75060,6 +77856,48 @@ CREATE INDEX src_dst_wide_mv_mbn_rpt_nap_pmk_is_nap_peilmerk ON public.mv_mbn_rp
 
 
 --
+-- Name: src_dst_wide_mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monument; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monument ON public.mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (src_id, dst_id);
+
+
+--
+-- Name: src_dst_wide_mv_mon_mon_bag_pnd_betreft_bag_pand; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_mon_mon_bag_pnd_betreft_bag_pand ON public.mv_mon_mon_bag_pnd_betreft_bag_pand USING btree (src_id, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_mon_mon_mon_cpx_ligt_in_monumenten_complex; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_mon_mon_mon_cpx_ligt_in_monumenten_complex ON public.mv_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (src_id, dst_id);
+
+
+--
+-- Name: src_dst_wide_mv_mon_mon_mon_sit_heeft_monumenten_situeringen; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_mon_mon_mon_sit_heeft_monumenten_situeringen ON public.mv_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (src_id, dst_id);
+
+
+--
+-- Name: src_dst_wide_mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding ON public.mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (src_id, dst_id, dst_volgnummer);
+
+
+--
+-- Name: src_dst_wide_mv_mon_sit_mon_mon_hoort_bij_monumenten_monument; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_dst_wide_mv_mon_sit_mon_mon_hoort_bij_monumenten_monument ON public.mv_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (src_id, dst_id);
+
+
+--
 -- Name: src_dst_wide_mv_nap_pmk_gbd_bbk_ligt_in_gebieden_bouwblok; Type: INDEX; Schema: public; Owner: gobtest
 --
 
@@ -76338,6 +79176,48 @@ CREATE INDEX src_id_mv_mbn_rpt_gbd_sdl_ligt_in_gebieden_stadsdeel ON public.mv_m
 --
 
 CREATE INDEX src_id_mv_mbn_rpt_nap_pmk_is_nap_peilmerk ON public.mv_mbn_rpt_nap_pmk_is_nap_peilmerk USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten ON public.mv_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_mon_mon_bag_pnd_betreft_bag_pand; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_mon_mon_bag_pnd_betreft_bag_pand ON public.mv_mon_mon_bag_pnd_betreft_bag_pand USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_mon_mon_mon_cpx_ligt_in_monumenten_complex; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_mon_mon_mon_cpx_ligt_in_monumenten_complex ON public.mv_mon_mon_mon_cpx_ligt_in_monumenten_complex USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_mon_mon_mon_sit_heeft_monumenten_situeringen; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_mon_mon_mon_sit_heeft_monumenten_situeringen ON public.mv_mon_mon_mon_sit_heeft_monumenten_situeringen USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding ON public.mv_mon_sit_bag_nag_betreft_bag_nummeraanduiding USING btree (src_id);
+
+
+--
+-- Name: src_id_mv_mon_sit_mon_mon_hoort_bij_monumenten_monument; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX src_id_mv_mon_sit_mon_mon_hoort_bij_monumenten_monument ON public.mv_mon_sit_mon_mon_hoort_bij_monumenten_monument USING btree (src_id);
 
 
 --
@@ -81705,6 +84585,102 @@ ALTER TABLE ONLY public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk
 
 ALTER TABLE ONLY public.rel_mbn_rpt_nap_pmk_is_nap_peilmerk
     ADD CONSTRAINT rel_mbn_rpt_nap_pmk_is_nap_peilmerk_sfk FOREIGN KEY (src_id) REFERENCES public.meetbouten_referentiepunten(_id);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten
+    ADD CONSTRAINT rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten_dfk FOREIGN KEY (dst_id) REFERENCES public.monumenten_monumenten(_id);
+
+
+--
+-- Name: rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten
+    ADD CONSTRAINT rel_mon_cpx_mon_mon_bestaat_uit_monumenten_monumenten_sfk FOREIGN KEY (src_id) REFERENCES public.monumenten_complexen(_id);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_betreft_bag_pand rel_mon_mon_bag_pnd_betreft_bag_pand_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_bag_pnd_betreft_bag_pand
+    ADD CONSTRAINT rel_mon_mon_bag_pnd_betreft_bag_pand_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_panden(_id, volgnummer);
+
+
+--
+-- Name: rel_mon_mon_bag_pnd_betreft_bag_pand rel_mon_mon_bag_pnd_betreft_bag_pand_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_bag_pnd_betreft_bag_pand
+    ADD CONSTRAINT rel_mon_mon_bag_pnd_betreft_bag_pand_sfk FOREIGN KEY (src_id) REFERENCES public.monumenten_monumenten(_id);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_ligt_in_monumenten_complex rel_mon_mon_mon_cpx_ligt_in_monumenten_complex_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex
+    ADD CONSTRAINT rel_mon_mon_mon_cpx_ligt_in_monumenten_complex_dfk FOREIGN KEY (dst_id) REFERENCES public.monumenten_complexen(_id);
+
+
+--
+-- Name: rel_mon_mon_mon_cpx_ligt_in_monumenten_complex rel_mon_mon_mon_cpx_ligt_in_monumenten_complex_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_cpx_ligt_in_monumenten_complex
+    ADD CONSTRAINT rel_mon_mon_mon_cpx_ligt_in_monumenten_complex_sfk FOREIGN KEY (src_id) REFERENCES public.monumenten_monumenten(_id);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_heeft_monumenten_situeringen rel_mon_mon_mon_sit_heeft_monumenten_situeringen_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen
+    ADD CONSTRAINT rel_mon_mon_mon_sit_heeft_monumenten_situeringen_dfk FOREIGN KEY (dst_id) REFERENCES public.monumenten_situeringen(_id);
+
+
+--
+-- Name: rel_mon_mon_mon_sit_heeft_monumenten_situeringen rel_mon_mon_mon_sit_heeft_monumenten_situeringen_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_mon_mon_sit_heeft_monumenten_situeringen
+    ADD CONSTRAINT rel_mon_mon_mon_sit_heeft_monumenten_situeringen_sfk FOREIGN KEY (src_id) REFERENCES public.monumenten_monumenten(_id);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding
+    ADD CONSTRAINT rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding_dfk FOREIGN KEY (dst_id, dst_volgnummer) REFERENCES public.bag_nummeraanduidingen(_id, volgnummer);
+
+
+--
+-- Name: rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding
+    ADD CONSTRAINT rel_mon_sit_bag_nag_betreft_bag_nummeraanduiding_sfk FOREIGN KEY (src_id) REFERENCES public.monumenten_situeringen(_id);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_hoort_bij_monumenten_monument rel_mon_sit_mon_mon_hoort_bij_monumenten_monument_dfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument
+    ADD CONSTRAINT rel_mon_sit_mon_mon_hoort_bij_monumenten_monument_dfk FOREIGN KEY (dst_id) REFERENCES public.monumenten_monumenten(_id);
+
+
+--
+-- Name: rel_mon_sit_mon_mon_hoort_bij_monumenten_monument rel_mon_sit_mon_mon_hoort_bij_monumenten_monument_sfk; Type: FK CONSTRAINT; Schema: public; Owner: gobtest
+--
+
+ALTER TABLE ONLY public.rel_mon_sit_mon_mon_hoort_bij_monumenten_monument
+    ADD CONSTRAINT rel_mon_sit_mon_mon_hoort_bij_monumenten_monument_sfk FOREIGN KEY (src_id) REFERENCES public.monumenten_situeringen(_id);
 
 
 --
