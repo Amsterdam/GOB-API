@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
-FROM amsterdam/gob_wheelhouse:3.9-bullseye as wheelhouse
+FROM amsterdam/gob_wheelhouse:3.9-slim-bullseye as wheelhouse
 MAINTAINER datapunt@amsterdam.nl
 
 
 # Application stage.
-FROM amsterdam/gob_baseimage:3.9-bullseye as application
+FROM amsterdam/gob_baseimage:3.9-slim-bullseye as application
 MAINTAINER datapunt@amsterdam.nl
 # GOB base image: SQL Server driver.
 
@@ -12,7 +12,8 @@ MAINTAINER datapunt@amsterdam.nl
 COPY --from=wheelhouse /opt/wheelhouse /opt/wheelhouse
 
 # Install ANTLR for build.sh (GraphQL 2 SQL grammar).
-RUN apt-get install -y antlr4
+RUN apt-get update && apt-get install -y antlr4
+RUN rm -rf /var/lib/apt/lists/*
 
 # Install gobapi service in /app folder.
 WORKDIR /app
@@ -56,6 +57,7 @@ USER datapunt
 # Test.
 FROM application as test
 USER root
+
 # Remove gobcore tests
 RUN rm -rf /app/src/gobcore/tests
 
