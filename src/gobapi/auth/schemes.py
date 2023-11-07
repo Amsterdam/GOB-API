@@ -72,7 +72,7 @@ GOB_AUTH_SCHEME = {
             "kadastralesubjecten": {
                 "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT],
                 "attributes": {
-                    "heeft_bsn_voor": {
+                    "heeft_bsn_voor_brp_persoon": {
                         "roles": [BRK_DATA_TOTAAL]
                     },
                 }
@@ -91,6 +91,25 @@ GOB_AUTH_SCHEME = {
             },
             "stukdelen": {
                 "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+            }
+        },
+        "hr": {
+            "collections": {
+                "functievervullingen": {
+                    "roles": [BRK_DATA_TOTAAL]
+                },
+                "maatschappelijkeactiviteiten": {
+                    "roles": [BRK_DATA_TOTAAL]
+                },
+                "natuurlijkepersonen": {
+                    "roles": [BRK_DATA_TOTAAL]
+                },
+                "nietnatuurlijkepersonen": {
+                    "roles": [BRK_DATA_TOTAAL]
+                },
+                "vestigingen": {
+                    "roles": [BRK_DATA_TOTAAL]
+                }
             }
         }
     },
