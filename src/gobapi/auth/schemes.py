@@ -92,24 +92,24 @@ GOB_AUTH_SCHEME = {
             "stukdelen": {
                 "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
             }
-        },
-        "hr": {
-            "collections": {
-                "functievervullingen": {
-                    "roles": [BRK_DATA_TOTAAL]
-                },
-                "maatschappelijkeactiviteiten": {
-                    "roles": [BRK_DATA_TOTAAL]
-                },
-                "natuurlijkepersonen": {
-                    "roles": [BRK_DATA_TOTAAL]
-                },
-                "nietnatuurlijkepersonen": {
-                    "roles": [BRK_DATA_TOTAAL]
-                },
-                "vestigingen": {
-                    "roles": [BRK_DATA_TOTAAL]
-                }
+        }
+    },
+    "hr": {
+        "collections": {
+            "functievervullingen": {
+                "roles": [BRK_DATA_TOTAAL]
+            },
+            "maatschappelijkeactiviteiten": {
+                "roles": [BRK_DATA_TOTAAL]
+            },
+            "natuurlijkepersonen": {
+                "roles": [BRK_DATA_TOTAAL]
+            },
+            "nietnatuurlijkepersonen": {
+                "roles": [BRK_DATA_TOTAAL]
+            },
+            "vestigingen": {
+                "roles": [BRK_DATA_TOTAAL]
             }
         }
     },
