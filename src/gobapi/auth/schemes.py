@@ -48,6 +48,71 @@ GOB_AUTH_SCHEME = {
             }
         }
     },
+    "brk2": {
+        "collections": {
+            "kadastraleobjecten": {
+                "attributes": {
+                    "koopsom": {
+                        "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+                    },
+                    "koopsom_valutacode": {
+                        "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+                    },
+                    "koopjaar": {
+                        "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+                    },
+                    "soort_cultuur_bebouwd": {
+                        "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+                    },
+                    "soort_cultuur_onbebouwd": {
+                        "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+                    },
+                }
+            },
+            "kadastralesubjecten": {
+                "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT],
+                "attributes": {
+                    "heeft_bsn_voor_brp_persoon": {
+                        "roles": [BRK_DATA_TOTAAL]
+                    },
+                }
+            },
+            "zakelijkerechten": {
+                "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+            },
+            "tenaamstellingen": {
+                "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+            },
+            "aantekeningenrechten": {
+                "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+            },
+            "aantekeningenkadastraleobjecten": {
+                "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+            },
+            "stukdelen": {
+                "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
+            }
+        },
+        "hr": {
+            "collections": {
+                "functievervullingen": {
+                    "roles": [BRK_DATA_TOTAAL]
+                },
+                "maatschappelijkeactiviteiten": {
+                    "roles": [BRK_DATA_TOTAAL]
+                },
+                "natuurlijkepersonen": {
+                    "roles": [BRK_DATA_TOTAAL]
+                },
+                "nietnatuurlijkepersonen": {
+                    "roles": [BRK_DATA_TOTAAL]
+                },
+                "vestigingen": {
+                    "roles": [BRK_DATA_TOTAAL]
+                }
+            }
+        }
+    },
     "test_catalogue": {
         "collections": {
             "secure": {
