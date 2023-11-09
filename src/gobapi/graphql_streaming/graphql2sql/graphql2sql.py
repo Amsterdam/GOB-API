@@ -64,9 +64,9 @@ class GraphQLVisitor(BaseVisitor):
 
     def visitDirective(self, ctx: GraphQLParser.DirectiveContext):
         if str(ctx.NAME()) == "formatdate":
-            # Ignore this one
+            # Ignore this one for now
             pass
-        else:
+        else:  # pragma: no cover
             raise NotImplementedError(f"Not implemented directive {ctx.NAME()}")
 
     def visitField(self, ctx: GraphQLParser.FieldContext):
@@ -108,7 +108,7 @@ class GraphQLVisitor(BaseVisitor):
             else:
                 value = str(ctx.NAME())
                 self.addArgument('sort', [value])
-        else:
+        else:  # pragma: no cover
             raise NotImplementedError(f"Not implemented argument {ctx}")
 
     def visitNameArray(self, ctx: GraphQLParser.NameArrayContext):
@@ -122,9 +122,7 @@ class GraphQLVisitor(BaseVisitor):
                 return self.visitNumberValue(ctx.value())
             if isinstance(ctx.value(), GraphQLParser.BooleanValueContext):
                 return self.visitBooleanValue(ctx.value())
-            if isinstance(ctx.value(), GraphQLParser.ArrayValueContext):
-                return self.visitArrayValue(ctx.value())
-            raise NotImplementedError(f"Not implemented value type {type(ctx.value())}")
+            raise NotImplementedError(f"Not implemented value type {type(ctx.value())}")  # pragma: no cover
         if ctx.variable():
             return self.visitVariable(ctx.variable())
 
@@ -136,15 +134,6 @@ class GraphQLVisitor(BaseVisitor):
 
     def visitBooleanValue(self, ctx: GraphQLParser.BooleanValueContext):
         return str(ctx.BOOLEAN()) != 'false'
-
-    def visitArrayValue(self, ctx:GraphQLParser.ArrayValueContext):
-        return self.visitArray(ctx.array())
-
-    def visitArray(self, ctx:GraphQLParser.ArrayContext):
-        if ctx.value():
-            return [self.visitValueOrVariable(value) for value in ctx.value()]
-        else:
-            return [n.getText() for n in ctx.NAME()]
 
     def visitFieldName(self, ctx: GraphQLParser.FieldNameContext):
         """

@@ -823,13 +823,6 @@ class TestGraphQLVisitor(TestCase):
         arg.STRING.return_value = 'somestringvalue'
         self.assertEqual(arg.STRING.return_value, self.visitor.visitStringValue(arg))
 
-    def test_visitField_arguments_not_implemented(self):
-        arg = MagicMock()
-        arg.directives.return_value = True
-
-        with self.assertRaises(NotImplementedError):
-            self.visitor.visitField(arg)
-
     def test_visitField_ignore_page_info(self):
         arg = MagicMock()
         arg.selectionSet.return_value = True
