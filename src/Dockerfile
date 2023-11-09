@@ -11,10 +11,6 @@ MAINTAINER datapunt@amsterdam.nl
 # Fill the wheelhouse.
 COPY --from=wheelhouse /opt/wheelhouse /opt/wheelhouse
 
-# Install ANTLR for build.sh (GraphQL 2 SQL grammar).
-RUN apt-get update && apt-get install -y antlr4
-RUN rm -rf /var/lib/apt/lists/*
-
 # Install gobapi service in /app folder.
 WORKDIR /app
 
@@ -29,10 +25,6 @@ RUN rm -rf /opt/wheelhouse
 # Copy gobapi module.
 COPY gobapi gobapi
 
-# GraphQL 2 SQL grammar build.
-COPY build.sh /app
-RUN ./build.sh
-
 # OAuth2 Proxy.
 COPY ./oauth2-proxy oauth2-proxy
 COPY ./oauth2-proxy.cfg oauth2-proxy.cfg
@@ -46,6 +38,14 @@ CMD uwsgi
 # Development.
 FROM application as development
 USER root
+
+# Install ANTLR for build.sh (GraphQL 2 SQL grammar).
+RUN apt-get update && apt-get install -y antlr4
+RUN rm -rf /var/lib/apt/lists/*
+
+# GraphQL 2 SQL grammar build.
+COPY build.sh /app
+
 # Install GOB-Core in development mode. Will be overridden with mounts from the developer filesystem.
 # Changes made to GOB-Core and will be available immediately.
 RUN git clone --depth=1 https://github.com/Amsterdam/GOB-Core.git
