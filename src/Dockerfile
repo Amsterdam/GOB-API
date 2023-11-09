@@ -43,9 +43,6 @@ USER root
 RUN apt-get update && apt-get install -y antlr4
 RUN rm -rf /var/lib/apt/lists/*
 
-# GraphQL 2 SQL grammar build.
-COPY build.sh /app
-
 # Install GOB-Core in development mode. Will be overridden with mounts from the developer filesystem.
 # Changes made to GOB-Core and will be available immediately.
 RUN git clone --depth=1 https://github.com/Amsterdam/GOB-Core.git
