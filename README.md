@@ -38,25 +38,6 @@ In order to activate OAuth2 Proxy and Keycloak locally see the comments in `dock
 
 ## Local
 
-Make sure [ANTLR4](https://www.antlr.org) is installed. Antlr is pre-installed in the development container.
-
-The name of the ANTLR-executable is system-dependent. Sometimes it is called ```antlr```, other times it is called ```antlr4```.
-
-The build script default is ```antlr4```. To change this, run
-
-```bash
-export ANTLR_CMD=<<any other value>>
-```
-
-Run
-
-```bash
-cd src
-./build.sh
-```
-
-to build and generate the project files.
-
 Create a virtual environment:
 
 ```bash
