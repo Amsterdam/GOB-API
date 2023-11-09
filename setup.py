@@ -27,7 +27,6 @@ setup(
         "PyYAML==6.0.1",
         "Rx==1.6.1",
         "singledispatch~=3.7.0",
-        "flask_audit_log @ git+https://github.com/Amsterdam/flask-audit-log.git@v0.1.0a-rc1#egg=datapunt-flask-audit-log",
         "gobcore @ git+https://github.com/Amsterdam/GOB-Core.git@v2.23.0"
     ]
 )
