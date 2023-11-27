@@ -1,5 +1,0 @@
-*.py
-*.interp
-*.tokens
-
-!__init__.py

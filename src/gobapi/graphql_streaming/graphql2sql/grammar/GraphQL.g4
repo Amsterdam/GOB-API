@@ -73,7 +73,9 @@ arguments
    ;
 
 argument
-   : NAME ':' valueOrVariable
+   : SORT ':' NAME
+   | SORT ':' nameArray
+   | NAME ':' valueOrVariable
    ;
 
 fragmentSpread
@@ -144,6 +146,10 @@ nonNullType
    : '!'
    ;
 
+nameArray
+   : '[' NAME ( ',' NAME )* ']'
+   ;
+
 array
    : '[' value ( ',' value )* ']' | '[' ']'
    ;
@@ -158,6 +164,7 @@ BOOLEAN
    : 'true' | 'false'
    ;
 
+SORT : 'sort' ;
 
 NAME
    : [_A-Za-z] [_0-9A-Za-z]*
