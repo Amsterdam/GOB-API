@@ -113,6 +113,27 @@ GOB_AUTH_SCHEME = {
             }
         }
     },
+    "monumenten": {
+        "collections": {
+            "monumenten": {
+                "attributes": {
+                    "beschrijving": {
+                        "roles": [BRK_DATA_TOTAAL]
+                    },
+                    "redengevende_omschrijving": {
+                        "roles": [BRK_DATA_TOTAAL]
+                    }
+                }
+            },
+            "complexen": {
+                "attributes": {
+                    "beschrijving": {
+                        "roles": [BRK_DATA_TOTAAL]
+                    }
+                }
+            }
+        }
+    },
     "test_catalogue": {
         "collections": {
             "secure": {

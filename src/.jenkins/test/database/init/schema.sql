@@ -5939,216 +5939,6 @@ CREATE VIEW legacy.meetbouten_rollagen AS
 ALTER TABLE legacy.meetbouten_rollagen OWNER TO gobtest;
 
 --
--- Name: monumenten_complexen; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.monumenten_complexen (
-    identificatie character varying,
-    monumentnummer_complex integer,
-    complex_naam character varying,
-    bestaat_uit_monumenten_monumenten jsonb,
-    beschrijving character varying,
-    beschrijving_publiek character varying,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.monumenten_complexen OWNER TO gobtest;
-
---
--- Name: monumenten_complexen; Type: VIEW; Schema: legacy; Owner: gobtest
---
-
-CREATE VIEW legacy.monumenten_complexen AS
- SELECT monumenten_complexen.identificatie,
-    monumenten_complexen.monumentnummer_complex,
-    monumenten_complexen.complex_naam,
-    monumenten_complexen.bestaat_uit_monumenten_monumenten,
-    monumenten_complexen.beschrijving,
-    monumenten_complexen.beschrijving_publiek,
-    monumenten_complexen._source,
-    monumenten_complexen._application,
-    monumenten_complexen._source_id,
-    monumenten_complexen._last_event,
-    monumenten_complexen._hash,
-    monumenten_complexen._version,
-    monumenten_complexen._date_created,
-    monumenten_complexen._date_confirmed,
-    monumenten_complexen._date_modified,
-    monumenten_complexen._date_deleted,
-    monumenten_complexen._expiration_date,
-    monumenten_complexen._gobid,
-    monumenten_complexen._id,
-    monumenten_complexen._tid
-   FROM public.monumenten_complexen;
-
-
-ALTER TABLE legacy.monumenten_complexen OWNER TO gobtest;
-
---
--- Name: monumenten_monumenten; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.monumenten_monumenten (
-    identificatie character varying,
-    monument_nummer integer,
-    orde_naam character varying,
-    betreft_bag_pand jsonb,
-    monument_naam character varying,
-    type character varying,
-    status character varying,
-    aanwijzingsdatum timestamp without time zone,
-    in_onderzoek character varying,
-    architect_ontwerp character varying,
-    opdrachtgever_bouw character varying,
-    bouwjaar_start_bouwperiode character varying,
-    bouwjaar_eind_bouwperiode character varying,
-    oorspronkelijke_functie character varying,
-    coordinaten public.geometry(Point,28992),
-    geometrie public.geometry(Geometry,28992),
-    redengevende_omschrijving character varying,
-    redengevende_omschrijving_publiek character varying,
-    beschrijving character varying,
-    beschrijving_publiek character varying,
-    ligt_in_monumenten_complex jsonb,
-    heeft_monumenten_situeringen jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.monumenten_monumenten OWNER TO gobtest;
-
---
--- Name: monumenten_monumenten; Type: VIEW; Schema: legacy; Owner: gobtest
---
-
-CREATE VIEW legacy.monumenten_monumenten AS
- SELECT monumenten_monumenten.identificatie,
-    monumenten_monumenten.monument_nummer,
-    monumenten_monumenten.orde_naam,
-    monumenten_monumenten.betreft_bag_pand,
-    monumenten_monumenten.monument_naam,
-    monumenten_monumenten.type,
-    monumenten_monumenten.status,
-    monumenten_monumenten.aanwijzingsdatum,
-    monumenten_monumenten.in_onderzoek,
-    monumenten_monumenten.architect_ontwerp,
-    monumenten_monumenten.opdrachtgever_bouw,
-    monumenten_monumenten.bouwjaar_start_bouwperiode,
-    monumenten_monumenten.bouwjaar_eind_bouwperiode,
-    monumenten_monumenten.oorspronkelijke_functie,
-    monumenten_monumenten.coordinaten,
-    monumenten_monumenten.geometrie,
-    monumenten_monumenten.redengevende_omschrijving,
-    monumenten_monumenten.redengevende_omschrijving_publiek,
-    monumenten_monumenten.beschrijving,
-    monumenten_monumenten.beschrijving_publiek,
-    monumenten_monumenten.ligt_in_monumenten_complex,
-    monumenten_monumenten.heeft_monumenten_situeringen,
-    monumenten_monumenten._source,
-    monumenten_monumenten._application,
-    monumenten_monumenten._source_id,
-    monumenten_monumenten._last_event,
-    monumenten_monumenten._hash,
-    monumenten_monumenten._version,
-    monumenten_monumenten._date_created,
-    monumenten_monumenten._date_confirmed,
-    monumenten_monumenten._date_modified,
-    monumenten_monumenten._date_deleted,
-    monumenten_monumenten._expiration_date,
-    monumenten_monumenten._gobid,
-    monumenten_monumenten._id,
-    monumenten_monumenten._tid
-   FROM public.monumenten_monumenten;
-
-
-ALTER TABLE legacy.monumenten_monumenten OWNER TO gobtest;
-
---
--- Name: monumenten_situeringen; Type: TABLE; Schema: public; Owner: gobtest
---
-
-CREATE TABLE public.monumenten_situeringen (
-    identificatie character varying,
-    eerste_situering character varying,
-    situering_nummeraanduiding character varying,
-    hoort_bij_monumenten_monument jsonb,
-    betreft_bag_nummeraanduiding jsonb,
-    _source character varying,
-    _application character varying,
-    _source_id character varying,
-    _last_event integer,
-    _hash character varying,
-    _version character varying,
-    _date_created timestamp without time zone,
-    _date_confirmed timestamp without time zone,
-    _date_modified timestamp without time zone,
-    _date_deleted timestamp without time zone,
-    _expiration_date timestamp without time zone,
-    _gobid integer NOT NULL,
-    _id character varying,
-    _tid character varying
-);
-
-
-ALTER TABLE public.monumenten_situeringen OWNER TO gobtest;
-
---
--- Name: monumenten_situeringen; Type: VIEW; Schema: legacy; Owner: gobtest
---
-
-CREATE VIEW legacy.monumenten_situeringen AS
- SELECT monumenten_situeringen.identificatie,
-    monumenten_situeringen.eerste_situering,
-    monumenten_situeringen.situering_nummeraanduiding,
-    monumenten_situeringen.hoort_bij_monumenten_monument,
-    monumenten_situeringen.betreft_bag_nummeraanduiding,
-    monumenten_situeringen._source,
-    monumenten_situeringen._application,
-    monumenten_situeringen._source_id,
-    monumenten_situeringen._last_event,
-    monumenten_situeringen._hash,
-    monumenten_situeringen._version,
-    monumenten_situeringen._date_created,
-    monumenten_situeringen._date_confirmed,
-    monumenten_situeringen._date_modified,
-    monumenten_situeringen._date_deleted,
-    monumenten_situeringen._expiration_date,
-    monumenten_situeringen._gobid,
-    monumenten_situeringen._id,
-    monumenten_situeringen._tid
-   FROM public.monumenten_situeringen;
-
-
-ALTER TABLE legacy.monumenten_situeringen OWNER TO gobtest;
-
---
 -- Name: monumenten_unesco; Type: TABLE; Schema: public; Owner: gobtest
 --
 
@@ -6170,7 +5960,9 @@ CREATE TABLE public.monumenten_unesco (
     _expiration_date timestamp without time zone,
     _gobid integer NOT NULL,
     _id character varying,
-    _tid character varying
+    _tid character varying,
+    datum_aanwijzing timestamp without time zone,
+    datum_afvoeren timestamp without time zone
 );
 
 
@@ -16197,6 +15989,37 @@ ALTER SEQUENCE public.meetbouten_rollagen__gobid_seq OWNED BY public.meetbouten_
 
 
 --
+-- Name: monumenten_complexen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.monumenten_complexen (
+    identificatie character varying,
+    monumentnummer_complex integer,
+    bestaat_uit_monumenten_monumenten jsonb,
+    beschrijving character varying,
+    beschrijving_publiek character varying,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying,
+    naam character varying,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.monumenten_complexen OWNER TO gobtest;
+
+--
 -- Name: monumenten_complexen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -16219,6 +16042,55 @@ ALTER SEQUENCE public.monumenten_complexen__gobid_seq OWNED BY public.monumenten
 
 
 --
+-- Name: monumenten_monumenten; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.monumenten_monumenten (
+    identificatie character varying,
+    betreft_bag_pand jsonb,
+    type character varying,
+    status character varying,
+    in_onderzoek character varying,
+    architect_ontwerp character varying,
+    opdrachtgever_bouw character varying,
+    oorspronkelijke_functie character varying,
+    geometrie public.geometry(Geometry,28992),
+    redengevende_omschrijving character varying,
+    redengevende_omschrijving_publiek character varying,
+    beschrijving character varying,
+    beschrijving_publiek character varying,
+    ligt_in_monumenten_complex jsonb,
+    heeft_monumenten_situeringen jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying,
+    monumentnummer integer,
+    adressering character varying,
+    naam character varying,
+    datum_aanwijzing timestamp without time zone,
+    datum_afvoeren timestamp without time zone,
+    jaar_begin_van character varying,
+    jaar_begin_tot character varying,
+    punt_coordinaten public.geometry(Point,28992),
+    contour public.geometry(Geometry,28992),
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.monumenten_monumenten OWNER TO gobtest;
+
+--
 -- Name: monumenten_monumenten__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
 --
 
@@ -16239,6 +16111,36 @@ ALTER TABLE public.monumenten_monumenten__gobid_seq OWNER TO gobtest;
 
 ALTER SEQUENCE public.monumenten_monumenten__gobid_seq OWNED BY public.monumenten_monumenten._gobid;
 
+
+--
+-- Name: monumenten_situeringen; Type: TABLE; Schema: public; Owner: gobtest
+--
+
+CREATE TABLE public.monumenten_situeringen (
+    identificatie character varying,
+    eerste_situering character varying,
+    situering_nummeraanduiding character varying,
+    hoort_bij_monumenten_monument jsonb,
+    betreft_bag_nummeraanduiding jsonb,
+    _source character varying,
+    _application character varying,
+    _source_id character varying,
+    _last_event integer,
+    _hash character varying,
+    _version character varying,
+    _date_created timestamp without time zone,
+    _date_confirmed timestamp without time zone,
+    _date_modified timestamp without time zone,
+    _date_deleted timestamp without time zone,
+    _expiration_date timestamp without time zone,
+    _gobid integer NOT NULL,
+    _id character varying,
+    _tid character varying,
+    datum_actueel_tot timestamp without time zone
+);
+
+
+ALTER TABLE public.monumenten_situeringen OWNER TO gobtest;
 
 --
 -- Name: monumenten_situeringen__gobid_seq; Type: SEQUENCE; Schema: public; Owner: gobtest
@@ -52419,17 +52321,17 @@ CREATE INDEX nap_pmk_b80bb7740288fda1f201890375a60c8f ON public.nap_peilmerken U
 
 
 --
--- Name: nap_pmk_cadf657ee6f481987a2334dfd3de08a3; Type: INDEX; Schema: public; Owner: gobtest
---
-
-CREATE INDEX nap_pmk_cadf657ee6f481987a2334dfd3de08a3 ON public.nap_peilmerken USING gin (ligt_in_gebieden_bouwblok);
-
-
---
 -- Name: nap_pmk_d05569f886377400312d8c2edd4c6f4c; Type: INDEX; Schema: public; Owner: gobtest
 --
 
 CREATE INDEX nap_pmk_d05569f886377400312d8c2edd4c6f4c ON public.nap_peilmerken USING btree (_gobid);
+
+
+--
+-- Name: nap_pmk_dc6c1fae5cee1f6a7f71cac88a73adda; Type: INDEX; Schema: public; Owner: gobtest
+--
+
+CREATE INDEX nap_pmk_dc6c1fae5cee1f6a7f71cac88a73adda ON public.nap_peilmerken USING gist (geometrie) WHERE public.st_isvalid(geometrie);
 
 
 --
