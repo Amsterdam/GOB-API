@@ -1,5 +1,5 @@
 import re
-from typing import List
+from typing import List, Type, Optional
 
 from antlr4 import CommonTokenStream, InputStream
 
@@ -164,7 +164,7 @@ class InvalidQueryException(Exception):
 
 
 class SqlGenerator:
-    """SqlGenerator generates SQL from the the GraphQLVisitor output."""
+    """SqlGenerator generates SQL from the GraphQLVisitor output."""
     CURSOR_ID = "cursor"
     SCHEMA = "legacy"
 
@@ -214,7 +214,8 @@ class SqlGenerator:
                 }
 
     def _reset(self):
-        self.select_expressions = []
+        self.aliased_select_expressions = {}
+        self.unaliased_select_expressions = []
         self.joins = []
         self.relation_info = {}
 
@@ -255,9 +256,13 @@ class SqlGenerator:
                 API_FIELD.START_VALIDITY_RELATION, API_FIELD.END_VALIDITY_RELATION]:
             raise InvalidQueryException(f"Attribute {attribute} does not exist for {relation_name}")
 
-    def _select_expression(self, relation: dict, field: str):
+    def _geometry_as_text(self, geometry: str):
+        return f"ST_AsText({geometry})"
+
+    def _select_expression(self, relation: dict, field: str) -> tuple[str, Optional[str]]:
+        """Returns the select expression for the given field, with the alias as a tuple."""
         if field == self.CURSOR_ID:
-            return f"{relation['alias']}.{FIELD.GOBID} AS {self.CURSOR_ID}"
+            return (f"{relation['alias']}.{FIELD.GOBID}", self.CURSOR_ID)
 
         field_snake = to_snake(field)
         expression = f"{relation['alias']}.{field_snake}"
@@ -266,14 +271,17 @@ class SqlGenerator:
 
         # If geometry field, transform to WKT
         if field_snake in relation['attributes'] and is_gob_geo_type(relation['attributes'][field_snake]['type']):
-            return f"ST_AsText({expression}) {field_snake}"
+            return self._geometry_as_text(expression), field_snake
 
-        return expression
+        return expression, None
 
     def _current_filter_expression(self, table_id: str = None):
         table = f"{table_id}." if table_id else ""
 
         return f"(COALESCE({table}{FIELD.EXPIRATION_DATE}, '9999-12-31'::timestamp without time zone) > NOW())"
+
+    def _full_table_name(self, table_name: str):
+        return f"{self.SCHEMA}.{table_name}"
 
     def _build_from_table(self, arguments: dict, table_name: str, table_alias: str):
         """Builds from table expression for base relation with :table_name: and :arguments:
@@ -314,7 +322,7 @@ class SqlGenerator:
 
         return f"""FROM (
     SELECT *
-    FROM {self.SCHEMA}.{table_name}
+    FROM {self._full_table_name(table_name)}
     {where}
     {order}
     {limit}
@@ -332,12 +340,14 @@ class SqlGenerator:
         select_fields = [self._select_expression(base_info, field)
                          for field in [FIELD.GOBID] + self.selects[base_collection]['fields']]
 
-        self.select_expressions.extend(select_fields)
+        self._add_select_expressions(select_fields)
+
         # Add catalog and collection to allow for value resolution
-        self.select_expressions.extend([
-            f"'{base_info['catalog_name']}' AS {CATALOG_NAME}",
-            f"'{base_info['collection_name']}' AS {COLLECTION_NAME}",
+        self._add_select_expressions([
+            (f"'{base_info['catalog_name']}'", CATALOG_NAME),
+            (f"'{base_info['collection_name']}'", COLLECTION_NAME),
         ])
+
         authority = Authority(base_info['catalog_name'], base_info['collection_name'])
         if not authority.allows_access():
             raise NoAccessException
@@ -350,13 +360,26 @@ class SqlGenerator:
 
         self._join_relations(self.selects)
 
-        select = ',\n'.join(self.select_expressions)
+        select = self._select_expressions_as_string()
         table_select = '\n'.join(self.joins)
         order_by = f"ORDER BY {base_info['alias']}.{FIELD.GOBID}"
 
         query = f"SELECT\n{select}\n{table_select}\n{order_by}"
 
         return query
+
+    def _add_select_expression(self, expression: str, alias: Optional[str] = None):
+        if alias is None:
+            self.unaliased_select_expressions.append(expression)
+        else:
+            self.aliased_select_expressions[alias] = expression
+
+    def _add_select_expressions(self, select_expressions: list[tuple[str, Optional[str]]]):
+        for expression, alias in select_expressions:
+            self._add_select_expression(expression, alias)
+
+    def _select_expressions_as_string(self):
+        return ",\n".join(self.unaliased_select_expressions + [f"{v} AS {k}" for k, v in self.aliased_select_expressions.items()])
 
     def _get_formatted_filter_arguments(self, arguments: dict, base_alias: str):
         result = []
@@ -404,12 +427,16 @@ class SqlGenerator:
             match_src_value = f"{jsonb_alias}.item->>'{FIELD.SOURCE_VALUE}'"
 
             self.joins.append(src_values_join)
-            self.select_expressions.append(f"{jsonb_alias}.item {src_alias}")
+            self._add_select_expression(f"{jsonb_alias}.item", src_alias)
         else:
             match_src_value = f"{src_relation['alias']}.{src_attr_name}->>'{FIELD.SOURCE_VALUE}'"
-            self.select_expressions.append(f"{src_relation['alias']}.{src_attr_name} {src_alias}")
+            self._add_select_expression(f"{src_relation['alias']}.{src_attr_name}", src_alias)
 
         return match_src_value
+
+    def _relation_table_name(self, relation_name: str):
+        table_name = f"mv_{relation_name}"
+        return self._full_table_name(table_name)
 
     def _join_relation_table(self, src_relation: dict, relation_name: str, rel_table_alias: str, arguments: dict,
                              src_value_requested: bool, src_attr_name: str, is_many: bool, is_inverse: bool):
@@ -426,7 +453,7 @@ class SqlGenerator:
         :return:
         """
         rel_left = 'src' if not is_inverse else 'dst'
-        relation_table = f"{self.SCHEMA}.mv_{relation_name}"
+        relation_table = self._relation_table_name(relation_name)
 
         def join_filters(table_alias: str):
             filters = [
@@ -472,7 +499,7 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         filter_args = self._get_formatted_filter_arguments(arguments, dst_relation['alias'])
         rel_right = 'dst' if not is_inverse else 'src'
 
-        join_dst_table = f"LEFT JOIN {self.SCHEMA}.{dst_relation['tablename']} {dst_relation['alias']} " \
+        join_dst_table = f"LEFT JOIN {self._full_table_name(dst_relation['tablename'])} {dst_relation['alias']} " \
                          f"ON {rel_table_alias}.{rel_right}_id = {dst_relation['alias']}.{FIELD.ID}"
 
         if dst_relation['has_states']:
@@ -527,25 +554,6 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         self.joins.append(join_relation_table)
         self.joins.append(join_dst_table)
 
-    def _json_build_attrs(self, attributes: list, relation_name: str):
-        """Create the list of attributes to be used in json_build_object( ) for attributes in relation_name
-
-        :param attributes:
-        :param relation_name:
-        :return:
-        """
-        snake_attrs = [to_snake(attr) for attr in attributes]
-
-        json_attrs = ",".join([f"'{attr}', {relation_name}.{attr}" for attr in snake_attrs
-                               if attr not in self.srcvalues_attributes + self.relvalues_attributes])
-
-        if self._is_relvalue_requested(attributes):
-            rel_attrs = ",".join([f"'{attr}', rel_{self.relcnt}.{attr.replace('_relatie', '')}"
-                                  for attr in snake_attrs if attr in self.relvalues_attributes])
-            json_attrs = f"{json_attrs}, {rel_attrs}"
-
-        return json_attrs
-
     def _is_srcvalue_requested(self, attributes: list):
         return any(to_snake(attr) in self.srcvalues_attributes for attr in attributes)
 
@@ -566,10 +574,6 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         dst_info = self._collect_relation_info(relation_alias, f'{dst_catalog_name}_{dst_collection_name}')
         self._validate_attributes(dst_info, attributes, relation_alias)
 
-        alias = f"_{to_snake(relation_alias)}"
-        json_attrs = self._json_build_attrs(attributes, dst_info['alias'])
-        json_attrs = f"{json_attrs}, '_catalog', '{dst_catalog_name}', '_collection', '{dst_collection_name}'"
-
         relation_name = get_relation_name(
             gob_model,
             parent_info['catalog_name'],
@@ -580,7 +584,14 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         self._add_relation_joins(parent_info, dst_info, relation_name, arguments,
                                  self._is_srcvalue_requested(attributes), relation_attr_name,
                                  self._is_many(parent_info['collection']['attributes'][relation_attr_name]['type']))
-        self.select_expressions.append(f"json_build_object({json_attrs}) {alias}")
+
+        self._add_relation_join_attributes_to_select_expressions(
+            attributes,
+            dst_catalog_name,
+            dst_collection_name,
+            dst_info['alias'],
+            relation_alias
+        )
 
     def _join_inverse_relation(self, relation_alias: str, attributes: list, arguments: dict):
         parent = self.relation_parents[relation_alias]
@@ -598,9 +609,6 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         dst_info = self._collect_relation_info(relation_alias, f'{dst_model_name}')
         self._validate_attributes(dst_info, attributes, relation_alias)
 
-        json_attrs = self._json_build_attrs(attributes, dst_info['alias'])
-        json_attrs = f"{json_attrs}, '_catalog', '{dst_catalog_name}', '_collection', '{dst_collection_name}'"
-        alias = to_snake(f"_{relation_alias}")
 
         self._validate_attribute(dst_info, relation_attr_name, dst_collection_name)
         relation_name = get_relation_name(
@@ -611,7 +619,40 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         )
 
         self._add_relation_joins(parent_info, dst_info, relation_name, arguments, is_inverse=True)
-        self.select_expressions.append(f"json_build_object({json_attrs}) {alias}")
+
+        self._add_relation_join_attributes_to_select_expressions(
+            attributes,
+            dst_catalog_name,
+            dst_collection_name,
+            dst_info['alias'],
+            relation_alias
+        )
+
+    def _json_build_attrs(self, attributes: list, join_alias: str):
+        """Create the list of attributes to be used in json_build_object( ) for attributes in relation_name
+
+        :param attributes:
+        :param join_alias:
+        :return:
+        """
+        snake_attrs = [to_snake(attr) for attr in attributes]
+
+        json_attrs = ",".join([f"'{attr}', {join_alias}.{attr}" for attr in snake_attrs
+                               if attr not in self.srcvalues_attributes + self.relvalues_attributes])
+
+        if self._is_relvalue_requested(attributes):
+            rel_attrs = ",".join([f"'{attr}', rel_{self.relcnt}.{attr.replace('_relatie', '')}"
+                                  for attr in snake_attrs if attr in self.relvalues_attributes])
+            json_attrs = f"{json_attrs}, {rel_attrs}"
+
+        return json_attrs
+
+    def _add_relation_join_attributes_to_select_expressions(self, attributes: list, dst_catalog_name: str,
+                                                            dst_collection_name: str, join_alias: str, relation_attr_name: str):
+        json_attrs = self._json_build_attrs(attributes, join_alias)
+        json_attrs = f"{json_attrs}, '_catalog', '{dst_catalog_name}', '_collection', '{dst_collection_name}'"
+        alias = to_snake(f"_{relation_attr_name}")
+        self._add_select_expression(f"json_build_object({json_attrs})", alias)
 
 
 class GraphQL2SQL:
@@ -621,16 +662,14 @@ class GraphQL2SQL:
     very specific to the GOB use and data model.
     """
 
-    def __init__(self, graphql_query: str, generator: SqlGenerator = None):
+    def __init__(self, graphql_query: str):
         self.query = graphql_query
         # Remove any GraphQL comments
         self.query = re.sub(r'#[^\s]*', '', self.query)
         self.relations_hierarchy = None
         self.selections = None
 
-        self.Generator = SqlGenerator if generator is None else generator
-
-    def sql(self):
+    def sql(self, generator: SqlGenerator = None, visitor: GraphQLVisitor = None):
         """Returns a tuple (sql, relation_parents), where sql is the generated sql and relation_parents is a dict
         containing the hierarchy of the relations in this query, so that the result set can be reconstructed as one
         object with nested relations.
@@ -643,10 +682,11 @@ class GraphQL2SQL:
         stream = CommonTokenStream(lexer)
         parser = GraphQLParser(stream)
         tree = parser.document()
-        visitor = GraphQLVisitor()
-        visitor.visit(tree)
 
-        generator = self.Generator(visitor)
+        visitor = visitor or GraphQLVisitor()
+        visitor.visit(tree)
+        generator = generator or SqlGenerator(visitor)
+
         self.relations_hierarchy = visitor.relationParents
         self.selections = visitor.selects
 

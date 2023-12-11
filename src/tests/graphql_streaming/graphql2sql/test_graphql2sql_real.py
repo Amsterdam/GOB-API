@@ -72,15 +72,15 @@ mbt_0._gobid,
 mbt_0.identificatie,
 mbt_0.locatie,
 mbt_0.status,
-ST_AsText(mbt_0.geometrie) geometrie,
 mbt_0.nabij_nummeraanduiding,
+ST_AsText(mbt_0.geometrie) AS geometrie,
 'meetbouten' AS _catalog,
 'meetbouten' AS _collection,
-json_build_object('_gobid', mtg_0._gobid,'identificatie', mtg_0.identificatie,'datum', mtg_0.datum, '_catalog', 'meetbouten', '_collection', 'metingen') _heeft_eerste_meting,
-json_build_object('_gobid', mtg_1._gobid,'identificatie', mtg_1.identificatie,'hoogte_tov_nap', mtg_1.hoogte_tov_nap,'zakkingssnelheid', mtg_1.zakkingssnelheid,'zakking_cumulatief', mtg_1.zakking_cumulatief, '_catalog', 'meetbouten', '_collection', 'metingen') _heeft_laatste_meting,
-json_build_object('_gobid', bbk_0._gobid,'identificatie', bbk_0.identificatie,'code', bbk_0.code, '_catalog', 'gebieden', '_collection', 'bouwblokken') _ligt_in_bouwblok,
-json_build_object('_gobid', brt_0._gobid,'identificatie', brt_0.identificatie,'code', brt_0.code,'naam', brt_0.naam, '_catalog', 'gebieden', '_collection', 'buurten') _ligt_in_buurt,
-json_build_object('_gobid', sdl_0._gobid,'identificatie', sdl_0.identificatie,'code', sdl_0.code,'naam', sdl_0.naam, '_catalog', 'gebieden', '_collection', 'stadsdelen') _ligt_in_stadsdeel
+json_build_object('_gobid', mtg_0._gobid,'identificatie', mtg_0.identificatie,'datum', mtg_0.datum, '_catalog', 'meetbouten', '_collection', 'metingen') AS _heeft_eerste_meting,
+json_build_object('_gobid', mtg_1._gobid,'identificatie', mtg_1.identificatie,'hoogte_tov_nap', mtg_1.hoogte_tov_nap,'zakkingssnelheid', mtg_1.zakkingssnelheid,'zakking_cumulatief', mtg_1.zakking_cumulatief, '_catalog', 'meetbouten', '_collection', 'metingen') AS _heeft_laatste_meting,
+json_build_object('_gobid', bbk_0._gobid,'identificatie', bbk_0.identificatie,'code', bbk_0.code, '_catalog', 'gebieden', '_collection', 'bouwblokken') AS _ligt_in_bouwblok,
+json_build_object('_gobid', brt_0._gobid,'identificatie', brt_0.identificatie,'code', brt_0.code,'naam', brt_0.naam, '_catalog', 'gebieden', '_collection', 'buurten') AS _ligt_in_buurt,
+json_build_object('_gobid', sdl_0._gobid,'identificatie', sdl_0.identificatie,'code', sdl_0.code,'naam', sdl_0.naam, '_catalog', 'gebieden', '_collection', 'stadsdelen') AS _ligt_in_stadsdeel
 FROM (
     SELECT *
     FROM legacy.meetbouten_meetbouten
