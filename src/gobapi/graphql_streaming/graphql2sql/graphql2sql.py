@@ -62,12 +62,19 @@ class GraphQLVisitor(BaseVisitor):
     def addArgument(self, key, value):
         self.arguments[key] = value
 
+    def visitDirective(self, ctx: GraphQLParser.DirectiveContext):
+        if str(ctx.NAME()) == "formatdate":
+            # Ignore this one for now
+            pass
+        else:  # pragma: no cover
+            raise NotImplementedError(f"Not implemented directive {ctx.NAME()}")
+
     def visitField(self, ctx: GraphQLParser.FieldContext):
         if ctx.arguments():
             self.visitArguments(ctx.arguments())
 
         if ctx.directives():
-            raise NotImplementedError()
+            self.visitDirectives(ctx.directives())
 
         # Alias is ignored for now
         field_name, alias = self.visitFieldName(ctx.fieldName())
@@ -89,9 +96,23 @@ class GraphQLVisitor(BaseVisitor):
             self.addSelectField(field_name)
 
     def visitArgument(self, ctx: GraphQLParser.ArgumentContext):
-        value = self.visitValueOrVariable(ctx.valueOrVariable())
-        name = str(ctx.NAME())
-        self.addArgument(name, value)
+
+        if ctx.valueOrVariable():
+            value = self.visitValueOrVariable(ctx.valueOrVariable())
+            name = str(ctx.NAME())
+            self.addArgument(name, value)
+        elif ctx.SORT():
+            if ctx.nameArray():
+                value = self.visitNameArray(ctx.nameArray())
+                self.addArgument('sort', value)
+            else:
+                value = str(ctx.NAME())
+                self.addArgument('sort', [value])
+        else:  # pragma: no cover
+            raise NotImplementedError(f"Not implemented argument {ctx}")
+
+    def visitNameArray(self, ctx: GraphQLParser.NameArrayContext):
+        return [str(n) for n in ctx.NAME()]
 
     def visitValueOrVariable(self, ctx: GraphQLParser.ValueOrVariableContext):
         if ctx.value():
@@ -101,7 +122,7 @@ class GraphQLVisitor(BaseVisitor):
                 return self.visitNumberValue(ctx.value())
             if isinstance(ctx.value(), GraphQLParser.BooleanValueContext):
                 return self.visitBooleanValue(ctx.value())
-            raise NotImplementedError("Not implemented value type")
+            raise NotImplementedError(f"Not implemented value type {type(ctx.value())}")  # pragma: no cover
         if ctx.variable():
             return self.visitVariable(ctx.variable())
 
@@ -277,11 +298,25 @@ class SqlGenerator:
         where = f"WHERE {' AND '.join(conditions)}" if conditions else ""
         limit = f"LIMIT {arguments['first']}" if 'first' in arguments else ""
 
+        order_by_fields = []
+        for s in arguments.get('sort', []):
+            if s.endswith('_desc'):
+                f = s.replace('_desc', '')
+                order_by_fields.append(f"{f} DESC")
+            else:
+                f = s.replace('_asc', '')
+                order_by_fields.append(f"{f} ASC")
+
+        if not len(order_by_fields):
+            order_by_fields.append(FIELD.GOBID)
+
+        order = f"ORDER BY {','.join(order_by_fields)}"
+
         return f"""FROM (
     SELECT *
     FROM {self.SCHEMA}.{table_name}
     {where}
-    ORDER BY {FIELD.GOBID}
+    {order}
     {limit}
 ) {table_alias}"""
 
@@ -340,7 +375,9 @@ class SqlGenerator:
             arguments = self._get_arguments_with_defaults(select['arguments'])
             select_fields = [FIELD.GOBID] + select['fields']
 
-            if relation_alias.startswith('inv'):
+            relation_unaliased = self.relation_aliases[relation_alias]
+
+            if relation_unaliased.startswith('inv'):
                 self._join_inverse_relation(relation_alias, select_fields, arguments)
             else:
                 self._join_relation(relation_alias, select_fields, arguments)
@@ -515,10 +552,10 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
     def _is_relvalue_requested(self, attributes: list):
         return any(to_snake(attr) in self.relvalues_attributes for attr in attributes)
 
-    def _join_relation(self, relation_name: str, attributes: list, arguments: dict):
-        parent = self.relation_parents[relation_name]
+    def _join_relation(self, relation_alias: str, attributes: list, arguments: dict):
+        parent = self.relation_parents[relation_alias]
         parent_info = self._get_relation_info(parent)
-        relation_attr_name = to_snake(self.relation_aliases[relation_name])
+        relation_attr_name = to_snake(self.relation_aliases[relation_alias])
 
         self._validate_attribute(parent_info, relation_attr_name, parent)
 
@@ -526,10 +563,10 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
             parent_info['collection']['attributes'][relation_attr_name]['ref']
         )
 
-        dst_info = self._collect_relation_info(relation_name, f'{dst_catalog_name}_{dst_collection_name}')
-        self._validate_attributes(dst_info, attributes, relation_name)
+        dst_info = self._collect_relation_info(relation_alias, f'{dst_catalog_name}_{dst_collection_name}')
+        self._validate_attributes(dst_info, attributes, relation_alias)
 
-        alias = f"_{to_snake(relation_name)}"
+        alias = f"_{to_snake(relation_alias)}"
         json_attrs = self._json_build_attrs(attributes, dst_info['alias'])
         json_attrs = f"{json_attrs}, '_catalog', '{dst_catalog_name}', '_collection', '{dst_collection_name}'"
 
@@ -545,11 +582,12 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
                                  self._is_many(parent_info['collection']['attributes'][relation_attr_name]['type']))
         self.select_expressions.append(f"json_build_object({json_attrs}) {alias}")
 
-    def _join_inverse_relation(self, relation_name: str, attributes: list, arguments: dict):
-        parent = self.relation_parents[relation_name]
+    def _join_inverse_relation(self, relation_alias: str, attributes: list, arguments: dict):
+        parent = self.relation_parents[relation_alias]
         parent_info = self._get_relation_info(parent)
 
-        relation_name_snake = to_snake(relation_name).split('_')
+        relation_unaliased = self.relation_aliases[relation_alias]
+        relation_name_snake = to_snake(relation_unaliased).split('_')
 
         assert relation_name_snake[0] == 'inv'
 
@@ -557,12 +595,12 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         dst_catalog_name = relation_name_snake[-2]
         dst_collection_name = relation_name_snake[-1]
         dst_model_name = gob_model.get_table_name(dst_catalog_name, dst_collection_name)
-        dst_info = self._collect_relation_info(relation_name, f'{dst_model_name}')
-        self._validate_attributes(dst_info, attributes, relation_name)
+        dst_info = self._collect_relation_info(relation_alias, f'{dst_model_name}')
+        self._validate_attributes(dst_info, attributes, relation_alias)
 
         json_attrs = self._json_build_attrs(attributes, dst_info['alias'])
         json_attrs = f"{json_attrs}, '_catalog', '{dst_catalog_name}', '_collection', '{dst_collection_name}'"
-        alias = f"_inv_{relation_attr_name}_{dst_info['catalog_name']}_{dst_info['collection_name']}"
+        alias = to_snake(f"_{relation_alias}")
 
         self._validate_attribute(dst_info, relation_attr_name, dst_collection_name)
         relation_name = get_relation_name(
@@ -583,12 +621,14 @@ class GraphQL2SQL:
     very specific to the GOB use and data model.
     """
 
-    def __init__(self, graphql_query: str):
+    def __init__(self, graphql_query: str, generator: SqlGenerator = None):
         self.query = graphql_query
         # Remove any GraphQL comments
         self.query = re.sub(r'#[^\s]*', '', self.query)
         self.relations_hierarchy = None
         self.selections = None
+
+        self.Generator = SqlGenerator if generator is None else generator
 
     def sql(self):
         """Returns a tuple (sql, relation_parents), where sql is the generated sql and relation_parents is a dict
@@ -606,7 +646,7 @@ class GraphQL2SQL:
         visitor = GraphQLVisitor()
         visitor.visit(tree)
 
-        generator = SqlGenerator(visitor)
+        generator = self.Generator(visitor)
         self.relations_hierarchy = visitor.relationParents
         self.selections = visitor.selects
 
