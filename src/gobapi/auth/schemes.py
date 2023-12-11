@@ -5,6 +5,7 @@ GOB_AUTH_SCHEME = {
     "brk": {
         "collections": {
             "kadastraleobjecten": {
+                "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT],
                 "attributes": {
                     "koopsom": {
                         "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
@@ -51,6 +52,7 @@ GOB_AUTH_SCHEME = {
     "brk2": {
         "collections": {
             "kadastraleobjecten": {
+                "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT],
                 "attributes": {
                     "koopsom": {
                         "roles": [BRK_DATA_TOTAAL, BRK_DATA_BEPERKT]
@@ -116,6 +118,7 @@ GOB_AUTH_SCHEME = {
     "monumenten": {
         "collections": {
             "monumenten": {
+                "roles": [BRK_DATA_TOTAAL],
                 "attributes": {
                     "beschrijving": {
                         "roles": [BRK_DATA_TOTAAL]
@@ -126,6 +129,7 @@ GOB_AUTH_SCHEME = {
                 }
             },
             "complexen": {
+                "roles": [BRK_DATA_TOTAAL],
                 "attributes": {
                     "beschrijving": {
                         "roles": [BRK_DATA_TOTAAL]
