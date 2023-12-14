@@ -566,15 +566,19 @@ FROM (
     ORDER BY _gobid
 
 ) cola_0
-LEFT JOIN legacy.mv_catalog_collectiona_some_nested_relation rel_0
-ON rel_0._gobid IN (
-    SELECT _gobid FROM legacy.mv_catalog_collectiona_some_nested_relation rel
-    WHERE rel.src_id = cola_0._id
-    LIMIT 2
-)
-LEFT JOIN legacy.catalog_collectionb colb_0 ON rel_0.dst_id = colb_0._id
-AND rel_0.dst_volgnummer = colb_0.volgnummer
-AND (COALESCE(colb_0._expiration_date, '9999-12-31'::timestamp without time zone) > NOW())
+LEFT JOIN (
+    SELECT
+        rel.src_id AS src_id,
+        rel.dst_id AS dst_id,
+        rel.dst_volgnummer AS dst_volgnummer,
+        ROW_NUMBER() OVER (
+            PARTITION BY rel.dst_id ORDER BY colb_0._gobid
+        ) AS row_number
+    FROM legacy.mv_catalog_collectiona_some_nested_relation rel
+    JOIN legacy.catalog_collectionb colb_0
+    ON rel.dst_id = colb_0._id AND rel.dst_volgnummer = colb_0.volgnummer
+) rel_0 ON rel_0.src_id = cola_0._id AND rel_0.row_number <= 2
+LEFT JOIN legacy.catalog_collectionb colb_0 ON rel_0.dst_id = colb_0._id AND rel_0.dst_volgnummer = colb_0.volgnummer AND (COALESCE(colb_0._expiration_date, '9999-12-31'::timestamp without time zone) > NOW())
 ORDER BY cola_0._gobid
          '''
         ),
@@ -612,13 +616,20 @@ FROM (
     ORDER BY _gobid
 
 ) colb_0
-LEFT JOIN legacy.mv_catalog_collectiona_some_nested_relation rel_0 ON rel_0._gobid IN (
-    SELECT _gobid FROM legacy.mv_catalog_collectiona_some_nested_relation rel
-    WHERE rel.dst_id = colb_0._id AND rel.dst_volgnummer = colb_0.volgnummer
-    LIMIT 1
-)
-LEFT JOIN legacy.catalog_collectiona cola_0 ON rel_0.src_id = cola_0._id AND (cola_0.some_property = 'someval')
-AND (COALESCE(cola_0._expiration_date, '9999-12-31'::timestamp without time zone) > NOW())
+
+LEFT JOIN (
+    SELECT
+        rel.src_id AS src_id,
+        rel.dst_id AS dst_id,
+        rel.src_volgnummer AS src_volgnummer,
+        ROW_NUMBER() OVER (
+            PARTITION BY rel.dst_id ORDER BY cola_0._gobid
+        ) AS row_number
+    FROM legacy.mv_catalog_collectiona_some_nested_relation rel
+    JOIN legacy.catalog_collectiona cola_0
+    ON rel.src_id = cola_0._id
+) rel_0 ON rel_0.dst_id = colb_0._id AND rel_0.dst_volgnummer = colb_0.volgnummer AND rel_0.row_number = 1
+LEFT JOIN legacy.catalog_collectiona cola_0 ON rel_0.src_id = cola_0._id AND (cola_0.some_property = 'someval') AND (COALESCE(cola_0._expiration_date, '9999-12-31'::timestamp without time zone) > NOW())
 ORDER BY colb_0._gobid
          '''
         ),

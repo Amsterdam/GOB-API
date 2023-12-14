@@ -1,5 +1,5 @@
 import re
-from typing import List, Type, Optional
+from typing import List, Optional
 
 from antlr4 import CommonTokenStream, InputStream
 
@@ -379,7 +379,8 @@ class SqlGenerator:
             self._add_select_expression(expression, alias)
 
     def _select_expressions_as_string(self):
-        return ",\n".join(self.unaliased_select_expressions + [f"{v} AS {k}" for k, v in self.aliased_select_expressions.items()])
+        return ",\n".join(self.unaliased_select_expressions + [f"{v} AS {k}"
+                                                               for k, v in self.aliased_select_expressions.items()])
 
     def _get_formatted_filter_arguments(self, arguments: dict, base_alias: str):
         result = []
@@ -438,8 +439,9 @@ class SqlGenerator:
         table_name = f"mv_{relation_name}"
         return self._full_table_name(table_name)
 
-    def _join_relation_table(self, src_relation: dict, relation_name: str, rel_table_alias: str, arguments: dict,
-                             src_value_requested: bool, src_attr_name: str, is_many: bool, is_inverse: bool):
+    def _join_relation_table(self, src_relation: dict, dst_relation: dict, relation_name: str, rel_table_alias: str,
+                             arguments: dict, src_value_requested: bool, src_attr_name: str, is_many: bool,
+                             is_inverse: bool):
         """Generates the SQL for the relation table join, see _add_relation_joins.
 
         :param src_relation:
@@ -453,34 +455,61 @@ class SqlGenerator:
         :return:
         """
         rel_left = 'src' if not is_inverse else 'dst'
+        rel_right = 'dst' if not is_inverse else 'src'
         relation_table = self._relation_table_name(relation_name)
 
-        def join_filters(table_alias: str):
+        def join_reltable(reltable_alias: str, reltable_side=rel_left, join_with_table='src'):
+            join_relation = src_relation if join_with_table == 'src' else dst_relation
+
             filters = [
-                f"{table_alias}.{rel_left}_id = {src_relation['alias']}.{FIELD.ID}"
+                f"{reltable_alias}.{reltable_side}_id = {join_relation['alias']}.{FIELD.ID}"
             ]
 
             if not is_inverse and src_value_requested:
-                match_src_value_with = self._add_srcvalue_selection(src_relation, src_attr_name, is_many)
-                filters.append(f"{table_alias}.{FIELD.SOURCE_VALUE} = {match_src_value_with}")
+                match_src_value_with = self._add_srcvalue_selection(join_relation, src_attr_name, is_many)
+                filters.append(f"{reltable_alias}.{FIELD.SOURCE_VALUE} = {match_src_value_with}")
 
-            if src_relation['has_states']:
-                filters.append(f"{table_alias}.{rel_left}_volgnummer = {src_relation['alias']}.{FIELD.SEQNR}")
+            if join_relation['has_states']:
+                filters.append(f"{reltable_alias}.{reltable_side}_volgnummer = {join_relation['alias']}.{FIELD.SEQNR}")
 
             return " AND ".join(filters)
 
         if arguments.get('first'):
+            if arguments.get('sort'):
+                sort = [s.replace('_desc', ' DESC')
+                        if s.endswith('_desc')
+                        else s.replace('_asc', ' ASC')
+                        for s in arguments['sort']]
+            else:
+                sort = [FIELD.GOBID]
+            order_by = ', '.join([f"{dst_relation['alias']}.{s}" for s in sort])
+
+            first = int(arguments['first'])
+            match_row_number = f"{rel_table_alias}.row_number <= {first}" if first > 1 \
+                else f"{rel_table_alias}.row_number = 1"
+
+            select_exprs = [
+                "rel.src_id AS src_id",
+                "rel.dst_id AS dst_id",
+            ]
+            select_exprs += ["rel.src_volgnummer AS src_volgnummer"] if src_relation['has_states'] else []
+            select_exprs += ["rel.dst_volgnummer AS dst_volgnummer"] if dst_relation['has_states'] else []
+
+            select_exprs_str = ",\n        ".join(select_exprs)
             join_relation_table = f"""
-LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} IN (
-    SELECT {FIELD.GOBID}
+LEFT JOIN (
+    SELECT
+        {select_exprs_str},
+        ROW_NUMBER() OVER (
+            PARTITION BY rel.dst_id ORDER BY {order_by}
+        ) AS row_number
     FROM {relation_table} rel
-    WHERE {join_filters('rel')}
-    LIMIT {arguments['first']}
-)
-"""
+    JOIN {self._full_table_name(dst_relation['tablename'])} {dst_relation['alias']}
+    ON {join_reltable('rel', rel_right, 'dst')}
+) {rel_table_alias} ON {join_reltable(rel_table_alias, rel_left)} AND {match_row_number}"""
         else:
             join_relation_table = f"LEFT JOIN {relation_table} {rel_table_alias} " \
-                                  f"ON {join_filters(rel_table_alias)}"
+                                  f"ON {join_reltable(rel_table_alias)}"
 
         return join_relation_table
 
@@ -547,8 +576,9 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         """
         rel_table_alias = f"rel_{self.relcnt}"
 
-        join_relation_table = self._join_relation_table(src_relation, relation_name, rel_table_alias, arguments,
-                                                        src_value_requested, src_attr_name, is_many, is_inverse)
+        join_relation_table = self._join_relation_table(src_relation, dst_relation, relation_name, rel_table_alias,
+                                                        arguments, src_value_requested, src_attr_name, is_many,
+                                                        is_inverse)
         join_dst_table = self._join_dst_table(dst_relation, rel_table_alias, arguments, is_inverse)
 
         self.joins.append(join_relation_table)
@@ -571,7 +601,8 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
             parent_info['collection']['attributes'][relation_attr_name]['ref']
         )
 
-        dst_info = self._collect_relation_info(relation_alias, f'{dst_catalog_name}_{dst_collection_name}')
+        dst_info = self._collect_relation_info(relation_alias,
+                                               f'{dst_catalog_name}_{dst_collection_name}')
         self._validate_attributes(dst_info, attributes, relation_alias)
 
         relation_name = get_relation_name(
@@ -608,7 +639,6 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
         dst_model_name = gob_model.get_table_name(dst_catalog_name, dst_collection_name)
         dst_info = self._collect_relation_info(relation_alias, f'{dst_model_name}')
         self._validate_attributes(dst_info, attributes, relation_alias)
-
 
         self._validate_attribute(dst_info, relation_attr_name, dst_collection_name)
         relation_name = get_relation_name(
@@ -647,8 +677,14 @@ LEFT JOIN {relation_table} {rel_table_alias} ON {rel_table_alias}.{FIELD.GOBID} 
 
         return json_attrs
 
-    def _add_relation_join_attributes_to_select_expressions(self, attributes: list, dst_catalog_name: str,
-                                                            dst_collection_name: str, join_alias: str, relation_attr_name: str):
+    def _add_relation_join_attributes_to_select_expressions(
+            self,
+            attributes: list,
+            dst_catalog_name: str,
+            dst_collection_name: str,
+            join_alias: str,
+            relation_attr_name: str
+    ):
         json_attrs = self._json_build_attrs(attributes, join_alias)
         json_attrs = f"{json_attrs}, '_catalog', '{dst_catalog_name}', '_collection', '{dst_collection_name}'"
         alias = to_snake(f"_{relation_attr_name}")
