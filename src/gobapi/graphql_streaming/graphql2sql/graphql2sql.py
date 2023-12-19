@@ -256,7 +256,7 @@ class SqlGenerator:
                 API_FIELD.START_VALIDITY_RELATION, API_FIELD.END_VALIDITY_RELATION]:
             raise InvalidQueryException(f"Attribute {attribute} does not exist for {relation_name}")
 
-    def _geometry_as_text(self, geometry: str):
+    def _geometry_as_text(self, geometry: str) -> str:
         return f"ST_AsText({geometry})"
 
     def _select_expression(self, relation: dict, field: str) -> tuple[str, Optional[str]]:
@@ -275,15 +275,15 @@ class SqlGenerator:
 
         return expression, None
 
-    def _current_filter_expression(self, table_id: str = None):
+    def _current_filter_expression(self, table_id: str = None) -> str:
         table = f"{table_id}." if table_id else ""
 
         return f"(COALESCE({table}{FIELD.EXPIRATION_DATE}, '9999-12-31'::timestamp without time zone) > NOW())"
 
-    def _full_table_name(self, table_name: str):
+    def _full_table_name(self, table_name: str) -> str:
         return f"{self.SCHEMA}.{table_name}"
 
-    def _build_from_table(self, arguments: dict, table_name: str, table_alias: str):
+    def _build_from_table(self, arguments: dict, table_name: str, table_alias: str) -> str:
         """Builds from table expression for base relation with :table_name: and :arguments:
 
         :param arguments:
@@ -368,17 +368,17 @@ class SqlGenerator:
 
         return query
 
-    def _add_select_expression(self, expression: str, alias: Optional[str] = None):
+    def _add_select_expression(self, expression: str, alias: Optional[str] = None) -> None:
         if alias is None:
             self.unaliased_select_expressions.append(expression)
         else:
             self.aliased_select_expressions[alias] = expression
 
-    def _add_select_expressions(self, select_expressions: list[tuple[str, Optional[str]]]):
+    def _add_select_expressions(self, select_expressions: list[tuple[str, Optional[str]]]) -> None:
         for expression, alias in select_expressions:
             self._add_select_expression(expression, alias)
 
-    def _select_expressions_as_string(self):
+    def _select_expressions_as_string(self) -> str:
         return ",\n".join(self.unaliased_select_expressions + [f"{v} AS {k}"
                                                                for k, v in self.aliased_select_expressions.items()])
 
@@ -435,13 +435,13 @@ class SqlGenerator:
 
         return match_src_value
 
-    def _relation_table_name(self, relation_name: str):
+    def _relation_table_name(self, relation_name: str) -> str:
         table_name = f"mv_{relation_name}"
         return self._full_table_name(table_name)
 
     def _join_relation_table(self, src_relation: dict, dst_relation: dict, relation_name: str, rel_table_alias: str,
                              arguments: dict, src_value_requested: bool, src_attr_name: str, is_many: bool,
-                             is_inverse: bool):
+                             is_inverse: bool) -> str:
         """Generates the SQL for the relation table join, see _add_relation_joins.
 
         :param src_relation:
@@ -658,7 +658,7 @@ LEFT JOIN (
             relation_alias
         )
 
-    def _json_build_attrs(self, attributes: list, join_alias: str):
+    def _json_build_attrs(self, attributes: list, join_alias: str) -> str:
         """Create the list of attributes to be used in json_build_object( ) for attributes in relation_name
 
         :param attributes:
@@ -684,7 +684,7 @@ LEFT JOIN (
             dst_collection_name: str,
             join_alias: str,
             relation_attr_name: str
-    ):
+    ) -> None:
         json_attrs = self._json_build_attrs(attributes, join_alias)
         json_attrs = f"{json_attrs}, '_catalog', '{dst_catalog_name}', '_collection', '{dst_collection_name}'"
         alias = to_snake(f"_{relation_attr_name}")
