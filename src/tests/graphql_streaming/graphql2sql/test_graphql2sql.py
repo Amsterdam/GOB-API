@@ -144,7 +144,7 @@ ORDER BY cola_0._gobid
   }
 }
 ''', '''
-SELECT geocoll_0._gobid, geocoll_0.identificatie, ST_AsText(geocoll_0.geofield) geofield, 'catalog' AS _catalog, 'collectionwithgeometry' AS _collection
+SELECT geocoll_0._gobid, geocoll_0.identificatie, ST_AsText(geocoll_0.geofield) AS geofield, 'catalog' AS _catalog, 'collectionwithgeometry' AS _collection
 FROM (
     SELECT * FROM legacy.catalog_collectionwithgeometry
     WHERE (COALESCE(_expiration_date, '9999-12-31'::timestamp without time zone) > NOW()) AND _date_deleted IS NULL
@@ -249,10 +249,10 @@ cola_0._gobid,
 cola_0.identificatie,
 'catalog' AS _catalog,
 'collectiona' AS _collection,
-cola_0.some_nested_relation _src_some_nested_relation,
+cola_0.some_nested_relation AS _src_some_nested_relation,
 json_build_object('_gobid', colb_0._gobid,'nested_identificatie', colb_0.nested_identificatie,
  'begin_geldigheid_relatie', rel_0.begin_geldigheid,'eind_geldigheid_relatie', rel_0.eind_geldigheid,
- '_catalog', 'catalog', '_collection', 'collectionb') _some_nested_relation
+ '_catalog', 'catalog', '_collection', 'collectionb') AS _some_nested_relation
 FROM (
     SELECT *
     FROM legacy.catalog_collectiona
@@ -294,9 +294,9 @@ colc_0._gobid,
 colc_0.identificatie,
 'catalog' AS _catalog,
 'collectionc' AS _collection,
-colc_0.relation_to_b _src_relation_to_b,
+colc_0.relation_to_b AS _src_relation_to_b,
 json_build_object('_gobid', colb_0._gobid,'nested_identificatie', colb_0.nested_identificatie,
- '_catalog', 'catalog', '_collection', 'collectionb') _relation_to_b
+ '_catalog', 'catalog', '_collection', 'collectionb') AS _relation_to_b
 FROM (
     SELECT *
     FROM legacy.catalog_collectionc
@@ -342,7 +342,7 @@ colb_0.identificatie,
 'catalog' AS _catalog,
 'collectionb' AS _collection,
 json_build_object('_gobid', colc_0._gobid,'nested_identificatie',
-    colc_0.nested_identificatie, '_catalog', 'catalog', '_collection', 'collectionc') _inv_relation_to_b_catalog_collectionc
+    colc_0.nested_identificatie, '_catalog', 'catalog', '_collection', 'collectionc') AS _inv_relation_to_b_catalog_collectionc
 FROM (
     SELECT *
     FROM legacy.catalog_collectionb
@@ -387,9 +387,9 @@ cola_0._gobid,
 cola_0.identificatie,
 'catalog' AS _catalog,
 'collectiona' AS _collection,
-rel_bw_0.item _src_some_nested_many_relation,
+rel_bw_0.item AS _src_some_nested_many_relation,
 json_build_object('_gobid', colb_0._gobid,'nested_identificatie',
-colb_0.nested_identificatie, '_catalog', 'catalog', '_collection', 'collectionb') _some_nested_many_relation
+colb_0.nested_identificatie, '_catalog', 'catalog', '_collection', 'collectionb') AS _some_nested_many_relation
 FROM (
     SELECT *
     FROM legacy.catalog_collectiona
@@ -433,7 +433,7 @@ colb_0.identificatie,
 'catalog' AS _catalog,
 'collectionb' AS _collection,
 json_build_object('_gobid',
-cola_0._gobid,'identificatie', cola_0.identificatie, '_catalog', 'catalog', '_collection', 'collectiona') _inv_some_nested_many_relation_catalog_collectiona
+cola_0._gobid,'identificatie', cola_0.identificatie, '_catalog', 'catalog', '_collection', 'collectiona') AS _inv_some_nested_many_relation_catalog_collectiona
 FROM (
     SELECT *
     FROM legacy.catalog_collectionb
@@ -474,7 +474,7 @@ colb_0.identificatie,
 'catalog' AS _catalog,
 'collectionb' AS _collection,
 json_build_object('_gobid', cola_0._gobid,'identificatie',
-cola_0.identificatie, '_catalog', 'catalog', '_collection', 'collectiona') _inv_some_nested_relation_catalog_collectiona
+cola_0.identificatie, '_catalog', 'catalog', '_collection', 'collectiona') AS _inv_some_nested_relation_catalog_collectiona
 FROM (
     SELECT *
     FROM legacy.catalog_collectionb
@@ -515,7 +515,7 @@ cola_0._gobid,
 cola_0.identificatie,
 'catalog' AS _catalog,
 'collectiona' AS _collection,
-json_build_object('_gobid', colb_0._gobid,'nested_identificatie', colb_0.nested_identificatie, '_catalog', 'catalog', '_collection', 'collectionb') _relation_alias
+json_build_object('_gobid', colb_0._gobid,'nested_identificatie', colb_0.nested_identificatie, '_catalog', 'catalog', '_collection', 'collectionb') AS _relation_alias
 FROM (
     SELECT *
     FROM legacy.catalog_collectiona
@@ -558,7 +558,7 @@ cola_0.identificatie,
 'catalog' AS _catalog,
 'collectiona' AS _collection,
 json_build_object('_gobid', colb_0._gobid,'nested_identificatie',
-colb_0.nested_identificatie, '_catalog', 'catalog', '_collection', 'collectionb') _relation_alias
+colb_0.nested_identificatie, '_catalog', 'catalog', '_collection', 'collectionb') AS _relation_alias
 FROM (
     SELECT *
     FROM legacy.catalog_collectiona
@@ -566,15 +566,19 @@ FROM (
     ORDER BY _gobid
 
 ) cola_0
-LEFT JOIN legacy.mv_catalog_collectiona_some_nested_relation rel_0
-ON rel_0._gobid IN (
-    SELECT _gobid FROM legacy.mv_catalog_collectiona_some_nested_relation rel
-    WHERE rel.src_id = cola_0._id
-    LIMIT 2
-)
-LEFT JOIN legacy.catalog_collectionb colb_0 ON rel_0.dst_id = colb_0._id
-AND rel_0.dst_volgnummer = colb_0.volgnummer
-AND (COALESCE(colb_0._expiration_date, '9999-12-31'::timestamp without time zone) > NOW())
+LEFT JOIN (
+    SELECT
+        rel.src_id AS src_id,
+        rel.dst_id AS dst_id,
+        rel.dst_volgnummer AS dst_volgnummer,
+        ROW_NUMBER() OVER (
+            PARTITION BY rel.dst_id ORDER BY colb_0._gobid
+        ) AS row_number
+    FROM legacy.mv_catalog_collectiona_some_nested_relation rel
+    JOIN legacy.catalog_collectionb colb_0
+    ON rel.dst_id = colb_0._id AND rel.dst_volgnummer = colb_0.volgnummer
+) rel_0 ON rel_0.src_id = cola_0._id AND rel_0.row_number <= 2
+LEFT JOIN legacy.catalog_collectionb colb_0 ON rel_0.dst_id = colb_0._id AND rel_0.dst_volgnummer = colb_0.volgnummer AND (COALESCE(colb_0._expiration_date, '9999-12-31'::timestamp without time zone) > NOW())
 ORDER BY cola_0._gobid
          '''
         ),
@@ -604,7 +608,7 @@ colb_0.identificatie,
 'catalog' AS _catalog,
 'collectionb' AS _collection,
 json_build_object('_gobid', cola_0._gobid,'identificatie',
-cola_0.identificatie, '_catalog', 'catalog', '_collection', 'collectiona') _inv_some_nested_relation_catalog_collectiona
+cola_0.identificatie, '_catalog', 'catalog', '_collection', 'collectiona') AS _inv_some_nested_relation_catalog_collectiona
 FROM (
     SELECT *
     FROM legacy.catalog_collectionb
@@ -612,13 +616,20 @@ FROM (
     ORDER BY _gobid
 
 ) colb_0
-LEFT JOIN legacy.mv_catalog_collectiona_some_nested_relation rel_0 ON rel_0._gobid IN (
-    SELECT _gobid FROM legacy.mv_catalog_collectiona_some_nested_relation rel
-    WHERE rel.dst_id = colb_0._id AND rel.dst_volgnummer = colb_0.volgnummer
-    LIMIT 1
-)
-LEFT JOIN legacy.catalog_collectiona cola_0 ON rel_0.src_id = cola_0._id AND (cola_0.some_property = 'someval')
-AND (COALESCE(cola_0._expiration_date, '9999-12-31'::timestamp without time zone) > NOW())
+
+LEFT JOIN (
+    SELECT
+        rel.src_id AS src_id,
+        rel.dst_id AS dst_id,
+        rel.src_volgnummer AS src_volgnummer,
+        ROW_NUMBER() OVER (
+            PARTITION BY rel.dst_id ORDER BY cola_0._gobid
+        ) AS row_number
+    FROM legacy.mv_catalog_collectiona_some_nested_relation rel
+    JOIN legacy.catalog_collectiona cola_0
+    ON rel.src_id = cola_0._id
+) rel_0 ON rel_0.dst_id = colb_0._id AND rel_0.dst_volgnummer = colb_0.volgnummer AND rel_0.row_number = 1
+LEFT JOIN legacy.catalog_collectiona cola_0 ON rel_0.src_id = cola_0._id AND (cola_0.some_property = 'someval') AND (COALESCE(cola_0._expiration_date, '9999-12-31'::timestamp without time zone) > NOW())
 ORDER BY colb_0._gobid
          '''
         ),
